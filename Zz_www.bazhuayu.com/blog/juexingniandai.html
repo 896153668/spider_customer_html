@@ -1,0 +1,2393 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    
+    
+<title>如何找到年度爆火神剧《觉醒年代》的观众画像？大数据告诉你！ - 八爪鱼采集器</title>
+<meta name="keywords" content="如何找到年度爆火神剧《觉醒年代》的观众画像？大数据告诉你！">
+<meta name="description" content="如何找到年度爆火神剧《觉醒年代》的观众画像？大数据告诉你！">
+    
+
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0">
+    <meta name="baidu-site-verification" content="my5tMHFCbI">
+    <meta name="author" content="八爪鱼采集器 - 视界科技旗下产品">
+    <meta http-equiv="Cache-Control" content="no-transform ">
+    <meta name="baidu-site-verification" content="zpPiFXIJuf">
+
+    <link rel="shortcut icon" href="https://www.bazhuayu.com/favicon-new.ico">
+
+    <!-- Le styles -->
+    <link href="../static/css/zui.min.css" rel="stylesheet">
+    <link href="../static/css/common.css" rel="stylesheet">
+    <link href="../static/css/site.min.css" rel="stylesheet">
+    
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/jquery.cookie.js"></script>
+    <script src="../static/js/zui.min.js"></script>
+    <script src="../static/js/common.js"></script>
+    <script src="../static/js/layer.js" type="text/javascript"></script>
+<style>
+    #promotionAd{
+        border-radius: 1.5%;
+        width: 100%;
+    }
+    .modal-contents{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 41.68%;
+        height: 53.4%;
+        /* background-color: pink; */
+    }
+    .promotion-ad-wrapper {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .activoty-cancel-icon {
+        position: absolute;
+        width: 2.7%;
+        height: 4%;
+        right: 1.6%;
+        top: 3%;
+        cursor: pointer;
+        /* transition: opacity 0.3s ease; */
+    }
+
+        /* .activoty-cancel-icon:hover {
+            opacity: 0.5;
+        } */
+
+    .activoty-bottom-btn {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 20.7%;
+        padding: 3.3% 15%;
+        /* border-radius: 3px; */
+        cursor: pointer;
+        /* background-color: #f6fc63; */
+        /* transition: background-color 0.3s ease; */
+    }
+    .activoty-bottom-btn-after{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 12.7%;
+        padding: 3.3% 15%;
+        cursor: pointer;
+    }
+
+        /* .activoty-bottom-btn:hover {
+            background-color: #ffda24;
+        } */
+
+        /* .activoty-bottom-btn span {
+            font-size: 20px;
+            line-height: 1;
+            font-weight: bold;
+            color: #3620b8;
+        } */
+</style>
+<div class="modal fade" tabindex="-1" id="adModal" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-contents">
+        <div class="promotion-ad-wrapper">
+            <img id="promotionAd" src="">
+            <div class="activoty-cancel-icon" onclick="closeAd()"></div>
+            <a id="activoty-bottom-btn" href="javascript:;" target="_blank" onclick="closeAd()">
+            </a>
+        </div>
+    </div>
+</div>
+    <!-- 修改 -->
+    <!-- var special = GlobalCache.ActivitySpecialDate.ToString("yyyy/MM/dd HH:mm:ss"); -->
+    <!-- 添加返场时间 -->
+
+<script>
+
+    window.onload = function () {
+        displayAd();
+
+    };
+
+
+    var activityPopConfig = {
+        excludePaths: [
+            /^\/(A|a)ccount/, /^\/(C|c)loud/, /^\/(F|f)ee/, /^\/(L|l)og/, /^\/six/, /^\/pay/, /^\/(A|a)ctivity/
+        ],
+        imgs: {
+            pre: "/images/act/202112/pc_pre.jpeg",
+            dayOne: "/images/act/202112/pc_first.jpeg",
+            afterDayOne: "/images/act/202112/pc_activity.jpeg",
+            // afterDayOne: "/images/act/202012/pc_afterDayOne_pop.png"
+            returnDay: "/images/act/202112/pc_fc.jpeg"
+        }
+    };
+
+    var currTime = new Date().getTime();
+    var activityPreStart = new Date("2021/12/07 22:30:00").getTime()
+    // 预热结束的时间就是活动开始的时间
+    var activityPreEnd = new Date("2021/12/14 15:00:00").getTime()
+    // 首日结束的时间就是正常活动日开始的时间
+    var activityDayOneEnd = new Date("2021/12/16 00:00:00").getTime()
+    // 正常活动日结束的时间就是返场开始的时间
+    // 添加
+    var activityNormalEnd = new Date("2021/12/22 00:00:00").getTime()
+    var activityEnd = new Date("2021/12/31 23:59:59").getTime()
+    // 检测是否看过广告，若有则不显示广告，否则3S后显示广告
+    function displayAd() {
+        var promotionAd = document.getElementById("promotionAd");
+        var btn = document.getElementById("activoty-bottom-btn");
+        var imgUrl;
+        var isShow = false;
+        if (currTime < activityPreStart)
+            return;
+        if (currTime < activityPreEnd) {
+            //预热时间
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.pre;
+            if (!localStorage[activityPreEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.dayOne;
+            if (!localStorage[activityDayOneEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.afterDayOne;
+            if (!localStorage[activityNormalEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.returnDay;
+            if (!localStorage[activityEnd]) {
+                isShow = true
+            }
+        }
+
+        if (isShow && checkPathValid()) {
+            // 为避免广告图片加载卡顿，应先加载后显示
+            promotionAd.setAttribute("src", imgUrl);
+            setTimeout(function () {
+                $("#adModal").modal({
+                    backdrop: "static",
+                    keyboard: false
+                });
+            }, 500);
+        }
+
+
+    }
+
+    // 校验当前path，个人中心下属页面及支付页面不显示
+    function checkPathValid() {
+        var currPath = window.location.pathname;
+        for (var i of activityPopConfig.excludePaths) {
+            if (i.test(currPath)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 关闭广告弹窗
+    function closeAd() {
+        if (currTime < activityPreEnd) {
+            //预热时间
+            localStorage[activityPreEnd] = true
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            localStorage[activityDayOneEnd] = true
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            localStorage[activityNormalEnd] = true
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            isShow = localStorage[activityEnd] = true
+        }
+
+        $("#adModal").modal("hide");
+    }
+</script> 
+    
+	<link rel="alternate" href="https://www.octoparse.com/" hreflang="en-us">
+    <link rel="alternate" href="https://www.octoparse.jp/" hreflang="ja-jp">
+    <link rel="alternate" href="../index1.html" hreflang="zh-cn">
+	<link rel="alternate" href="https://www.octoparse.es/" hreflang="es-es">
+	<link rel="alternate" href="https://www.octoparse.fr/" hreflang="fr-fr">
+	<link rel="alternate" href="https://www.octoparse.de/" hreflang="de">
+		<!--百度统计-异步-->
+        <script type="text/javascript">
+            var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+            document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F7515d7bccdb62c11803f90ca8071f05b' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+    <!--百度统计-异步-->
+        <script type='text/javascript'>
+            var _vds = _vds || [];
+            window._vds = _vds;
+            (function () {
+                _vds.push(['setAccountId', 'a7c11699fcd726cf']);
+                (function () {
+                    var vds = document.createElement('script');
+                    vds.type = 'text/javascript';
+                    vds.async = true;
+                    vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'assets.growingio.com/vds.js';
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(vds, s);
+                })();
+            })();
+        </script>
+    <!--用户来源统计-->
+        <script type="text/javascript">
+
+            var utm_campaign = getQueryStringMaster("utm_campaign");
+            var utmFlag = 0;
+            if (utm_campaign != null && utm_campaign != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_campaign=" + encodeURI(utm_campaign) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_medium = getQueryStringMaster("utm_medium");
+            if (utm_medium != null && utm_medium != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_medium=" + encodeURI(utm_medium) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_source = getQueryStringMaster("utm_source");
+            if (utm_source != null && utm_source != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_source=" + encodeURI(utm_source) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_content = getQueryStringMaster("utm_content");
+            if (utm_content != null && utm_content != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_content=" + encodeURI(utm_content) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_term = getQueryStringMaster("utm_term");
+            if (utm_term != null && utm_term != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_term=" + encodeURI(utm_term) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_url = decodeURI(window.location);
+            if (utm_url != null && utm_url != "") {
+                if (getCookie("url") == "") {
+                    var exp = new Date();
+                    exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                    document.cookie = "url=" + encodeURI(utm_url) + ";expires=" + exp.toGMTString();
+                }
+            }
+
+            var referrerUrl = document.referrer;
+            var keys = ["wd", "q", "query", "word"];
+            var searchWord = "";
+            for (var i = 0; i < keys.length; i++) {
+                var reg = new RegExp("(^|&)" + keys[i] + "=([^&]*)(&|$)", "i");
+                var r = referrerUrl.substr(1).match(reg);
+                if (r && r[2]) {
+                    searchWord = decodeURI(r[2]);
+                    var exp = new Date();
+                    exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                    document.cookie = "search_word=" + encodeURI(searchWord) + ";expires=" + exp.toGMTString();// 写入Cookie，注册时使用
+                    break;
+                }
+            }     
+            if (searchWord != "") {
+                utmFlag = 1;
+            }
+            else
+            {
+                if (getCookie("search_word") != "") {
+                     searchWord = getCookie("search_word");
+                     utmFlag = 1;
+               }
+            }
+
+            if (utmFlag == 1) {
+                $.ajax({
+                    url: "/Common/AjaxPostUtm",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        "utm_campaign": utm_campaign,
+                        "utm_medium": utm_medium,
+                        "utm_source": utm_source,
+                        "utm_content": utm_content,
+                        "utm_term": utm_term,
+                        "utm_url": utm_url,
+                        "search_word": searchWord
+                    },
+                });
+            }
+
+            function getCookie(Name) {
+                var search = Name + "="
+                if (document.cookie.length > 0) {
+                    offset = document.cookie.indexOf(search)
+                    if (offset != -1) {
+                        offset += search.length
+                        end = document.cookie.indexOf(";", offset)
+                        if (end == -1) end = document.cookie.length
+                        return unescape(document.cookie.substring(offset, end))
+                    }
+                    else return ""
+                }
+            }
+
+            function getQueryStringMaster(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return decodeURI(r[2]); return null;
+            }
+
+            $(document).ready(function () {
+                var jihuoH = $('#jihuoH').val();
+                if (jihuoH == '0') {
+                    $('#jihuop').show();
+                }
+                logFromChannelCookie();
+                function logFromChannelCookie() {
+                    var fromChannel = getQueryStringMaster("fromchannel");
+                    if (fromChannel) {
+                        var exp = new Date();
+                        exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24 * 7);//过期时间1天
+                        document.cookie = "_bzytg=" + fromChannel + ";expires=" + exp.toGMTString();
+                    }
+                }
+            });
+
+        </script>
+    <!--用户来源统计-->
+			
+
+
+    
+    
+	<style type="text/css">
+	body{
+			background:#F1F1F1;
+		     	
+		}
+		.leftbar .row{
+			background: #fff;
+		}
+		.blog-left-bar,.blog-detail{
+			background: #fff;
+		}
+		    .mini-banner {
+        letter-spacing: 1px;
+        height: 160px;
+        background: #fff url('../static/image/banner1.png') center bottom no-repeat;
+        
+    }
+	.mini-banner p {
+            font-size: 24px;
+            text-align: center;
+            line-height: 160px;
+            color: #0064Cd;
+        }
+
+		.nav-center .nav-faq a{color: #006DCC!important;}
+		.bzy-navbar{background: #FBFBFB;}
+		.blog-detail{border:1px solid #BDBDBD;overflow: hidden;padding: 20px;}
+		.blog-title{border-bottom: 1px solid #E5E5E5;margin-bottom: 20px;}
+		.blog-title h1{margin:0;margin-bottom: 10px;font-size: 20px;font-weight: 600;}
+		.user{margin-right: 10px;}
+		.calendar{margin-right: 20px;}
+		.breadcrumb {padding-left:0;margin-bottom: 6px;}
+		.breadcrumb a{font-size: 14px;color: #006DCC;}
+		.bloglist .title{font-size: 18px;margin-bottom: 3px;width: 100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;display: block;}
+		.blog-left-bar .contact-info,
+.toturial-left-bar .contact-info {
+	width: 100%;
+    border: 1px solid #BDBDBD;
+    margin-top: 10px;
+    /*border-top: 1px solid #F1F1F1;*/
+    padding-top: 5px
+}
+
+.blog-left-bar .contact-info img,
+.toturial-left-bar .contact-info img {
+    width: 156px;
+    height: 156px
+}
+
+.blog-left-bar .contact-info .contact-inner,
+.toturial-left-bar .contact-info .contact-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    color: #666
+}
+
+.blog-left-bar .contact-info .contact-inner .bzy-btn,
+.toturial-left-bar .contact-info .contact-inner .bzy-btn {
+    display: block;
+    width: 150px;
+    margin: 25px auto 15px;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    background: url(../static/image/icon-download.png) 26px center no-repeat #0064Cd;
+    color: #fff
+}
+
+.blog-left-bar .contact-info .contact-inner .bzy-btn:hover,
+.toturial-left-bar .contact-info .contact-inner .bzy-btn:hover {
+    opacity: .8
+}
+
+.blog-left-bar .contact-info .contact-inner .qq-panel,
+.toturial-left-bar .contact-info .contact-inner .qq-panel {
+    width: 100%;
+    padding-left: 10px
+}
+
+.blog-left-bar .contact-info .contact-inner .qq-title,
+.toturial-left-bar .contact-info .contact-inner .qq-title {
+    color: #333;
+    line-height: 40px
+}
+
+.blog-left-bar .contact-info .contact-inner a,
+.toturial-left-bar .contact-info .contact-inner a {
+    color: #666
+}
+	</style>
+
+    <style>
+    .reco-link {
+        height: 30px;
+        line-height: 30px;
+        width: 100%;
+        margin-top: 45px;
+    }
+
+    .reco-link ul {
+        margin: 0 auto;
+        height: 100%;
+        width: 800px;
+        padding-top: 7px;
+    }
+
+    .reco-link ul li {
+        float: left;
+        margin-right: 15px;
+        font-size:14px;
+        font-family:PingFang-SC-Medium,PingFang-SC;
+        font-weight:500;
+        color:rgba(255,255,255,1);
+    }
+    .reco-link ul li a:hover {
+        color: rgba(255,255,255,1);
+    }
+    </style>
+
+</head>
+<body>
+
+
+
+<style>
+    .site-header-pro:hover .sub-list {
+        height: 360px !important;
+    }
+
+    .site-header .site-tutorial:hover .solution-sub-list {
+        display: block;
+        height: 130px;
+    }
+
+.site-header .site-tutorial2:hover .solution-sub-list {
+        display: block;
+        height: 84px;
+    }
+
+  .site-header .site-tutorial3:hover .solution-sub-list {
+        display: block;
+        height: 300px;
+    }
+
+</style>
+<header class="site-header">
+    <ul class="site-nav" style="width: 1045px">
+        <li class="site-bzy-logo">
+            <a href="../index1.html"></a>
+        </li>
+        <li class='site-header-pro'>
+            <a href="javascript:;">
+                产品
+                <i class="icon icon-angle-down"></i>
+            </a>
+            <ul class="pro-sub-list sub-list">
+                <li>
+                    <a href="../about.html">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>关于八爪鱼</p>
+                            <p>人人可用的数据采集器</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="../enterprise/index.html" data-utm="1" target="_blank">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>八爪鱼企业版</p>
+                            <p>企业级数据采集解决方案</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="../qiyeban/index.html" data-utm="1">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>八爪鱼私有化部署版</p>
+                            <p>支持内网采集与OEM集成</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="../edu.html" data-utm="1">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>教育公益计划</p>
+                            <p>教学科研的大数据助手</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" target="_blank">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>客户体验管理</p>
+                            <p>聚合全网客户声音</p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="../plan.html">价格</a>
+        </li>
+        <li class='site-header-solution site-tutorial3'>
+            <a href="javascript:;">
+                解决方案
+                <i class="icon icon-angle-down"></i>
+            </a>
+            <ul class="solution-sub-list sub-list" style="left: -100%;">
+                <li>
+                    <a href="" data-utm="1" target="_blank" style="font-size: 16px;color: #919194;font-weight: bold;">数据采集</a>
+                </li>
+                <li>
+                    <a href="../newscrawler/index.html" data-utm="1" target="_blank">新闻采集</a>
+                </li>
+                <li>
+                    <a href="../ecdatacrawler/index.html" data-utm="1" target="_blank">电商采集</a>
+                </li>
+                <li>
+                    <a href="../socialmediacrawler/index.html" data-utm="1" target="_blank">社交采集</a>
+                </li>
+                <li>
+                    <a href="../realestate/index.html" data-utm="1" target="_blank">房产采集</a>
+                </li>
+                <li>
+                    <a href="../zhaotoubiao/index.html" data-utm="1" target="_blank">招投标采集</a>
+                </li>
+				
+
+
+                
+            </ul>
+            <ul class="solution-sub-list sub-list">
+                <li>
+                    <a href="" data-utm="1" target="_blank" style="font-size: 16px;color: #919194;font-weight: bold;">场景应用</a>
+                </li>
+				<li>
+                    <a href="../marketresearch/index.html" data-utm="1" target="_blank">市场研究</a>
+                </li>
+              
+                <li>
+                    <a href="../dscomment/index.html" data-utm="1" target="_blank">评论分析</a>
+                </li>
+                <li>
+                    <a href="../gaoxiaojiaoyu/index.html" data-utm="1" target="_blank">高校教育</a>
+                </li>
+                <li>
+                    <a href="../jingwaiyuqing/index.html" data-utm="1" target="_blank">境外舆情</a>
+                </li>				 
+				<li>
+                    <a href="../cross-border-electricity/index.html" data-utm="1" target="_blank">跨境电商采集</a>
+                </li>
+				<li>
+                    <a href="../voc/index.html" data-utm="1" target="_blank">客户之声</a>
+                </li>
+				
+                
+
+
+            </ul>
+        </li>
+
+
+
+<li class='site-header-solution site-tutorial2'>
+            <a href="javascript:;">
+                采集模板
+                <i class="icon icon-angle-down"></i>
+            </a>           
+            <ul class="solution-sub-list sub-list">               				
+                <li>
+                    <a href="../kjdscjmb/index.html" data-utm="1" target="_blank">跨境电商</a>
+                </li>  
+				<li>
+                    <a href="../news/index.html" data-utm="1" target="_blank">新闻传媒</a>
+                </li>		
+			
+            </ul>
+        </li>
+
+
+
+        <li>
+            <a href="../download/windows.html">软件下载</a>
+        </li>
+        
+        <li class='site-header-solution site-tutorial'>
+            <a href="../tutorialIndex8.html">
+                教程与帮助
+                <i class="icon icon-angle-down"></i>
+            </a>
+            <div>
+                <ul class="edu-sub-list solution-sub-list sub-list sub-list-edu">
+                    <li class="sub-edu">
+                        <a href="../tutorial8/hottutorial.html">
+                            <div class="sub-item">
+                                <p>图文教程</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../tutorial8/videotutorial.html">
+                            <div class="sub-item">
+                                <p>视频教程</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../tutorial8/faq.html">
+                            <div class="sub-item sub-edu-item">
+                                <p>常见问题</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+        <li></li>
+        <li class='site-header-solution site-tutorial2'>
+            
+			 <a href="javascript:;">
+                关于我们
+                <i class="icon icon-angle-down"></i>
+            </a>           
+            <ul class="solution-sub-list sub-list">               				
+                <li>
+                    <a href="../intro.html" data-utm="1">关于我们</a>
+                </li>  
+				<li>
+                    <a href="../contactus.html" data-utm="1">联系我们</a>
+                </li>				
+            </ul>
+        </li>
+        
+<style>
+    .site-header .signin, .site-header .signup {
+        width: 48px;
+        height: 26px;
+        display: inline-block !important;
+        vertical-align: middle;
+        border-radius: 3px;
+        line-height: 26px;
+        border: 1px solid #D9D9D9;
+        background: #FAFAFA;
+    }
+
+        .site-header .signin:hover, .site-header .signup:hover {
+            color: #0059B8;
+            border: 1px solid #0059B8;
+        }
+
+        .site-header .signup:hover {
+            color: #fff;
+            background: #0059B8;
+        }
+
+    .site-header .signup {
+        color: #fff;
+        background: #096ACF;
+        border-color: #096ACF;
+    }
+</style>
+﻿    <ul class="right-bar">
+        <li class="right-bar"><a href="../Account/Login.html" class="signin">登录</a></li>
+        <li class="s" style="width: 10px"><a href="javascript:;">&nbsp;</a></li>
+        <li><a class="signup" href="../account/register.html">注册</a></li>
+    </ul>
+
+    </ul>
+</header>
+
+<style>
+    #promotionAd{
+        border-radius: 1.5%;
+        width: 100%;
+    }
+    .modal-contents{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 41.68%;
+        height: 53.4%;
+        /* background-color: pink; */
+    }
+    .promotion-ad-wrapper {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .activoty-cancel-icon {
+        position: absolute;
+        width: 2.7%;
+        height: 4%;
+        right: 1.6%;
+        top: 3%;
+        cursor: pointer;
+        /* transition: opacity 0.3s ease; */
+    }
+
+        /* .activoty-cancel-icon:hover {
+            opacity: 0.5;
+        } */
+
+    .activoty-bottom-btn {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 20.7%;
+        padding: 3.3% 15%;
+        /* border-radius: 3px; */
+        cursor: pointer;
+        /* background-color: #f6fc63; */
+        /* transition: background-color 0.3s ease; */
+    }
+    .activoty-bottom-btn-after{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 12.7%;
+        padding: 3.3% 15%;
+        cursor: pointer;
+    }
+
+        /* .activoty-bottom-btn:hover {
+            background-color: #ffda24;
+        } */
+
+        /* .activoty-bottom-btn span {
+            font-size: 20px;
+            line-height: 1;
+            font-weight: bold;
+            color: #3620b8;
+        } */
+</style>
+<div class="modal fade" tabindex="-1" id="adModal" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-contents">
+        <div class="promotion-ad-wrapper">
+            <img id="promotionAd" src="">
+            <div class="activoty-cancel-icon" onclick="closeAd()"></div>
+            <a id="activoty-bottom-btn" href="javascript:;" target="_blank" onclick="closeAd()">
+            </a>
+        </div>
+    </div>
+</div>
+    <!-- 修改 -->
+    <!-- var special = GlobalCache.ActivitySpecialDate.ToString("yyyy/MM/dd HH:mm:ss"); -->
+    <!-- 添加返场时间 -->
+
+<script>
+
+    window.onload = function () {
+        displayAd();
+
+    };
+
+
+    var activityPopConfig = {
+        excludePaths: [
+            /^\/(A|a)ccount/, /^\/(C|c)loud/, /^\/(F|f)ee/, /^\/(L|l)og/, /^\/six/, /^\/pay/, /^\/(A|a)ctivity/
+        ],
+        imgs: {
+            pre: "/images/act/202112/pc_pre.jpeg",
+            dayOne: "/images/act/202112/pc_first.jpeg",
+            afterDayOne: "/images/act/202112/pc_activity.jpeg",
+            // afterDayOne: "/images/act/202012/pc_afterDayOne_pop.png"
+            returnDay: "/images/act/202112/pc_fc.jpeg"
+        }
+    };
+
+    var currTime = new Date().getTime();
+    var activityPreStart = new Date("2021/12/07 22:30:00").getTime()
+    // 预热结束的时间就是活动开始的时间
+    var activityPreEnd = new Date("2021/12/14 15:00:00").getTime()
+    // 首日结束的时间就是正常活动日开始的时间
+    var activityDayOneEnd = new Date("2021/12/16 00:00:00").getTime()
+    // 正常活动日结束的时间就是返场开始的时间
+    // 添加
+    var activityNormalEnd = new Date("2021/12/22 00:00:00").getTime()
+    var activityEnd = new Date("2021/12/31 23:59:59").getTime()
+    // 检测是否看过广告，若有则不显示广告，否则3S后显示广告
+    function displayAd() {
+        var promotionAd = document.getElementById("promotionAd");
+        var btn = document.getElementById("activoty-bottom-btn");
+        var imgUrl;
+        var isShow = false;
+        if (currTime < activityPreStart)
+            return;
+        if (currTime < activityPreEnd) {
+            //预热时间
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.pre;
+            if (!localStorage[activityPreEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.dayOne;
+            if (!localStorage[activityDayOneEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.afterDayOne;
+            if (!localStorage[activityNormalEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.returnDay;
+            if (!localStorage[activityEnd]) {
+                isShow = true
+            }
+        }
+
+        if (isShow && checkPathValid()) {
+            // 为避免广告图片加载卡顿，应先加载后显示
+            promotionAd.setAttribute("src", imgUrl);
+            setTimeout(function () {
+                $("#adModal").modal({
+                    backdrop: "static",
+                    keyboard: false
+                });
+            }, 500);
+        }
+
+
+    }
+
+    // 校验当前path，个人中心下属页面及支付页面不显示
+    function checkPathValid() {
+        var currPath = window.location.pathname;
+        for (var i of activityPopConfig.excludePaths) {
+            if (i.test(currPath)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 关闭广告弹窗
+    function closeAd() {
+        if (currTime < activityPreEnd) {
+            //预热时间
+            localStorage[activityPreEnd] = true
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            localStorage[activityDayOneEnd] = true
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            localStorage[activityNormalEnd] = true
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            isShow = localStorage[activityEnd] = true
+        }
+
+        $("#adModal").modal("hide");
+    }
+</script>
+
+    <div class="content" style="margin-top:64px;overflow:hidden;background:rgba(247,251,255,1);">
+        
+
+
+<div class="mini-banner">
+			<p>八爪鱼，百万用户信赖的网络爬虫工具</p>
+		</div>
+	<div style="margin-top:50px;">
+	<div style="margin-top:50px;margin-bottom:50px;">
+		<div class="container">
+			<div class="row custom-col">
+				<div class="col-md-3">	
+					<div class="leftbar">			
+						<div class="container" style="z-index:9999999;padding-left:0;padding-right:0;">
+							<div class="row" style="border:1px solid #BDBDBD;margin-bottom:20px;">
+									<div class="row">
+										<h3 style="background-color:#006DCC;padding:5px;;color:white;margin-top:0;">热门博客</h3>
+									</div>
+
+                                    
+            <div class="row bloglist" style="padding:5px 5px;">
+                <div class="col-md-12">
+                    <a class="title" href="javascript:;" target="_blank" style="font-size:14px;" title="火狐firebug和firepath插件安装方法（最新）">
+                        火狐firebug和firep...
+                    </a>
+                </div>
+            </div>
+            <div class="row bloglist" style="padding:5px 5px;">
+                <div class="col-md-12">
+                    <a class="title" href="javascript:;" target="_blank" style="font-size:14px;" title="干货｜国内外十大主流采集软件盘点">
+                        干货｜国内外十大主流采集软件盘...
+                    </a>
+                </div>
+            </div>
+            <div class="row bloglist" style="padding:5px 5px;">
+                <div class="col-md-12">
+                    <a class="title" href="javascript:;" target="_blank" style="font-size:14px;" title="12款常用的数据挖掘工具推荐">
+                        12款常用的数据挖掘工具推荐
+                    </a>
+                </div>
+            </div>
+            <div class="row bloglist" style="padding:5px 5px;">
+                <div class="col-md-12">
+                    <a class="title" href="javascript:;" target="_blank" style="font-size:14px;" title="怎么复制网页上不能复制的文字">
+                        怎么复制网页上不能复制的文字
+                    </a>
+                </div>
+            </div>
+            <div class="row bloglist" style="padding:5px 5px;">
+                <div class="col-md-12">
+                    <a class="title" href="javascript:;" target="_blank" style="font-size:14px;" title="八爪鱼7版本安装说明">
+                        八爪鱼7版本安装说明
+                    </a>
+                </div>
+            </div>
+            <div class="row bloglist" style="padding:5px 5px;">
+                <div class="col-md-12">
+                    <a class="title" href="javascript:;" target="_blank" style="font-size:14px;" title="别跑，教你微信公众号采集！">
+                        别跑，教你微信公众号采集！
+                    </a>
+                </div>
+            </div>
+
+							</div>
+							<div class="row" style="border:1px solid #BDBDBD;margin-bottom:20px;">
+									<div class="row">
+										<h3 style="background-color:#006DCC;padding:5px;;color:white;margin-top:0;">最新博客</h3>
+									</div>
+										<div class="row bloglist" style="padding:5px 5px;">
+											<div class="col-md-12">
+												<a class="title" href="zbsjy.html" target="_blank" style="font-size:14px;" title="史上最全！招投标行业114个数据源盘点">
+													史上最全！招投标行业114个数...</a>
+											</div>
+										</div>
+										<div class="row bloglist" style="padding:5px 5px;">
+											<div class="col-md-12">
+												<a class="title" href="yaojianju.html" target="_blank" style="font-size:14px;" title="洞察药监局数据，挖掘万亿价值">
+													洞察药监局数据，挖掘万亿价值</a>
+											</div>
+										</div>
+										<div class="row bloglist" style="padding:5px 5px;">
+											<div class="col-md-12">
+												<a class="title" href="zhibo1222.html" target="_blank" style="font-size:14px;" title="【直播预告】从入门到大神③，数据采集进阶课开讲，更有9周年狂欢价加码！">
+													【直播预告】从入门到大神③，数...</a>
+											</div>
+										</div>
+										<div class="row bloglist" style="padding:5px 5px;">
+											<div class="col-md-12">
+												<a class="title" href="zhaotoubiao.html" target="_blank" style="font-size:14px;" title="一文学会招投标数据采集分析 | 中国政府采购网1~11月数据详解">
+													一文学会招投标数据采集分析 |...</a>
+											</div>
+										</div>
+										<div class="row bloglist" style="padding:5px 5px;">
+											<div class="col-md-12">
+												<a class="title" href="javascript:;" target="_blank" style="font-size:14px;" title="低至五折！最高直降1300元！八爪鱼9周年大促提前开抢">
+													低至五折！最高直降1300元！...</a>
+											</div>
+										</div>
+										<div class="row bloglist" style="padding:5px 5px;">
+											<div class="col-md-12">
+												<a class="title" href="javascript:;" target="_blank" style="font-size:14px;" title="【今晚直播】从入门到大神②，数据采集“疑难杂症”一次搞定！">
+													【今晚直播】从入门到大神②，数...</a>
+											</div>
+										</div>
+							</div>
+						</div>
+								<div class="blog-left-bar">
+ <div class="contact-info">
+                    <div class="contact-inner">
+                        <img src="../static/picture/qrcode2.jpg" style="width:auto;height:auto" alt="八爪鱼采集研究院微信订阅号">
+                        <span>扫码关注我们</span>
+                        <a class="bzy-btn" style="background-image:none;margin-top:15px;margin-bottom:15px;height:84px" target="_blank" href="javascript:;"><div>整套学习资料下载</div><div>提取码：rnfm</div></a>
+                        <div class="qq-panel">
+                            <ul>
+                                <li class="qq-title">免费版QQ群</li>
+                                <li><span>1群：</span><a href="javascript:void(0);"> 159956780</a></li>
+                                <li><span>2群：</span>
+                                    <a href="javascript:void(0);" rel="nofollow">257583266</a>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li class="qq-title">专业版QQ群</li>
+                                    <li><span>1群：</span>
+                                        <a href="javascript:void(0);">1065566150</a>
+                                    </li>
+                                    <li><span>2群：</span>
+                                        <a href="javascript:void(0);">1065566150</a>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li class="qq-title">旗舰版QQ群</li>
+                                    <li><span>1群：</span>
+                                        <a href="javascript:void(0);">196097783</a>
+                                    </li>
+                                    <li><span>2群：</span>
+                                        <a href="javascript:void(0);">130849246</a>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li class="qq-title">旗舰版+QQ群</li>
+                                    <li><span>1群：</span>
+                                        <a href="javascript:void(0);">431013573</a>
+                                    </li>
+                                </ul>
+                                <!-- <ul>
+                                    <li class="qq-title">站长采集交流群</li>
+                                    <li><span>1群：</span>
+                                        <a href="http://shang.qq.com/wpa/qunwpa?idkey=3b82c9c0b8e7bedc227eda339a1391c752967de3527f934f235c9732d0c441f6" rel="nofollow">304456535</a>
+                                    </li>
+                                    <li><span>2群：</span>
+                                        <a href="http://shang.qq.com/wpa/qunwpa?idkey=cb82bf90b638113e34c72d05e45b70abdacf15baa49a603b26dbbe8cbc522f20" rel="nofollow">492396817</a>
+                                    </li>
+                                </ul> -->
+                                <!-- <ul>
+                                    <li class="qq-title">付费数据定制</li>
+                                    <li>
+                                        <a href="javascript:void(0);" rel="nofollow">439945889</a>
+                                    </li>
+                                </ul> -->
+                                  <a href="../download/windows.html" class="bzy-btn">软件下载</a>
+                        </div>
+                    </div>
+                </div>
+					</div>
+					</div>
+				</div>				
+				<div class="col-md-9">
+					
+					<ol class="breadcrumb">
+					  <li><a href="../index1.html">首页</a></li>
+					  <li><a href="../blog.html">博客</a></li>
+					  <li class="active">如何找到年度爆火神剧《觉醒年代》的观众画像？大数据告诉你！</li>
+					</ol>
+					
+					<div class="blog-detail">	
+						<div class="blog-title">
+							<h1>如何找到年度爆火神剧《觉醒年代》的观众画像？大数据告诉你！</h1>
+						</div>				
+						
+						
+						<div class="row">
+							<div class="col-md-9">
+								<span class="itemWithIcon user">作者：keven</span>
+								<span class="itemWithIcon calendar">发布时间：2021/7/1 15:09:33 </span>
+								<span class="itemWithIcon calendar">
+10429 人已阅读</span>
+								<br><br>
+								<div class="alert alert-info">摘要：如何找到年度爆火神剧《觉醒年代》的观众画像？大数据告诉你！</div>
+							</div>
+						</div>
+								
+						<p style="text-align: center;"> </p>
+<p><span style="font-size: 12pt;">要说最近最火的电视剧，那非《觉醒年代》莫属！</span></p>
+<p> </p>
+<p><span style="font-size: 12pt;"><img id="__mcenew" style="display: block; margin-left: auto; margin-right: auto;" src="../static/picture/海报.png" alt="" width="428" height="571" data-id="14722"></span></p>
+<p> </p>
+<p><span style="font-size: 12pt;"><span>这部由央视出品的献礼片，在建党100周年之际播出实在再适合不过。但不同于我们以往对于这类剧集的印象，非但不沉闷说教，反而充满激情，令人心潮澎湃。</span></span></p>
+<p style="text-align: center;"> <img id="__mcenew" src="../static/picture/22.jpg" alt="" data-id="14728"></p>
+<p><span style="font-size: 12pt;">没有流量的加持，却凭借过硬的品质和精湛的演技收获了好评无数，豆瓣评分高达<span><strong>9.3分，</strong></span>评价人数超过<strong><span>27W</span></strong>人。 </span></p>
+<p><span style="font-size: 12pt;"><br>据八爪鱼大数据统计，近两周《觉醒年代》在热搜榜出现了<strong><span>15次</span></strong>（仅包含关键词数据），仅次于《叛逆者》（16次）。</span></p>
+<p> </p>
+<p> </p>
+<p style="text-align: center;"><img id="__mcenew" src="../static/picture/131.png" alt="" data-id="14725"></p>
+<p style="text-align: center;"><span style="font-size: 10pt;">近两周微博热搜榜数据（6.12-6.25）</span></p>
+<p> </p>
+<p><span style="font-size: 12pt;">这部热门影视剧收获了哪些人的认同？在哪些人群中讨论最为热烈呢？</span></p>
+<p><br><span style="font-size: 12pt;">我们用八爪鱼数据采集爬取3624条《觉醒年代》微博博文，从数据采集、数据清洗、到数据可视化，手把手教你解析《觉醒年代》粉丝人群画像。</span></p>
+<p> </p>
+<p><span style="font-size: 12pt;"><strong>本文您将获得</strong></span></p>
+<p><span style="font-size: 12pt;">1、微博采集思路解析</span></p>
+<p><span style="font-size: 12pt;">2、微博评论数据的可视化分析思路</span></p>
+<p><span style="font-size: 12pt;">3、采集福利集锦（文末）</span></p>
+<p> </p>
+<p><span style="font-size: 12pt; color: #ff0000;"><strong>一、《觉醒年代》微博采集思路解析</strong></span></p>
+<p> </p>
+<p><span style="font-size: 12pt;"><strong>1、首先明确观影人群画像需要哪些数据字段？</strong></span></p>
+<p><span style="font-size: 12pt;">采集字段：用户名、性别、年龄、头像、城市地区、院校、属性标签、简介以及它的微博评论内容、发布时间、发布来源。</span></p>
+<p> </p>
+<p><span style="font-size: 12pt;">为了加快采集效率，此处我们分两步进行：</span></p>
+<p><span style="font-size: 12pt;">1）从微博广场采集《觉醒年代》的实时讨论内容，包括用户名、发布来源、发布内容、发布时间、用户主页链接等</span></p>
+<p><span style="font-size: 12pt;">2）根据已经采集好的微博主页链接，从主页链接获取观众基本信息，包括用户名、性别、年龄、城市地区、毕业院校、个人标签等内容。</span></p>
+<p> </p>
+<p><span style="font-size: 12pt;"><strong>2、打开八爪鱼，根据目标字段制作规则并运行</strong></span></p>
+<p> </p>
+<p><span style="font-size: 12pt;">我已制作好的八爪鱼微博采集规则</span></p>
+<p style="text-align: center;"> <img id="__mcenew" src="../static/picture/117.png" alt="" width="227" height="464" data-id="14723"></p>
+<p style="text-align: center;"><span style="font-size: 10pt;">微博搜索采集规则</span></p>
+<p style="text-align: center;"> <img id="__mcenew" src="../static/picture/36.jpg" alt="" data-id="14742"></p>
+<p style="text-align: center;"> 微博讨论用户基本信息采集规则</p>
+<p> </p>
+<p> </p>
+<p><span style="font-size: 12pt; color: #ff0000;"><strong>二、《觉醒年代》评论数据可视化分析思路</strong></span></p>
+<p> </p>
+<p><span style="font-size: 12pt;"><strong>1、明确观影人群画像分析维度</strong></span></p>
+<p> </p>
+<p><span style="font-size: 12pt;">包括：性别、年龄、地区、发布来源、星座、标签属性、微博内容词频分析等维度。</span></p>
+<p> </p>
+<p><span style="font-size: 12pt;"><strong>2、清洗数据</strong></span></p>
+<p> </p>
+<p><span style="font-size: 12pt;">清洗数据是非常关键的一环，数据的质量直接决定分析结果的质量。</span></p>
+<p> </p>
+<p style="text-align: center;"> </p>
+<p><span style="font-size: 12pt;">在原有的数据上，我根据一些背景数据和分析需要，做了颗粒度更细的划分，同时通过统一表述（原意不变），让数据可以更好地归类和呈现。</span></p>
+<p> </p>
+<p><span style="font-size: 12pt;"><strong>3、数据可视化分析</strong></span></p>
+<p> </p>
+<p><span style="font-size: 12pt;"><strong>1） 基本信息：性别分布</strong></span></p>
+<p> </p>
+<p style="text-align: center;"><img id="__mcenew" src="../static/picture/102.png" alt="" data-id="14720"> </p>
+<p style="text-align: center;"><span style="font-size: 10pt;">微博讨论用户年性别占比</span></p>
+<p style="text-align: center;"> </p>
+<p><span style="font-size: 12pt;">从微博讨论《觉醒年代》的用户人群来看，女性粉丝占比79.42%，男性人群占比仅20.58%成，《觉醒年代》在女性人群中有着极高热度，除了微博本身的用户性别占比外，与女性人群更热爱表达也有一定的关系。</span></p>
+<p> </p>
+<p><span style="font-size: 12pt;"><strong>2） 基本信息：年龄分布</strong></span></p>
+<p style="text-align: center;"><span style="font-size: 12pt;"><strong><img id="__mcenew" src="../static/picture/37.png" alt="" width="596" height="380" data-id="14713"></strong></span></p>
+<p style="text-align: center;"><span>微博讨论用户年龄段划分</span></p>
+<p style="text-align: center;"> </p>
+<p><span style="font-size: 12pt;">从年龄分布来看，,《觉醒年代》在90后及00后中影响最为广泛，占据所有讨论人数的95%。热衷讨论《觉醒年代》的观众中，95后观众的占比超过一半、00后异军突起，占比超过90后，成为《觉醒年代》的观众主力军之一；相比之下，《觉醒年代》对于90年之前出生的观众影响较小，讨论热度也不高。</span></p>
+<p> </p>
+<p><span style="font-size: 12pt;"><strong>3） 基本信息：地域分布</strong></span></p>
+<p><span style="font-size: 12pt;"> <img id="__mcenew" style="display: block; margin-left: auto; margin-right: auto;" src="../static/picture/56.png" alt="" width="841" height="532" data-id="14715"></span></p>
+<p style="text-align: center;"><span>微博讨论用户省份分布</span></p>
+<p> </p>
+<p> </p>
+<p><span style="font-size: 12pt;">从地域分布来看，北上广深等一线城市的观众讨论热度最高，其次是江浙沿海一带，山东、河南、湖北、重庆等省份观众同样热爱分享与讨论剧情。</span></p>
+<p><span style="font-size: 12pt;">城市类型的分布中，一线及新一线城市的观众占据了绝大多数，作为建党100周年的献礼剧，《觉醒年代》在海外观众中也收获了不少关注。</span></p>
+<p> </p>
+<p><span style="font-size: 12pt;"><img id="__mcenew" style="display: block; margin-left: auto; margin-right: auto;" src="../static/picture/48.png" alt="" width="639" height="366" data-id="14714"></span></p>
+<p style="text-align: center;"><span style="font-size: 10pt;">微博讨论用户城市划分</span></p>
+<p><span style="font-size: 12pt;"> </span></p>
+<p><span style="font-size: 12pt;"><strong>4） 基本信息：</strong><strong>手机型号/渠道分布</strong></span></p>
+<p><img id="__mcenew" style="display: block; margin-left: auto; margin-right: auto;" src="../static/picture/75.png" alt="" width="783" height="441" data-id="14717"></p>
+<p style="text-align: center;"><span>微博讨论用户发布来源分布</span></p>
+<p> </p>
+<p><span style="font-size: 12pt;">手机品牌iPhone（42.05%）占比超过四成；华为13.29%、荣耀3.39%、OPPO 3.21%、VIVO 1.82%、小米2.34%等国产手机总占比将近3成，热议《觉醒年代》的观众中，有超过4成是忠实“果粉”。</span></p>
+<p><span style="font-size: 12pt;">微博视频号、觉醒年代超话等也是用户来源之一。</span></p>
+<p><span style="font-size: 12pt;"> </span></p>
+<p><span style="font-size: 12pt;"><strong> 5） 基本信息：个人标签</strong></span></p>
+<p><img id="__mcenew" style="display: block; margin-left: auto; margin-right: auto;" src="../static/picture/94.png" alt="" data-id="14719"></p>
+<p style="text-align: center;"><span>微博讨论用户标签分布</span></p>
+<p> </p>
+<p><span style="font-size: 12pt;">从讨论人的身份标签来看，热爱讨论《觉醒年代》的观众大多是热爱旅游和音乐，喜欢追星看小说、幽默搞笑的网友。出现次数排名前十的标签分别是：<strong>旅游</strong><strong>、</strong><strong>音乐</strong><strong>、</strong><strong>明星</strong><strong>、</strong><strong>名人</strong><strong>、</strong><strong>幽默</strong><strong>、</strong><strong>搞笑</strong><strong>、</strong><strong>星座</strong><strong>、</strong><strong>动漫</strong><strong>、</strong><strong>摄影</strong><strong>、</strong><strong>八卦</strong><strong>。</strong></span></p>
+<p> </p>
+<p><span style="font-size: 12pt;"><strong>6） 基本信息：星座分布</strong></span></p>
+<p><span style="font-size: 12pt;">排行TOP5的星座分别是：巨蟹座、天秤座、天蝎座、狮子座、摩羯座。</span></p>
+<p><span style="font-size: 12pt;"> <img id="__mcenew" style="display: block; margin-left: auto; margin-right: auto;" src="../static/picture/63.png" alt="" width="770" height="490" data-id="14716"></span></p>
+<p style="text-align: center;"><span style="font-size: 10pt;">微博讨论用户星座及性别分布</span></p>
+<p style="text-align: center;"> </p>
+<p><span style="font-size: 12pt;"><strong>7）讨论内容：</strong><strong>评论词频分析</strong></span></p>
+<p><span style="font-size: 12pt;">热门讨论词的大小根据关键词出现的次数变化。筛去电视剧名称及角色/主演名字后，频次最多的词展示如下：</span></p>
+<p><span style="font-size: 12pt;"> <img id="__mcenew" style="display: block; margin-left: auto; margin-right: auto;" src="../static/picture/84.png" alt="" data-id="14718"></span></p>
+<p style="text-align: center;"><span style="font-size: 10pt;">微博讨论词频分布</span></p>
+<p style="text-align: center;"> </p>
+<p><span style="font-size: 12pt;">热门讨论词可以分为以下几类：</span></p>
+<p><span style="font-size: 12pt;"><strong>A 剧情向：</strong>历史、文化、日记、先辈、信仰、建党、革命者、青春、青年</span></p>
+<p><span style="font-size: 12pt;"><strong>B 情感向：</strong>热泪盈眶、眼泪、快乐、可爱、感动、热血沸腾、伟大、幸福</span></p>
+<p><span style="font-size: 12pt;"><strong>C 评价向：</strong>yyds、好看、安利、镜头、成本、台词、主演、角色、流量</span></p>
+<p> </p>
+<p><span style="font-size: 12pt;"><strong>8）讨论内容：角色讨论热度排行</strong></span></p>
+<p style="text-align: center;"> <img id="__mcenew" src="../static/picture/14.png" alt="" width="297" height="382" data-id="14726"></p>
+<p style="text-align: center;"><span style="font-size: 12pt;">《觉醒年代》角色讨论热度</span></p>
+<p style="text-align: center;"> </p>
+<p><span style="font-size: 12pt;">根据角色热度排行来看，陈独秀及李大钊两位作为主角，讨论热度遥遥领先于其他角色，前段时间斩获“白玉兰奖最佳男主角”的陈独秀饰演者于和伟老师，无论是剧中角色还是本人演技，都得到了广大网友的认可；</span></p>
+<p style="text-align: center;"><span style="font-size: 12pt;"><img id="__mcenew" src="../static/picture/23.jpg" alt="" data-id="14729"></span></p>
+<p><span style="font-size: 12pt;">延年和乔年两位的成长经历也赚足了讨论热度，稳居讨论热度TOP5，蔡元培、辜鸿铭、胡适、邓中夏等具有影响力的文化学者和革命党人同样有着超高的讨论度；</span></p>
+<p style="text-align: center;"><span style="font-size: 12pt;"><img id="__mcenew" src="../static/picture/24.jpg" alt="" data-id="14730"></span></p>
+<p><span style="font-size: 12pt;">柳眉是唯一上榜的女性角色，与剧中的延年从欢喜冤家发展到两情相悦，二人的感情线被广大网友热议。</span></p>
+<p> </p>
+<p><strong><span style="font-size: 12pt;">3. 八爪鱼采集福利！</span></strong></p>
+<p><br><span style="font-size: 12pt;">1. 微博关键词采集规则</span></p>
+<p><span style="font-size: 12pt;">2. 微博主页信息采集规则</span></p>
+<p><br><span style="font-size: 12pt;"><strong>如何获得？</strong></span></p>
+<p><span style="font-size: 12pt;"><strong>扫码以下二维码，即可免费下载</strong></span></p>
+<p><span style="font-size: 12pt;"><strong><img id="__mcenew" src="../static/picture/25.jpg" alt="" data-id="14731"></strong></span></p>
+<p> </p>
+<p><span style="font-size: 12pt;">将otd规则导入到八爪鱼采集器中就可以使用啦~</span></p>
+<p><br><span style="font-size: 12pt;"><strong>附：使用指南</strong>（ 采集规则仅适用于旧版微博，请在右上角切换回旧版微博后再使用）</span></p>
+<p> </p>
+<p> </p>
+<p><br><span style="font-size: 12pt;"><strong>第1步 设置cookie登录微博 </strong></span></p>
+<p><span style="font-size: 12pt;">因为微博必须要登录才能看得到更多的数据，所以登录是我们要做的第一步。先点击第一步打开网页，在采集界面中打开浏览模式，选择账号或扫码登录微博；</span></p>
+<p style="text-align: center;"><span style="font-size: 12pt;"><img id="__mcenew" src="../static/picture/26.jpg" alt="" data-id="14732"></span></p>
+<p><span style="font-size: 12pt;">登录完成后，在打开网页的步骤设置中选择使用指定的cookie，获取当前页面的cookie并应用</span><br><br><br><span style="font-size: 12pt;"><strong>第2步 输入</strong><strong>#觉醒年代#</strong><strong>关键词获得搜索结果   </strong>如果需要搜索其他关键词（一个或多个），可以打开循环1的步骤设置界面</span></p>
+<p style="text-align: center;"><img id="__mcenew" src="../static/picture/27.jpg" alt="" data-id="14733"></p>
+<p style="text-align: center;"><img id="__mcenew" src="../static/picture/28.jpg" alt="" data-id="14734"></p>
+<p style="text-align: left;"><br><span style="font-size: 12pt;">将循环方式切换为“文本列表”，点击红色方框中的编辑按钮，输入关键词（多个关键词按回车分隔），确定后点击右下方的应用，即可切换关键词。</span></p>
+<p style="text-align: center;"> </p>
+<p style="text-align: center;"><img id="__mcenew" src="../static/picture/29.jpg" alt="" data-id="14735"></p>
+<p style="text-align: center;"><img id="__mcenew" src="../static/picture/30.jpg" alt="" data-id="14736"></p>
+<p style="text-align: center;"> </p>
+<p style="text-align: left;"><br><span style="font-size: 12pt;"><strong>第3步 设置循环页数</strong>规则中默认的翻页数是10页，如果想要更改翻页次数，可以打开循环翻页中的步骤设置（如果不需要更改翻页次数，可以略过这一步）</span></p>
+<p style="text-align: center;"><br><img id="__mcenew" src="../static/picture/31.jpg" alt="" data-id="14737"><br><span style="font-size: 12pt;"></span></p>
+<p style="text-align: left;"><span style="font-size: 12pt;">修改循环执行次数（上限不能超过50页），并点击应用；</span></p>
+<p style="text-align: center;"> </p>
+<p style="text-align: center;"><img id="__mcenew" src="../static/picture/32.jpg" alt="" data-id="14738"></p>
+<p style="text-align: left;"><br><br><span style="font-size: 12pt;"><strong>第4步 保存并<strong>运行规则，收获数据</strong></strong></span></p>
+<p style="text-align: center;"> </p>
+<p style="text-align: left;"> </p>
+<p style="text-align: center;"><img id="__mcenew" src="../static/picture/33.jpg" alt="" data-id="14739"></p>
+<p style="text-align: left;"><br><br><span style="font-size: 12pt;"><strong><strong>第5步 微博用户信息循环<strong><strong>采集</strong></strong></strong></strong></span></p>
+<p style="text-align: left;"><span style="font-size: 12pt;">进入填写的URL列表步骤设置（用户信息可以在未登录的状态下采集，但登录后采集效果更好，登录cookie制作可以参考第一步）</span></p>
+<p style="text-align: left;"> </p>
+<p style="text-align: center;"><span style="font-size: 12pt;"><img id="__mcenew" src="../static/picture/31.jpg" alt="" data-id="14737"></span></p>
+<p style="text-align: left;"> </p>
+<p style="text-align: left;"> </p>
+<p style="text-align: left;"><span style="font-size: 12pt;">从上述采集到的数据中复制讨论用户的主页链接（字段名：微博发布者链接），并导入循环，点击应用</span><br><span style="font-size: 12pt;"></span></p>
+<p style="text-align: left;"> </p>
+<p style="text-align: center;"><span style="font-size: 12pt;"><img id="__mcenew" src="../static/picture/35.jpg" alt="" data-id="14741"></span></p>
+<p style="text-align: left;"> </p>
+<p style="text-align: left;"><span style="font-size: 12pt;">保存并启动规则，就可以成功获取讨论用户的微博主页信息啦！</span></p>
+<p style="text-align: left;"><br><span style="font-size: 12pt;"><strong>扫码即可免费获取微博采集规则</strong><strong><br></strong><img id="__mcenew" src="../static/picture/25.jpg" alt="" data-id="14731"><br></span><span></span></p>
+<p> </p>
+<p> </p>
+						
+						<div class="row">	
+								<div class="col-md-6">
+										<a href="javascript:;" class="btn btn-default" style="background-color:white;" title="6.23直播|八爪鱼新功能大剧透！让你的店铺运营事半功倍">
+											上一篇：6.23直播|八爪鱼新功能大剧...
+										</a>
+								</div>
+								<div class="col-md-6" style="text-align:right;">
+										<a href="zhengce.html" class="btn btn-default" style="background-color:white;" title="政府平台公告采集|以全国楼市政策为例">
+											下一篇：政府平台公告采集|以全国楼市政...
+										</a>
+								</div>
+
+						</div>
+						<br>
+						<div style="margin-bottom:20px;padding-bottom:10px;">
+							<a href="../blog.html" class="btn btn-primary active" role="button">返回博文列表</a>
+						</div>
+					
+						
+					</div>	
+					
+
+				</div> <!-- end -->
+				
+			</div>
+			<div class="clearfix"></div>
+			
+			
+		</div>
+	</div>
+		
+
+    </div>
+
+    <div class="modal fade" id="commonModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default cancel" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary ok">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<style>
+        .kefu-content{
+        width: 297px;
+        box-shadow: 1px 1px 1px black;
+        }
+        .kefu-dialog {
+            position: relative;
+            width: auto;
+            background-color: #fff;
+            -webkit-background-clip: padding-box;
+                    background-clip: padding-box;
+            border: 1px solid #999;
+            border: 1px solid rgba(0, 0, 0, .2);
+            border-radius: 6px;
+            outline: 0;
+            -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+                    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+        }
+        .kefu-body{
+            padding: 22px 15px;
+            /* height: 60px;
+            line-height: 60px; */
+        }
+        .kefu-headers {
+            height: 50px;
+            padding-top: 14px;
+            border-bottom: 0.5px solid #e2e0e0;
+        }
+        .kefu-headers span{
+            padding-right: 12px;
+        }
+        .modal-dialog{
+            margin-top: 364px !important;
+        }
+    </style>
+	
+    <div class="modal fade" id="serviceTip">
+        <div class="modal-dialog modal-sm">
+            <div class="kefu-content">
+                <div class="kefu-headers">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                    <h4 class="modal-title" style="margin-left:40%">服务提示</h4>
+                </div>
+                <div class="kefu-body">
+                    <div style="text-align:center;" id="detailTipContent">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:center;">
+                        <a class="btn btn-default" href="../index2.html" target="_blank" id="consultNow">论坛求助</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a class="btn btn-primary" href="javascript:;" target="_blank" id="upgradeNow">立即升级套餐</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="consult-modal" style="display: none;">
+        <div class="consult-header">
+            <h3>咨询顾问</h3><span class="close-modal">×</span>
+        </div>
+        <div class="consult-body">
+            <form>
+                <input name="__RequestVerificationToken" type="hidden" value="z177o8WuhpG13YOuTh_uX9usyk8zDYAOvDG5D9W_weuc5hjsPlkM3HnImo-5_Z35OOsFXYo0hpi7ZUCq92j26pES9mjM_H0u2fU5hDczZwM1">;
+                <p><input type="text" name="name" pattern="^\w{2,50}$" title="字符个数在2-50个之间" placeholder="姓名"></p>
+                <p><input type="text" name="mobile" pattern="^(?:\+?86)?1(?:3\d{3}|5[^4\D]\d{2}|8\d{3}|7(?:[235-8]\d{2}|4(?:0\d|1[0-2]|9\d))|9[0-35-9]\d{2}|66\d{2})\d{6}$" placeholder="手机"></p>
+                <p><input type="text" name="title" pattern="^\w{3,50}$" title="字符个数在3-50个之间" placeholder="职位"></p>
+                <p><input type="text" name="company" pattern="^\w{3,50}$" title="字符个数在3-50个之间" placeholder="公司"></p>
+                <p>咨询顾问联系方式 0755-86702246
+</p>
+                <button class="submit-btn" type="button">提交</button>
+            </form>
+        </div>
+    </div>
+<style>
+    #free-trial .modal-dialog {
+        width: 514px;
+    }
+
+    #free-trial .modal-content .modal-header {
+        border: none;
+        padding-top: 27px;
+        padding-bottom: 0;
+    }
+
+    #free-trial .modal-header .close {
+        margin-top: -11px;
+    }
+
+        #free-trial .modal-header .close .close-sig {
+            line-height: 24px;
+            display: inline-block;
+            height: 24px;
+            font-size: 36px;
+            width: 24px;
+            font-weight: 100;
+            color: #7E87A0;
+        }
+
+    #free-trial .modal-content h4.modal-title {
+        font-size: 20px;
+        margin-left: 202px;
+        line-height: 32px;
+    }
+
+    #free-trial .modal-content p.modal-subtitle {
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(126,135,160,1);
+        text-align: center;
+    }
+
+    #free-trial .modal-content .modal-body {
+        padding-top: 0;
+    }
+
+        #free-trial .modal-content .modal-body .modal-body-hint, #trial-form, #submitPlan {
+            display: none;
+        }
+
+    .modal-body .plan-form-title {
+        font-weight: bold;
+        color: rgba(28,29,30,1);
+        line-height: 24px;
+        margin: 28px 0 10px 21px;
+    }
+
+    .modal-body .plan-form-control {
+        margin-left: 21px;
+    }
+
+        .modal-body .plan-form-control .form-control-label {
+            display: inline-block;
+            width: 80px;
+            margin-right: 4px;
+        }
+
+        .modal-body .plan-form-control .form-required label::before {
+            content: '*';
+            color: #D0021B;
+            margin-right: 4px;
+        }
+
+        .modal-body .plan-form-control .form-control-item {
+            display: inline-block;
+            width: 358px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+            .modal-body .plan-form-control .form-control-item label.error ,
+            .modal-body .plan-form-control .form-control-item p.error{
+                position: absolute;
+                font-size: 12px;
+                font-weight: 500;
+                color: rgba(208,2,27,1);
+                line-height: 20px;
+                left: 0;
+                bottom: -20px;
+            }
+
+            .modal-body .plan-form-control .form-control-item input {
+                width: 100%;
+                border: 1px solid rgba(234,238,244,1);
+                border-radius: 4px;
+                height: 32px;
+                line-height: 32px;
+                color: #1C1D1E;
+                padding-left: 12px;
+            }
+
+            .modal-body .plan-form-control .form-control-item textarea {
+                width: 100%;
+                border: 1px solid rgba(234,238,244,1);
+                border-radius: 4px;
+                color: #1C1D1E;
+                padding-left: 12px;
+                min-height: 63px;
+                max-height: 63px;
+                padding: 5px 12px;
+            }
+
+            .modal-body .plan-form-control .form-control-item textarea::placeholder{
+                font-size: 12px;
+                color: #b2b8cc;
+            }
+
+            .modal-body .plan-form-control .form-control-item select {
+                width: 170px;
+                font-size: 14px;
+                font-weight: 500;
+                color: rgba(28,29,30,1);
+                line-height: 32px;
+                height: 32px;
+                border: 1px solid rgba(234,238,244,1);
+                border-radius: 4px;
+                padding-left: 12px;
+            }
+
+        .modal-body .plan-form-control #MobileCode {
+            padding-right: 108px;
+        }
+
+        .modal-body .plan-form-control .sendCode {
+            position: absolute;
+            right: 16px;
+            bottom: 4px;
+            padding-left: 15px;
+            border-left: 1px solid #EAEEF4;
+            color: #025CDF;
+            cursor: pointer;
+        }
+
+    .modal-body .form-useage {
+        display: flex;
+        justify-content: space-between;
+        margin: 32px 15px 10px 21px;
+        align-items: center;
+    }
+
+        .modal-body .form-useage .form-useage-checkbox label {
+            font-size: 16px;
+            font-weight: bold;
+            color: rgba(28,29,30,1);
+        }
+
+        .modal-body .form-useage .form-useage-checkbox input {
+            margin-right: 6px;
+        }
+
+        .modal-body .form-useage .form-useage-txt {
+            font-size: 12px;
+            color: #b2b8cc;
+            line-height: 20px;
+            height: 20px;
+        }
+
+    .modal-body .user-card-upload {
+        position: relative;
+        display: inline-block;
+    }
+
+    .modal-body .form-upload #userCardImg {
+        width: 80px;
+        height: 80px;
+        display: inline-block;
+        border-radius: 4px;
+        background-color: #EAEEF4;
+    }
+
+    .modal-body .form-upload .upload-btn {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+        .modal-body .form-upload .upload-btn input {
+            width: 80px;
+            height: 80px;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+    .modal-body .user-card-upload label.error {
+        position: absolute;
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(208,2,27,1);
+        line-height: 20px;
+        left: 0;
+        bottom: -20px;
+    }
+
+    #try-other-version {
+        display: none;
+    }
+
+    #free-trial .modal-content .modal-footer {
+        border: none;
+        padding-bottom: 36px;
+        padding-top: 64px;
+    }
+
+    #free-trial .modal-footer .btn-primary {
+        width: 200px;
+        border-radius: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    #free-trial .none .modal-body .modal-body-hint, #free-trial .invalid .modal-body .modal-body-hint {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        color: rgba(28,29,30,1);
+        line-height: 24px;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    #free-trial .invalid #try-other-version {
+        display: inline-block;
+        margin-bottom: 16px;
+    }
+
+    #free-trial .invalid .modal-footer {
+        padding-top: 25px;
+    }
+
+    #free-trial .trial-plan #trial-form {
+        display: block;
+    }
+
+    #free-trial .trial-plan #submitPlan {
+        display: block;
+        width: 200px;
+        border-radius: 20px;
+        margin: 32px auto 0;
+        height: 40px;
+    }
+
+        #free-trial .trial-plan #submitPlan:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+    #free-trial .trial-plan .modal-body {
+        padding-bottom: 0;
+    }
+
+    #free-trial .trial-plan .modal-footer {
+        padding-top: 15px;
+    }
+
+    #sendMobileCode[disabled] {
+        pointer-events: none;
+        color: #666;
+    }
+
+    #successMsg {
+        position: fixed;
+        top: 100px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        z-index: 9999999999999;
+    }
+
+        #successMsg div {
+            width: 330px;
+            padding: 10px 16px;
+            background: #fff;
+            margin: 0 auto;
+            border-radius: 2px;
+            -webkit-box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+            color: rgba(0, 0, 0, 0.85);
+            animation-name: slide;
+            animation-duration: 200ms;
+            animation-delay: 0ms;
+            animation-fill-mode: forwards;
+            position: relative;
+        }
+
+        #successMsg .text{
+            display: flex;
+            align-items: center;
+            height: 20px;
+            justify-content: center;
+        }
+
+    @keyframes slide {
+        0% {
+            top: 0;
+        }
+
+        100% {
+            top: 20px;
+        }
+    }
+
+    .margintop {
+        margin-top:58px !important;
+    }
+</style>
+<div class="modal fade" id="free-trial">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true" class="close-sig">×</span>
+                    <span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">申请试用</h4>
+                <p class="modal-subtitle">当前版本：<span id="currentAccountName"></span></p>
+            </div>
+            <div class="modal-body">
+                <p class="modal-body-hint">您当前不满足试用条件。
+                    <a href="../tutorial8/sywt.html" target="_blank" style="color:#025CDF">（试用规则？）</a>
+                </p>
+                <form id="trial-form" autocomplete="off">
+                    <h3 class="plan-form-title">选择版本</h3>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>试用版本</label>
+                        </div>
+                        <div class="form-control-item" style="margin: 0;">
+                            <select name="AvailableTypes" id="AvailableTypes">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="plan-form-control" style='padding-top:12px;padding-bottom:8px;'>
+                        <div class="form-control-label">
+                            <label style='padding-left: 9px;'> 试用天数</label>
+                        </div>
+                        <div class="form-control-item" style="margin: 0;">
+                            <p class="form-useage-txt">
+                                3天
+                            </p>
+                        </div>
+                    </div>
+                    <h3 class="plan-form-title" style="margin-top: 12px;">填写信息</h3>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>联系人</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="Contact" name="Contact" type="text" required="">
+                        </div>
+                    </div>
+                    <div class="plan-form-control telphone">
+                        <div class="form-control-label form-required">
+                            <label>手机号</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="Telphone" name="Telphone" type="text">
+                            <p class="error"></p>
+                        </div>
+                    </div>
+                    <div class="plan-form-control mobile-code">
+                        <div class="form-control-label form-required">
+                            <label>验证码</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="MobileCode" name="MobileCode" type="text" required="">
+                            <div class="sendCode" id="sendMobileCode"><span>发送验证码</span></div>
+                        </div>
+                    </div>
+                    <div class="plan-form-control form-useage" style="display:none">
+                        <div class="form-useage-checkbox" id="radioSwitch">
+                            <label style="margin-right:16px;"><input type="radio" name="ApplicantType" id="entertainmentPlan" value="1" checked="">企业使用</label>
+                            <label><input type="radio" name="ApplicantType" id="personPlan" value="0">个人使用</label>
+                        </div>
+                    </div>
+                <div id="entertainmentPlanForm">
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>公司名称</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="CompanyName" name="CompanyName" type="text" required="">
+                        </div>
+                    </div>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>职位</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="JobTitle" name="JobTitle" type="text" required="">
+                        </div>
+                    </div>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>试用用途</label>
+                        </div>
+                        <div class="form-control-item">
+                            <textarea rows="3" placeholder="请备注您的行业，想要采集的网站，采集的用途等信息。" id="Reason" name="Reason" type="text" required=""></textarea>
+                        </div>
+                    </div>
+                    <div class="plan-form-control form-upload">
+                        <div class="form-control-label form-required">
+                            <label>上传名片</label>
+                        </div>
+                        <div class="user-card-upload">
+                            <div class="user-card-img">
+                                <img id="userCardImg" src="../static/picture/add.png" class="">
+                            </div>
+                            <div class="upload-btn">
+                                <label>
+                                    <input type="file" id="filecard" name="filecard" onchange="fileChange(this)" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <input class="btn btn-primary" type="submit" id="submitPlan" value="提交申请">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div style="text-align:center;">
+                    <a class="btn btn-primary" href="javascript:;" id="try-other-version">试试其他版本</a>
+                    <p style="font-size: 12px;color:#7e87a0;">咨询顾问电话：0755-86702246&nbsp;&nbsp 010-87987723;&nbsp;&nbsp;企业合作邮箱：sales@skieer.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="successMsg" class="hidden">
+    <div>
+        <p class="text">
+            <img style="height: 20px;margin-right: 8px;" src="../static/picture/zf_sucess.png" alt="">
+            <span></span>
+        </p>
+        <p class="sub-text hidden"></p>
+    </div>
+</div>
+<script src="../static/js/jquery.validate.min.js"></script>
+<script src="../static/js/jquery.validate.messages_zh.js"></script>
+<style>
+
+    .zhiCustomBtn {
+        visibility: hidden;
+        height: 50px;
+        width: 120px;
+        border-radius: 25px;
+        color: #fff;
+        background-color: #2282f2;
+        box-shadow: rgba(15, 66, 76, 0.45) 0px 0px 14px 0px;
+        border: 0px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+
+    .pZhichiCustomBtn {
+        float: right;
+        height: 50px;
+        width: 120px;
+        border-radius: 25px;
+        color: #fff;
+        background-color: #2282f2;
+        box-shadow: rgba(15, 66, 76, 0.45) 0px 0px 14px 0px;
+        border: 0px;
+        box-sizing: border-box;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .pZhichiCustomBtnClose {
+        float: right;
+        height: 70px;
+        width: 70px;
+        border-radius: 35px;
+        color: #fff;
+        background-color: #2282f2;
+        box-shadow: rgba(15, 66, 76, 0.45) 0px 0px 14px 0px;
+        border: 0px;
+        box-sizing: border-box;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+<style>
+
+    .floating_ck dl dd {
+        background-position: center;
+    }
+
+        .floating_ck dl dd.return {
+            background-size: 19px;
+            background-position: center;
+        }
+
+    .floating_ck .quote {
+        background-image: url(../static/image/icon-qq.png);
+        background-size: 24px;
+    }
+
+    .floating_ck .kefu {
+        background-image: url(../static/image/icon-kefu.png);
+        background-size: 38px;
+    }
+
+    .floating_ck .qiye {
+        background-image: url(../static/image/icon-qiye.png);
+        position: relative;
+        background-size: 35px;
+    }
+
+        .floating_ck .qiye::after {
+            content: "";
+            background-image: url(../static/image/free.png);
+            width: 30px;
+            height: 19px;
+            position: absolute;
+            right: -7px;
+            top: -4px;
+        }
+
+    .floating_ck .floating {
+        position: absolute;
+        left: -154px;
+        top: 10px;
+        padding: 15px;
+        line-height: 1.2;
+        color: #FFFFFF !important;
+        background: rgba(0,0,0,0.6);
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 4px;
+        z-index: 999999;
+        max-width: 315px;
+        font-size: 14px;
+        display: none;
+    }
+
+        .floating_ck .floating::after {
+            content: "";
+            width: 0;
+            height: 0;
+            display: block;
+            border-style: solid;
+            border-width: 8px;
+            border-color: transparent transparent transparent rgba(0,0,0,0.6);
+            position: absolute;
+            z-index: 999998;
+            right: -16px;
+            top: 13px;
+        }
+
+    .floating_ck .quote .flex {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .quote .floating {
+        left: -330px;
+        width: 315px;
+    }
+
+    .quote .floating li{
+        cursor: text;
+        line-height: 1.2;
+    }
+    .quote .floating .qq-title{
+        line-height: 22px;
+    }
+
+    #gotoTrial .floating {
+        left: -139px;
+    }
+
+    .floating_ck dl dd {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+    }
+
+    .floating_ck .pZhichiCustomBtn {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: none;
+    }
+
+    .floating_ck dl dd .txt {
+        color: #fff;
+        position: absolute;
+        bottom: 0px;
+        width: 70px;
+        text-align: center;
+    }
+
+    #zhichi-div:hover .floating-kefu, #gotoTrial:hover .floating-qiye, .quote:hover .floating {
+        display: block;
+    }
+</style>
+<div class="floating_ck">
+    <dl>
+        <dt></dt>
+        <a href="javascript:void(0);" id="onlineChatAnchor" target="_blank" style="">
+            <p>
+
+            </p>
+        </a>
+        <dd class="kefu" id="zhichi-div" title="点击联系客服">
+            <button id="btn" class="zhiCustomBtn"></button>
+            <p id="chatFlag" data-mtype="0"></p>
+            <button id="pbtn" class="pZhichiCustomBtn"></button>
+            <div class="floating floating-kefu">
+                <div>欢迎咨询在线客服</div>
+            </div>
+        </dd>
+        <dd class="quote">
+            <div class="floating">
+                <div class="flex">
+                    <ul>
+                        <li class="qq-title">免费版QQ群</li>
+                        <li>
+                            <span>159956780</span>
+                        </li>
+                        <li>
+                            <span>257583266</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="qq-title">专业版QQ群</li>
+                        <li>
+                            <span>1065566150</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="qq-title">月旗舰版QQ群</li>
+                        <li>
+                            <span>196097783</span>
+                        </li>
+                        <li>
+                            <span>157692830</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex">
+                    <ul>
+                        <li class="qq-title">月旗舰+QQ群</li>
+                        <li>
+                            <span>431013573</span>
+                        </li>
+                    </ul>
+                    <ul style="">
+                        <li class="qq-title">年旗舰版QQ群</li>
+                        <li>
+                            <span>415864512</span>
+                        </li>
+                    </ul>
+                    <ul style="">
+                        <li class="qq-title">年旗舰+QQ群</li>
+                        <li>
+                            <span>592777128</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </dd>
+        <dt></dt>
+        <dd class="qiye" id="gotoTrial" title="免费试用" onclick="javascript: window.location.href = '/trial/index';">
+            <div class="floating floating-qiye">
+                <div id="qiye">欢迎您申请试用</div>
+            </div>
+        </dd>
+        <dd class="return" onclick="gotoTop();return false;" title="回到顶部">
+        </dd>
+    </dl>
+
+</div>
+<!-- <div title="在线客服" id="zhichi-div" style="position: fixed;bottom: 120px;right: 20px;z-index: 999">
+    <button id="btn" class="zhiCustomBtn">欢迎咨询</button>
+    <p id="chatFlag" data-mType="0"></p>
+    <button id="pbtn" class="pZhichiCustomBtn">欢迎咨询</button>
+</div> -->
+<script src="../static/js/entrance.js" id="zhichiScript" class="zhiCustomBtn"></script>
+
+<div class="modal fade" id="serviceTip" style="margin-top: 230px;font-size:14px;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                <h4 class="modal-title" style="margin-left:40%">服务提示</h4>
+            </div>
+            <div class="modal-body">
+                <div style="text-align:center;" id="detailTipContent">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="text-align:center;">
+                    <a class="btn btn-default" href="../index2.html" target="_blank" id="consultNow">论坛求助</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-primary" href="javascript:;" target="_blank" id="upgradeNow">立即升级套餐</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../static/js/rightFixedBar.js"></script>
+<div class="site-footer">
+  <div class="bottom-banner" style="position:unset">
+    <div class="inner-main banner-content" style="position:relative;margin: 0;">
+      <p style="font-size:24px">开始简单高效的数据采集</p>
+      <div class="footer-download">
+        <span class="btn-download"><a href="../download/windows.html">
+            免费下载
+          </a></span>
+        <span class="btn-signup"><a href="../account/register.html">
+            免费注册
+          </a></span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-info">
+    <div class="inner-main">
+      <div class="part1">
+        <ul>
+          <li class="title"><a href="javascript:;">关于我们</a></li>
+          <li><a href="../intro.html">公司介绍</a></li>
+          <li><a href="../HonorWall.html">公司荣誉</a></li>
+          <li><a href="javascript:;" target="_blank">加入我们</a></li>
+          <li><a href="../contactus.html">联系我们</a></li>
+        </ul>
+        <ul>
+          <li class="title"><a href="javascript:;">产品</a></li>
+          <li><a href="../about.html">八爪鱼采集器</a></li>
+          <li><a href="../enterprise/index.html" target="_blank">八爪鱼企业版</a></li>
+          <li><a href="../qiyeban/index.html" target="_blank">八爪鱼私有化部署版</a></li>
+          <li><a href="javascript:;" target="_blank">客户体验管理</a></li>
+        </ul>
+        <ul>
+          <li class="title"><a href="javascript:;">服务</a></li>
+          
+          <li><a href="../aboutus.html">商务合作</a></li>
+          
+          <li>
+            <a href="../edu.html">教育公益计划</a>
+          </li>
+        </ul>
+        <ul>
+          <li class="title"><a href="javascript:;">资源中心</a></li>
+          <li><a href="../tutorial8/hottutorial.html">图文教程</a></li>
+          <li><a href="../tutorial8/videotutorial.html">视频教程</a></li>
+          <li>
+            <a href="../tutorial8/faq.html">常见问题</a>
+          </li>
+          <li>
+            <a href="../blog.html">博客文章</a>
+          </li>
+          <li>
+            <a href="../tutorial8/81api.html">API文档</a>
+          </li>
+          <li>
+            <a href="../tutorialindex.html">旧版教程</a>
+          </li>
+        </ul>
+        <div>
+          <dl>
+            <dt><img src="../static/picture/qrcode1.jpg" alt="微信服务号"></dt>
+            <dd>微信服务号</dd>
+          </dl>
+          <dl>
+            <dt>
+              <img src="../static/picture/qrcode2.jpg" alt="八爪鱼采集研究院微信订阅号">
+            </dt>
+            <dd>采集研究院</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="part2">
+        <ul class="tools">
+
+          
+			<li>
+            <a href="javascript:;" target="_blank">web scraping</a>
+          </li>	
+			<li>
+            <a href="javascript:;" target="_blank">webスクレイピング</a>
+          </li>
+			<li>
+            <a href="javascript:;" target="_blank">Herramienta de Web Scraping Gratis</a>
+          </li>
+			<li>
+            <a href="javascript:;" target="_blank">kostenloser Web Crawler</a>
+          </li>	
+			<li>
+            <a href="javascript:;" target="_blank">Outil de Web Scraping gratuits</a>
+          </li>	
+			<li>
+            <a href="javascript:;" target="_blank">data extraction</a>
+          </li>	
+						
+        </ul>
+      </div>
+
+      <div class="company-info">
+        <p>
+          深圳视界信息技术有限公司版权所有 © 2013-2021 . All rights reserved.
+          <a target="_blank" href="javascript:;" rel="nofollow">粤ICP备14092314号</a> <a href="../ServiceTerms.html" rel="nofollow">服务协议</a>
+		  | <a href="../octServicePrivacy.html" rel="nofollow">隐私协议</a> | <a href="../octServiceCompetence.html" rel="nofollow">版本</a>
+		  | <a href="../octServiceCompetence.html" rel="nofollow">开发者名称</a> | <a href="../octServiceCompetence.html" rel="nofollow">权限</a>
+        </p>
+        <p>公司地址：深圳市南山区西丽街道禹洲广场A座5楼</p>
+        <p>粤公网安备 44030502000701号</p>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  var matchUrlLoaction = function() {
+    urlConfig = [
+      {
+        name: "about",
+        navIndex: 1
+      },
+      {
+        name: "plan",
+        navIndex: 2
+      },
+      {
+        name: "solution",
+        navIndex: 3
+      },
+      {
+        name: "download",
+        navIndex: 4
+      },
+      {
+        name: "app",
+        navIndex: 5
+      },
+      {
+        name: "tutorial",
+        navIndex: 6
+      },
+      {
+        name: "faqIndex",
+        navIndex: 7
+      },
+      {
+        name: "faq",
+        navIndex: 7
+      }
+    ];
+    var currentHref = window.location.href;
+    urlConfig.some(function(v) {
+      if (currentHref.lastIndexOf(v.name) > -1) {
+        $(".site-nav >li")
+          .eq(v.navIndex)
+          .addClass("active");
+      } else {
+        $(".site-nav >li")
+          .eq(v.navIndex)
+          .removeClass("active");
+      }
+    });
+  };
+  matchUrlLoaction();
+</script>
+
+
+    <script>
+        (function () {
+            var canonicalURL, curProtocol;
+            //Get the <link> tag
+            var x = document.getElementsByTagName("link");
+            //Find the last canonical URL
+            if (x.length > 0) {
+                for (i = 0; i < x.length; i++) {
+                    if (x[i].rel.toLowerCase() == 'canonical' && x[i].href) {
+                        canonicalURL = x[i].href;
+                    }
+                }
+            }
+            //Get protocol
+            if (!canonicalURL) {
+                curProtocol = window.location.protocol.split(':')[0];
+            }
+            else {
+                curProtocol = canonicalURL.split(':')[0];
+            }
+            //Get current URL if the canonical URL does not exist
+            if (!canonicalURL) canonicalURL = window.location.href;
+            //Assign script content. Replace current URL with the canonical URL
+            !function () { var e = /([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi, r = canonicalURL, t = document.referrer; if (!e.test(r)) { var n = (String(curProtocol).toLowerCase() === 'https') ? "https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif" : "//api.share.baidu.com/s.gif"; t ? (n += "?r=" + encodeURIComponent(document.referrer), r && (n += "&l=" + r)) : r && (n += "?l=" + r); var i = new Image; i.src = n } }(window);
+        })();
+    </script>
+    <script>
+        $(function () {
+            $("a[url]").click(function () {
+                var $th = $(this);
+                var url = $th.attr("url");
+                var title = $th.text();
+                layer.open({
+                    type: 2,
+                    title: title,
+                    shadeClose: false,
+                    shade: 0.8,
+                    area: ['350px', '460px'],
+                    anim: 2,
+                    content: [url, 'no'],
+                });
+            })
+
+            var appendUtmToLandPage = function () {
+                var utmList = ["utm_campaign", "utm_content", "utm_medium", "utm_source", "utm_term"];
+                var utmInfo = "";
+                var hasUtm = false;
+                utmList.forEach(utm => {
+                    var c = $.cookie(utm);
+                    if (c) {
+                        utmInfo += utm + "=" + c + "&";
+                        hasUtm = true;
+                    }
+                });
+                utmInfo = utmInfo.replace(/&$/, '');
+                if (hasUtm) {
+                    var utmLinks = document.querySelectorAll("a[data-utm]");
+                    if (utmLinks && utmLinks.length > 0) {
+                        utmLinks.forEach(a => {
+                            if (a.href.indexOf('?') != -1) {
+                                a.href = a.href + '&' + utmInfo;
+                            } else {
+                                a.href = a.href + '?' + utmInfo;
+                            }
+                        });
+                    }
+                }
+            };
+            appendUtmToLandPage();
+        })
+    </script>
+    
+
+
+    <script type="text/javascript" src="../static/js/rightFixedBar.js"></script>
+    <script type="text/javascript" src="../static/js/stat.js"></script>
+</div></body>
+</html>

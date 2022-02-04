@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <title>&#x767B;&#x5F55; - 八爪鱼采集器</title>
+    <meta name="keywords">
+    <meta name="description">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0">
+    <meta name="applicable-device" content="pc">
+    <meta name="baidu-site-verification" content="my5tMHFCbI">
+    <meta name="author" content="八爪鱼采集器 - 视界科技旗下产品">
+    <meta http-equiv="Cache-Control" content="no-transform ">
+    <meta name="baidu-site-verification" content="zpPiFXIJuf">
+
+    <link rel="shortcut icon" href="https://identity.bazhuayu.com/favicon-new.ico">
+    <link href="../static/css/zui.css" rel="stylesheet">
+    <link href="../static/css/loginOrRegisterCommon.css" rel="stylesheet">
+    <link href="../static/css/loginOrRegisterPage.css" rel="stylesheet">
+    <link href="../static/css/login-register.min.css" rel="stylesheet">
+
+    
+
+</head>
+<body>
+    
+<div class="bzy-account" style="padding:50px 49px 0">
+    <a href="../index1.html" title="跳转到首页"><img class="loginLogo" src="../static/picture/logo-login.png" alt="八爪鱼采集器"></a>
+    <div class="tab-group">
+        <div class="tab login active"><a href="javascript:;" id="loginTab">登录</a></div>
+        <div class="tab register"><a href="javascript:;" id="registerTab">注册</a></div>
+    </div>
+    <div id="loginForm" class="tab-content">
+        
+<div id="loginBox" class="login-page">
+    <form action="/Account/Login" method="post">
+        <input type="hidden" id="ReturnUrl" name="ReturnUrl" value="/connect/authorize/callback?client_id=BazhuayuWeb&amp;response_type=id_token%20token&amp;scope=openid%20profile&amp;state=OpenIdConnect.AuthenticationProperties%3DsUVbmQ0BwT4X0nPBJKCLbQRcn6AWwd1-iUrOXAmH5HOtPXZBQutAGorxbDil8W1MGpO2_LgguRlf5TYl5ORNqOZQdP_Xsear0sdSfG7q0_X2yJwoFyX0JGQePFHP-u3zlvkRdY8QpAmyQ3weGH-SAEprG6bzt8bVjRcz_d3e0t7dyOzW-bxukDQhlrHSPFGp&amp;response_mode=form_post&amp;nonce=637794052203639390.NjAyNWQwOTctNDZjZS00YzhkLTg1Y2ItN2Q3NjFjODc0MDQyMDI1N2E5NDYtY2RiMC00ZmI0LWJmYzItM2YxMTY3M2JlZTA5&amp;redirect_uri=https%3A%2F%2Fwww.bazhuayu.com%2Foidc%2Flogin-callback&amp;x-client-SKU=ID_NET45&amp;x-client-ver=5.3.0.0">
+        <input type="hidden" id="From" name="From" value="">
+        <input type="hidden" id="ChannelUid" name="ChannelUid" value="">
+        <div class="bzy-form-control">
+            <div class="input-wrap">
+                <input autofocus="" type="text" data-val="true" data-val-required="The LoginName field is required." id="LoginName" name="LoginName" value="">
+                <label class="">用户名 / 手机号 / 邮箱</label>
+                <div class="error-tips"></div>
+            </div>
+        </div>
+        <div class="bzy-form-control">
+            <div class="input-wrap">
+                <input type="password" autocomplete="off" data-val="true" data-val-required="The Password field is required." id="Password" name="Password">
+                <label class="">密码</label>
+                <div class="error-tips"></div>
+            </div>
+        </div>
+        <div class="bzy-form-control">
+            <div class="input-wrap">
+                <input type="text" autocomplete="off" data-val="true" data-val-required="The Captcha field is required." id="Captcha" name="Captcha" value="">
+                <label class="">输入验证码</label>
+                <div class="error-tips"></div>
+                <img class="valid-pic captcha" id="captchaImg" src="../static/picture/code.jpg" onclick="this.src='/captcha/code?type=0&r='+Math.random()" alt="验证码" style="position:absolute;right:0;">
+            </div>
+        </div>
+        <div class="login-setting">
+            <label class="checkbox-wrap">
+                <div class="checkbox">
+                    <input type="checkbox" checked="checked" data-val="true" data-val-required="The RememberMe field is required." id="RememberMe" name="RememberMe" value="true">
+                    <div class="checkbox-body"></div>
+                </div>&nbsp;记住登录
+            </label>
+            <a href="javascript:;" class="forgot-password">忘记密码</a>
+        </div>
+
+        <button class="btn login" id="login">登录</button>
+
+            <div class="social-media-login-title">第三方登录</div>
+            <div class="social-media-wrap">
+                    <a style="margin: 0 auto;" href="javascript:;">
+                        <img src="../static/picture/QQ.png" alt="QQ" width="28" height="28">
+                    </a>
+            </div>
+    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8LS_F95DyfpPjorFQ-Qn9uOvXSHVfdHka4fRhrBkN4qt9mqj1cP_pTWatGEbjC2MhYnhFu1NOUlYFI5PG9A2HjsBS9y9q9aOhn_1yXpBy39ih7dnNyiL-V6_OwCQD-iMitZfivTKz4xr1_wUmzRhBOw"><input name="RememberMe" type="hidden" value="false"></form>
+</div>
+
+    </div>
+    <div id="registerForm" class="tab-content" style="display: none">
+        <script src="../static/js/TCaptcha.js"></script>
+<div id="registerBox" class="register-page">
+    <div class="main-content step-1">
+        <div class="sub-page p-1">
+            <div class="bzy-form-control user">
+                <div class="input-wrap">
+                    <input tabindex="-1" type="text" id="emailOrPhone">
+                    <label class="">输入你的邮箱或手机号</label>
+                    <div class="error-tips"></div>
+                </div>
+                <div class="deal" style="position:absolute;top: 55px;">
+                    <input type='checkbox' style="transform: translateY(2px);" checked="">
+                    <span style="font-size: 12px;color: #808080c4;">
+                        我已阅读并同意
+                        <a style="text-decoration: underline" target="_black" href="../ServiceTerms1.html">深圳视界注册协议</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="sub-page p-2" id="registerByPhoneForm">
+            <div class="bzy-form-control user" id="mobilePwd">
+                <div class="input-wrap">
+                    <input tabindex="-1" type="password" id="password" name="password">
+                    <label class="">设置登录密码</label>
+                    <div class="error-tips"></div>
+                </div>
+            </div>
+            <div class="bzy-form-control user" id="mobileMsgCode">
+                <div class="input-wrap">
+                    <input tabindex="-1" type="text" id="smsCode" name="smsCode">
+                    <label class="">短信验证码</label>
+                    <div class="error-tips"></div>
+                    <span class="send-verify-code" id="TencentCaptcha" data-appid="2019320523" data-cbfn="callback" type="button">发送验证码</span>
+                </div>
+            </div>
+            <label class="checkbox-wrap licence-check">
+                <div class="checkbox">
+                    <input tabindex="-1" type="checkbox" checked="checked">
+                    <div class="checkbox-body"></div>
+                </div>&nbsp;我已阅读并同意&nbsp;<a href="javascript:;" target="_blank" tabindex="-1">《用户注册协议》</a>
+            </label>
+        </div>
+        <div class="sub-page p-3" id="registerByEmailForm">
+            <div class="bzy-form-control user" id="emailUserName">
+                <div class="input-wrap">
+                    <input tabindex="-1" type="text" id="username" name="username">
+                    <label class="">设置用户名</label>
+                    <div class="error-tips"></div>
+                </div>
+            </div>
+            <div class="bzy-form-control user" id="emailpwd">
+                <div class="input-wrap">
+                    <input tabindex="-1" type="password" id="password" name="password">
+                    <label class="">设置登录密码</label>
+                    <div class="error-tips"></div>
+                </div>
+            </div>
+            <div class="bzy-form-control user" id="emailCaptcha">
+                <div class="input-wrap">
+                    <input tabindex="-1" type="text" id="captcha" name="captcha">
+                    <label class="">输入验证码</label>
+                    <div class="error-tips"></div>
+                    <img class="valid-pic captcha" width="150" onclick="this.src='/captcha/code?type=1&r='+Math.random()" alt="图片验证码">
+                </div>
+            </div>
+            <label class="checkbox-wrap licence-check">
+                <div class="checkbox">
+                    <input tabindex="-1" type="checkbox" checked="checked">
+                    <div class="checkbox-body"></div>
+                </div>
+                &nbsp;我已阅读并同意&nbsp;
+                <a href="javascript:;" target="_blank" tabindex="-1">《用户注册协议》</a>
+            </label>
+        </div>
+    </div>
+    <div class="register-footer">
+        <button class="btn register-btn">注册</button>
+        <div class="register-mobile" style="display:none">
+            <button class="btn" id="registerByPhoneBtn" disabled="">&#x5B8C;&#x6210;</button>
+            <div class="return-step-1-tips">手机号输错？<span id="changeMobile">换个手机号</span></div>
+        </div>
+        <div class="register-email" style="display:none">
+            <button class="btn" id="registerByEmailBtn">&#x9A8C;&#x8BC1;&#x90AE;&#x7BB1;</button>
+            <div class="return-step-1-tips">邮箱输错？<span id="changeEmail">换个邮箱</span></div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="isBind" value="0">
+ 
+    </div>
+</div>
+
+
+
+    <script src="../static/js/jquery1.js"></script>
+    <script src="../static/js/jquery.cookie1.js"></script>
+    <script src="../static/js/bootstrap.js"></script>
+    <script src="../static/js/layer1.js"></script>
+    <script src="../static/js/zui.js"></script>
+    <script src="../static/js/common1.js"></script>
+    	<!--百度统计-异步-->
+    <script type="text/javascript">
+        var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F7515d7bccdb62c11803f90ca8071f05b' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+<!--百度统计-异步-->
+    <script type='text/javascript'>
+        var _vds = _vds || [];
+        window._vds = _vds;
+        (function () {
+            _vds.push(['setAccountId', 'a7c11699fcd726cf']);
+            (function () {
+                var vds = document.createElement('script');
+                vds.type = 'text/javascript';
+                vds.async = true;
+                vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'assets.growingio.com/vds.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(vds, s);
+            })();
+        })();
+    </script>
+<!--用户来源统计-->
+<script type="text/javascript">
+    var utm_campaign = getQueryStringMaster("utm_campaign");
+    var utmFlag = 0;
+    if (utm_campaign != null && utm_campaign != "") {
+        utmFlag = 1;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+        document.cookie = "utm_campaign=" + encodeURI(utm_campaign) + ";expires=" + exp.toGMTString();
+    }
+
+    var utm_medium = getQueryStringMaster("utm_medium");
+    if (utm_medium != null && utm_medium != "") {
+        utmFlag = 1;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+        document.cookie = "utm_medium=" + encodeURI(utm_medium) + ";expires=" + exp.toGMTString();
+    }
+
+    var utm_source = getQueryStringMaster("utm_source");
+    if (utm_source != null && utm_source != "") {
+        utmFlag = 1;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+        document.cookie = "utm_source=" + encodeURI(utm_source) + ";expires=" + exp.toGMTString();
+    }
+
+    var utm_content = getQueryStringMaster("utm_content");
+    if (utm_content != null && utm_content != "") {
+        utmFlag = 1;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+        document.cookie = "utm_content=" + encodeURI(utm_content) + ";expires=" + exp.toGMTString();
+    }
+
+    var utm_term = getQueryStringMaster("utm_term");
+    if (utm_term != null && utm_term != "") {
+        utmFlag = 1;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+        document.cookie = "utm_term=" + encodeURI(utm_term) + ";expires=" + exp.toGMTString();
+    }
+
+    var utm_url = decodeURI(window.location);
+    if (utm_url != null && utm_url != "") {
+        if (getCookie("url") == "") {
+            var exp = new Date();
+            exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+            document.cookie = "url=" + encodeURI(utm_url) + ";expires=" + exp.toGMTString();
+        }
+    }
+
+    var referrerUrl = document.referrer;
+    var keys = ["wd", "q", "query", "word"];
+    var searchWord = "";
+    for (var i = 0; i < keys.length; i++) {
+        var reg = new RegExp("(^|&)" + keys[i] + "=([^&]*)(&|$)", "i");
+        var r = referrerUrl.substr(1).match(reg);
+        if (r && r[2]) {
+            searchWord = decodeURI(r[2]);
+            var exp = new Date();
+            exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+            document.cookie = "search_word=" + encodeURI(searchWord) + ";expires=" + exp.toGMTString();// 写入Cookie，注册时使用
+            break;
+        }
+    }     
+    if (searchWord != "") {
+        utmFlag = 1;
+    }
+    else
+    {
+        if (getCookie("search_word") != "") {
+                searchWord = getCookie("search_word");
+                utmFlag = 1;
+        }
+    }
+
+    if (utmFlag == 1) {
+        $.ajax({
+            url: "/Common/AjaxPostUtm",
+            type: "post",
+            dataType: "json",
+            data: {
+                "utm_campaign": utm_campaign,
+                "utm_medium": utm_medium,
+                "utm_source": utm_source,
+                "utm_content": utm_content,
+                "utm_term": utm_term,
+                "utm_url": utm_url,
+                "search_word": searchWord
+            },
+        });
+    }
+
+    function getCookie(Name) {
+        var search = Name + "="
+        if (document.cookie.length > 0) {
+            offset = document.cookie.indexOf(search)
+            if (offset != -1) {
+                offset += search.length
+                end = document.cookie.indexOf(";", offset)
+                if (end == -1) end = document.cookie.length
+                return unescape(document.cookie.substring(offset, end))
+            }
+            else return ""
+        }
+    }
+
+    function getQueryStringMaster(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return decodeURI(r[2]); return null;
+    }
+
+    $(document).ready(function () {
+        var jihuoH = $('#jihuoH').val();
+        if (jihuoH == '0') {
+            $('#jihuop').show();
+        }
+        logFromChannelCookie();
+        function logFromChannelCookie() {
+            var fromChannel = getQueryStringMaster("fromchannel");
+            if (fromChannel) {
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24 * 7);//过期时间1天
+                document.cookie = "_bzytg=" + fromChannel + ";expires=" + exp.toGMTString();
+            }
+        }
+    });
+</script>
+<!--用户来源统计-->
+
+    
+    <script src="../static/js/login.js" type="text/javascript"></script>
+    <script src="../static/js/register.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#loginForm").show();
+            $("#registerForm").hide();
+
+            $("#registerTab").click(function () {
+                if ($("#registerForm").is(":hidden")) {
+                    $("div.tab.register").addClass("active");
+                    $("div.tab.login").removeClass("active");
+                    $("#loginForm").hide();
+                    $("#registerForm").show();
+                    $("#registerForm input:visible:first").focus();
+                }
+            });
+            $("#loginTab").click(function () {
+                if ($("#loginForm").is(":hidden")) {
+                    $("div.tab.login").addClass("active");
+                    $("div.tab.register").removeClass("active");
+                    $("#loginForm").show();
+                    $("#registerForm").hide();
+                    $("#loginForm input:visible:first").focus();
+                }
+            });
+
+            $.map($('.bzy-form-control').find('input:text'), function (el) {
+                $(el).val() === '' ? $(el).removeClass('fill') : $(el).addClass('fill');
+            });
+            $('.bzy-form-control').on('change', 'input', function () {
+                $(this).val() === '' ? $(this).removeClass('fill') : $(this).addClass('fill');
+            });
+            $('.bzy-form-control').on('keydown', 'input', function () {
+                var keyCode = getKeyCode();
+                if (keyCode != 13)
+                    $(this).siblings("div.error-tips").text("");
+            });
+        });
+    </script>
+
+</body>
+</html>

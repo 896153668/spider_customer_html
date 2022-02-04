@@ -1,0 +1,883 @@
+body, body h1, body h2, body h3, body h4, body h5, body h6 {
+    font-family: 'PingFang SC', "Helvetica Neue", Helvetica, Tahoma, Arial, 'Microsoft Yahei', 'Hiragino Sans GB', 'WenQuanYi Micro Hei', sans-serif
+}
+
+*, body, div, h1, h2, h3, h4, html, li, ol, p, ul {
+    margin: 0;
+    padding: 0
+}
+
+*, a:focus {
+    outline: 0
+}
+
+li, ol, ul {
+    list-style: none
+}
+
+a {
+    text-decoration: none;
+    color: inherit
+}
+
+a:active, a:focus, a:hover {
+    text-decoration: none;
+    color: #0043ea
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+body {
+    font-size: 14px
+}
+
+@media screen and (max-width:1000px) {
+    body .content, body .site-footer {
+        width: 1000px
+    }
+}
+
+body, html {
+    width: 100%;
+    min-height: 100%
+}
+
+#nav-header {
+    height: 50px;
+    width: 100%;
+    margin-bottom: 8px;
+    background-color: #fff
+}
+
+#main-body {
+    width: 100%;
+    padding-bottom: 20px
+}
+
+label {
+    margin-bottom: 0;
+    font-weight: 400
+}
+
+.checkbox {
+    width: 12px;
+    height: 12px;
+    position: relative;
+    display: inline-block
+}
+
+.checkbox input {
+    visibility: hidden;
+    width: 12px;
+    height: 12px;
+    display: block
+}
+
+.checkbox input:checked+.checkbox-body {
+    background-image: url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' width='1024' height='1024' viewBox='0 0 1024 1024'%3E%3Cpath fill='%2382868d' d='M0 171.435c0-94.72 76.971-171.435 171.435-171.435h681.216c94.635 0 171.349 76.971 171.349 171.435v681.216c0 94.635-76.971 171.349-171.435 171.349h-681.131c-94.72 0-171.435-76.971-171.435-171.435v-681.131zM85.333 171.435v681.216c0 47.36 38.656 86.016 86.101 86.016h681.216c47.36 0 86.016-38.656 86.016-86.101v-681.131c0-47.445-38.656-86.101-86.101-86.101h-681.131c-47.445 0-86.101 38.656-86.101 86.101z'%3E%3C/path%3E%3Cpath fill='%233980de' d='M387.072 593.067l422.315-422.4 120.661 120.661-542.976 543.061-301.739-301.653 120.661-120.747z'%3E%3C/path%3E%3C/svg%3E")
+}
+
+.checkbox input:disabled+.checkbox-body {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1024' height='1024' viewBox='0 0 1024 1024'%3E%3Cpath fill='%23e1e1e1' d='M0 171.435c0-94.72 76.971-171.435 171.435-171.435h681.216c94.635 0 171.349 76.971 171.349 171.435v681.216c0 94.635-76.971 171.349-171.435 171.349h-681.131c-94.72 0-171.435-76.971-171.435-171.435v-681.131zM85.333 171.435v681.216c0 47.36 38.656 86.016 86.101 86.016h681.216c47.36 0 86.016-38.656 86.016-86.101v-681.131c0-47.445-38.656-86.101-86.101-86.101h-681.131c-47.445 0-86.101 38.656-86.101 86.101z'%3E%3C/path%3E%3C/svg%3E");
+    cursor: not-allowed
+}
+
+.checkbox input:checked:disabled+.checkbox-body {
+    background-image: url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' width='1024' height='1024' viewBox='0 0 1024 1024'%3E%3Cpath fill='%23e1e1e1' d='M0 171.435c0-94.72 76.971-171.435 171.435-171.435h681.216c94.635 0 171.349 76.971 171.349 171.435v681.216c0 94.635-76.971 171.349-171.435 171.349h-681.131c-94.72 0-171.435-76.971-171.435-171.435v-681.131zM85.333 171.435v681.216c0 47.36 38.656 86.016 86.101 86.016h681.216c47.36 0 86.016-38.656 86.016-86.101v-681.131c0-47.445-38.656-86.101-86.101-86.101h-681.131c-47.445 0-86.101 38.656-86.101 86.101z'%3E%3C/path%3E%3Cpath fill='%23cecece' d='M387.072 593.067l422.315-422.4 120.661 120.661-542.976 543.061-301.739-301.653 120.661-120.747z'%3E%3C/path%3E%3C/svg%3E")
+}
+
+.checkbox .checkbox-body {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1024' height='1024' viewBox='0 0 1024 1024'%3E%3Cpath fill='%2382868d' d='M0 171.435c0-94.72 76.971-171.435 171.435-171.435h681.216c94.635 0 171.349 76.971 171.349 171.435v681.216c0 94.635-76.971 171.349-171.435 171.349h-681.131c-94.72 0-171.435-76.971-171.435-171.435v-681.131zM85.333 171.435v681.216c0 47.36 38.656 86.016 86.101 86.016h681.216c47.36 0 86.016-38.656 86.016-86.101v-681.131c0-47.445-38.656-86.101-86.101-86.101h-681.131c-47.445 0-86.101 38.656-86.101 86.101z'%3E%3C/path%3E%3C/svg%3E");
+    background-size: contain
+}
+
+html body {
+    width: 100%;
+    height: auto;
+    overflow-y: auto
+}
+
+.css-arrow {
+    position: relative
+}
+
+.css-arrow:after, .css-arrow:before {
+    position: absolute;
+    width: 1px;
+    height: 10px;
+    right: -10px;
+    top: 50%;
+    margin-top: -5px;
+    background: #333;
+    display: block
+}
+
+.css-arrow:before {
+    content: '';
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg)
+}
+
+.css-arrow:after {
+    content: "";
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg)
+}
+
+.site-header {
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+    height: 64px;
+    font-size: 14px;
+    position: fixed;
+    border-bottom: solid #e1e1e1 1px;
+    background: #fff
+}
+
+.site-header .site-header-solution, .site-header .site-nav .site-header-pro {
+    position: relative
+}
+
+.site-header a {
+    color: #333
+}
+
+.site-header .site-header-solution .solution-sub-list {
+    width: 100%
+}
+
+.site-header .site-header-solution .solution-sub-list li {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    padding-right: 8px
+}
+
+.site-header .site-header-solution:hover .solution-sub-list {
+    display: block;
+    height: 160px
+}
+
+.site-header .site-nav {
+    width: 1000px;
+    height: 100%;
+    margin: 0 auto;
+    line-height: 64px;
+    vertical-align: middle;
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%)
+}
+
+.site-header .site-nav>li {
+    height: 100%;
+    text-align: center;
+    float: left
+}
+
+.site-header .site-nav>li>a {
+    padding: 0 20px;
+    display: block;
+    height: 100%
+}
+
+.site-header .site-nav>li:hover {
+    background: #F1F1F1
+}
+
+.site-header .site-nav>li.active {
+    border-bottom: 3px solid #0064cd
+}
+
+.site-header .site-nav>li.active>a {
+    color: #0064cd
+}
+
+.site-header .site-nav .site-bzy-logo {
+    width: 124px;
+    padding: 0;
+    margin-right: 40px
+}
+
+.site-header .site-nav .site-bzy-logo:hover {
+    background: #fff
+}
+
+.site-header .site-nav .site-bzy-logo a {
+    display: inline-block;
+    width: 100%;
+    height: 32px;
+    vertical-align: middle;
+    background: url(https://identity.bazhuayu.com/images/bzy-logo.png) center no-repeat;
+    background-size: 100% 100%
+}
+
+.site-header .site-nav .site-bzy-logo a:hover {
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+    -webkit-transition: all .3s;
+    transition: all .3s
+}
+
+.site-header .site-nav .site-header-pro .pro-sub-list {
+    width: 220px
+}
+
+.site-header .site-nav .site-header-pro .pro-sub-list li {
+    width: 100%;
+    height: 72px;
+    font-size: 12px;
+    background: #F1F1F1;
+    border: none
+}
+
+.site-header .site-nav .site-header-pro .pro-sub-list li .sub-item-icon {
+    width: 24px;
+    height: 24px;
+    margin: 0 18px;
+    background: url(https://identity.bazhuayu.com/images/home/icon-product.png) center no-repeat;
+    background-size: 24px 24px
+}
+
+.site-header .site-nav .site-header-pro .pro-sub-list li:first-child {
+    background: #fff
+}
+
+.site-header .site-nav .site-header-pro .pro-sub-list li>a {
+    height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center
+}
+
+.site-header .site-nav .site-header-pro .pro-sub-list li>a p {
+    height: 20px;
+    line-height: 20px
+}
+
+.site-header .site-nav .site-header-pro .pro-sub-list li>a p:last-child, .site-header .site-nav .site-header-pro .pro-sub-list li>a p:last-child:hover {
+    color: #666
+}
+
+.site-header .site-nav .site-header-pro .pro-sub-list li .sub-item:hover, .site-header .site-nav .sub-list>li:hover a {
+    color: #0064cd
+}
+
+.site-header .site-nav .site-header-pro .pro-sub-list li .sub-item {
+    height: 100%;
+    width: 160px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    text-align: left
+}
+
+.site-header .site-nav .site-header-pro .pro-sub-list li:nth-child(2) .sub-item-icon {
+    background: url(https://identity.bazhuayu.com/images/home/icon-analyze.png) center no-repeat
+}
+
+.site-header .site-nav .site-header-pro .pro-sub-list li:nth-child(3) .sub-item-icon {
+    background: url(https://identity.bazhuayu.com/images/home/icon-download.png) center no-repeat
+}
+
+.site-header .site-nav .site-header-pro:hover .pro-sub-list {
+    display: block;
+    height: 144px
+}
+
+.site-header .site-nav .sub-list {
+    overflow: hidden;
+    position: absolute;
+    top: 63px;
+    left: 0;
+    height: 0;
+    background: #fff;
+    -webkit-box-shadow: 1px 3px 3px rgba(0, 0, 0, .2);
+    box-shadow: 1px 3px 3px rgba(0, 0, 0, .2);
+    -webkit-transition: .1s all;
+    transition: .1s all
+}
+
+.site-header .site-nav .right-bar {
+    width: 120px;
+    height: 100%;
+    margin-left: auto;
+    text-align: center;
+    float: right
+}
+
+.site-header .site-nav .right-bar>li {
+    width: 50px;
+    float: left
+}
+
+.site-header .site-nav .right-bar>li a {
+    padding: 0;
+    display: block
+}
+
+.site-header .site-nav .right-bar>li:hover {
+    background: #F1F1F1
+}
+
+.site-header .site-nav .right-bar .s {
+    width: 20px
+}
+
+.site-header .site-nav .right-bar .s :hover {
+    background: #fff
+}
+
+.site-header .site-nav .right-bar .s a {
+    display: block;
+    line-height: 62px
+}
+
+.site-header .site-nav .right-bar.login-info {
+    width: 100px;
+    padding: 0
+}
+
+.site-header .site-nav .right-bar.login-info>a {
+    padding: 0
+}
+
+.site-header .site-nav .right-bar.login-info .user-name {
+    overflow: hidden;
+    width: 80px;
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-overflow: ellipsis
+}
+
+.site-header .site-nav .right-bar .dropdown-menu {
+    min-width: 100px;
+    border: none;
+    border-radius: 0;
+    top: 62px
+}
+
+.site-header .site-nav .right-bar .dropdown-menu>li>a:hover {
+    color: #0064cd !important;
+    background: #fff
+}
+
+.site-header .site-nav .right-bar .login-bar {
+    position: relative
+}
+
+.site-header .site-nav .right-bar .login-bar:after {
+    content: "";
+    display: block;
+    width: 1px;
+    height: 16px;
+    background: #333;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -8px
+}
+
+.site-footer {
+    width: 100%;
+    font-size: 12px;
+    color: #999;
+    overflow: hidden
+}
+
+.site-footer .title, .site-footer .title a {
+    color: #fff
+}
+
+.site-footer .inner-main {
+    width: 1000px;
+    margin: 0 auto
+}
+
+.site-footer .banner-content {
+    text-align: center;
+    padding: 34px 0;
+    font-size: 16px;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    letter-spacing: 2px;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%)
+}
+
+.site-footer .banner-content p {
+    margin-bottom: 30px
+}
+
+.site-footer .banner-content .download-now {
+    background-image: -webkit-gradient(linear, right top, left top, color-stop(0, #1dab7d), to(#47de9d));
+    background-image: linear-gradient(270deg, #1dab7d 0, #47de9d 100%);
+    border-radius: 4px;
+    width: 140px;
+    height: 40px;
+    display: block;
+    margin: 0 auto;
+    line-height: 40px;
+    font-size: 16px;
+    color: #fff;
+    letter-spacing: 1px;
+    text-align: center
+}
+
+.site-footer .banner-content .download-now:hover {
+    background-image: -webkit-gradient(linear, right top, left top, color-stop(0, #1A9970), to(#3FC78C));
+    background-image: linear-gradient(270deg, #1A9970 0, #3FC78C 100%)
+}
+
+.site-footer a {
+    color: #999
+}
+
+.site-footer .bottom-banner {
+    height: 260px;
+    background: url(https://identity.bazhuayu.com/images/home/bottom-bg.jpg) center center #246AFD;
+    position: relative
+}
+
+.site-footer .part1 {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 45px 0 30px;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between
+}
+
+.site-footer .part1 li {
+    line-height: 28px
+}
+
+.site-footer .part1 dl {
+    float: left;
+    margin: 15px
+}
+
+.site-footer .part1 dd {
+    text-align: center;
+    line-height: 36px
+}
+
+.site-footer .part2 {
+    border-bottom: 1px solid #999;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between
+}
+
+.site-footer .part2 .tools a {
+    color: #fff
+}
+
+.site-footer .part2 .tools li {
+    line-height: 40px
+}
+
+.site-footer .part2 ul {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap
+}
+
+.site-footer .part2 ul li {
+    line-height: 28px;
+    padding-right: 36px
+}
+
+.site-footer .footer-info {
+    height: 380px;
+    padding-bottom: 20px;
+    background: #212e49
+}
+
+.site-footer .company-info {
+    text-align: center;
+    padding-top: 10px
+}
+
+.site-footer .company-info p {
+    padding-bottom: 14px
+}
+
+.floating_ck {
+    position: fixed;
+    right: 20px;
+    top: 30%;
+    z-index: 100000
+}
+
+.floating_ck .consult, .floating_ck .words {
+    background-image: url(https://identity.bazhuayu.com/images/icon0701/icon-msg.png)
+}
+
+.floating_ck .quote {
+    background-image: url(https://identity.bazhuayu.com/images/icon0701/icon-qq.png)
+}
+
+.floating_ck .qrcord {
+    background-image: url(https://identity.bazhuayu.com/images/icon0701/icon-weixin.png)
+}
+
+.floating_ck .return {
+    background-image: url(https://identity.bazhuayu.com/images/icon0701/icon-top.png)
+}
+
+.floating_ck dl dd {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 2px;
+    background-color: rgba(0, 0, 0, .5);
+    text-align: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer
+}
+
+.floating_ck dl dd:hover {
+    background-color: #e40231;
+    border-bottom: solid 1px #a40324
+}
+
+.floating_ck dl dd:hover .floating_left {
+    display: block
+}
+
+.floating_left {
+    position: absolute;
+    left: -200px;
+    right: 50px;
+    top: 0;
+    width: 200px;
+    height: auto;
+    display: none;
+    padding: 5px
+}
+
+.floating_left ul, .floating_left ul li {
+    background-color: #fff;
+    float: left;
+    width: 80px
+}
+
+.floating_left .floating-content {
+    border: 1px solid #aaa;
+    height: auto;
+    left: 50%;
+    min-height: 140px;
+    background: #fff;
+    text-align: center;
+    padding: 6%
+}
+
+.floating_left a {
+    color: #000;
+    line-height: 0
+}
+
+.floating_left ul {
+    height: auto
+}
+
+.floating_left ul li {
+    height: 15px
+}
+
+.floating_left ul li.qq-title {
+    color: #00f;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    font-size: 12px
+}
+
+.floating_ewm {
+    height: 150px
+}
+
+.floating_ewm i {
+    background: url(https://identity.bazhuayu.com/images/icon0701/icon-fuwuhao.jpg) center no-repeat;
+    display: block;
+    width: 105px;
+    height: 105px;
+    margin: 2px auto 0;
+    float: right
+}
+
+body {
+    background-color: #EBEEF3;
+}
+
+#main-box {
+    padding: 0 49px;
+    margin: 30px auto 0;
+    background-color: #fff;
+    width: 348px;
+    height: 414px;
+    box-shadow: 0 0 6px #777;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#main-box .logo {
+    width: 110px;
+    height: 33px;
+    margin: 16px 0 22px;
+}
+
+#main-box .tab-group {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 28px;
+    font-size: 14px;
+}
+
+#main-box .tab-group .tab {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#main-box .tab-group .tab:hover {
+    color: #555;
+}
+
+#main-box .tab-group::after {
+    content: ' ';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: 0;
+    background-color: #84A7F9;
+}
+
+#main-box .tab-group .active-line {
+    width: 125px;
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    background-color: #0043EA;
+    z-index: 1;
+    left: 0;
+    transition: left 300ms;
+}
+
+#main-box .tab-group .register.active+.active-line {
+    left: 50%;
+}
+
+#main-box .form-control {
+    width: 100%;
+    height: 44px;
+    position: relative;
+    border-bottom: solid 1px #84A7F9;
+}
+
+#main-box .form-control label {
+    cursor: text;
+    font-size: 12px;
+    color: #999;
+    position: absolute;
+    top: 23px;
+    z-index: 1;
+    height: 12px;
+    line-height: 1;
+    transition: top 300ms;
+}
+
+#main-box .form-control label.focus {
+    top: 0;
+}
+
+#main-box .form-control .input-wrap {
+    height: 28px;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    display: flex;
+    align-items: center;
+}
+
+#main-box .form-control .input-wrap input {
+    font-size: 14px;
+    border: 0;
+    min-width: 0;
+    flex: 1;
+    margin-right: 6px;
+}
+
+#main-box .form-control .input-wrap .error-tips {
+    font-size: 12px;
+    color: #F04134;
+}
+
+#main-box .checkbox-wrap {
+    display: flex;
+    align-items: center;
+    color: #666;
+}
+
+#main-box .btn {
+    color: #fff;
+    background-color: #0043EA;
+    border: 0;
+    width: 180px;
+    height: 32px;
+}
+
+#main-box .btn:hover {
+    background-color: #2b66f9;
+}
+
+.login-page .form-control {
+    margin-top: 24px;
+}
+
+.login-page .login-setting {
+    width: 100%;
+    height: 16px;
+    margin-top: 20px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.login-page .login-setting .forgot-password {
+    color: #0043EA;
+}
+
+.login-page .btn.login {
+    margin-top: 20px;
+}
+
+.login-page .btn.register {
+    margin-top: 20px;
+}
+
+.login-page .social-media-login-title {
+    color: #0043EA;
+    margin: 16px 0;
+    font-size: 12px;
+}
+
+.login-page .social-media-wrap {
+    display: flex;
+    justify-content: space-between;
+    width: 80px;
+}
+
+.register-page .main-content {
+    height: 220px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.register-page .main-content .sub-page {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    transition: left 300ms;
+}
+
+.register-page .main-content .p-1 {
+    justify-content: center;
+}
+
+.register-page .main-content .p-2 .form-control {
+    margin-top: 16px;
+}
+
+.register-page .main-content .send-verify-code {
+    color: #0043EA;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.register-page .main-content .licence-check {
+    margin-top: 16px;
+    font-size: 12px;
+}
+
+.register-page .main-content .licence-check a {
+    color: #0043EA;
+}
+
+.register-page .main-content.step-1 .sub-page.p-1 {
+    left: 0;
+}
+
+.register-page .main-content.step-1 .sub-page.p-2 {
+    left: 100%;
+}
+
+.register-page .main-content.step-2 .sub-page.p-1 {
+    left: -100%;
+}
+
+.register-page .main-content.step-2 .sub-page.p-2 {
+    left: 0;
+}
+
+.register-page .btn {
+    margin-top: 13px;
+}
+
+.register-page .return-step-1-tips {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #666;
+}
+
+.register-page .return-step-1-tips span {
+    cursor: pointer;
+    color: #0043EA;
+}
+
+.register-page .return-step-1-tips span:hover {
+    text-decoration: underline;
+}

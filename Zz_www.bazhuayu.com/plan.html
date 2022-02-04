@@ -1,0 +1,3616 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    
+    
+<title>套餐价格 - 爬虫抓取软件价格 - 八爪鱼采集器</title>
+<meta name="keywords" content="爬虫抓取价格,数据采集器价格">
+<meta name="description" content="八爪鱼爬虫工具的价格套餐">
+    
+
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0">
+    <meta name="baidu-site-verification" content="my5tMHFCbI">
+    <meta name="author" content="八爪鱼采集器 - 视界科技旗下产品">
+    <meta http-equiv="Cache-Control" content="no-transform ">
+    <meta name="baidu-site-verification" content="zpPiFXIJuf">
+
+    <link rel="shortcut icon" href="https://www.bazhuayu.com/favicon-new.ico">
+
+    <!-- Le styles -->
+    <link href="static/css/zui.min.css" rel="stylesheet">
+    <link href="static/css/common.css" rel="stylesheet">
+    <link href="static/css/site.min.css" rel="stylesheet">
+    
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/jquery.cookie.js"></script>
+    <script src="static/js/zui.min.js"></script>
+    <script src="static/js/common.js"></script>
+    <script src="static/js/layer.js" type="text/javascript"></script>
+<style>
+    #promotionAd{
+        border-radius: 1.5%;
+        width: 100%;
+    }
+    .modal-contents{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 41.68%;
+        height: 53.4%;
+        /* background-color: pink; */
+    }
+    .promotion-ad-wrapper {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .activoty-cancel-icon {
+        position: absolute;
+        width: 2.7%;
+        height: 4%;
+        right: 1.6%;
+        top: 3%;
+        cursor: pointer;
+        /* transition: opacity 0.3s ease; */
+    }
+
+        /* .activoty-cancel-icon:hover {
+            opacity: 0.5;
+        } */
+
+    .activoty-bottom-btn {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 20.7%;
+        padding: 3.3% 15%;
+        /* border-radius: 3px; */
+        cursor: pointer;
+        /* background-color: #f6fc63; */
+        /* transition: background-color 0.3s ease; */
+    }
+    .activoty-bottom-btn-after{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 12.7%;
+        padding: 3.3% 15%;
+        cursor: pointer;
+    }
+
+        /* .activoty-bottom-btn:hover {
+            background-color: #ffda24;
+        } */
+
+        /* .activoty-bottom-btn span {
+            font-size: 20px;
+            line-height: 1;
+            font-weight: bold;
+            color: #3620b8;
+        } */
+</style>
+<div class="modal fade" tabindex="-1" id="adModal" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-contents">
+        <div class="promotion-ad-wrapper">
+            <img id="promotionAd" src="">
+            <div class="activoty-cancel-icon" onclick="closeAd()"></div>
+            <a id="activoty-bottom-btn" href="javascript:;" target="_blank" onclick="closeAd()">
+            </a>
+        </div>
+    </div>
+</div>
+    <!-- 修改 -->
+    <!-- var special = GlobalCache.ActivitySpecialDate.ToString("yyyy/MM/dd HH:mm:ss"); -->
+    <!-- 添加返场时间 -->
+
+<script>
+
+    window.onload = function () {
+        displayAd();
+
+    };
+
+
+    var activityPopConfig = {
+        excludePaths: [
+            /^\/(A|a)ccount/, /^\/(C|c)loud/, /^\/(F|f)ee/, /^\/(L|l)og/, /^\/six/, /^\/pay/, /^\/(A|a)ctivity/
+        ],
+        imgs: {
+            pre: "/images/act/202112/pc_pre.jpeg",
+            dayOne: "/images/act/202112/pc_first.jpeg",
+            afterDayOne: "/images/act/202112/pc_activity.jpeg",
+            // afterDayOne: "/images/act/202012/pc_afterDayOne_pop.png"
+            returnDay: "/images/act/202112/pc_fc.jpeg"
+        }
+    };
+
+    var currTime = new Date().getTime();
+    var activityPreStart = new Date("2021/12/07 22:30:00").getTime()
+    // 预热结束的时间就是活动开始的时间
+    var activityPreEnd = new Date("2021/12/14 15:00:00").getTime()
+    // 首日结束的时间就是正常活动日开始的时间
+    var activityDayOneEnd = new Date("2021/12/16 00:00:00").getTime()
+    // 正常活动日结束的时间就是返场开始的时间
+    // 添加
+    var activityNormalEnd = new Date("2021/12/22 00:00:00").getTime()
+    var activityEnd = new Date("2021/12/31 23:59:59").getTime()
+    // 检测是否看过广告，若有则不显示广告，否则3S后显示广告
+    function displayAd() {
+        var promotionAd = document.getElementById("promotionAd");
+        var btn = document.getElementById("activoty-bottom-btn");
+        var imgUrl;
+        var isShow = false;
+        if (currTime < activityPreStart)
+            return;
+        if (currTime < activityPreEnd) {
+            //预热时间
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.pre;
+            if (!localStorage[activityPreEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.dayOne;
+            if (!localStorage[activityDayOneEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.afterDayOne;
+            if (!localStorage[activityNormalEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.returnDay;
+            if (!localStorage[activityEnd]) {
+                isShow = true
+            }
+        }
+
+        if (isShow && checkPathValid()) {
+            // 为避免广告图片加载卡顿，应先加载后显示
+            promotionAd.setAttribute("src", imgUrl);
+            setTimeout(function () {
+                $("#adModal").modal({
+                    backdrop: "static",
+                    keyboard: false
+                });
+            }, 500);
+        }
+
+
+    }
+
+    // 校验当前path，个人中心下属页面及支付页面不显示
+    function checkPathValid() {
+        var currPath = window.location.pathname;
+        for (var i of activityPopConfig.excludePaths) {
+            if (i.test(currPath)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 关闭广告弹窗
+    function closeAd() {
+        if (currTime < activityPreEnd) {
+            //预热时间
+            localStorage[activityPreEnd] = true
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            localStorage[activityDayOneEnd] = true
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            localStorage[activityNormalEnd] = true
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            isShow = localStorage[activityEnd] = true
+        }
+
+        $("#adModal").modal("hide");
+    }
+</script> 
+    
+	<link rel="alternate" href="https://www.octoparse.com/" hreflang="en-us">
+    <link rel="alternate" href="https://www.octoparse.jp/" hreflang="ja-jp">
+    <link rel="alternate" href="index1.html" hreflang="zh-cn">
+	<link rel="alternate" href="https://www.octoparse.es/" hreflang="es-es">
+	<link rel="alternate" href="https://www.octoparse.fr/" hreflang="fr-fr">
+	<link rel="alternate" href="https://www.octoparse.de/" hreflang="de">
+		<!--百度统计-异步-->
+        <script type="text/javascript">
+            var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+            document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F7515d7bccdb62c11803f90ca8071f05b' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+    <!--百度统计-异步-->
+        <script type='text/javascript'>
+            var _vds = _vds || [];
+            window._vds = _vds;
+            (function () {
+                _vds.push(['setAccountId', 'a7c11699fcd726cf']);
+                (function () {
+                    var vds = document.createElement('script');
+                    vds.type = 'text/javascript';
+                    vds.async = true;
+                    vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'assets.growingio.com/vds.js';
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(vds, s);
+                })();
+            })();
+        </script>
+    <!--用户来源统计-->
+        <script type="text/javascript">
+
+            var utm_campaign = getQueryStringMaster("utm_campaign");
+            var utmFlag = 0;
+            if (utm_campaign != null && utm_campaign != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_campaign=" + encodeURI(utm_campaign) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_medium = getQueryStringMaster("utm_medium");
+            if (utm_medium != null && utm_medium != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_medium=" + encodeURI(utm_medium) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_source = getQueryStringMaster("utm_source");
+            if (utm_source != null && utm_source != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_source=" + encodeURI(utm_source) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_content = getQueryStringMaster("utm_content");
+            if (utm_content != null && utm_content != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_content=" + encodeURI(utm_content) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_term = getQueryStringMaster("utm_term");
+            if (utm_term != null && utm_term != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_term=" + encodeURI(utm_term) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_url = decodeURI(window.location);
+            if (utm_url != null && utm_url != "") {
+                if (getCookie("url") == "") {
+                    var exp = new Date();
+                    exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                    document.cookie = "url=" + encodeURI(utm_url) + ";expires=" + exp.toGMTString();
+                }
+            }
+
+            var referrerUrl = document.referrer;
+            var keys = ["wd", "q", "query", "word"];
+            var searchWord = "";
+            for (var i = 0; i < keys.length; i++) {
+                var reg = new RegExp("(^|&)" + keys[i] + "=([^&]*)(&|$)", "i");
+                var r = referrerUrl.substr(1).match(reg);
+                if (r && r[2]) {
+                    searchWord = decodeURI(r[2]);
+                    var exp = new Date();
+                    exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                    document.cookie = "search_word=" + encodeURI(searchWord) + ";expires=" + exp.toGMTString();// 写入Cookie，注册时使用
+                    break;
+                }
+            }     
+            if (searchWord != "") {
+                utmFlag = 1;
+            }
+            else
+            {
+                if (getCookie("search_word") != "") {
+                     searchWord = getCookie("search_word");
+                     utmFlag = 1;
+               }
+            }
+
+            if (utmFlag == 1) {
+                $.ajax({
+                    url: "/Common/AjaxPostUtm",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        "utm_campaign": utm_campaign,
+                        "utm_medium": utm_medium,
+                        "utm_source": utm_source,
+                        "utm_content": utm_content,
+                        "utm_term": utm_term,
+                        "utm_url": utm_url,
+                        "search_word": searchWord
+                    },
+                });
+            }
+
+            function getCookie(Name) {
+                var search = Name + "="
+                if (document.cookie.length > 0) {
+                    offset = document.cookie.indexOf(search)
+                    if (offset != -1) {
+                        offset += search.length
+                        end = document.cookie.indexOf(";", offset)
+                        if (end == -1) end = document.cookie.length
+                        return unescape(document.cookie.substring(offset, end))
+                    }
+                    else return ""
+                }
+            }
+
+            function getQueryStringMaster(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return decodeURI(r[2]); return null;
+            }
+
+            $(document).ready(function () {
+                var jihuoH = $('#jihuoH').val();
+                if (jihuoH == '0') {
+                    $('#jihuop').show();
+                }
+                logFromChannelCookie();
+                function logFromChannelCookie() {
+                    var fromChannel = getQueryStringMaster("fromchannel");
+                    if (fromChannel) {
+                        var exp = new Date();
+                        exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24 * 7);//过期时间1天
+                        document.cookie = "_bzytg=" + fromChannel + ";expires=" + exp.toGMTString();
+                    }
+                }
+            });
+
+        </script>
+    <!--用户来源统计-->
+			
+
+
+    
+    
+    <style>
+        .container {
+            width: 1000px;
+        }
+
+        .nav-center .nav-gm a {
+            color: #006DCC !important;
+        }
+
+        .plan-top {
+            overflow: hidden;
+            width: 100%;
+            background: #F1F1F1;
+            padding-top: 70px;
+            margin-bottom: 50px;
+        }
+
+        .pricing-package {
+            padding: 0 8px;
+        }
+
+        .heading {
+            margin-bottom: 60px;
+        }
+
+            .heading h3 {
+                margin: 0;
+                text-align: center;
+                font-size: 24px;
+                font-weight: normal;
+            }
+
+            .heading a {
+                margin: 0 10px;
+                padding: 11px 15px;
+                font-size: 18px;
+                border-radius: 2px;
+                margin-top: 28px;
+            }
+
+            .heading .btn-blue-o {
+                padding-left: 40px;
+                background: url('static/image/bf.png') no-repeat 16px center;
+            }
+
+                .heading .btn-blue-o:hover {
+                    background: #006DCC url('static/image/bf1.png') no-repeat 16px center !important;
+                    color: #fff !important;
+                }
+
+        .bodying {
+            margin-bottom: 40px;
+        }
+
+        .pricing-package-inner {
+            border: 1px solid #F1F1F1;
+            background: #fff;
+            margin-bottom: 10px;
+            -moz-transition: all 0.2s;
+            -webkit-transition: all 0.2s;
+            -o-transition: all 0.2s;
+            transition: all 0.2s;
+        }
+
+            .pricing-package-inner, .pricing-package-inner a {
+                color: #999;
+            }
+
+        .ppi-body {
+            overflow: hidden;
+            border: 1px solid #BDBDBD;
+            -moz-transition: all 0.2s;
+            -webkit-transition: all 0.2s;
+            -o-transition: all 0.2s;
+            transition: all 0.2s;
+        }
+
+        .package-header {
+            border-bottom: 1px solid #BDBDBD;
+            height: 78px;
+        }
+
+            .package-header h3 {
+                font-size: 24px;
+                font-weight: normal;
+                text-align: center;
+                width: 100%;
+                color: #333;
+                margin: 0;
+                padding: 27px 0 0;
+            }
+
+                .package-header h3 a {
+                    color: #333;
+                    text-decoration: none;
+                }
+
+                    .package-header h3 a:hover {
+                        color: #006DCC;
+                    }
+
+            .package-header .hot {
+                background: url('static/image/hot.png') no-repeat 175px 14px;
+            }
+
+            .package-header h5 {
+                font-weight: normal;
+                text-align: center;
+                font-size: 14px;
+                margin: 0;
+                padding: 6px 0 0;
+            }
+
+        .package-price {
+            height: 80px;
+            border-bottom: 1px solid #E5E5E5;
+            overflow: hidden;
+            text-align: center;
+        }
+
+            .package-price span {
+                font-size: 24px;
+            }
+
+                .package-price span i {
+                    font-size: 14px;
+                    font-style: normal;
+                    margin-left: 4px;
+                }
+
+            .package-price > div {
+                float: left;
+                width: 50%;
+                overflow: hidden;
+                height: 100%;
+                padding-top: 22px;
+            }
+
+                .package-price > div:last-child {
+                    border-left: 1px solid #E5E5E5;
+                    width: 49%;
+                }
+
+            .package-price > .syy {
+                padding-top: 5px;
+            }
+
+                .package-price > .syy span {
+                    width: 100%;
+                    float: left;
+                    text-align: left;
+                    padding-left: 5px;
+                }
+
+        .package-buy {
+            border-bottom: 1px dashed #E5E5E5;
+            margin: 0 16px;
+            height: 80px;
+            padding-top: 20px;
+            text-align: center;
+            margin-bottom: 18px;
+        }
+
+            .package-buy .btn {
+                margin: 0 5px;
+                padding: 7px 20px !important;
+                border-radius: 2px;
+                font-size: 16px;
+            }
+
+        .package-top-features {
+            list-style-type: none;
+            margin: 0 4px;
+            padding: 0;
+            overflow: hidden;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #E5E5E5;
+            margin-bottom: 16px;
+        }
+
+            .package-top-features li {
+                width: 100%;
+                margin-bottom: 6px;
+                overflow: hidden;
+                font-size: 14px;
+                padding-left: 10px;
+            }
+
+        .package-features {
+            list-style-type: none;
+            margin: 0 8px;
+            padding: 0;
+            overflow: hidden;
+            padding-bottom: 0px;
+        }
+
+            .package-features li {
+                width: 100%;
+                margin-bottom: 6px;
+                overflow: hidden;
+                font-size: 14px;
+                padding-left: 6px;
+            }
+
+        .pricing-package-inner .color-blue {
+            color: #006DCC !important;
+        }
+
+        .pricing-help {
+            float: left;
+            height: 100%;
+            overflow: hidden;
+            text-align: left;
+            height: 21px;
+            line-height: 21px;
+        }
+
+        .pricing-package-inner .has-nofeature span {
+            opacity: 0;
+        }
+        /*.pricing-package-inner:hover{border-color: #006DCC;}*/
+        .pricing-package-inner:hover .ppi-body {
+            border: 1px solid #006DCC;
+        }
+
+        .popover-content {
+            width: 300px;
+        }
+
+        .versions {
+            border: 1px solid #BDBDBD;
+            padding: 30px;
+            overflow: hidden;
+            color: #999;
+            margin-bottom: 10px;
+        }
+
+            .versions .heading {
+                border-bottom: 1px solid #E5E5E5;
+                overflow: hidden;
+                padding-bottom: 18px;
+                margin-bottom: 0;
+            }
+
+                .versions .heading h2, .versions .heading h4 {
+                    margin: 0;
+                    padding: 0;
+                    float: left;
+                    font-weight: normal;
+                }
+
+                .versions .heading h2 {
+                    font-size: 26px;
+                    color: #006DCC;
+                }
+
+                .versions .heading h4 {
+                    font-size: 18px;
+                    border-left: 1px solid #999;
+                    padding-left: 10px;
+                    margin-left: 10px;
+                    margin-top: 7px;
+                }
+
+            .versions .bs-callout-info {
+                overflow: hidden;
+                padding-top: 20px;
+            }
+
+                .versions .bs-callout-info p {
+                    font-size: 14px;
+                    line-height: 24px;
+                    margin-bottom: 30px;
+                }
+
+            .versions .btn {
+                font-size: 18px;
+                border-radius: 2px;
+                padding: 10px 38px;
+            }
+
+        .page-heng {
+            overflow: hidden;
+            margin-top: 40px;
+            margin-bottom: 50px;
+        }
+
+        .page-heng-title {
+            margin: 0;
+            padding: 0;
+            padding-bottom: 18px;
+            border-bottom: 1px solid #E5E5E5;
+            font-size: 26px;
+            color: #006DCC;
+            font-weight: normal;
+        }
+
+        .page-heng-body {
+            overflow: hidden;
+            padding-top: 24px;
+        }
+
+            .page-heng-body p {
+                color: #999;
+                margin-bottom: 10px;
+            }
+
+            .page-heng-body .btn {
+                border-radius: 20px;
+                padding: 2px 10px;
+                font-size: 14px;
+                margin-top: 20px;
+            }
+
+        /*.package-top-features li.hasround{background: url('/image/plan/round.png') no-repeat right center;}*/
+
+        .pack-sq {
+            height: 50px;
+            overflow: hidden;
+        }
+
+            .pack-sq span {
+                height: 50px;
+                background: #f8f8f8;
+                border-top: 1px solid #bdbdbd;
+                width: 100%;
+                display: block;
+                text-align: center;
+                line-height: 50px;
+            }
+
+                .pack-sq span a {
+                    color: #006DCC;
+                    font-size: 18px;
+                    text-decoration: none;
+                }
+
+        body .layer-ext-seaning .layui-layer-content {
+            height: 118px !important;
+        }
+
+        /*改*/
+        /*改*/
+        .price-f {
+            position: relative;
+        }
+
+        .float-1 {
+            position: absolute;
+            font-size: 16px !important;
+            top: 0;
+            left: 48px;
+            color: #006dcc;
+            font-family: 'Microsoft Yahei';
+        }
+
+        .float-2 {
+            position: absolute;
+            font-size: 12px !important;
+            color: #999;
+            width: 100%;
+            top: 54px;
+            left: 4px;
+            text-align: center;
+            font-family: 'Microsoft Yahei';
+        }
+
+            .float-2 span {
+                text-decoration: line-through;
+                font-size: 12px !important;
+            }
+
+        .float-spc-1 {
+            left: 50px;
+        }
+
+        .float-spc-2 {
+            left: 0px;
+        }
+
+        .package-header-spc {
+            position: relative;
+        }
+
+        .ipad {
+            position: absolute;
+            font-size: 16px !important;
+            color: #006dcc;
+            width: 100%;
+            bottom: 0px;
+            left: 0px;
+            text-align: center;
+            font-family: 'Microsoft Yahei';
+        }
+
+        @media screen and (min-width: 768px) and (max-width: 1366px) {
+        }
+
+        @media screen and (max-width: 768px) {
+            .popover-content {
+                width: auto;
+            }
+        }
+    </style>
+
+
+    <style>
+    .reco-link {
+        height: 30px;
+        line-height: 30px;
+        width: 100%;
+        margin-top: 45px;
+    }
+
+    .reco-link ul {
+        margin: 0 auto;
+        height: 100%;
+        width: 800px;
+        padding-top: 7px;
+    }
+
+    .reco-link ul li {
+        float: left;
+        margin-right: 15px;
+        font-size:14px;
+        font-family:PingFang-SC-Medium,PingFang-SC;
+        font-weight:500;
+        color:rgba(255,255,255,1);
+    }
+    .reco-link ul li a:hover {
+        color: rgba(255,255,255,1);
+    }
+    </style>
+
+</head>
+<body>
+
+
+
+<style>
+    .site-header-pro:hover .sub-list {
+        height: 360px !important;
+    }
+
+    .site-header .site-tutorial:hover .solution-sub-list {
+        display: block;
+        height: 130px;
+    }
+
+.site-header .site-tutorial2:hover .solution-sub-list {
+        display: block;
+        height: 84px;
+    }
+
+  .site-header .site-tutorial3:hover .solution-sub-list {
+        display: block;
+        height: 300px;
+    }
+
+</style>
+<header class="site-header">
+    <ul class="site-nav" style="width: 1045px">
+        <li class="site-bzy-logo">
+            <a href="index1.html"></a>
+        </li>
+        <li class='site-header-pro'>
+            <a href="javascript:;">
+                产品
+                <i class="icon icon-angle-down"></i>
+            </a>
+            <ul class="pro-sub-list sub-list">
+                <li>
+                    <a href="about.html">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>关于八爪鱼</p>
+                            <p>人人可用的数据采集器</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="enterprise/index.html" data-utm="1" target="_blank">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>八爪鱼企业版</p>
+                            <p>企业级数据采集解决方案</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="qiyeban/index.html" data-utm="1">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>八爪鱼私有化部署版</p>
+                            <p>支持内网采集与OEM集成</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="edu.html" data-utm="1">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>教育公益计划</p>
+                            <p>教学科研的大数据助手</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" target="_blank">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>客户体验管理</p>
+                            <p>聚合全网客户声音</p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="">价格</a>
+        </li>
+        <li class='site-header-solution site-tutorial3'>
+            <a href="javascript:;">
+                解决方案
+                <i class="icon icon-angle-down"></i>
+            </a>
+            <ul class="solution-sub-list sub-list" style="left: -100%;">
+                <li>
+                    <a href="" data-utm="1" target="_blank" style="font-size: 16px;color: #919194;font-weight: bold;">数据采集</a>
+                </li>
+                <li>
+                    <a href="newscrawler/index.html" data-utm="1" target="_blank">新闻采集</a>
+                </li>
+                <li>
+                    <a href="ecdatacrawler/index.html" data-utm="1" target="_blank">电商采集</a>
+                </li>
+                <li>
+                    <a href="socialmediacrawler/index.html" data-utm="1" target="_blank">社交采集</a>
+                </li>
+                <li>
+                    <a href="realestate/index.html" data-utm="1" target="_blank">房产采集</a>
+                </li>
+                <li>
+                    <a href="zhaotoubiao/index.html" data-utm="1" target="_blank">招投标采集</a>
+                </li>
+				
+
+
+                
+            </ul>
+            <ul class="solution-sub-list sub-list">
+                <li>
+                    <a href="" data-utm="1" target="_blank" style="font-size: 16px;color: #919194;font-weight: bold;">场景应用</a>
+                </li>
+				<li>
+                    <a href="marketresearch/index.html" data-utm="1" target="_blank">市场研究</a>
+                </li>
+              
+                <li>
+                    <a href="dscomment/index.html" data-utm="1" target="_blank">评论分析</a>
+                </li>
+                <li>
+                    <a href="gaoxiaojiaoyu/index.html" data-utm="1" target="_blank">高校教育</a>
+                </li>
+                <li>
+                    <a href="jingwaiyuqing/index.html" data-utm="1" target="_blank">境外舆情</a>
+                </li>				 
+				<li>
+                    <a href="cross-border-electricity/index.html" data-utm="1" target="_blank">跨境电商采集</a>
+                </li>
+				<li>
+                    <a href="voc/index.html" data-utm="1" target="_blank">客户之声</a>
+                </li>
+				
+                
+
+
+            </ul>
+        </li>
+
+
+
+<li class='site-header-solution site-tutorial2'>
+            <a href="javascript:;">
+                采集模板
+                <i class="icon icon-angle-down"></i>
+            </a>           
+            <ul class="solution-sub-list sub-list">               				
+                <li>
+                    <a href="kjdscjmb/index.html" data-utm="1" target="_blank">跨境电商</a>
+                </li>  
+				<li>
+                    <a href="news/index.html" data-utm="1" target="_blank">新闻传媒</a>
+                </li>		
+			
+            </ul>
+        </li>
+
+
+
+        <li>
+            <a href="download/windows.html">软件下载</a>
+        </li>
+        
+        <li class='site-header-solution site-tutorial'>
+            <a href="tutorialIndex8.html">
+                教程与帮助
+                <i class="icon icon-angle-down"></i>
+            </a>
+            <div>
+                <ul class="edu-sub-list solution-sub-list sub-list sub-list-edu">
+                    <li class="sub-edu">
+                        <a href="tutorial8/hottutorial.html">
+                            <div class="sub-item">
+                                <p>图文教程</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="tutorial8/videotutorial.html">
+                            <div class="sub-item">
+                                <p>视频教程</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="tutorial8/faq.html">
+                            <div class="sub-item sub-edu-item">
+                                <p>常见问题</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+        <li></li>
+        <li class='site-header-solution site-tutorial2'>
+            
+			 <a href="javascript:;">
+                关于我们
+                <i class="icon icon-angle-down"></i>
+            </a>           
+            <ul class="solution-sub-list sub-list">               				
+                <li>
+                    <a href="intro.html" data-utm="1">关于我们</a>
+                </li>  
+				<li>
+                    <a href="contactus.html" data-utm="1">联系我们</a>
+                </li>				
+            </ul>
+        </li>
+        
+<style>
+    .site-header .signin, .site-header .signup {
+        width: 48px;
+        height: 26px;
+        display: inline-block !important;
+        vertical-align: middle;
+        border-radius: 3px;
+        line-height: 26px;
+        border: 1px solid #D9D9D9;
+        background: #FAFAFA;
+    }
+
+        .site-header .signin:hover, .site-header .signup:hover {
+            color: #0059B8;
+            border: 1px solid #0059B8;
+        }
+
+        .site-header .signup:hover {
+            color: #fff;
+            background: #0059B8;
+        }
+
+    .site-header .signup {
+        color: #fff;
+        background: #096ACF;
+        border-color: #096ACF;
+    }
+</style>
+﻿    <ul class="right-bar">
+        <li class="right-bar"><a href="Account/Login.html" class="signin">登录</a></li>
+        <li class="s" style="width: 10px"><a href="javascript:;">&nbsp;</a></li>
+        <li><a class="signup" href="account/register.html">注册</a></li>
+    </ul>
+
+    </ul>
+</header>
+
+<style>
+    #promotionAd{
+        border-radius: 1.5%;
+        width: 100%;
+    }
+    .modal-contents{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 41.68%;
+        height: 53.4%;
+        /* background-color: pink; */
+    }
+    .promotion-ad-wrapper {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .activoty-cancel-icon {
+        position: absolute;
+        width: 2.7%;
+        height: 4%;
+        right: 1.6%;
+        top: 3%;
+        cursor: pointer;
+        /* transition: opacity 0.3s ease; */
+    }
+
+        /* .activoty-cancel-icon:hover {
+            opacity: 0.5;
+        } */
+
+    .activoty-bottom-btn {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 20.7%;
+        padding: 3.3% 15%;
+        /* border-radius: 3px; */
+        cursor: pointer;
+        /* background-color: #f6fc63; */
+        /* transition: background-color 0.3s ease; */
+    }
+    .activoty-bottom-btn-after{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 12.7%;
+        padding: 3.3% 15%;
+        cursor: pointer;
+    }
+
+        /* .activoty-bottom-btn:hover {
+            background-color: #ffda24;
+        } */
+
+        /* .activoty-bottom-btn span {
+            font-size: 20px;
+            line-height: 1;
+            font-weight: bold;
+            color: #3620b8;
+        } */
+</style>
+<div class="modal fade" tabindex="-1" id="adModal" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-contents">
+        <div class="promotion-ad-wrapper">
+            <img id="promotionAd" src="">
+            <div class="activoty-cancel-icon" onclick="closeAd()"></div>
+            <a id="activoty-bottom-btn" href="javascript:;" target="_blank" onclick="closeAd()">
+            </a>
+        </div>
+    </div>
+</div>
+    <!-- 修改 -->
+    <!-- var special = GlobalCache.ActivitySpecialDate.ToString("yyyy/MM/dd HH:mm:ss"); -->
+    <!-- 添加返场时间 -->
+
+<script>
+
+    window.onload = function () {
+        displayAd();
+
+    };
+
+
+    var activityPopConfig = {
+        excludePaths: [
+            /^\/(A|a)ccount/, /^\/(C|c)loud/, /^\/(F|f)ee/, /^\/(L|l)og/, /^\/six/, /^\/pay/, /^\/(A|a)ctivity/
+        ],
+        imgs: {
+            pre: "/images/act/202112/pc_pre.jpeg",
+            dayOne: "/images/act/202112/pc_first.jpeg",
+            afterDayOne: "/images/act/202112/pc_activity.jpeg",
+            // afterDayOne: "/images/act/202012/pc_afterDayOne_pop.png"
+            returnDay: "/images/act/202112/pc_fc.jpeg"
+        }
+    };
+
+    var currTime = new Date().getTime();
+    var activityPreStart = new Date("2021/12/07 22:30:00").getTime()
+    // 预热结束的时间就是活动开始的时间
+    var activityPreEnd = new Date("2021/12/14 15:00:00").getTime()
+    // 首日结束的时间就是正常活动日开始的时间
+    var activityDayOneEnd = new Date("2021/12/16 00:00:00").getTime()
+    // 正常活动日结束的时间就是返场开始的时间
+    // 添加
+    var activityNormalEnd = new Date("2021/12/22 00:00:00").getTime()
+    var activityEnd = new Date("2021/12/31 23:59:59").getTime()
+    // 检测是否看过广告，若有则不显示广告，否则3S后显示广告
+    function displayAd() {
+        var promotionAd = document.getElementById("promotionAd");
+        var btn = document.getElementById("activoty-bottom-btn");
+        var imgUrl;
+        var isShow = false;
+        if (currTime < activityPreStart)
+            return;
+        if (currTime < activityPreEnd) {
+            //预热时间
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.pre;
+            if (!localStorage[activityPreEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.dayOne;
+            if (!localStorage[activityDayOneEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.afterDayOne;
+            if (!localStorage[activityNormalEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.returnDay;
+            if (!localStorage[activityEnd]) {
+                isShow = true
+            }
+        }
+
+        if (isShow && checkPathValid()) {
+            // 为避免广告图片加载卡顿，应先加载后显示
+            promotionAd.setAttribute("src", imgUrl);
+            setTimeout(function () {
+                $("#adModal").modal({
+                    backdrop: "static",
+                    keyboard: false
+                });
+            }, 500);
+        }
+
+
+    }
+
+    // 校验当前path，个人中心下属页面及支付页面不显示
+    function checkPathValid() {
+        var currPath = window.location.pathname;
+        for (var i of activityPopConfig.excludePaths) {
+            if (i.test(currPath)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 关闭广告弹窗
+    function closeAd() {
+        if (currTime < activityPreEnd) {
+            //预热时间
+            localStorage[activityPreEnd] = true
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            localStorage[activityDayOneEnd] = true
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            localStorage[activityNormalEnd] = true
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            isShow = localStorage[activityEnd] = true
+        }
+
+        $("#adModal").modal("hide");
+    }
+</script>
+
+    <div class="content" style="margin-top:64px;overflow:hidden;background:rgba(247,251,255,1);">
+        
+
+
+
+
+
+<style>
+    body {
+        background: #fff !important;
+    }
+
+    .priceWrap {
+        width: 100%;
+        background: #f1f1f1;
+        padding-bottom: 50px;
+    }
+
+        .priceWrap .priceHeader {
+            width: 100%;
+            padding-top: 40px;
+            box-sizing: border-box;
+            height: 200px;
+            text-align: center;
+            background-image: url(static/image/banner.png);
+            margin-bottom: 26px;
+        }
+
+            .priceWrap .priceHeader p {
+                font-size: 24px;
+                color: #ffffff;
+                margin-bottom: 37px;
+            }
+
+            .priceWrap .priceHeader a {
+                display: inline-block;
+                width: 103px;
+                height: 36px;
+                background: #ffffff;
+                border: 1px solid #ffffff;
+                border-radius: 2px;
+                font-size: 14px;
+                color: #276bff;
+                text-decoration: none;
+                line-height: 36px;
+                margin-right: 20px;
+            }
+
+                .priceWrap .priceHeader a:nth-child(odd) {
+                    background: unset;
+                    width: 151px;
+                    color: #ffffff;
+                }
+
+        .priceWrap .banner {
+            position: relative;
+        }
+
+            .priceWrap .banner img {
+                width: 100%;
+                height: 158px;
+            }
+
+            .priceWrap .banner h1 {
+                position: absolute;
+                width: 100%;
+                text-align: center;
+                font-size: 40px;
+                color: #FFFFFF;
+                text-shadow: 0px 2px 4px rgba(18,47,113,0.5);
+                top: 46px;
+                font-weight: 500;
+                line-height: 65px;
+            }
+
+        .priceWrap .bg {
+            width: 1185px;
+            margin: 0 auto;
+        }
+
+            .priceWrap .bg .bg-title {
+                font-size: 32px;
+                text-align: center;
+                font-weight: 500;
+            }
+
+        .priceWrap #table-price {
+            margin-top: 121px;
+        }
+
+            .priceWrap #table-price table {
+                width: 100%;
+                background-color: rgba(252,252,252,1);
+                border-radius: 8px;
+            }
+
+            .priceWrap #table-price td {
+                height: 0;
+            }
+
+                .priceWrap #table-price td:first-child {
+                    border-right: 1px solid rgba(211,215,228,1);
+                }
+
+            .priceWrap #table-price ul {
+                height: 100%;
+            }
+
+            .priceWrap #table-price .price-head {
+                width: 15.96%;
+            }
+
+            .priceWrap #table-price .price-free,
+            .priceWrap #table-price .price-std,
+            .priceWrap #table-price .price-pro {
+                width: 21.01%;
+                border-bottom: 1px solid #D3D7E4;
+                border-right: 1px solid #D3D7E4;
+            }
+
+            .priceWrap #table-price .price-proplus {
+                width: 21.01%;
+                background-color: #025CDF;
+                border-top-right-radius: 8px;
+            }
+
+                .priceWrap #table-price .price-proplus h3, .priceWrap #table-price .price-proplus p {
+                    color: #FFFFFF !important;
+                }
+
+
+            .priceWrap #table-price .table-price-version {
+                padding: 55px 0 34px 25px;
+                height: 357px;
+            }
+
+            .priceWrap #table-price .price-version-img {
+                margin-top: 164px;
+                margin-bottom: 31px;
+            }
+
+            .priceWrap #table-price .price-version-txt h2 {
+                font-size: 24px;
+                color: rgba(0,0,0,1);
+            }
+
+            .priceWrap #table-price .table-price-list {
+                padding-top: 46px;
+                position: relative;
+                height: 357px;
+            }
+
+                .priceWrap #table-price .table-price-list .price-list-title {
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    width: 120px;
+                    height: 32px;
+                    margin: 0 auto;
+                }
+
+                .priceWrap #table-price .table-price-list .title-free {
+                    background-image: url("static/image/Rectangle.png");
+                }
+
+                .priceWrap #table-price .table-price-list .title-std {
+                    background-image: url("static/image/Rectangle-Copy-15.png");
+                }
+
+                .priceWrap #table-price .table-price-list .title-pro {
+                    background-image: url("static/image/Rectangle-Copy-57.png");
+                }
+
+                    .priceWrap #table-price .table-price-list .title-pro h3 {
+                        color: #FFFFFF;
+                    }
+
+                .priceWrap #table-price .table-price-list .price-list-title h3 {
+                    text-align: center;
+                    line-height: 32px;
+                }
+
+                .priceWrap #table-price .table-price-list .price-list-btn {
+                    position: absolute;
+                    top: 239px;
+                    left: 42px;
+                }
+
+                .priceWrap #table-price .table-price-list .price-list-trial {
+                    position: absolute;
+                    top: 290px;
+                    left: 97px;
+                }
+
+                .priceWrap #table-price .table-price-list .price-list-btn a {
+                    display: inline-block;
+                    width: 166px;
+                    height: 44px;
+                    line-height: 44px;
+                    text-align: center;
+                    background-color: rgba(2,92,223,1);
+                    border-radius: 22px;
+                    color: #FFFFFF;
+                }
+
+                .priceWrap #table-price .table-price-list .price-list-btn a:hover {
+                    background-color: #3d8cff !important;
+                }
+
+                .priceWrap #table-price .price-proplus .price-list-btn a:hover {
+                    background-color: #e6f0ff !important;
+                }
+
+                .priceWrap #table-price .table-price-list .price-list-subtitle {
+                    font-size: 12px;
+                    font-weight: 800;
+                    color: #999999;
+                    margin-top: 5px;
+                    text-align: center;
+                }
+
+                .priceWrap #table-price .table-price-list .price-list-year {
+                    font-size: 30px;
+                    font-weight: 900;
+                    color: rgba(0,0,0,1);
+                    text-align: center;
+                    margin-top: 29px;
+                }
+
+                .priceWrap #table-price .table-price-list .price-list-month {
+                    text-align: center;
+                    font-size: 18px;
+                    font-weight: bold;
+                    margin-top: 9px;
+                }
+
+            .priceWrap #table-price .bubble-hover {
+                position: absolute;
+                padding: 15px;
+                margin-top: 10px;
+                line-height: 1.2;
+                color: #FFFFFF !important;
+                background: rgba(0,0,0,0.6);
+                -moz-border-radius: 10px;
+                -webkit-border-radius: 10px;
+                border-radius: 4px;
+                z-index: 999999;
+                max-width: 300px;
+                font-size: 12px;
+                display: none;
+            }
+
+                .priceWrap #table-price .bubble-hover::after {
+                    content: "";
+                    width: 0;
+                    height: 0;
+                    display: block;
+                    border-style: solid;
+                    border-width: 8px;
+                    border-color: transparent transparent rgba(0,0,0,0.6) transparent;
+                    position: absolute;
+                    z-index: 999998;
+                    left: 27px;
+                    top: -16px;
+                }
+
+            .priceWrap #table-price .tr-edge {
+                height: 42px;
+            }
+
+                .priceWrap #table-price .tr-edge td {
+                    border-right: 1px solid rgba(211,215,228,1);
+                }
+
+            .priceWrap #table-price .tr-normal {
+                height: 12px;
+            }
+
+                .priceWrap #table-price .tr-normal td:not(:first-child) {
+                    border-right: 1px solid rgba(211,215,228,1);
+                }
+
+            .priceWrap #table-price .borderbottom td:not(:first-child) {
+                border-bottom: 1px solid rgba(211,215,228,1);
+            }
+
+            .priceWrap #table-price .normal td:first-child {
+                color: rgba(0,0,0,1);
+            }
+
+                .priceWrap #table-price .normal td:first-child:hover .bubble-hover {
+                    display: block;
+                    color: rgba(0,0,0,1);
+                }
+
+            .priceWrap #table-price .normal td {
+                font-weight: bold;
+                color: rgba(85,85,85,1);
+                line-height: 20px;
+                border-right: 1px solid rgba(211,215,228,1);
+                padding: 8px 25px;
+            }
+
+            .priceWrap #table-price .normal:hover {
+                background-color: #D6DCE6;
+            }
+
+            .priceWrap #table-price .normal td a {
+                color: #025CDF;
+            }
+
+            .priceWrap #table-price .normal td:last-child,
+            .priceWrap #table-price .tr-normal td:last-child,
+            .priceWrap #table-price .tr-edge td:last-child {
+                border-right: transparent;
+            }
+
+        .priceWrap #more-version {
+            margin-top: 120px;
+        }
+
+            .priceWrap #more-version ul {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 60px;
+            }
+
+            .priceWrap #more-version li {
+                background-color: #FFFFFF;
+                border-radius: 6px;
+                display: inline-block;
+                box-shadow: 0px 0px 17px 0px rgba(208,216,224,1);
+                width: 378px;
+            }
+
+            .priceWrap #more-version .more-version-header {
+                height: 10px;
+                background-color: #6FDFE4;
+                width: 100%;
+                border-radius: 6px 6px 0px 0px;
+            }
+
+            .priceWrap #more-version .more-version-private {
+                background-color: #4FA1FF;
+            }
+
+            .priceWrap #more-version .more-version-data {
+                background-color: #5D45FF;
+            }
+
+            .priceWrap #more-version h2 {
+                font-size: 24px;
+                text-align: center;
+                font-weight: bold;
+                margin-top: 76px;
+                color: #1C1D1E;
+            }
+
+            .priceWrap #more-version p {
+                font-size: 16px;
+                text-align: center;
+                font-weight: bold;
+                padding: 16px 96px 73px;
+                color: #555555;
+            }
+
+            .priceWrap #more-version .more-version-btn {
+                margin: 0 40px 54px;
+                display: flex;
+                justify-content: center;
+            }
+
+                .priceWrap #more-version .more-version-btn .version-btn-normal {
+                    font-size: 14px;
+                    width: 146px;
+                    height: 42px;
+                    border-radius: 24px;
+                    text-align: center;
+                    line-height: 42px;
+                    box-shadow: 0px 4px 8px 0px rgba(161,189,245,0.63);
+                    color: rgba(28,29,30,1);
+                }
+
+                    .priceWrap #more-version .more-version-btn .version-btn-normal:hover {
+                        color: rgba(28,29,30,1);
+                    }
+
+                .priceWrap #more-version .more-version-btn .version-btn-detail {
+                    background-color: rgba(2,92,223,1);
+                    color: #FFFFFF;
+                }
+
+                    .priceWrap #more-version .more-version-btn .version-btn-detail:hover {
+                        color: #FFFFFF;
+                        background-color: #3d8cff !important;
+                    }
+
+        .priceWrap #relative-issue {
+            margin-top: 120px;
+            margin-bottom: 122px;
+        }
+
+            .priceWrap #relative-issue .relative-issue-more {
+                float: right;
+                margin-top: 22px;
+            }
+
+                .priceWrap #relative-issue .relative-issue-more a {
+                    font-size: 16px;
+                    font-weight: bold;
+                    vertical-align: middle;
+                }
+
+                .priceWrap #relative-issue .relative-issue-more img {
+                    display: inline-block;
+                    width: 16px;
+                    height: 16px;
+                    margin-left: 5px;
+                }
+
+            .priceWrap #relative-issue .relative-issue-list {
+                margin-top: 62px;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .priceWrap #relative-issue .relative-issue-card {
+                display: inline-block;
+                width: 574px;
+                background-color: #F3F7FB;
+                border-radius: 16px;
+                position: relative;
+                height: 246px;
+            }
+
+            .priceWrap #relative-issue .issue-card-content {
+                margin: 60px 35px 68px 90px;
+            }
+
+            .priceWrap #relative-issue .relative-issue-quote {
+                position: absolute;
+                width: 40px;
+                height: 40px;
+                top: 40px;
+                left: 35px;
+            }
+
+            .priceWrap #relative-issue .relative-issue-card .issue-card-title {
+                font-size: 16px;
+                font-weight: bold;
+                line-height: 22px;
+                color: #1C1D1E;
+                margin: 0 0 16px;
+            }
+
+            .priceWrap #relative-issue .relative-issue-card p {
+                font-size: 16px;
+                line-height: 24px;
+                color: #5E637C;
+            }
+
+            .priceWrap #relative-issue .issue-card-detail {
+                display: inline-block;
+                font-size: 16px;
+                color: #025CDF;
+                float: right;
+            }
+
+            .priceWrap #relative-issue .issue-card-detail:hover {
+                color: #3d8cff;
+            }
+
+                .priceWrap #relative-issue .issue-card-detail .svg {
+                    vertical-align: middle;
+                }
+</style>
+<link rel="stylesheet" href="static/css/swiper.min.css">
+<script type="text/javascript" src="static/js/swiper.jquery.min.js"></script>
+<form id="form1">
+    <input name="__RequestVerificationToken" type="hidden" value="Q4FK3NGImOVLS8gkJF5P7yGqbb30_qfDoyZgtfYrwNz8ghLNzAbJ8bjCKinXxLCpHkllOQEonahsJVQgCu9xZEZ6hNFZxYekKIvmYosPGaE1">
+    <div class="priceWrap">
+
+        <div class="banner">
+            <img src="static/picture/Group-89.png" alt="">
+            <h1>数据无价，触手可达</h1>
+        </div>
+        <div id="table-price" class="bg">
+            <table>
+                <tr>
+                    <td class="price-head">
+                        <ul class="table-price-version">
+                            <li class="price-version-title">
+                                <a href="tutorial8/bbqb.html" target="_blank">
+                                    <img src="static/picture/shape.png" alt="">
+                                    版本选择攻略
+                                </a>
+                            </li>
+                            <li class="price-version-img">
+                                <img src="static/picture/Group-25.png" alt="">
+                            </li>
+                            <li class="price-version-txt">
+                                <h2>功能分类</h2>
+                            </li>
+                        </ul>
+                    </td>
+                    <td class="price-free">
+                        <ul class="table-price-list">
+                            <li>
+                                <div class="price-list-title title-free">
+                                    <h3>免费版</h3>
+                                </div>
+                            </li>
+                            <li>
+                                <p class="price-list-subtitle">轻松上手</p>
+                            </li>
+                            <li>
+                                <p class="price-list-year">￥0</p>
+                            </li>
+                            <li class="price-list-btn">
+                                <a href="download/windows.html" target="_blank">免费使用</a>
+                            </li>
+                        </ul>
+                    </td>
+                    <td class="price-std">
+                        <ul class="table-price-list">
+                            <li>
+                                <div class="price-list-title title-std">
+                                    <h3>专业版</h3>
+                                </div>
+                            </li>
+                            <li>
+                                <p class="price-list-subtitle">导出更多数据</p>
+                            </li>
+                            <li>
+                                <p class="price-list-year">￥399/年</p>
+                            </li>
+                            <li>
+                                <p class="price-list-month">￥49/月</p>
+                            </li>
+                            <li class="price-list-btn">
+                                <a href="Account/Login1.html" target="_blank">立即购买</a>
+                            </li>
+                        </ul>
+                    </td>
+                    <td class="price-pro">
+                        <ul class="table-price-list">
+                            <li>
+                                <div class="price-list-title title-pro">
+                                    <h3>旗舰版</h3>
+                                </div>
+                            </li>
+                            <li>
+                                <p class="price-list-subtitle">云加速，个人首选</p>
+                            </li>
+                            <li>
+                                <p class="price-list-year">￥2999/年</p>
+                            </li>
+                            <li>
+                                <p class="price-list-month">￥399/月</p>
+                            </li>
+                            <li class="price-list-btn">
+                                <a href="Account/Login2.html" target="_blank">立即购买</a>
+                            </li>
+                            <li class="price-list-trial" style="text-align: center;">
+                                <a href="javascript:;" style="color: #025CDF;display: inline-block;" id="ultimate">免费试用</a>
+                            </li>
+                        </ul>
+                    </td>
+                    <td class="price-proplus">
+                        <ul class="table-price-list">
+                            <li>
+                                <h3 style="text-align: center;line-height: 22px;">旗舰+</h3>
+                            </li>
+                            <li>
+                                <p style="text-align: center;margin-top: 8px;">更高云加速，团队首选</p>
+                            </li>
+                            <li class="price-list-year" style="margin-top: 30px;">
+                                <p>￥3999/年</p>
+                            </li>
+                            <li class="price-list-month">
+                                <p>￥499/月</p>
+                            </li>
+                            <li class="price-list-btn">
+                                <a href="Account/Login3.html" target="_blank" style="background-color: #ffffff;color: #025CDF;">立即购买</a>
+                            </li>
+                            <li class="price-list-trial" style="text-align: center;">
+                                <a href="javascript:;" style="color: #FFFFFF;display: inline-block;" id="ultimateplus">免费试用</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr class="tr-edge">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="scratch-website normal">
+                    <td>
+                        采集网站
+                        <div class="bubble-hover">
+                            八爪鱼采集器各版本，均不限制采集的网站。
+                        </div>
+                    </td>
+                    <td>不限制</td>
+                    <td>不限制</td>
+                    <td>不限制</td>
+                    <td>不限制</td>
+                </tr>
+                <tr class="normal">
+                    <td>
+                        任务数
+                        <div class="bubble-hover">
+                            一个采集需求对应一个任务。任务超出时，可删除部分任务或升级版本。
+                        </div>
+                    </td>
+                    <td>30</td>
+                    <td>100</td>
+                    <td>300</td>
+                    <td>1000</td>
+                </tr>
+                <tr class="normal">
+                    <td>
+                        同时登录终端数
+                        <div class="bubble-hover">
+                            同一个账号在不同终端登陆，限制同时在线的终端数。终端超出时，可退出或升级版本。
+                        </div>
+                    </td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>4</td>
+                </tr>
+
+                <tr class="tr-normal borderbottom">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="tr-normal">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="local-scratch normal">
+                    <td>
+                        本地采集任务启动数
+                        <div class="bubble-hover">
+                            本地采集使用自己的电脑进行采集，采集消耗本地电脑资源。一个终端可同时启动多个本地采集，本地采集任务启动数是同时采集的任务数限制。
+                        </div>
+                    </td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>6</td>
+                    <td>10</td>
+                </tr>
+                <tr class="normal">
+                    <td>
+                        本地数据导出上限
+                        <div class="bubble-hover">
+                            一个任务可多次启动本地采集，每次获取一定数据量。本地数据导出上限是每次允许导出的最大本地数据条数。
+                        </div>
+                    </td>
+                    <td>1万条/次</td>
+                    <td>10万条/次</td>
+                    <td>100万条/次</td>
+                    <td>500万条/次</td>
+                </tr>
+                <tr class="normal">
+                    <td>
+                        本地数据导出
+                    </td>
+                    <td>Excel、CSV、HTML、JSON、 数据库（手动）</td>
+                    <td>Excel、CSV、HTML、JSON、 数据库（手动）</td>
+                    <td>Excel、CSV、HTML、JSON、 数据库（手动）</td>
+                    <td>Excel、CSV、HTML、JSON、 数据库（手动）</td>
+                </tr>
+                <tr class="normal">
+                    <td>
+                        定时本地采集任务启动数
+                        <div class="bubble-hover">
+                            支持对执行本地采集的任务设置定时启动。定时本地采集任务启动数是同时进行定时本地采集的任务数限制。
+                        </div>
+                    </td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>1</td>
+                    <td>1</td>
+                </tr>
+				<tr class="normal">
+                    <td>
+                        本地加速并行采集数
+                    </td>
+                    <td>每月试用3次</td>
+                    <td>每月试用3次</td>
+                    <td>2</td>
+                    <td>3</td>
+                </tr>
+                <tr class="normal">
+                    <td>
+                        本地采集历史记录数
+                    </td>
+                    <td>5</td>
+                    <td>10</td>
+                    <td>30</td>
+                    <td>50</td>
+                </tr>
+                <tr class="normal">
+                    <td>
+                        本地数据备份到云（含自动备份）
+                    </td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>无限制</td>
+                </tr>
+                <tr class="tr-normal borderbottom">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="tr-normal">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="cloud-scratch normal">
+                    <td>
+                        云采集速度
+                        <div class="bubble-hover">
+                            云采集用八爪鱼提供的云服务器进行采集，采集时消耗八爪鱼云服务器资源。不同版本提供云节点数不同，云节点越多，云采集加速效果越明显。
+                        </div>
+                    </td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>最高10倍速</td>
+                    <td>最高12倍速</td>
+                </tr>
+                <tr class="normal">
+                    <td>
+                        云采数据导出上限
+                        <div class="bubble-hover">
+                            一个任务可多次启动云采集，每次获取一定数据量。云数据导出上限是每次允许导出的最大云数据条数。
+                        </div>
+                    </td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>100万条/次</td>
+                    <td>1000万条/次</td>
+                </tr>
+                <tr class="normal">
+                    <td>
+                        云采集数据导出
+                    </td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>Excel、CSV、HTML、JSON、数据库（自动）</td>
+                    <td>Excel、CSV、HTML、JSON、数据库（自动）</td>
+                </tr>
+                <tr class="normal">
+                    <td>
+                        API
+                        <div class="bubble-hover">
+                            八爪鱼提供两种API接口，无缝对接企业的内部系统。数据导出API：轻松获取通过八爪鱼采集到的数据，实现秒级导出。任务控制API：轻松获取任务信息，无需启动八爪鱼客户端即可控制任务启停。
+                        </div>
+                    </td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>数据导出API</td>
+                    <td>数据导出API+任务控制API</td>
+                </tr>
+                <tr class="tr-normal borderbottom">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="tr-normal">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                
+                <tr class="normal">
+                    <td>
+                        简易模板余额
+                        <div class="bubble-hover">
+                            八爪鱼提供常见网站的采集模板，多数可免费使用，少数成本高昂的模板需消耗简易模板余额。购买特定版本时会赠送简易模板余额。余额不足时，可额外购买。
+                        </div>
+                    </td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>
+                        <p>赠5元/月，可<a href="Account/Login4.html" target="_blank">加购</a></p>
+                        <p>赠15元/季，可<a href="Account/Login4.html" target="_blank">加购</a></p>
+                        <p>赠100元/年，可<a href="Account/Login4.html" target="_blank">加购</a></p>
+                    </td>
+                    <td>
+                        <p>赠30元/月，可<a href="Account/Login4.html" target="_blank">加购</a></p>
+                        <p>赠90元/季，可<a href="Account/Login4.html" target="_blank">加购</a></p>
+                        <p>赠400元/年，可<a href="Account/Login4.html" target="_blank">加购</a></p>
+                    </td>
+                </tr>
+                <tr class="tr-normal borderbottom">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="tr-normal">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="normal">
+                    <td>
+                        团队协作
+                        <div class="bubble-hover">
+                            通过八爪鱼提供的「团队协作管理平台」，平台管理员可统一管理自己和所有团队成员的任务（查看/启动/复制）、
+                            数据（查看/导出/下载）、资源（云节点/第三方IP/验证码）等，促进团队协作，提升采集效率。
+                        </div>
+                    </td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>限年旗舰+</td>
+                </tr>
+                <tr class="tr-normal borderbottom">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="tr-normal">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="normal">
+                    <td>技术支持</td>
+                    <td>在线客服 免费版QQ群</td>
+                    <td>在线客服 专业版QQ群</td>
+                    <td>在线客服 旗舰版QQ群</td>
+                    <td>在线客服 旗舰+QQ群 电话</td>
+                </tr>
+                <tr class="tr-edge">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <div id="more-version" class=" bg">
+            <h1 class="bg-title">
+                更高的版本与服务
+            </h1>
+            <ul>
+                <li style="margin-left:16.3%">
+                    <div class="more-version-header"></div>
+                    <h2>企业版</h2>
+                    <p>满足企业级客户大规模数据采集需求</p>
+                    <div class="more-version-btn">
+                        <a class="version-btn-normal version-btn-detail" href="enterprise/index.html" target="_blank">查看详情</a>
+                    </div>
+                </li>
+                <li style="margin-right:16.3%">
+                    <div class="more-version-header more-version-private"></div>
+                    <h2>私有化部署版</h2>
+                    <p>企业私有化部署版，支持软件OEM</p>
+                    <div class="more-version-btn">
+                        <a class="version-btn-normal version-btn-detail" href="qiyeban/index.html" target="_blank">查看详情</a>
+                    </div>
+                </li>
+                
+            </ul>
+        </div>
+        <div id="relative-issue" class="bg clearfix">
+            <h1 class="bg-title">
+                相关问题
+            </h1>
+            <div class="relative-issue-more">
+                <a href="tutorial8/faq/shouqian/zhanghao.html" target="_blank">
+                    更多常见问题
+                    <object type="image/svg+xml" data="../images/planb/doubleleft.svg" class="svg"></object>
+                </a>
+            </div>
+            <ul class="relative-issue-list">
+                <li class="relative-issue-card">
+                    <img class="relative-issue-quote" src="static/picture/quote.png" alt="">
+                    <div class="issue-card-content clearfix">
+                        <h6 class="issue-card-title">
+                            购买付费版本后，如何享受相关服务？
+                        </h6>
+                        <p>通过官网线上购买：账号将自动升级为相应版本，享受相关版本权益。</p>
+                        <p style="margin-top:8px">通过线下购买：联系人工客服，手动为您升级。</p>
+                        <a class="issue-card-detail" href="tutorial8/gmhzhsy.html" target="_blank">
+                            查看详情
+                            <object type="image/svg+xml" data="../images/planb/doubleleft.svg" class="svg"></object>
+                        </a>
+                    </div>
+                </li>
+                <li class="relative-issue-card">
+                    <img class="relative-issue-quote" src="static/picture/quote.png" alt="">
+                    <div class="issue-card-content clearfix">
+                        <h6 class="issue-card-title">
+                            购买后如何开发票？
+                        </h6>
+                        <p>通过官网线上购买：在官网【用户中心】&#8594【费用中心】&#8594【发票】，申请开票。</p>
+                        <p style="margin-top:8px">通过线下购买：联系人工客服，手动为您开票。</p>
+                        <a class="issue-card-detail" href="tutorial8/rhkfp.html" target="_blank">
+                            查看详情
+                            <object type="image/svg+xml" data="../images/planb/doubleleft.svg" class="svg"></object>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <ul class="relative-issue-list" style="margin-top:19px">
+                <li class="relative-issue-card">
+                    <img class="relative-issue-quote" src="static/picture/quote.png" alt="">
+                    <div class="issue-card-content clearfix">
+                        <h6 class="issue-card-title">
+                            是否可以提供合同？
+                        </h6>
+                        <p>购买年旗舰、年旗舰+、企业版和私有化部署版可提供合同，具体合同内容请联系人工客服获取。</p>
+                    </div>
+                </li>
+                <li class="relative-issue-card">
+                    <img class="relative-issue-quote" src="static/picture/quote.png" alt="">
+                    <div class="issue-card-content clearfix">
+                        <h6 class="issue-card-title">
+                            是否可以申请试用？
+                        </h6>
+                        <p>旗舰版 / 旗舰+ / 企业版本可以申请免费试用。</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</form>
+</div>
+<script>
+    $(document).ready(function () {
+        if (window.location.search.indexOf('enterprise') > -1) {
+            document.querySelector('.versionSel span[data-class=proVersion]').click();
+        }
+        $(".contact").hover(function () {
+            $this = this;
+            console.log($this.offsetLeft);
+            left = $this.offsetLeft + $this.offsetWidth / 2 - 100;
+            $("#contact").css({ "display": "block", "left": left + "px" });
+        }, function () {
+            $("#contact").css("display", "none");
+        });
+        $("#contact").hover(function () {
+            $(this).css({ "display": "block" });
+        }, function () {
+            $(this).css("display", "none");
+        });
+        layer.config({
+            skin: 'layer-ext-seaning',
+            extend: 'skin/seaning/style.css'
+        });
+        $('.pricing-help2').popover({
+            trigger: 'hover',
+            html: true
+        });
+        var mySwiper = new Swiper('.swiper-container',
+            {
+                pagination: '.swiper-pagination',
+                paginationClickable: true,
+                spaceBetween: 50,
+                effect: 'fade',
+                loop: true,
+                autoplay: 5000,
+
+                // 如果需要前进后退按钮
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev'
+                }
+
+            });
+
+        $('#ultimate').click(function () {
+            getTrialIndex("ultimate");
+        });
+
+        $('#ultimateplus').click(function () {
+            getTrialIndex("ultimateplus");
+        });
+
+        var svgmore = $(".relative-issue-more object");
+        svgmore[0].addEventListener("load",function(){
+            var svgDoc = this.contentDocument; //get the inner DOM of alpha.svg
+            var svgRoot = svgDoc.documentElement;
+            var page = svgRoot.getElementById('Page-2');
+            page.setAttribute('fill','rgb(53, 53, 53)');
+            page.setAttribute('cursor','pointer');
+            $('.relative-issue-more').hover(function(){
+                $(this).find("object")[0].contentDocument.documentElement.getElementById('Page-2').setAttribute('fill','#0043ea')
+            },function(){
+                $(this).find("object")[0].contentDocument.documentElement.getElementById('Page-2').setAttribute('fill','rgb(53, 53, 53)')
+            })
+        },false);
+
+        var svg = $(".relative-issue-list object");
+        svg[0].addEventListener("load",function(){
+            initSVG(this);
+            $('.issue-card-detail').hover(function(){
+                $(this).find("object")[0].contentDocument.documentElement.getElementById('Page-2').setAttribute('fill','#3d8cff')
+            },function(){
+                $(this).find("object")[0].contentDocument.documentElement.getElementById('Page-2').setAttribute('fill','#025CDF')
+            })
+        },false);
+        svg[1].addEventListener("load",function(){
+            initSVG(this);
+        },false);
+
+        function initSVG(item){
+            var svgDoc = item.contentDocument; //get the inner DOM of alpha.svg
+            var svgRoot = svgDoc.documentElement;
+            var page = svgRoot.getElementById('Page-2');
+            page.setAttribute('fill','#025CDF');
+            page.setAttribute('cursor','pointer');
+        }
+    });
+</script>
+<link rel="stylesheet" href="static/css/login-register.min1.css">
+<script src="static/js/signup.js" type="text/javascript"></script>
+<script src="static/js/login1.js" type="text/javascript"></script>
+<style>
+    .bzy-account {
+        display: none;
+        z-index: 999;
+    }
+
+    .mark {
+        position: fixed;
+        left: 0;
+        top: 0;
+        opacity: .5;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 998;
+        display: none;
+    }
+</style>
+<div class="bzy-account" style="padding:50px 49px 0">
+    <div class="tab-group">
+        <div class="tab login active"><a href="javascript:;" id="login-tab">登录</a></div>
+        <div class="tab register "><a href="javascript:;" id="reg-tab">注册</a></div>
+    </div>
+    <div id="loginBox" class="login-page tab-content">
+        <div class="bzy-form-control">
+            <div class="input-wrap">
+                <input type="text" id="logname">
+                <label class="">用户名 / 手机号 / 邮箱</label>
+                <div class="error-tips"></div>
+            </div>
+        </div>
+        <div class="bzy-form-control">
+            <div class="input-wrap">
+                <input type="password" id="logpwd">
+                <label class="">密码</label>
+                <div class="error-tips"></div>
+            </div>
+        </div>
+        <div class="bzy-form-control">
+            <div class="input-wrap">
+                <input type="text" id="logcheckcode">
+                <label class="">输入验证码</label>
+                <div class="error-tips"></div>
+                <img class="valid-pic captcha" id="loginCheckCode" src="static/picture/RandomImg.jpg" onclick="this.src='/RandomImg?type=2&r='+Math.random()" alt="验证码" style="position:absolute;right:0;">
+            </div>
+        </div>
+            <div class="login-setting">
+                <label class="checkbox-wrap">
+                    <div class="checkbox">
+                        <input type="checkbox" checked="checked">
+                        <div class="checkbox-body"></div>
+                    </div>&nbsp;记住登录
+                </label>
+                <a href="account/forgotpassword.html" class="forgot-password">忘记密码</a>
+            </div>
+        <div style="color:red;text-align:center;" id="returnErr"></div>
+        <button class="btn login" id="login">登录</button>
+            <div class="social-media-login-title">第三方登录</div>
+            <div class="social-media-wrap">
+                <a href="oauth2/authorize.html">
+                    <img src="static/picture/weibo.png" alt="" width="28" height="28">
+                </a>
+                <a href="oauth2.0/show.html">
+                    <img src="static/picture/QQ.png" alt="" width="28" height="28">
+                </a>
+            </div>
+    </div>
+    <div id="regBox" class="register-page tab-content">
+        <div class="main-content step-1">
+            <div class="sub-page p-1" id="emailOrMobile">
+                <div class="bzy-form-control user">
+                    <div class="input-wrap">
+                        <input tabindex="-1" type="text" id="regAccount">
+                        <label class="">输入你的邮箱或手机号</label>
+                        <div class="error-tips"></div>
+                    </div>
+                    <div class="deal" style="position:absolute;top: 55px;">
+                        <input type='checkbox' style="transform: translateY(2px);" checked="">
+                        <span style="font-size: 12px;color: #808080c4;">我已阅读并同意 <a style="text-decoration: underline" target="_black" href="ServiceTerms1.html">深圳视界注册协议</a></span>
+                    </div>
+                </div>
+            </div>
+            <div class="sub-page p-2">
+                <div class="bzy-form-control user" id="mobilePwd">
+                    <div class="input-wrap">
+                        <input tabindex="-1" type="password" id="mpwd">
+                        <label class="">设置登录密码</label>
+                        <div class="error-tips"></div>
+                    </div>
+                </div>
+                <div class="bzy-form-control user" id="mobileCheckCode">
+                    <div class="input-wrap">
+                        <input tabindex="-1" type="text" id="mcheckcode">
+                        <label class="">输入验证码</label>
+                        <div class="error-tips"></div>
+                        <img class="valid-pic captcha" onclick="this.src='/RandomImg?type=3&r='+Math.random()" alt="图片验证码">
+                    </div>
+                </div>
+                <div class="bzy-form-control user" id="mobileMsgCode">
+                    <div class="input-wrap">
+                        <input tabindex="-1" type="text" id="mmsgcode">
+                        <label class="">短信验证码</label>
+                        <div class="error-tips">
+                        </div>
+                        <span class="send-verify-code">发送验证码</span>
+                    </div>
+                </div>
+                <label class="checkbox-wrap licence-check">
+                    <div class="checkbox">
+                        <input tabindex="-1" type="checkbox" checked="checked">
+                        <div class="checkbox-body"></div>
+                    </div>&nbsp;我已阅读并同意&nbsp;<a href="ServiceTerms.html" target="_blank" tabindex="-1">《用户注册协议》</a>
+                </label>
+                <!---->
+            </div>
+            <div class="sub-page p-3">
+                <div class="bzy-form-control user" id="emailUserName">
+                    <div class="input-wrap">
+                        <input tabindex="-1" type="text" id="eusername">
+                        <label class="">设置用户名</label>
+                        <div class="error-tips"></div>
+                    </div>
+                </div>
+                <div class="bzy-form-control user" id="emailpwd">
+                    <div class="input-wrap">
+                        <input tabindex="-1" type="password" id="epwd">
+                        <label class="">设置登录密码</label>
+                        <div class="error-tips"></div>
+                    </div>
+                </div>
+                <div class="bzy-form-control user" id="emailCheckCode">
+                    <div class="input-wrap">
+                        <input tabindex="-1" type="text" id="echeckcode">
+                        <label class="">输入验证码</label>
+                        <div class="error-tips"></div>
+                        <img class="valid-pic captcha" width="150" onclick="this.src='/RandomImg?type=1&r='+Math.random()" alt="图片验证码">
+                    </div>
+                </div>
+                <label class="checkbox-wrap licence-check">
+                    <div class="checkbox">
+                        <input tabindex="-1" type="checkbox" checked="checked">
+                        <div class="checkbox-body"></div>
+                    </div>&nbsp;我已阅读并同意&nbsp;
+                    <a href="ServiceTerms.html" target="_blank" tabindex="-1">《用户注册协议》</a>
+                </label>
+            </div>
+            <div>
+            </div>
+        </div>
+        <div class="register-footer">
+            <button class="btn register-btn">注册</button>
+            <div class="register-mobile" style="display:none">
+                <button class="btn" id="btnMobileReg" disabled="">完成</button>
+                <div class="return-step-1-tips">手机号输错？<span id="changeMobile">换个手机号</span></div>
+            </div>
+            <div class="register-email" style="display:none">
+                <button class="btn" id="btnEmailReg">验证邮箱</button>
+                <div class="return-step-1-tips">邮箱输错？<span id="changeEmail">换个邮箱</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mark"></div>
+
+		
+
+    
+
+    <div class="modal fade" id="commonModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default cancel" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary ok">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<style>
+        .kefu-content{
+        width: 297px;
+        box-shadow: 1px 1px 1px black;
+        }
+        .kefu-dialog {
+            position: relative;
+            width: auto;
+            background-color: #fff;
+            -webkit-background-clip: padding-box;
+                    background-clip: padding-box;
+            border: 1px solid #999;
+            border: 1px solid rgba(0, 0, 0, .2);
+            border-radius: 6px;
+            outline: 0;
+            -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+                    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+        }
+        .kefu-body{
+            padding: 22px 15px;
+            /* height: 60px;
+            line-height: 60px; */
+        }
+        .kefu-headers {
+            height: 50px;
+            padding-top: 14px;
+            border-bottom: 0.5px solid #e2e0e0;
+        }
+        .kefu-headers span{
+            padding-right: 12px;
+        }
+        .modal-dialog{
+            margin-top: 364px !important;
+        }
+    </style>
+	
+    <div class="modal fade" id="serviceTip">
+        <div class="modal-dialog modal-sm">
+            <div class="kefu-content">
+                <div class="kefu-headers">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                    <h4 class="modal-title" style="margin-left:40%">服务提示</h4>
+                </div>
+                <div class="kefu-body">
+                    <div style="text-align:center;" id="detailTipContent">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:center;">
+                        <a class="btn btn-default" href="index2.html" target="_blank" id="consultNow">论坛求助</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a class="btn btn-primary" href="javascript:;" target="_blank" id="upgradeNow">立即升级套餐</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="consult-modal" style="display: none;">
+        <div class="consult-header">
+            <h3>咨询顾问</h3><span class="close-modal">×</span>
+        </div>
+        <div class="consult-body">
+            <form>
+                <input name="__RequestVerificationToken" type="hidden" value="YWsRuAUP8f39FOCt8hgr41zpuoyzdePWySJsYIIlyDhU5cDrueX7hlS632nyQi_FDDHS7zFNeViqaSMwEbzGzyhya71pNadbixthN8Yyz-Q1">;
+                <p><input type="text" name="name" pattern="^\w{2,50}$" title="字符个数在2-50个之间" placeholder="姓名"></p>
+                <p><input type="text" name="mobile" pattern="^(?:\+?86)?1(?:3\d{3}|5[^4\D]\d{2}|8\d{3}|7(?:[235-8]\d{2}|4(?:0\d|1[0-2]|9\d))|9[0-35-9]\d{2}|66\d{2})\d{6}$" placeholder="手机"></p>
+                <p><input type="text" name="title" pattern="^\w{3,50}$" title="字符个数在3-50个之间" placeholder="职位"></p>
+                <p><input type="text" name="company" pattern="^\w{3,50}$" title="字符个数在3-50个之间" placeholder="公司"></p>
+                <p>咨询顾问联系方式 0755-86702246
+</p>
+                <button class="submit-btn" type="button">提交</button>
+            </form>
+        </div>
+    </div>
+<style>
+    #free-trial .modal-dialog {
+        width: 514px;
+    }
+
+    #free-trial .modal-content .modal-header {
+        border: none;
+        padding-top: 27px;
+        padding-bottom: 0;
+    }
+
+    #free-trial .modal-header .close {
+        margin-top: -11px;
+    }
+
+        #free-trial .modal-header .close .close-sig {
+            line-height: 24px;
+            display: inline-block;
+            height: 24px;
+            font-size: 36px;
+            width: 24px;
+            font-weight: 100;
+            color: #7E87A0;
+        }
+
+    #free-trial .modal-content h4.modal-title {
+        font-size: 20px;
+        margin-left: 202px;
+        line-height: 32px;
+    }
+
+    #free-trial .modal-content p.modal-subtitle {
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(126,135,160,1);
+        text-align: center;
+    }
+
+    #free-trial .modal-content .modal-body {
+        padding-top: 0;
+    }
+
+        #free-trial .modal-content .modal-body .modal-body-hint, #trial-form, #submitPlan {
+            display: none;
+        }
+
+    .modal-body .plan-form-title {
+        font-weight: bold;
+        color: rgba(28,29,30,1);
+        line-height: 24px;
+        margin: 28px 0 10px 21px;
+    }
+
+    .modal-body .plan-form-control {
+        margin-left: 21px;
+    }
+
+        .modal-body .plan-form-control .form-control-label {
+            display: inline-block;
+            width: 80px;
+            margin-right: 4px;
+        }
+
+        .modal-body .plan-form-control .form-required label::before {
+            content: '*';
+            color: #D0021B;
+            margin-right: 4px;
+        }
+
+        .modal-body .plan-form-control .form-control-item {
+            display: inline-block;
+            width: 358px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+            .modal-body .plan-form-control .form-control-item label.error ,
+            .modal-body .plan-form-control .form-control-item p.error{
+                position: absolute;
+                font-size: 12px;
+                font-weight: 500;
+                color: rgba(208,2,27,1);
+                line-height: 20px;
+                left: 0;
+                bottom: -20px;
+            }
+
+            .modal-body .plan-form-control .form-control-item input {
+                width: 100%;
+                border: 1px solid rgba(234,238,244,1);
+                border-radius: 4px;
+                height: 32px;
+                line-height: 32px;
+                color: #1C1D1E;
+                padding-left: 12px;
+            }
+
+            .modal-body .plan-form-control .form-control-item textarea {
+                width: 100%;
+                border: 1px solid rgba(234,238,244,1);
+                border-radius: 4px;
+                color: #1C1D1E;
+                padding-left: 12px;
+                min-height: 63px;
+                max-height: 63px;
+                padding: 5px 12px;
+            }
+
+            .modal-body .plan-form-control .form-control-item textarea::placeholder{
+                font-size: 12px;
+                color: #b2b8cc;
+            }
+
+            .modal-body .plan-form-control .form-control-item select {
+                width: 170px;
+                font-size: 14px;
+                font-weight: 500;
+                color: rgba(28,29,30,1);
+                line-height: 32px;
+                height: 32px;
+                border: 1px solid rgba(234,238,244,1);
+                border-radius: 4px;
+                padding-left: 12px;
+            }
+
+        .modal-body .plan-form-control #MobileCode {
+            padding-right: 108px;
+        }
+
+        .modal-body .plan-form-control .sendCode {
+            position: absolute;
+            right: 16px;
+            bottom: 4px;
+            padding-left: 15px;
+            border-left: 1px solid #EAEEF4;
+            color: #025CDF;
+            cursor: pointer;
+        }
+
+    .modal-body .form-useage {
+        display: flex;
+        justify-content: space-between;
+        margin: 32px 15px 10px 21px;
+        align-items: center;
+    }
+
+        .modal-body .form-useage .form-useage-checkbox label {
+            font-size: 16px;
+            font-weight: bold;
+            color: rgba(28,29,30,1);
+        }
+
+        .modal-body .form-useage .form-useage-checkbox input {
+            margin-right: 6px;
+        }
+
+        .modal-body .form-useage .form-useage-txt {
+            font-size: 12px;
+            color: #b2b8cc;
+            line-height: 20px;
+            height: 20px;
+        }
+
+    .modal-body .user-card-upload {
+        position: relative;
+        display: inline-block;
+    }
+
+    .modal-body .form-upload #userCardImg {
+        width: 80px;
+        height: 80px;
+        display: inline-block;
+        border-radius: 4px;
+        background-color: #EAEEF4;
+    }
+
+    .modal-body .form-upload .upload-btn {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+        .modal-body .form-upload .upload-btn input {
+            width: 80px;
+            height: 80px;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+    .modal-body .user-card-upload label.error {
+        position: absolute;
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(208,2,27,1);
+        line-height: 20px;
+        left: 0;
+        bottom: -20px;
+    }
+
+    #try-other-version {
+        display: none;
+    }
+
+    #free-trial .modal-content .modal-footer {
+        border: none;
+        padding-bottom: 36px;
+        padding-top: 64px;
+    }
+
+    #free-trial .modal-footer .btn-primary {
+        width: 200px;
+        border-radius: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    #free-trial .none .modal-body .modal-body-hint, #free-trial .invalid .modal-body .modal-body-hint {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        color: rgba(28,29,30,1);
+        line-height: 24px;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    #free-trial .invalid #try-other-version {
+        display: inline-block;
+        margin-bottom: 16px;
+    }
+
+    #free-trial .invalid .modal-footer {
+        padding-top: 25px;
+    }
+
+    #free-trial .trial-plan #trial-form {
+        display: block;
+    }
+
+    #free-trial .trial-plan #submitPlan {
+        display: block;
+        width: 200px;
+        border-radius: 20px;
+        margin: 32px auto 0;
+        height: 40px;
+    }
+
+        #free-trial .trial-plan #submitPlan:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+    #free-trial .trial-plan .modal-body {
+        padding-bottom: 0;
+    }
+
+    #free-trial .trial-plan .modal-footer {
+        padding-top: 15px;
+    }
+
+    #sendMobileCode[disabled] {
+        pointer-events: none;
+        color: #666;
+    }
+
+    #successMsg {
+        position: fixed;
+        top: 100px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        z-index: 9999999999999;
+    }
+
+        #successMsg div {
+            width: 330px;
+            padding: 10px 16px;
+            background: #fff;
+            margin: 0 auto;
+            border-radius: 2px;
+            -webkit-box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+            color: rgba(0, 0, 0, 0.85);
+            animation-name: slide;
+            animation-duration: 200ms;
+            animation-delay: 0ms;
+            animation-fill-mode: forwards;
+            position: relative;
+        }
+
+        #successMsg .text{
+            display: flex;
+            align-items: center;
+            height: 20px;
+            justify-content: center;
+        }
+
+    @keyframes slide {
+        0% {
+            top: 0;
+        }
+
+        100% {
+            top: 20px;
+        }
+    }
+
+    .margintop {
+        margin-top:58px !important;
+    }
+</style>
+<div class="modal fade" id="free-trial">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true" class="close-sig">×</span>
+                    <span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">申请试用</h4>
+                <p class="modal-subtitle">当前版本：<span id="currentAccountName"></span></p>
+            </div>
+            <div class="modal-body">
+                <p class="modal-body-hint">您当前不满足试用条件。
+                    <a href="tutorial8/sywt.html" target="_blank" style="color:#025CDF">（试用规则？）</a>
+                </p>
+                <form id="trial-form" autocomplete="off">
+                    <h3 class="plan-form-title">选择版本</h3>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>试用版本</label>
+                        </div>
+                        <div class="form-control-item" style="margin: 0;">
+                            <select name="AvailableTypes" id="AvailableTypes">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="plan-form-control" style='padding-top:12px;padding-bottom:8px;'>
+                        <div class="form-control-label">
+                            <label style='padding-left: 9px;'> 试用天数</label>
+                        </div>
+                        <div class="form-control-item" style="margin: 0;">
+                            <p class="form-useage-txt">
+                                3天
+                            </p>
+                        </div>
+                    </div>
+                    <h3 class="plan-form-title" style="margin-top: 12px;">填写信息</h3>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>联系人</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="Contact" name="Contact" type="text" required="">
+                        </div>
+                    </div>
+                    <div class="plan-form-control telphone">
+                        <div class="form-control-label form-required">
+                            <label>手机号</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="Telphone" name="Telphone" type="text">
+                            <p class="error"></p>
+                        </div>
+                    </div>
+                    <div class="plan-form-control mobile-code">
+                        <div class="form-control-label form-required">
+                            <label>验证码</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="MobileCode" name="MobileCode" type="text" required="">
+                            <div class="sendCode" id="sendMobileCode"><span>发送验证码</span></div>
+                        </div>
+                    </div>
+                    <div class="plan-form-control form-useage" style="display:none">
+                        <div class="form-useage-checkbox" id="radioSwitch">
+                            <label style="margin-right:16px;"><input type="radio" name="ApplicantType" id="entertainmentPlan" value="1" checked="">企业使用</label>
+                            <label><input type="radio" name="ApplicantType" id="personPlan" value="0">个人使用</label>
+                        </div>
+                    </div>
+                <div id="entertainmentPlanForm">
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>公司名称</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="CompanyName" name="CompanyName" type="text" required="">
+                        </div>
+                    </div>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>职位</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="JobTitle" name="JobTitle" type="text" required="">
+                        </div>
+                    </div>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>试用用途</label>
+                        </div>
+                        <div class="form-control-item">
+                            <textarea rows="3" placeholder="请备注您的行业，想要采集的网站，采集的用途等信息。" id="Reason" name="Reason" type="text" required=""></textarea>
+                        </div>
+                    </div>
+                    <div class="plan-form-control form-upload">
+                        <div class="form-control-label form-required">
+                            <label>上传名片</label>
+                        </div>
+                        <div class="user-card-upload">
+                            <div class="user-card-img">
+                                <img id="userCardImg" src="static/picture/add.png" class="">
+                            </div>
+                            <div class="upload-btn">
+                                <label>
+                                    <input type="file" id="filecard" name="filecard" onchange="fileChange(this)" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <input class="btn btn-primary" type="submit" id="submitPlan" value="提交申请">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div style="text-align:center;">
+                    <a class="btn btn-primary" href="javascript:;" id="try-other-version">试试其他版本</a>
+                    <p style="font-size: 12px;color:#7e87a0;">咨询顾问电话：0755-86702246&nbsp;&nbsp 010-87987723;&nbsp;&nbsp;企业合作邮箱：sales@skieer.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="successMsg" class="hidden">
+    <div>
+        <p class="text">
+            <img style="height: 20px;margin-right: 8px;" src="static/picture/zf_sucess.png" alt="">
+            <span></span>
+        </p>
+        <p class="sub-text hidden"></p>
+    </div>
+</div>
+<script src="static/js/jquery.validate.min.js"></script>
+<script src="static/js/jquery.validate.messages_zh.js"></script>
+<style>
+
+    .zhiCustomBtn {
+        visibility: hidden;
+        height: 50px;
+        width: 120px;
+        border-radius: 25px;
+        color: #fff;
+        background-color: #2282f2;
+        box-shadow: rgba(15, 66, 76, 0.45) 0px 0px 14px 0px;
+        border: 0px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+
+    .pZhichiCustomBtn {
+        float: right;
+        height: 50px;
+        width: 120px;
+        border-radius: 25px;
+        color: #fff;
+        background-color: #2282f2;
+        box-shadow: rgba(15, 66, 76, 0.45) 0px 0px 14px 0px;
+        border: 0px;
+        box-sizing: border-box;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .pZhichiCustomBtnClose {
+        float: right;
+        height: 70px;
+        width: 70px;
+        border-radius: 35px;
+        color: #fff;
+        background-color: #2282f2;
+        box-shadow: rgba(15, 66, 76, 0.45) 0px 0px 14px 0px;
+        border: 0px;
+        box-sizing: border-box;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+<style>
+
+    .floating_ck dl dd {
+        background-position: center;
+    }
+
+        .floating_ck dl dd.return {
+            background-size: 19px;
+            background-position: center;
+        }
+
+    .floating_ck .quote {
+        background-image: url(static/image/icon-qq.png);
+        background-size: 24px;
+    }
+
+    .floating_ck .kefu {
+        background-image: url(static/image/icon-kefu.png);
+        background-size: 38px;
+    }
+
+    .floating_ck .qiye {
+        background-image: url(static/image/icon-qiye.png);
+        position: relative;
+        background-size: 35px;
+    }
+
+        .floating_ck .qiye::after {
+            content: "";
+            background-image: url(static/image/free.png);
+            width: 30px;
+            height: 19px;
+            position: absolute;
+            right: -7px;
+            top: -4px;
+        }
+
+    .floating_ck .floating {
+        position: absolute;
+        left: -154px;
+        top: 10px;
+        padding: 15px;
+        line-height: 1.2;
+        color: #FFFFFF !important;
+        background: rgba(0,0,0,0.6);
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 4px;
+        z-index: 999999;
+        max-width: 315px;
+        font-size: 14px;
+        display: none;
+    }
+
+        .floating_ck .floating::after {
+            content: "";
+            width: 0;
+            height: 0;
+            display: block;
+            border-style: solid;
+            border-width: 8px;
+            border-color: transparent transparent transparent rgba(0,0,0,0.6);
+            position: absolute;
+            z-index: 999998;
+            right: -16px;
+            top: 13px;
+        }
+
+    .floating_ck .quote .flex {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .quote .floating {
+        left: -330px;
+        width: 315px;
+    }
+
+    .quote .floating li{
+        cursor: text;
+        line-height: 1.2;
+    }
+    .quote .floating .qq-title{
+        line-height: 22px;
+    }
+
+    #gotoTrial .floating {
+        left: -139px;
+    }
+
+    .floating_ck dl dd {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+    }
+
+    .floating_ck .pZhichiCustomBtn {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: none;
+    }
+
+    .floating_ck dl dd .txt {
+        color: #fff;
+        position: absolute;
+        bottom: 0px;
+        width: 70px;
+        text-align: center;
+    }
+
+    #zhichi-div:hover .floating-kefu, #gotoTrial:hover .floating-qiye, .quote:hover .floating {
+        display: block;
+    }
+</style>
+<div class="floating_ck">
+    <dl>
+        <dt></dt>
+        <a href="javascript:void(0);" id="onlineChatAnchor" target="_blank" style="">
+            <p>
+
+            </p>
+        </a>
+        <dd class="kefu" id="zhichi-div" title="点击联系客服">
+            <button id="btn" class="zhiCustomBtn"></button>
+            <p id="chatFlag" data-mtype="0"></p>
+            <button id="pbtn" class="pZhichiCustomBtn"></button>
+            <div class="floating floating-kefu">
+                <div>欢迎咨询在线客服</div>
+            </div>
+        </dd>
+        <dd class="quote">
+            <div class="floating">
+                <div class="flex">
+                    <ul>
+                        <li class="qq-title">免费版QQ群</li>
+                        <li>
+                            <span>159956780</span>
+                        </li>
+                        <li>
+                            <span>257583266</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="qq-title">专业版QQ群</li>
+                        <li>
+                            <span>1065566150</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="qq-title">月旗舰版QQ群</li>
+                        <li>
+                            <span>196097783</span>
+                        </li>
+                        <li>
+                            <span>157692830</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex">
+                    <ul>
+                        <li class="qq-title">月旗舰+QQ群</li>
+                        <li>
+                            <span>431013573</span>
+                        </li>
+                    </ul>
+                    <ul style="">
+                        <li class="qq-title">年旗舰版QQ群</li>
+                        <li>
+                            <span>415864512</span>
+                        </li>
+                    </ul>
+                    <ul style="">
+                        <li class="qq-title">年旗舰+QQ群</li>
+                        <li>
+                            <span>592777128</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </dd>
+        <dt></dt>
+        <dd class="qiye" id="gotoTrial" title="免费试用" onclick="javascript: window.location.href = '/trial/index';">
+            <div class="floating floating-qiye">
+                <div id="qiye">欢迎您申请试用</div>
+            </div>
+        </dd>
+        <dd class="return" onclick="gotoTop();return false;" title="回到顶部">
+        </dd>
+    </dl>
+
+</div>
+<!-- <div title="在线客服" id="zhichi-div" style="position: fixed;bottom: 120px;right: 20px;z-index: 999">
+    <button id="btn" class="zhiCustomBtn">欢迎咨询</button>
+    <p id="chatFlag" data-mType="0"></p>
+    <button id="pbtn" class="pZhichiCustomBtn">欢迎咨询</button>
+</div> -->
+<script src="static/js/entrance.js" id="zhichiScript" class="zhiCustomBtn"></script>
+
+<div class="modal fade" id="serviceTip" style="margin-top: 230px;font-size:14px;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                <h4 class="modal-title" style="margin-left:40%">服务提示</h4>
+            </div>
+            <div class="modal-body">
+                <div style="text-align:center;" id="detailTipContent">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="text-align:center;">
+                    <a class="btn btn-default" href="index2.html" target="_blank" id="consultNow">论坛求助</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-primary" href="javascript:;" target="_blank" id="upgradeNow">立即升级套餐</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="static/js/rightFixedBar.js"></script>
+<div class="site-footer">
+  <div class="bottom-banner" style="position:unset">
+    <div class="inner-main banner-content" style="position:relative;margin: 0;">
+      <p style="font-size:24px">开始简单高效的数据采集</p>
+      <div class="footer-download">
+        <span class="btn-download"><a href="download/windows.html">
+            免费下载
+          </a></span>
+        <span class="btn-signup"><a href="account/register.html">
+            免费注册
+          </a></span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-info">
+    <div class="inner-main">
+      <div class="part1">
+        <ul>
+          <li class="title"><a href="javascript:;">关于我们</a></li>
+          <li><a href="intro.html">公司介绍</a></li>
+          <li><a href="HonorWall.html">公司荣誉</a></li>
+          <li><a href="javascript:;" target="_blank">加入我们</a></li>
+          <li><a href="contactus.html">联系我们</a></li>
+        </ul>
+        <ul>
+          <li class="title"><a href="javascript:;">产品</a></li>
+          <li><a href="about.html">八爪鱼采集器</a></li>
+          <li><a href="enterprise/index.html" target="_blank">八爪鱼企业版</a></li>
+          <li><a href="qiyeban/index.html" target="_blank">八爪鱼私有化部署版</a></li>
+          <li><a href="javascript:;" target="_blank">客户体验管理</a></li>
+        </ul>
+        <ul>
+          <li class="title"><a href="javascript:;">服务</a></li>
+          
+          <li><a href="aboutus.html">商务合作</a></li>
+          
+          <li>
+            <a href="edu.html">教育公益计划</a>
+          </li>
+        </ul>
+        <ul>
+          <li class="title"><a href="javascript:;">资源中心</a></li>
+          <li><a href="tutorial8/hottutorial.html">图文教程</a></li>
+          <li><a href="tutorial8/videotutorial.html">视频教程</a></li>
+          <li>
+            <a href="tutorial8/faq.html">常见问题</a>
+          </li>
+          <li>
+            <a href="blog.html">博客文章</a>
+          </li>
+          <li>
+            <a href="tutorial8/81api.html">API文档</a>
+          </li>
+          <li>
+            <a href="tutorialindex.html">旧版教程</a>
+          </li>
+        </ul>
+        <div>
+          <dl>
+            <dt><img src="static/picture/qrcode1.jpg" alt="微信服务号"></dt>
+            <dd>微信服务号</dd>
+          </dl>
+          <dl>
+            <dt>
+              <img src="static/picture/qrcode2.jpg" alt="八爪鱼采集研究院微信订阅号">
+            </dt>
+            <dd>采集研究院</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="part2">
+        <ul class="tools">
+
+          
+			<li>
+            <a href="javascript:;" target="_blank">web scraping</a>
+          </li>	
+			<li>
+            <a href="javascript:;" target="_blank">webスクレイピング</a>
+          </li>
+			<li>
+            <a href="javascript:;" target="_blank">Herramienta de Web Scraping Gratis</a>
+          </li>
+			<li>
+            <a href="javascript:;" target="_blank">kostenloser Web Crawler</a>
+          </li>	
+			<li>
+            <a href="javascript:;" target="_blank">Outil de Web Scraping gratuits</a>
+          </li>	
+			<li>
+            <a href="javascript:;" target="_blank">data extraction</a>
+          </li>	
+						
+        </ul>
+      </div>
+
+      <div class="company-info">
+        <p>
+          深圳视界信息技术有限公司版权所有 © 2013-2021 . All rights reserved.
+          <a target="_blank" href="javascript:;" rel="nofollow">粤ICP备14092314号</a> <a href="ServiceTerms.html" rel="nofollow">服务协议</a>
+		  | <a href="octServicePrivacy.html" rel="nofollow">隐私协议</a> | <a href="octServiceCompetence.html" rel="nofollow">版本</a>
+		  | <a href="octServiceCompetence.html" rel="nofollow">开发者名称</a> | <a href="octServiceCompetence.html" rel="nofollow">权限</a>
+        </p>
+        <p>公司地址：深圳市南山区西丽街道禹洲广场A座5楼</p>
+        <p>粤公网安备 44030502000701号</p>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  var matchUrlLoaction = function() {
+    urlConfig = [
+      {
+        name: "about",
+        navIndex: 1
+      },
+      {
+        name: "plan",
+        navIndex: 2
+      },
+      {
+        name: "solution",
+        navIndex: 3
+      },
+      {
+        name: "download",
+        navIndex: 4
+      },
+      {
+        name: "app",
+        navIndex: 5
+      },
+      {
+        name: "tutorial",
+        navIndex: 6
+      },
+      {
+        name: "faqIndex",
+        navIndex: 7
+      },
+      {
+        name: "faq",
+        navIndex: 7
+      }
+    ];
+    var currentHref = window.location.href;
+    urlConfig.some(function(v) {
+      if (currentHref.lastIndexOf(v.name) > -1) {
+        $(".site-nav >li")
+          .eq(v.navIndex)
+          .addClass("active");
+      } else {
+        $(".site-nav >li")
+          .eq(v.navIndex)
+          .removeClass("active");
+      }
+    });
+  };
+  matchUrlLoaction();
+</script>
+
+
+    <script>
+        (function () {
+            var canonicalURL, curProtocol;
+            //Get the <link> tag
+            var x = document.getElementsByTagName("link");
+            //Find the last canonical URL
+            if (x.length > 0) {
+                for (i = 0; i < x.length; i++) {
+                    if (x[i].rel.toLowerCase() == 'canonical' && x[i].href) {
+                        canonicalURL = x[i].href;
+                    }
+                }
+            }
+            //Get protocol
+            if (!canonicalURL) {
+                curProtocol = window.location.protocol.split(':')[0];
+            }
+            else {
+                curProtocol = canonicalURL.split(':')[0];
+            }
+            //Get current URL if the canonical URL does not exist
+            if (!canonicalURL) canonicalURL = window.location.href;
+            //Assign script content. Replace current URL with the canonical URL
+            !function () { var e = /([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi, r = canonicalURL, t = document.referrer; if (!e.test(r)) { var n = (String(curProtocol).toLowerCase() === 'https') ? "https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif" : "//api.share.baidu.com/s.gif"; t ? (n += "?r=" + encodeURIComponent(document.referrer), r && (n += "&l=" + r)) : r && (n += "?l=" + r); var i = new Image; i.src = n } }(window);
+        })();
+    </script>
+    <script>
+        $(function () {
+            $("a[url]").click(function () {
+                var $th = $(this);
+                var url = $th.attr("url");
+                var title = $th.text();
+                layer.open({
+                    type: 2,
+                    title: title,
+                    shadeClose: false,
+                    shade: 0.8,
+                    area: ['350px', '460px'],
+                    anim: 2,
+                    content: [url, 'no'],
+                });
+            })
+
+            var appendUtmToLandPage = function () {
+                var utmList = ["utm_campaign", "utm_content", "utm_medium", "utm_source", "utm_term"];
+                var utmInfo = "";
+                var hasUtm = false;
+                utmList.forEach(utm => {
+                    var c = $.cookie(utm);
+                    if (c) {
+                        utmInfo += utm + "=" + c + "&";
+                        hasUtm = true;
+                    }
+                });
+                utmInfo = utmInfo.replace(/&$/, '');
+                if (hasUtm) {
+                    var utmLinks = document.querySelectorAll("a[data-utm]");
+                    if (utmLinks && utmLinks.length > 0) {
+                        utmLinks.forEach(a => {
+                            if (a.href.indexOf('?') != -1) {
+                                a.href = a.href + '&' + utmInfo;
+                            } else {
+                                a.href = a.href + '?' + utmInfo;
+                            }
+                        });
+                    }
+                }
+            };
+            appendUtmToLandPage();
+        })
+    </script>
+    
+
+    <script src="static/js/layer.js"></script>
+    <script>
+    $(document).ready(function(){
+            var isLogin=true;
+            if(isLogin){
+                $("#regBox").hide();
+                $("#loginBox").show();
+            }else{
+                $("#loginBox").hide();
+                $("#regBox").show();
+            }
+        $(".mark").click(function() {
+            $('.bzy-account').css("display", "none");
+            $('.mark').css("display", "none");
+        });
+            $("#reg-tab").click(function () {
+                if ($("#regBox").is(":hidden")) {
+                    $(this).parent().addClass("active");
+                    $("#login-tab").parent().removeClass("active");
+                    $("#regBox").show();
+                    $("#loginBox").hide()
+                    var firstInput;
+                    if(!$(".main-content .p-1").is(":hidden")){
+                        firstInput = $(".main-content .p-1 input:first");
+                    }else if(!$(".main-content .p-2").is(":hidden")){
+                        firstInput = $(".main-content .p-2 input:first");
+                    }else if(!$(".main-content .p-3").is(":hidden")){
+                        firstInput = $(".main-content .p-3 input:first");
+                    }
+                    if(firstInput)
+                        firstInput.focus();
+                }
+            });
+            $("#login-tab").click(function () {
+                if ($("#loginBox").is(":hidden")) {
+                    $(this).parent().addClass("active");
+                    $("#reg-tab").parent().removeClass("active");
+                    $("#regBox").hide();
+                    $("#loginBox").show();
+                    $("#logname").focus();
+                }
+            });
+        signup.init(false, null);
+        login.init(false, null, window.location.href);
+      layer.config({
+            skin: 'layer-ext-seaning',
+            extend: 'skin/seaning/style.css'
+         });
+      $('.pricing-help').popover({trigger:'hover'});
+    });
+
+    function applyTry(url){
+      $.ajax({
+        method:'get',
+        url:url,
+        success:function(d){
+            if (d.status == 1) {
+                window.location = d.url;
+            }
+
+            else if (d.status == -1) {
+                $('.bzy-account').css("display", "block");
+                $('.mark').css("display", "block");
+                return;
+            } else {
+                layer.open({
+                    content: d.message,
+                    shadeClose:true
+                    ,btn: ['联系客服']
+                    , yes: function (index, layero) {
+                        layer.close(index);
+                        $("#onlineChatDD").click();
+                    }
+                });
+                return;
+            }
+        }
+      });
+    }
+    </script>
+
+
+    <script type="text/javascript" src="static/js/rightFixedBar.js"></script>
+    <script type="text/javascript" src="static/js/stat.js"></script>
+</body>
+</html>

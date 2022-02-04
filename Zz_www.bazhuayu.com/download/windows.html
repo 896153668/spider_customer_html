@@ -1,0 +1,3850 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    
+    
+<title>免费下载-Windows大数据采集软件下载 - 八爪鱼采集器</title>
+<meta name="keywords" content="八爪鱼采集器下载,采集器下载,大数据采集软件下载">
+<meta name="description" content="八爪鱼下载页面提供最新的八爪鱼采集器免费下载，目前有超过100万的企业在使用，赶紧来下载并使用八爪鱼吧！">
+    
+
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0">
+    <meta name="baidu-site-verification" content="my5tMHFCbI">
+    <meta name="author" content="八爪鱼采集器 - 视界科技旗下产品">
+    <meta http-equiv="Cache-Control" content="no-transform ">
+    <meta name="baidu-site-verification" content="zpPiFXIJuf">
+
+    <link rel="shortcut icon" href="https://www.bazhuayu.com/favicon-new.ico">
+
+    <!-- Le styles -->
+    <link href="../static/css/zui.min.css" rel="stylesheet">
+    <link href="../static/css/common.css" rel="stylesheet">
+    <link href="../static/css/site.min.css" rel="stylesheet">
+    
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/jquery.cookie.js"></script>
+    <script src="../static/js/zui.min.js"></script>
+    <script src="../static/js/common.js"></script>
+    <script src="../static/js/layer.js" type="text/javascript"></script>
+<style>
+    #promotionAd{
+        border-radius: 1.5%;
+        width: 100%;
+    }
+    .modal-contents{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 41.68%;
+        height: 53.4%;
+        /* background-color: pink; */
+    }
+    .promotion-ad-wrapper {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .activoty-cancel-icon {
+        position: absolute;
+        width: 2.7%;
+        height: 4%;
+        right: 1.6%;
+        top: 3%;
+        cursor: pointer;
+        /* transition: opacity 0.3s ease; */
+    }
+
+        /* .activoty-cancel-icon:hover {
+            opacity: 0.5;
+        } */
+
+    .activoty-bottom-btn {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 20.7%;
+        padding: 3.3% 15%;
+        /* border-radius: 3px; */
+        cursor: pointer;
+        /* background-color: #f6fc63; */
+        /* transition: background-color 0.3s ease; */
+    }
+    .activoty-bottom-btn-after{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 12.7%;
+        padding: 3.3% 15%;
+        cursor: pointer;
+    }
+
+        /* .activoty-bottom-btn:hover {
+            background-color: #ffda24;
+        } */
+
+        /* .activoty-bottom-btn span {
+            font-size: 20px;
+            line-height: 1;
+            font-weight: bold;
+            color: #3620b8;
+        } */
+</style>
+<div class="modal fade" tabindex="-1" id="adModal" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-contents">
+        <div class="promotion-ad-wrapper">
+            <img id="promotionAd" src="">
+            <div class="activoty-cancel-icon" onclick="closeAd()"></div>
+            <a id="activoty-bottom-btn" href="javascript:;" target="_blank" onclick="closeAd()">
+            </a>
+        </div>
+    </div>
+</div>
+    <!-- 修改 -->
+    <!-- var special = GlobalCache.ActivitySpecialDate.ToString("yyyy/MM/dd HH:mm:ss"); -->
+    <!-- 添加返场时间 -->
+
+<script>
+
+    window.onload = function () {
+        displayAd();
+
+    };
+
+
+    var activityPopConfig = {
+        excludePaths: [
+            /^\/(A|a)ccount/, /^\/(C|c)loud/, /^\/(F|f)ee/, /^\/(L|l)og/, /^\/six/, /^\/pay/, /^\/(A|a)ctivity/
+        ],
+        imgs: {
+            pre: "/images/act/202112/pc_pre.jpeg",
+            dayOne: "/images/act/202112/pc_first.jpeg",
+            afterDayOne: "/images/act/202112/pc_activity.jpeg",
+            // afterDayOne: "/images/act/202012/pc_afterDayOne_pop.png"
+            returnDay: "/images/act/202112/pc_fc.jpeg"
+        }
+    };
+
+    var currTime = new Date().getTime();
+    var activityPreStart = new Date("2021/12/07 22:30:00").getTime()
+    // 预热结束的时间就是活动开始的时间
+    var activityPreEnd = new Date("2021/12/14 15:00:00").getTime()
+    // 首日结束的时间就是正常活动日开始的时间
+    var activityDayOneEnd = new Date("2021/12/16 00:00:00").getTime()
+    // 正常活动日结束的时间就是返场开始的时间
+    // 添加
+    var activityNormalEnd = new Date("2021/12/22 00:00:00").getTime()
+    var activityEnd = new Date("2021/12/31 23:59:59").getTime()
+    // 检测是否看过广告，若有则不显示广告，否则3S后显示广告
+    function displayAd() {
+        var promotionAd = document.getElementById("promotionAd");
+        var btn = document.getElementById("activoty-bottom-btn");
+        var imgUrl;
+        var isShow = false;
+        if (currTime < activityPreStart)
+            return;
+        if (currTime < activityPreEnd) {
+            //预热时间
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.pre;
+            if (!localStorage[activityPreEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.dayOne;
+            if (!localStorage[activityDayOneEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.afterDayOne;
+            if (!localStorage[activityNormalEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.returnDay;
+            if (!localStorage[activityEnd]) {
+                isShow = true
+            }
+        }
+
+        if (isShow && checkPathValid()) {
+            // 为避免广告图片加载卡顿，应先加载后显示
+            promotionAd.setAttribute("src", imgUrl);
+            setTimeout(function () {
+                $("#adModal").modal({
+                    backdrop: "static",
+                    keyboard: false
+                });
+            }, 500);
+        }
+
+
+    }
+
+    // 校验当前path，个人中心下属页面及支付页面不显示
+    function checkPathValid() {
+        var currPath = window.location.pathname;
+        for (var i of activityPopConfig.excludePaths) {
+            if (i.test(currPath)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 关闭广告弹窗
+    function closeAd() {
+        if (currTime < activityPreEnd) {
+            //预热时间
+            localStorage[activityPreEnd] = true
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            localStorage[activityDayOneEnd] = true
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            localStorage[activityNormalEnd] = true
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            isShow = localStorage[activityEnd] = true
+        }
+
+        $("#adModal").modal("hide");
+    }
+</script> 
+    
+	<link rel="alternate" href="https://www.octoparse.com/" hreflang="en-us">
+    <link rel="alternate" href="https://www.octoparse.jp/" hreflang="ja-jp">
+    <link rel="alternate" href="../index1.html" hreflang="zh-cn">
+	<link rel="alternate" href="https://www.octoparse.es/" hreflang="es-es">
+	<link rel="alternate" href="https://www.octoparse.fr/" hreflang="fr-fr">
+	<link rel="alternate" href="https://www.octoparse.de/" hreflang="de">
+		<!--百度统计-异步-->
+        <script type="text/javascript">
+            var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+            document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F7515d7bccdb62c11803f90ca8071f05b' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+    <!--百度统计-异步-->
+        <script type='text/javascript'>
+            var _vds = _vds || [];
+            window._vds = _vds;
+            (function () {
+                _vds.push(['setAccountId', 'a7c11699fcd726cf']);
+                (function () {
+                    var vds = document.createElement('script');
+                    vds.type = 'text/javascript';
+                    vds.async = true;
+                    vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'assets.growingio.com/vds.js';
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(vds, s);
+                })();
+            })();
+        </script>
+    <!--用户来源统计-->
+        <script type="text/javascript">
+
+            var utm_campaign = getQueryStringMaster("utm_campaign");
+            var utmFlag = 0;
+            if (utm_campaign != null && utm_campaign != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_campaign=" + encodeURI(utm_campaign) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_medium = getQueryStringMaster("utm_medium");
+            if (utm_medium != null && utm_medium != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_medium=" + encodeURI(utm_medium) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_source = getQueryStringMaster("utm_source");
+            if (utm_source != null && utm_source != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_source=" + encodeURI(utm_source) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_content = getQueryStringMaster("utm_content");
+            if (utm_content != null && utm_content != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_content=" + encodeURI(utm_content) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_term = getQueryStringMaster("utm_term");
+            if (utm_term != null && utm_term != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_term=" + encodeURI(utm_term) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_url = decodeURI(window.location);
+            if (utm_url != null && utm_url != "") {
+                if (getCookie("url") == "") {
+                    var exp = new Date();
+                    exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                    document.cookie = "url=" + encodeURI(utm_url) + ";expires=" + exp.toGMTString();
+                }
+            }
+
+            var referrerUrl = document.referrer;
+            var keys = ["wd", "q", "query", "word"];
+            var searchWord = "";
+            for (var i = 0; i < keys.length; i++) {
+                var reg = new RegExp("(^|&)" + keys[i] + "=([^&]*)(&|$)", "i");
+                var r = referrerUrl.substr(1).match(reg);
+                if (r && r[2]) {
+                    searchWord = decodeURI(r[2]);
+                    var exp = new Date();
+                    exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                    document.cookie = "search_word=" + encodeURI(searchWord) + ";expires=" + exp.toGMTString();// 写入Cookie，注册时使用
+                    break;
+                }
+            }     
+            if (searchWord != "") {
+                utmFlag = 1;
+            }
+            else
+            {
+                if (getCookie("search_word") != "") {
+                     searchWord = getCookie("search_word");
+                     utmFlag = 1;
+               }
+            }
+
+            if (utmFlag == 1) {
+                $.ajax({
+                    url: "/Common/AjaxPostUtm",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        "utm_campaign": utm_campaign,
+                        "utm_medium": utm_medium,
+                        "utm_source": utm_source,
+                        "utm_content": utm_content,
+                        "utm_term": utm_term,
+                        "utm_url": utm_url,
+                        "search_word": searchWord
+                    },
+                });
+            }
+
+            function getCookie(Name) {
+                var search = Name + "="
+                if (document.cookie.length > 0) {
+                    offset = document.cookie.indexOf(search)
+                    if (offset != -1) {
+                        offset += search.length
+                        end = document.cookie.indexOf(";", offset)
+                        if (end == -1) end = document.cookie.length
+                        return unescape(document.cookie.substring(offset, end))
+                    }
+                    else return ""
+                }
+            }
+
+            function getQueryStringMaster(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return decodeURI(r[2]); return null;
+            }
+
+            $(document).ready(function () {
+                var jihuoH = $('#jihuoH').val();
+                if (jihuoH == '0') {
+                    $('#jihuop').show();
+                }
+                logFromChannelCookie();
+                function logFromChannelCookie() {
+                    var fromChannel = getQueryStringMaster("fromchannel");
+                    if (fromChannel) {
+                        var exp = new Date();
+                        exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24 * 7);//过期时间1天
+                        document.cookie = "_bzytg=" + fromChannel + ";expires=" + exp.toGMTString();
+                    }
+                }
+            });
+
+        </script>
+    <!--用户来源统计-->
+			
+
+
+    
+    
+    <link rel="stylesheet" href="../static/css/h5.css">
+    <link rel="stylesheet" href="../static/css/jquery-ui.css">
+    <script src="../static/js/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#accordion").accordion();
+        });
+    </script>
+    <style type="text/css">
+        .down-top {
+            overflow: hidden;
+            width: 100%;
+            margin-bottom: 50px;
+        }
+
+        .heading {
+            margin-bottom: 60px;
+        }
+
+            .heading h3 {
+                margin: 0;
+                text-align: center;
+                font-size: 24px;
+                font-weight: normal;
+            }
+
+            .heading p {
+                color: #999;
+                margin: 10px 0 0;
+                font-size: 14px;
+            }
+
+            .heading a {
+                margin: 0 10px;
+                padding: 9px 33px;
+                font-size: 18px;
+                border-radius: 2px;
+                margin-top: 18px;
+            }
+
+        .bodying {
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .computer {
+            margin: 0 auto;
+            display: inline-block;
+            position: relative;
+            margin-bottom: -5px;
+        }
+
+            .computer img {
+                display: block;
+            }
+
+        .computer-move {
+            position: absolute;
+            overflow: hidden;
+            left: 0;
+            top: 30%;
+        }
+
+        .cm-1 {
+            overflow: hidden;
+            float: left;
+            height: 136px;
+        }
+
+        .cm-jt {
+            padding: 0 20px;
+            padding-top: 50px;
+        }
+
+        .cm-t {
+            padding-top: 4px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .cm-1 {
+                width: 20%;
+                overflow: hidden;
+                float: left;
+                height: 136px;
+            }
+
+            .cm-jt {
+                padding: 0 10px;
+                padding-top: 10px;
+            }
+
+            .cm-t {
+                padding-top: 4px;
+            }
+        }
+
+        .profile-banner {
+            width: 1163px;
+            margin: 10px auto;
+            margin-bottom: 20px;
+            display: block;
+        }
+        /*7.0 NEW btn style*/
+        .btn-light-blue,
+        .btn-blue {
+            position: relative;
+        }
+
+        .btn-light-blue {
+            background: #2095f2;
+            border-color: #2095f2;
+            color: #fff !important;
+        }
+
+            .btn-light-blue:hover,
+            .btn-light-blue:focus {
+                background: #005299;
+                border-color: #005299;
+                color: #fff !important;
+            }
+
+        .down-top .dl-banner {
+            position: relative;
+            background: linear-gradient( 149deg, rgba(243, 249, 255, 1) 0%, rgba(232, 241, 255, 1) 100% );
+            margin-bottom: 50px;
+        }
+
+            .down-top .dl-banner .dl-container {
+                display: flex;
+                background: #f0f3f7;
+                width: 1920px;
+                position: absolute;
+                left: 50%;
+                margin-left: -960px;
+                top: 0;
+                /*top: 50%;*/
+                height:743px;
+                margin-top: 124px;
+            }
+
+                .down-top .dl-banner .dl-container .dl-mid {
+                    flex: 1;
+                    background: linear-gradient( 149deg, rgba(243, 249, 255, 1) 0%, rgba(232, 241, 255, 1) 100% );
+                }
+
+                    .down-top .dl-banner .dl-container .dl-mid .dl-mid-logo {
+                        text-align: center;
+                        margin-bottom: 24px;
+                    }
+
+                    .down-top .dl-banner .dl-container .dl-mid .dl-mid-title {
+                        color: #000000;
+                        font-size: 38px;
+                        text-align: center;
+                        margin-bottom: 60px;
+                    }
+
+                    .down-top .dl-banner .dl-container .dl-mid .dl-mid-subtitle {
+                        color: #000000;
+                        font-size: 20px;
+                        text-align: center;
+                        margin-bottom: 40px;
+                    }
+
+                    .down-top .dl-banner .dl-container .dl-mid .dl-mid-update {
+                        color: #999999;
+                        font-size: 12px;
+                        text-align: center;
+                        margin: 0 auto;
+                        font-weight: 500;
+                    }
+
+                    .down-top .dl-banner .dl-container .dl-mid .dl-mid-btnbox {
+                        overflow: hidden;
+                        width: 434px;
+                        margin: 0 auto;
+                        margin-bottom: 24px;
+                    }
+
+                    .down-top .dl-banner .dl-container .dl-mid .dl-mid-instruction {
+                        display: flex;
+                        align-items: center;
+                        width: 300px;
+                        margin: 0 auto;
+                        margin-bottom: 8px;
+                        padding-left: 5px;
+                        margin-bottom: 100px;
+                    }
+
+                        .down-top .dl-banner .dl-container .dl-mid .dl-mid-instruction a {
+                            color: #555555;
+                        }
+
+                            .down-top .dl-banner .dl-container .dl-mid .dl-mid-instruction a:hover {
+                                color: #025bdd;
+                            }
+
+                            .down-top .dl-banner .dl-container .dl-mid .dl-mid-instruction a img {
+                                margin-right: 6px;
+                            }
+
+                            .down-top .dl-banner .dl-container .dl-mid .dl-mid-instruction a i {
+                                font-size: 16px;
+                                margin-right: 6px;
+                                line-height: unset;
+                            }
+
+                            .down-top .dl-banner .dl-container .dl-mid .dl-mid-instruction a span {
+                                font-size: 14px;
+                                cursor: pointer;
+                            }
+
+                    .down-top .dl-banner .dl-container .dl-mid .dl-mid-arrow {
+                        text-align: center;
+                        margin-bottom: 147px;
+                    }
+
+                        .down-top .dl-banner .dl-container .dl-mid .dl-mid-arrow img {
+                            cursor: pointer;
+                            opacity: 0.5;
+                            transition: all 0.5s;
+                        }
+
+                            .down-top .dl-banner .dl-container .dl-mid .dl-mid-arrow img:hover {
+                                opacity: 1;
+                                transition: all 0.5s;
+                            }
+
+        .dl-mid-btnbox {
+            display: flex;
+            height: 60px;
+        }
+
+        .dl-mid-btnbox a {
+            width: 200px;
+            height: 50px;
+            margin-right: 17px;
+            border-radius: 25px;
+            font-weight: bold;
+            line-height: 50px;
+            font-size: 16px;
+            font-family: PingFang-SC-Bold, PingFang-SC;
+            text-align: center;
+            color: rgba(2, 92, 223, 1);
+        }
+
+        .btn-download {
+            color: rgba(255, 255, 255, 1);
+            background: rgba(2, 92, 223, 1);
+            box-shadow: 0px 2px 4px 0px rgba(48, 73, 155, 0.46);
+        }
+        
+        .btn-download:hover {
+            cursor: pointer;
+            background: rgb(2, 84, 204);
+        }
+    
+        .btn-download span {
+            color: rgba(255, 255, 255, 1);
+        }
+
+        .btn-common {
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0px 4px 8px 0px rgba(161, 189, 245, 0.63);
+        }
+        .btn-common:hover {
+            cursor: pointer;
+            background: rgb(244, 249, 255)
+        }
+
+        .mac-download {
+            width: 200px;
+            height: 40px;
+            text-align: center;
+            margin: 100px auto;
+        }
+
+            .mac-download img {
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+                margin-bottom: 7px;
+            }
+
+            .mac-download a {
+                width: 128px;
+                height: 22px;
+                font-size: 16px;
+                font-family: PingFang-SC-Medium, PingFang-SC;
+                font-weight: 500;
+                color: rgba(2, 92, 223, 1);
+                line-height: 40px;
+                cursor: pointer;
+            }
+
+        .system-icon {
+            width: 14px;
+            height: 16px;
+            margin-right: 15px;
+            margin-bottom: 3px;
+        }
+
+        .container {
+            width: 100%;
+            margin-top: 82px;
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .system-require {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .container p {
+            font-size: 22px;
+            font-family: PingFang-SC-Medium, PingFang-SC;
+            font-weight: 500;
+            color: rgba(28, 29, 30, 1);
+            margin: 40px 0 14px 0;
+        }
+
+        .system-detail {
+            width: 100%;
+            background: rgba(243, 247, 251, 1);
+            border-radius: 10px;
+            padding: 15px 0 10px 0;
+        }
+
+            .system-detail li {
+                font-size: 14px;
+                font-family: PingFang-SC-Regular, PingFang-SC;
+                font-weight: 400;
+                color: rgba(94, 99, 124, 1);
+                padding: 0px 0px 5px 58px;
+            }
+
+        .version-accordion h3 {
+            height: 56px;
+            background: rgba(243,247,251,1);
+            border-radius: 10px;
+            font-size: 16px !important;
+            font-family: PingFang-SC-Bold,PingFang-SC;
+            font-weight: bold;
+            color: rgba(94,99,124,1);
+            line-height: 38px;
+            margin-top: 8px !important;
+            border: unset !important;
+        }
+        h3[aria-expanded="true"] {
+            border-radius: 10px 10px 0 0;
+        }
+        .version-accordion h3 span{
+            
+        }
+        .version-accordion h3 small>span {
+            margin-left: 16px;
+            font-size:16px;
+            font-family:PingFang-SC-Regular,PingFang-SC;
+            font-weight:400;
+            color:rgba(94,99,124,1);
+        }
+        .version-accordion > div{
+            padding-left: 50px !important;
+            background: rgba(243,247,251,1);
+            border: unset !important;
+        }
+        /*
+        .version-accordion > div > ul > li > ul > li {
+            font-size: 14px;
+            color: #555555;
+            font-weight: bold;
+            margin: 0px 0px 24px 0px;
+        }*/
+        
+        .version-accordion > div > ul > li > ul > li {
+            font-size: 18px;
+            font-family: PingFang-SC-Medium, PingFang-SC;
+            font-weight: 500;
+            color: rgba(28, 29, 30, 1);
+        }
+        .version-accordion > div > ul > li > ul > li > ul {
+            line-height: 24px;
+            font-weight: normal;
+            list-style: square;
+            margin: 20px 0 24px 0;
+            font-size: 14px;
+            font-family: PingFang-SC-Regular, PingFang-SC;
+            font-weight: 400;
+            color: rgba(94, 99, 124, 1);
+        }
+        .detail-content {
+            background:rgba(243,247,251,1);
+            border-radius:0px 0px 10px 10px;
+            border: unset !important;
+            padding-left: 50px !important;
+        }
+        .detail-header {
+            font-size: 14px;
+            color: #555555;
+            font-weight: bold;
+            margin: 0px 0px 24px 0px;
+        }
+        .mac-download > a:hover{
+            color:rgb(19,67,156,1);
+        }
+    </style>
+
+    <style>
+    .reco-link {
+        height: 30px;
+        line-height: 30px;
+        width: 100%;
+        margin-top: 45px;
+    }
+
+    .reco-link ul {
+        margin: 0 auto;
+        height: 100%;
+        width: 800px;
+        padding-top: 7px;
+    }
+
+    .reco-link ul li {
+        float: left;
+        margin-right: 15px;
+        font-size:14px;
+        font-family:PingFang-SC-Medium,PingFang-SC;
+        font-weight:500;
+        color:rgba(255,255,255,1);
+    }
+    .reco-link ul li a:hover {
+        color: rgba(255,255,255,1);
+    }
+    </style>
+
+</head>
+<body>
+
+
+
+<style>
+    .site-header-pro:hover .sub-list {
+        height: 360px !important;
+    }
+
+    .site-header .site-tutorial:hover .solution-sub-list {
+        display: block;
+        height: 130px;
+    }
+
+.site-header .site-tutorial2:hover .solution-sub-list {
+        display: block;
+        height: 84px;
+    }
+
+  .site-header .site-tutorial3:hover .solution-sub-list {
+        display: block;
+        height: 300px;
+    }
+
+</style>
+<header class="site-header">
+    <ul class="site-nav" style="width: 1045px">
+        <li class="site-bzy-logo">
+            <a href="../index1.html"></a>
+        </li>
+        <li class='site-header-pro'>
+            <a href="javascript:;">
+                产品
+                <i class="icon icon-angle-down"></i>
+            </a>
+            <ul class="pro-sub-list sub-list">
+                <li>
+                    <a href="../about.html">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>关于八爪鱼</p>
+                            <p>人人可用的数据采集器</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="../enterprise/index.html" data-utm="1" target="_blank">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>八爪鱼企业版</p>
+                            <p>企业级数据采集解决方案</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="../qiyeban/index.html" data-utm="1">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>八爪鱼私有化部署版</p>
+                            <p>支持内网采集与OEM集成</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="../edu.html" data-utm="1">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>教育公益计划</p>
+                            <p>教学科研的大数据助手</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" target="_blank">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>客户体验管理</p>
+                            <p>聚合全网客户声音</p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="../plan.html">价格</a>
+        </li>
+        <li class='site-header-solution site-tutorial3'>
+            <a href="javascript:;">
+                解决方案
+                <i class="icon icon-angle-down"></i>
+            </a>
+            <ul class="solution-sub-list sub-list" style="left: -100%;">
+                <li>
+                    <a href="" data-utm="1" target="_blank" style="font-size: 16px;color: #919194;font-weight: bold;">数据采集</a>
+                </li>
+                <li>
+                    <a href="../newscrawler/index.html" data-utm="1" target="_blank">新闻采集</a>
+                </li>
+                <li>
+                    <a href="../ecdatacrawler/index.html" data-utm="1" target="_blank">电商采集</a>
+                </li>
+                <li>
+                    <a href="../socialmediacrawler/index.html" data-utm="1" target="_blank">社交采集</a>
+                </li>
+                <li>
+                    <a href="../realestate/index.html" data-utm="1" target="_blank">房产采集</a>
+                </li>
+                <li>
+                    <a href="../zhaotoubiao/index.html" data-utm="1" target="_blank">招投标采集</a>
+                </li>
+				
+
+
+                
+            </ul>
+            <ul class="solution-sub-list sub-list">
+                <li>
+                    <a href="" data-utm="1" target="_blank" style="font-size: 16px;color: #919194;font-weight: bold;">场景应用</a>
+                </li>
+				<li>
+                    <a href="../marketresearch/index.html" data-utm="1" target="_blank">市场研究</a>
+                </li>
+              
+                <li>
+                    <a href="../dscomment/index.html" data-utm="1" target="_blank">评论分析</a>
+                </li>
+                <li>
+                    <a href="../gaoxiaojiaoyu/index.html" data-utm="1" target="_blank">高校教育</a>
+                </li>
+                <li>
+                    <a href="../jingwaiyuqing/index.html" data-utm="1" target="_blank">境外舆情</a>
+                </li>				 
+				<li>
+                    <a href="../cross-border-electricity/index.html" data-utm="1" target="_blank">跨境电商采集</a>
+                </li>
+				<li>
+                    <a href="../voc/index.html" data-utm="1" target="_blank">客户之声</a>
+                </li>
+				
+                
+
+
+            </ul>
+        </li>
+
+
+
+<li class='site-header-solution site-tutorial2'>
+            <a href="javascript:;">
+                采集模板
+                <i class="icon icon-angle-down"></i>
+            </a>           
+            <ul class="solution-sub-list sub-list">               				
+                <li>
+                    <a href="../kjdscjmb/index.html" data-utm="1" target="_blank">跨境电商</a>
+                </li>  
+				<li>
+                    <a href="../news/index.html" data-utm="1" target="_blank">新闻传媒</a>
+                </li>		
+			
+            </ul>
+        </li>
+
+
+
+        <li>
+            <a href="">软件下载</a>
+        </li>
+        
+        <li class='site-header-solution site-tutorial'>
+            <a href="../tutorialIndex8.html">
+                教程与帮助
+                <i class="icon icon-angle-down"></i>
+            </a>
+            <div>
+                <ul class="edu-sub-list solution-sub-list sub-list sub-list-edu">
+                    <li class="sub-edu">
+                        <a href="../tutorial8/hottutorial.html">
+                            <div class="sub-item">
+                                <p>图文教程</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../tutorial8/videotutorial.html">
+                            <div class="sub-item">
+                                <p>视频教程</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../tutorial8/faq.html">
+                            <div class="sub-item sub-edu-item">
+                                <p>常见问题</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+        <li></li>
+        <li class='site-header-solution site-tutorial2'>
+            
+			 <a href="javascript:;">
+                关于我们
+                <i class="icon icon-angle-down"></i>
+            </a>           
+            <ul class="solution-sub-list sub-list">               				
+                <li>
+                    <a href="../intro.html" data-utm="1">关于我们</a>
+                </li>  
+				<li>
+                    <a href="../contactus.html" data-utm="1">联系我们</a>
+                </li>				
+            </ul>
+        </li>
+        
+<style>
+    .site-header .signin, .site-header .signup {
+        width: 48px;
+        height: 26px;
+        display: inline-block !important;
+        vertical-align: middle;
+        border-radius: 3px;
+        line-height: 26px;
+        border: 1px solid #D9D9D9;
+        background: #FAFAFA;
+    }
+
+        .site-header .signin:hover, .site-header .signup:hover {
+            color: #0059B8;
+            border: 1px solid #0059B8;
+        }
+
+        .site-header .signup:hover {
+            color: #fff;
+            background: #0059B8;
+        }
+
+    .site-header .signup {
+        color: #fff;
+        background: #096ACF;
+        border-color: #096ACF;
+    }
+</style>
+﻿    <ul class="right-bar">
+        <li class="right-bar"><a href="../Account/Login.html" class="signin">登录</a></li>
+        <li class="s" style="width: 10px"><a href="javascript:;">&nbsp;</a></li>
+        <li><a class="signup" href="../account/register.html">注册</a></li>
+    </ul>
+
+    </ul>
+</header>
+
+<style>
+    #promotionAd{
+        border-radius: 1.5%;
+        width: 100%;
+    }
+    .modal-contents{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 41.68%;
+        height: 53.4%;
+        /* background-color: pink; */
+    }
+    .promotion-ad-wrapper {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .activoty-cancel-icon {
+        position: absolute;
+        width: 2.7%;
+        height: 4%;
+        right: 1.6%;
+        top: 3%;
+        cursor: pointer;
+        /* transition: opacity 0.3s ease; */
+    }
+
+        /* .activoty-cancel-icon:hover {
+            opacity: 0.5;
+        } */
+
+    .activoty-bottom-btn {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 20.7%;
+        padding: 3.3% 15%;
+        /* border-radius: 3px; */
+        cursor: pointer;
+        /* background-color: #f6fc63; */
+        /* transition: background-color 0.3s ease; */
+    }
+    .activoty-bottom-btn-after{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 12.7%;
+        padding: 3.3% 15%;
+        cursor: pointer;
+    }
+
+        /* .activoty-bottom-btn:hover {
+            background-color: #ffda24;
+        } */
+
+        /* .activoty-bottom-btn span {
+            font-size: 20px;
+            line-height: 1;
+            font-weight: bold;
+            color: #3620b8;
+        } */
+</style>
+<div class="modal fade" tabindex="-1" id="adModal" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-contents">
+        <div class="promotion-ad-wrapper">
+            <img id="promotionAd" src="">
+            <div class="activoty-cancel-icon" onclick="closeAd()"></div>
+            <a id="activoty-bottom-btn" href="javascript:;" target="_blank" onclick="closeAd()">
+            </a>
+        </div>
+    </div>
+</div>
+    <!-- 修改 -->
+    <!-- var special = GlobalCache.ActivitySpecialDate.ToString("yyyy/MM/dd HH:mm:ss"); -->
+    <!-- 添加返场时间 -->
+
+<script>
+
+    window.onload = function () {
+        displayAd();
+
+    };
+
+
+    var activityPopConfig = {
+        excludePaths: [
+            /^\/(A|a)ccount/, /^\/(C|c)loud/, /^\/(F|f)ee/, /^\/(L|l)og/, /^\/six/, /^\/pay/, /^\/(A|a)ctivity/
+        ],
+        imgs: {
+            pre: "/images/act/202112/pc_pre.jpeg",
+            dayOne: "/images/act/202112/pc_first.jpeg",
+            afterDayOne: "/images/act/202112/pc_activity.jpeg",
+            // afterDayOne: "/images/act/202012/pc_afterDayOne_pop.png"
+            returnDay: "/images/act/202112/pc_fc.jpeg"
+        }
+    };
+
+    var currTime = new Date().getTime();
+    var activityPreStart = new Date("2021/12/07 22:30:00").getTime()
+    // 预热结束的时间就是活动开始的时间
+    var activityPreEnd = new Date("2021/12/14 15:00:00").getTime()
+    // 首日结束的时间就是正常活动日开始的时间
+    var activityDayOneEnd = new Date("2021/12/16 00:00:00").getTime()
+    // 正常活动日结束的时间就是返场开始的时间
+    // 添加
+    var activityNormalEnd = new Date("2021/12/22 00:00:00").getTime()
+    var activityEnd = new Date("2021/12/31 23:59:59").getTime()
+    // 检测是否看过广告，若有则不显示广告，否则3S后显示广告
+    function displayAd() {
+        var promotionAd = document.getElementById("promotionAd");
+        var btn = document.getElementById("activoty-bottom-btn");
+        var imgUrl;
+        var isShow = false;
+        if (currTime < activityPreStart)
+            return;
+        if (currTime < activityPreEnd) {
+            //预热时间
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.pre;
+            if (!localStorage[activityPreEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.dayOne;
+            if (!localStorage[activityDayOneEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.afterDayOne;
+            if (!localStorage[activityNormalEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.returnDay;
+            if (!localStorage[activityEnd]) {
+                isShow = true
+            }
+        }
+
+        if (isShow && checkPathValid()) {
+            // 为避免广告图片加载卡顿，应先加载后显示
+            promotionAd.setAttribute("src", imgUrl);
+            setTimeout(function () {
+                $("#adModal").modal({
+                    backdrop: "static",
+                    keyboard: false
+                });
+            }, 500);
+        }
+
+
+    }
+
+    // 校验当前path，个人中心下属页面及支付页面不显示
+    function checkPathValid() {
+        var currPath = window.location.pathname;
+        for (var i of activityPopConfig.excludePaths) {
+            if (i.test(currPath)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 关闭广告弹窗
+    function closeAd() {
+        if (currTime < activityPreEnd) {
+            //预热时间
+            localStorage[activityPreEnd] = true
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            localStorage[activityDayOneEnd] = true
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            localStorage[activityNormalEnd] = true
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            isShow = localStorage[activityEnd] = true
+        }
+
+        $("#adModal").modal("hide");
+    }
+</script>
+
+    <div class="content" style="margin-top:64px;overflow:hidden;background:rgba(247,251,255,1);">
+        
+
+
+
+
+<div class="down-top" style="margin-bottom: 40px;">
+    <div class="dl-banner">
+        <div class="dl-container">
+            <!-- <div class="dl-left">
+                      <img src="/image/download/banner-left.png"/>
+                  </div> -->
+            <div class="dl-mid">
+                <div class="dl-mid-logo">
+                    <img style="height:100px;width:100px;" src="../static/picture/banner-logo.png">
+                </div>
+                <div class="dl-mid-title">
+                    八爪鱼Windows客户端下载
+                </div>
+
+                <div class="dl-mid-btnbox">
+                    <a class="btn-download" href="javascript:;">
+                        <span>V8.4.6版本</span>
+                    </a>
+                    <a class="btn-showbeta btn-common" href="javascript:;" target="_blank">V8.5.0（加速体验版）</a>
+                    <a class="btn-common" href="../account/register.html" target="_blank">免费注册</a>
+                </div>
+                <div class="dl-mid-instruction">
+                    <div class="dl-mid-update">
+                        软件版本：V8.5.0（加速体验版） 更新日期：
+                        2022年01月26日<br><img src="../static/picture/sec.png">八爪鱼软件已通过360安全检测，请放心使用!
+                    </div>
+                </div>
+                <div class="mac-download">
+                    <img src="../static/picture/macX2.png"><a href="javascript:;">八爪鱼Mac客户端</a>
+                </div>
+                <div class="dl-mid-arrow">
+                    <img style="height:32px;width:32px;" id="dl_arrow" src="../static/picture/arrow.png">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="dl_attention">
+        <div class="system-require">
+            <p>
+                <img src="../static/picture/windows-fill2x.png" class="system-icon">系统要求
+            </p>
+            <div class="system-detail">
+                <ol>
+                    <li>1. Win7 / 8 / 8.1 / 10（x64位）</li>
+                    <li>2. XP系统或32位系统，<a style="color: #0064cd;" href="javascript:;">请下载安装7版本</a></li>
+                </ol>
+                
+            </div>
+        </div>
+        <div class="system-require">
+            <p><img src="../static/picture/windows-fill2x.png" class="system-icon">安装步骤</p>
+            <div class="system-detail">
+                <ol>
+                    <li>1. 下载八爪鱼采集器安装文件（.exe）</li>
+                    <li>2. 双击.exe文件，开始安装</li>
+                    <li>3. 安装完成后，在开始菜单或桌面上找到八爪鱼采集器快捷方式</li>
+                    <li>4. 启动八爪鱼采集器，使用您的账号登录（还没有账号？<a style="color: #0064cd;" href="../account/register.html">点击免费注册）</a></li>
+                    <li>- 安装不成功？<a style="color: #0064cd;" href="javascript:;">查看常见安装问题</a></li>
+                </ol>
+                
+            </div>
+        </div>
+        <p style="margin: 40px 0 14px 0;"><img src="../static/picture/windows-fill2x.png" class="system-icon">更新记录</p>
+        <div id="accordion" class="version-accordion">
+            
+    <h3>
+        <span>V8.5.0</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2022-01-26</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>任务配置模块
+<ul>
+<li>新增字段配置的“时区格式化”功能</li>
+<li>新增字段配置的"任务源网址"功能</li>
+<li>新增任务设置的切换“云采集IP区域"功能</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="" data-list="bullet1">任务列表模块
+<ul>
+<li class="" data-list="bullet2">优化了排序、更新、筛选、查询结果反馈等</li>
+<li class="" data-list="bullet2">优化任务列表使用交互体验</li>
+</ul>
+</li>
+<li class="" data-list="bullet1">本地采集模块
+<ul>
+<li class="" data-list="bullet2">新增子任务采集完成日志</li>
+<li class="" data-list="bullet2">新增加速模式拆分循环项</li>
+<li class="" data-list="bullet2">优化采集面板使用交互体验</li>
+</ul>
+</li>
+<li>其他 
+<ul>
+<li class="" data-list="bullet2">解决了mac版安全认证的问题和10.13系统版本兼容问题</li>
+<li class="" data-list="bullet2">解决定时入库运行一段时间会停止问题</li>
+<li class="" data-list="bullet2">解决部分用户安装后客户端无法启动问题</li>
+<li>优化大文件导出失败的问题</li>
+<li>优化调整用户调研问卷策略</li>
+<li>优化修复已知的bug、性能、体验问题</li>
+</ul>
+</li>
+<li class="" data-list="bullet2">
+<div class="okr-block-clipboard" data-okr="%7B%22okrDelta%22%3A%5B%7B%22lineType%22%3A%22bullet%22%2C%22lineOptions%22%3A%7B%22level%22%3A2%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%22%E2%98%85%E2%98%85%E2%98%85%E5%85%AB%E7%88%AA%E9%B1%BC%E5%9B%A2%E9%98%9F%E6%8F%90%E5%89%8D%E7%A5%9D%E7%A6%8F%E6%89%80%E6%9C%89%E7%94%A8%E6%88%B7%E6%9C%8B%E5%8F%8B%E4%BB%AC%EF%BC%9A2022%E5%B9%B4%E6%96%B0%E5%B9%B4%E5%BF%AB%E4%B9%90%E3%80%81%E8%99%8E%E5%B9%B4%E5%A4%A7%E5%90%89%E5%A4%A7%E5%88%A9%E2%98%85%E2%98%85%E2%98%85%22%7D%7D%5D%7D%5D%2C%22businessKey%22%3A%22lark-doc%22%7D">★★★八爪鱼团队提前祝福所有用户朋友们：2022年新年快乐、虎年大吉大利★★★</div>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.4.8</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2021-12-24</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li><span style="font-size: 14pt;"><span style="font-size: 14pt;">本地采集</span></span>
+<ul>
+<li>
+<div class="okr-block-clipboard" data-okr="%7B%22okrDelta%22%3A%5B%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%221%E3%80%81%E4%BC%98%E5%8C%96%E6%9C%AC%E5%9C%B0%E9%87%87%E9%9B%86%E7%95%8C%E9%9D%A2%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%222%E3%80%81%E6%96%B0%E5%A2%9E%E6%9C%AC%E5%9C%B0%E5%8A%A0%E9%80%9F%E9%87%87%E9%9B%86%E6%A8%A1%E5%BC%8F%22%7D%7D%5D%7D%5D%2C%22businessKey%22%3A%22lark-doc%22%7D">优化本地采集界面的使用体验</div>
+</li>
+<li>
+<div class="okr-block-clipboard" data-okr="%7B%22okrDelta%22%3A%5B%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%221%E3%80%81%E4%BC%98%E5%8C%96%E6%9C%AC%E5%9C%B0%E9%87%87%E9%9B%86%E7%95%8C%E9%9D%A2%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%222%E3%80%81%E6%96%B0%E5%A2%9E%E6%9C%AC%E5%9C%B0%E5%8A%A0%E9%80%9F%E9%87%87%E9%9B%86%E6%A8%A1%E5%BC%8F%22%7D%7D%5D%7D%5D%2C%22businessKey%22%3A%22lark-doc%22%7D">新增本地加速采集模式</div>
+</li>
+<li>
+<div class="okr-block-clipboard" data-okr="%7B%22okrDelta%22%3A%5B%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%22%E6%96%B0%E5%A2%9E%E6%9C%AC%E5%9C%B0%E9%87%87%E9%9B%86%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%224%E3%80%81%E6%96%B0%E5%A2%9E%E6%9A%82%E5%81%9C%E9%87%87%E9%9B%86%E5%8A%9F%E8%83%BD%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%225%E3%80%81%E6%96%B0%E5%A2%9E%E9%87%87%E9%9B%86%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%226%E3%80%81%E6%96%B0%E5%A2%9E%E6%9C%AC%E5%9C%B0%E9%87%87%E9%9B%86%E6%95%B0%E6%8D%AE%E8%87%AA%E5%8A%A8%E4%BA%91%E5%A4%87%E4%BB%BD%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%227%E3%80%81%E9%87%87%E9%9B%86%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%9A%84%E4%BC%98%E5%8C%96%22%7D%7D%5D%7D%5D%2C%22businessKey%22%3A%22lark-doc%22%7D">新增本地采集日志系统</div>
+</li>
+<li>
+<div class="okr-block-clipboard" data-okr="%7B%22okrDelta%22%3A%5B%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%22%E6%96%B0%E5%A2%9E%E6%9C%AC%E5%9C%B0%E9%87%87%E9%9B%86%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%224%E3%80%81%E6%96%B0%E5%A2%9E%E6%9A%82%E5%81%9C%E9%87%87%E9%9B%86%E5%8A%9F%E8%83%BD%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%225%E3%80%81%E6%96%B0%E5%A2%9E%E9%87%87%E9%9B%86%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%226%E3%80%81%E6%96%B0%E5%A2%9E%E6%9C%AC%E5%9C%B0%E9%87%87%E9%9B%86%E6%95%B0%E6%8D%AE%E8%87%AA%E5%8A%A8%E4%BA%91%E5%A4%87%E4%BB%BD%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%227%E3%80%81%E9%87%87%E9%9B%86%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%9A%84%E4%BC%98%E5%8C%96%22%7D%7D%5D%7D%5D%2C%22businessKey%22%3A%22lark-doc%22%7D">新增暂停采集功能</div>
+</li>
+<li>
+<div class="okr-block-clipboard" data-okr="%7B%22okrDelta%22%3A%5B%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%22%E6%96%B0%E5%A2%9E%E6%9C%AC%E5%9C%B0%E9%87%87%E9%9B%86%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%224%E3%80%81%E6%96%B0%E5%A2%9E%E6%9A%82%E5%81%9C%E9%87%87%E9%9B%86%E5%8A%9F%E8%83%BD%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%225%E3%80%81%E6%96%B0%E5%A2%9E%E9%87%87%E9%9B%86%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%226%E3%80%81%E6%96%B0%E5%A2%9E%E6%9C%AC%E5%9C%B0%E9%87%87%E9%9B%86%E6%95%B0%E6%8D%AE%E8%87%AA%E5%8A%A8%E4%BA%91%E5%A4%87%E4%BB%BD%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%227%E3%80%81%E9%87%87%E9%9B%86%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%9A%84%E4%BC%98%E5%8C%96%22%7D%7D%5D%7D%5D%2C%22businessKey%22%3A%22lark-doc%22%7D">新增采集历史记录</div>
+</li>
+<li>
+<div class="okr-block-clipboard" data-okr="%7B%22okrDelta%22%3A%5B%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%22%E6%96%B0%E5%A2%9E%E6%9C%AC%E5%9C%B0%E9%87%87%E9%9B%86%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%224%E3%80%81%E6%96%B0%E5%A2%9E%E6%9A%82%E5%81%9C%E9%87%87%E9%9B%86%E5%8A%9F%E8%83%BD%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%225%E3%80%81%E6%96%B0%E5%A2%9E%E9%87%87%E9%9B%86%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%226%E3%80%81%E6%96%B0%E5%A2%9E%E6%9C%AC%E5%9C%B0%E9%87%87%E9%9B%86%E6%95%B0%E6%8D%AE%E8%87%AA%E5%8A%A8%E4%BA%91%E5%A4%87%E4%BB%BD%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%227%E3%80%81%E9%87%87%E9%9B%86%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%9A%84%E4%BC%98%E5%8C%96%22%7D%7D%5D%7D%5D%2C%22businessKey%22%3A%22lark-doc%22%7D">新增本地采集数据自动云备份</div>
+</li>
+<li>
+<div class="okr-block-clipboard" data-okr="%7B%22okrDelta%22%3A%5B%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%22%E6%96%B0%E5%A2%9E%E6%9C%AC%E5%9C%B0%E9%87%87%E9%9B%86%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%224%E3%80%81%E6%96%B0%E5%A2%9E%E6%9A%82%E5%81%9C%E9%87%87%E9%9B%86%E5%8A%9F%E8%83%BD%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%225%E3%80%81%E6%96%B0%E5%A2%9E%E9%87%87%E9%9B%86%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%226%E3%80%81%E6%96%B0%E5%A2%9E%E6%9C%AC%E5%9C%B0%E9%87%87%E9%9B%86%E6%95%B0%E6%8D%AE%E8%87%AA%E5%8A%A8%E4%BA%91%E5%A4%87%E4%BB%BD%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%227%E3%80%81%E9%87%87%E9%9B%86%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%9A%84%E4%BC%98%E5%8C%96%22%7D%7D%5D%7D%5D%2C%22businessKey%22%3A%22lark-doc%22%7D">采集工作流的优化</div>
+</li>
+</ul>
+</li>
+<li><span style="font-size: 14pt;">任务列表</span>
+<ul>
+<li>
+<div class="okr-block-clipboard" data-okr="%7B%22okrDelta%22%3A%5B%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%22%E4%BC%98%E5%8C%96%E4%BB%BB%E5%8A%A1%E5%88%97%E8%A1%A8%E7%95%8C%E9%9D%A2%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%222%E3%80%81%E6%96%B0%E5%A2%9E%E7%BB%BC%E5%90%88%E7%AD%9B%E9%80%89%E5%8A%9F%E8%83%BD%E5%92%8C%E5%BF%AB%E6%8D%B7%E7%AD%9B%E9%80%89%E7%B3%BB%E7%BB%9F%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%223%E3%80%81%E6%96%B0%E5%A2%9E%E6%89%B9%E9%87%8F%E5%A4%8D%E5%88%B6%E4%BB%BB%E5%8A%A1%E5%8A%9F%E8%83%BD%EF%BC%8C%E6%89%B9%E9%87%8F%E5%81%9C%E6%AD%A2%E4%BA%91%E9%87%87%E9%9B%86%E5%8A%9F%E8%83%BD%EF%BC%8C%E6%89%B9%E9%87%8F%E6%9C%AC%E5%9C%B0%E5%AE%9A%E6%97%B6%E5%8A%9F%E8%83%BD%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%224%E3%80%81%E6%96%B0%E5%A2%9E%E6%9B%B4%E7%BB%86%E8%87%B4%E7%9A%84%E6%8E%92%E5%BA%8F%E6%96%B9%E5%BC%8F%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%225%E3%80%81%E6%96%B0%E5%A2%9E%E6%9C%AC%E5%9C%B0%E9%87%87%E9%9B%86%E6%AC%A1%E6%95%B0%EF%BC%8C%E9%87%87%E9%9B%86%E5%BC%80%E5%A7%8B%E6%97%B6%E9%97%B4%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%226%E3%80%81%E4%BA%91%E9%87%87%E9%9B%86%E4%BC%98%E5%85%88%E7%BA%A7%E8%B0%83%E6%95%B4%E4%B8%BA%E4%BD%8E%E4%B8%AD%E9%AB%98%E7%AD%89%E7%BA%A71-99%22%7D%7D%5D%7D%5D%2C%22businessKey%22%3A%22lark-doc%22%7D">优化任务列表界面的使用体验</div>
+</li>
+<li>
+<div class="okr-block-clipboard" data-okr="%7B%22okrDelta%22%3A%5B%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%22%E4%BC%98%E5%8C%96%E4%BB%BB%E5%8A%A1%E5%88%97%E8%A1%A8%E7%95%8C%E9%9D%A2%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%222%E3%80%81%E6%96%B0%E5%A2%9E%E7%BB%BC%E5%90%88%E7%AD%9B%E9%80%89%E5%8A%9F%E8%83%BD%E5%92%8C%E5%BF%AB%E6%8D%B7%E7%AD%9B%E9%80%89%E7%B3%BB%E7%BB%9F%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%223%E3%80%81%E6%96%B0%E5%A2%9E%E6%89%B9%E9%87%8F%E5%A4%8D%E5%88%B6%E4%BB%BB%E5%8A%A1%E5%8A%9F%E8%83%BD%EF%BC%8C%E6%89%B9%E9%87%8F%E5%81%9C%E6%AD%A2%E4%BA%91%E9%87%87%E9%9B%86%E5%8A%9F%E8%83%BD%EF%BC%8C%E6%89%B9%E9%87%8F%E6%9C%AC%E5%9C%B0%E5%AE%9A%E6%97%B6%E5%8A%9F%E8%83%BD%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%224%E3%80%81%E6%96%B0%E5%A2%9E%E6%9B%B4%E7%BB%86%E8%87%B4%E7%9A%84%E6%8E%92%E5%BA%8F%E6%96%B9%E5%BC%8F%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%225%E3%80%81%E6%96%B0%E5%A2%9E%E6%9C%AC%E5%9C%B0%E9%87%87%E9%9B%86%E6%AC%A1%E6%95%B0%EF%BC%8C%E9%87%87%E9%9B%86%E5%BC%80%E5%A7%8B%E6%97%B6%E9%97%B4%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%226%E3%80%81%E4%BA%91%E9%87%87%E9%9B%86%E4%BC%98%E5%85%88%E7%BA%A7%E8%B0%83%E6%95%B4%E4%B8%BA%E4%BD%8E%E4%B8%AD%E9%AB%98%E7%AD%89%E7%BA%A71-99%22%7D%7D%5D%7D%5D%2C%22businessKey%22%3A%22lark-doc%22%7D">新增综合筛选功能和快捷筛选系统</div>
+</li>
+<li>
+<div class="okr-block-clipboard" data-okr="%7B%22okrDelta%22%3A%5B%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%22%E4%BC%98%E5%8C%96%E4%BB%BB%E5%8A%A1%E5%88%97%E8%A1%A8%E7%95%8C%E9%9D%A2%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%222%E3%80%81%E6%96%B0%E5%A2%9E%E7%BB%BC%E5%90%88%E7%AD%9B%E9%80%89%E5%8A%9F%E8%83%BD%E5%92%8C%E5%BF%AB%E6%8D%B7%E7%AD%9B%E9%80%89%E7%B3%BB%E7%BB%9F%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%223%E3%80%81%E6%96%B0%E5%A2%9E%E6%89%B9%E9%87%8F%E5%A4%8D%E5%88%B6%E4%BB%BB%E5%8A%A1%E5%8A%9F%E8%83%BD%EF%BC%8C%E6%89%B9%E9%87%8F%E5%81%9C%E6%AD%A2%E4%BA%91%E9%87%87%E9%9B%86%E5%8A%9F%E8%83%BD%EF%BC%8C%E6%89%B9%E9%87%8F%E6%9C%AC%E5%9C%B0%E5%AE%9A%E6%97%B6%E5%8A%9F%E8%83%BD%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%224%E3%80%81%E6%96%B0%E5%A2%9E%E6%9B%B4%E7%BB%86%E8%87%B4%E7%9A%84%E6%8E%92%E5%BA%8F%E6%96%B9%E5%BC%8F%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%225%E3%80%81%E6%96%B0%E5%A2%9E%E6%9C%AC%E5%9C%B0%E9%87%87%E9%9B%86%E6%AC%A1%E6%95%B0%EF%BC%8C%E9%87%87%E9%9B%86%E5%BC%80%E5%A7%8B%E6%97%B6%E9%97%B4%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%226%E3%80%81%E4%BA%91%E9%87%87%E9%9B%86%E4%BC%98%E5%85%88%E7%BA%A7%E8%B0%83%E6%95%B4%E4%B8%BA%E4%BD%8E%E4%B8%AD%E9%AB%98%E7%AD%89%E7%BA%A71-99%22%7D%7D%5D%7D%5D%2C%22businessKey%22%3A%22lark-doc%22%7D">新增批量复制任务功能，批量停止云采集功能，批量本地定时功能</div>
+</li>
+<li>
+<div class="okr-block-clipboard" data-okr="%7B%22okrDelta%22%3A%5B%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%22%E4%BC%98%E5%8C%96%E4%BB%BB%E5%8A%A1%E5%88%97%E8%A1%A8%E7%95%8C%E9%9D%A2%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%222%E3%80%81%E6%96%B0%E5%A2%9E%E7%BB%BC%E5%90%88%E7%AD%9B%E9%80%89%E5%8A%9F%E8%83%BD%E5%92%8C%E5%BF%AB%E6%8D%B7%E7%AD%9B%E9%80%89%E7%B3%BB%E7%BB%9F%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%223%E3%80%81%E6%96%B0%E5%A2%9E%E6%89%B9%E9%87%8F%E5%A4%8D%E5%88%B6%E4%BB%BB%E5%8A%A1%E5%8A%9F%E8%83%BD%EF%BC%8C%E6%89%B9%E9%87%8F%E5%81%9C%E6%AD%A2%E4%BA%91%E9%87%87%E9%9B%86%E5%8A%9F%E8%83%BD%EF%BC%8C%E6%89%B9%E9%87%8F%E6%9C%AC%E5%9C%B0%E5%AE%9A%E6%97%B6%E5%8A%9F%E8%83%BD%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%224%E3%80%81%E6%96%B0%E5%A2%9E%E6%9B%B4%E7%BB%86%E8%87%B4%E7%9A%84%E6%8E%92%E5%BA%8F%E6%96%B9%E5%BC%8F%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%225%E3%80%81%E6%96%B0%E5%A2%9E%E6%9C%AC%E5%9C%B0%E9%87%87%E9%9B%86%E6%AC%A1%E6%95%B0%EF%BC%8C%E9%87%87%E9%9B%86%E5%BC%80%E5%A7%8B%E6%97%B6%E9%97%B4%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%226%E3%80%81%E4%BA%91%E9%87%87%E9%9B%86%E4%BC%98%E5%85%88%E7%BA%A7%E8%B0%83%E6%95%B4%E4%B8%BA%E4%BD%8E%E4%B8%AD%E9%AB%98%E7%AD%89%E7%BA%A71-99%22%7D%7D%5D%7D%5D%2C%22businessKey%22%3A%22lark-doc%22%7D">新增更细致的排序方式</div>
+</li>
+<li>
+<div class="okr-block-clipboard" data-okr="%7B%22okrDelta%22%3A%5B%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%22%E4%BC%98%E5%8C%96%E4%BB%BB%E5%8A%A1%E5%88%97%E8%A1%A8%E7%95%8C%E9%9D%A2%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%222%E3%80%81%E6%96%B0%E5%A2%9E%E7%BB%BC%E5%90%88%E7%AD%9B%E9%80%89%E5%8A%9F%E8%83%BD%E5%92%8C%E5%BF%AB%E6%8D%B7%E7%AD%9B%E9%80%89%E7%B3%BB%E7%BB%9F%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%223%E3%80%81%E6%96%B0%E5%A2%9E%E6%89%B9%E9%87%8F%E5%A4%8D%E5%88%B6%E4%BB%BB%E5%8A%A1%E5%8A%9F%E8%83%BD%EF%BC%8C%E6%89%B9%E9%87%8F%E5%81%9C%E6%AD%A2%E4%BA%91%E9%87%87%E9%9B%86%E5%8A%9F%E8%83%BD%EF%BC%8C%E6%89%B9%E9%87%8F%E6%9C%AC%E5%9C%B0%E5%AE%9A%E6%97%B6%E5%8A%9F%E8%83%BD%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%224%E3%80%81%E6%96%B0%E5%A2%9E%E6%9B%B4%E7%BB%86%E8%87%B4%E7%9A%84%E6%8E%92%E5%BA%8F%E6%96%B9%E5%BC%8F%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%225%E3%80%81%E6%96%B0%E5%A2%9E%E6%9C%AC%E5%9C%B0%E9%87%87%E9%9B%86%E6%AC%A1%E6%95%B0%EF%BC%8C%E9%87%87%E9%9B%86%E5%BC%80%E5%A7%8B%E6%97%B6%E9%97%B4%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%226%E3%80%81%E4%BA%91%E9%87%87%E9%9B%86%E4%BC%98%E5%85%88%E7%BA%A7%E8%B0%83%E6%95%B4%E4%B8%BA%E4%BD%8E%E4%B8%AD%E9%AB%98%E7%AD%89%E7%BA%A71-99%22%7D%7D%5D%7D%5D%2C%22businessKey%22%3A%22lark-doc%22%7D">新增本地采集次数，采集开始时间</div>
+</li>
+<li>
+<div class="okr-block-clipboard" data-okr="%7B%22okrDelta%22%3A%5B%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%22%E4%BC%98%E5%8C%96%E4%BB%BB%E5%8A%A1%E5%88%97%E8%A1%A8%E7%95%8C%E9%9D%A2%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%222%E3%80%81%E6%96%B0%E5%A2%9E%E7%BB%BC%E5%90%88%E7%AD%9B%E9%80%89%E5%8A%9F%E8%83%BD%E5%92%8C%E5%BF%AB%E6%8D%B7%E7%AD%9B%E9%80%89%E7%B3%BB%E7%BB%9F%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%223%E3%80%81%E6%96%B0%E5%A2%9E%E6%89%B9%E9%87%8F%E5%A4%8D%E5%88%B6%E4%BB%BB%E5%8A%A1%E5%8A%9F%E8%83%BD%EF%BC%8C%E6%89%B9%E9%87%8F%E5%81%9C%E6%AD%A2%E4%BA%91%E9%87%87%E9%9B%86%E5%8A%9F%E8%83%BD%EF%BC%8C%E6%89%B9%E9%87%8F%E6%9C%AC%E5%9C%B0%E5%AE%9A%E6%97%B6%E5%8A%9F%E8%83%BD%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%224%E3%80%81%E6%96%B0%E5%A2%9E%E6%9B%B4%E7%BB%86%E8%87%B4%E7%9A%84%E6%8E%92%E5%BA%8F%E6%96%B9%E5%BC%8F%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%225%E3%80%81%E6%96%B0%E5%A2%9E%E6%9C%AC%E5%9C%B0%E9%87%87%E9%9B%86%E6%AC%A1%E6%95%B0%EF%BC%8C%E9%87%87%E9%9B%86%E5%BC%80%E5%A7%8B%E6%97%B6%E9%97%B4%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%226%E3%80%81%E4%BA%91%E9%87%87%E9%9B%86%E4%BC%98%E5%85%88%E7%BA%A7%E8%B0%83%E6%95%B4%E4%B8%BA%E4%BD%8E%E4%B8%AD%E9%AB%98%E7%AD%89%E7%BA%A71-99%22%7D%7D%5D%7D%5D%2C%22businessKey%22%3A%22lark-doc%22%7D">云采集优先级调整为低中高等级1-99</div>
+</li>
+</ul>
+</li>
+<li><span style="font-size: 14pt;">其他</span>
+<ul>
+<li>
+<div class="okr-block-clipboard" data-okr="%7B%22okrDelta%22%3A%5B%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%22%E4%BC%98%E5%8C%96%E4%B8%BB%E8%8F%9C%E5%8D%95%E5%AF%BC%E8%88%AA%E5%8A%9F%E8%83%BD%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%222%E3%80%81%E9%83%A8%E5%88%86%E5%B7%B2%E7%9F%A5bug%E4%BF%AE%E5%A4%8D%22%7D%7D%5D%7D%5D%2C%22businessKey%22%3A%22lark-doc%22%7D">优化主菜单导航功能</div>
+</li>
+<li>
+<div class="okr-block-clipboard" data-okr="%7B%22okrDelta%22%3A%5B%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%22%E4%BC%98%E5%8C%96%E4%B8%BB%E8%8F%9C%E5%8D%95%E5%AF%BC%E8%88%AA%E5%8A%9F%E8%83%BD%22%7D%7D%5D%7D%2C%7B%22lineType%22%3A%22text%22%2C%22lineOptions%22%3A%7B%7D%2C%22lineContent%22%3A%5B%7B%22opType%22%3A%22text%22%2C%22options%22%3A%7B%22text%22%3A%222%E3%80%81%E9%83%A8%E5%88%86%E5%B7%B2%E7%9F%A5bug%E4%BF%AE%E5%A4%8D%22%7D%7D%5D%7D%5D%2C%22businessKey%22%3A%22lark-doc%22%7D">部分已知bug修复</div>
+</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.4.6</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2021-11-16</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li><span style="font-size: 18.6667px;">更新内容</span><br>
+<ul>
+<li>新增“关于我们”等页面的用户问题反馈机制和通道</li>
+<li>修复部分bug</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>v8.4.2</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2021-10-10</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li><span style="font-size: 18.6667px;">更新内容</span><br>
+<ul>
+<li>新增时间戳转换</li>
+<li>新增任务自定义UA</li>
+<li>新增网页局部滚动功能设置</li>
+<li>新增针对动态瀑布流类型网站采集“滚动时循环列表不自动去重”选项</li>
+<li>新增旗舰+版本本地采集云备份功能</li>
+<li>优化修复部分常见的bug问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.4.0</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2021-08-23</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li><span style="font-size: 14pt;">本地采集模块</span>
+<ul>
+<li>本地采集浏览器技术升级</li>
+<li>解决浏览器造成闪屏、串屏、采集面板前置导致影响电脑其他应用使用情况</li>
+<li>解决电脑睡眠重新启动后无法继续采集、卡死等问题</li>
+</ul>
+</li>
+<li><span style="font-size: 14pt;">自定义任务编辑模块</span>
+<ul>
+<li>自定义任务页面浏览器技术升级</li>
+<li>数据预览区块编辑结构调整</li>
+<li>新增了纵向字段编辑模式</li>
+<li>新增页面和提取步骤层级结构</li>
+<li>优化流程图、网页、数据预览三个模块之间的联动关系</li>
+<li>优化视觉界面和交互</li>
+<li>修复设置去重字段，去重状态显示错误的问题。</li>
+</ul>
+</li>
+<li><span style="font-size: 12pt;"><span style="font-size: 12pt;">定时入库模块</span></span>
+<ul>
+<li>新增窗口缩放、搜索功能、任务名排序</li>
+<li>实现启停状态的筛选</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.3.4(Beta)</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2021-06-25</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li><span style="font-size: 14pt;">迭代优化</span>
+<ul>
+<li>优化对话窗口和操作选项的界面和交互体验</li>
+<li>优化对话窗口文案提升友好性</li>
+<li>对自定义任务编辑页面浏览器技术升级，提升浏览器性能得流畅性和联带异常问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.3.2(Beta)</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2021-04-09</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li><span style="font-size: 14pt;">迭代功能</span>
+<ul>
+<li>提高了iframe识别能力</li>
+<li>提高了验证码识别能力</li>
+<li>增加了定时入库工具自定义缩放的功能</li>
+<li>优化了流程图区域的交互联动效果</li>
+</ul>
+</li>
+<li><span style="font-size: 14pt;">Bug修复</span>
+<ul>
+<li>修复了元素定位方式默认显示异常的问题</li>
+<li>修复了备用元素默认显示异常的问题</li>
+<li>修复了任务管理面板部分操作异常跳转的问题</li>
+<li>修复了部分json采集显示异常的问题</li>
+<li>修复了部分操作导致的白屏的问题</li>
+<li>修复了部分操作无响应的问题</li>
+<li>修复了部分操作提示错误的问题</li>
+<li>修复了部分操作导致浏览器异常闪烁的问题</li>
+<li>修复了部分功能按钮缺少鼠标停放提示的问题</li>
+<li>修复了部分网站云采集无数据的问题</li>
+<li>修复了部分网站无法定位字段的问题</li>
+<li>修复了部分网站采集时客户端异常闪退的问题</li>
+<li>修复了部分需要登录的网站的兼容性问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.3.0（Beta）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2021-03-03</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li><span style="font-size: 14pt;">迭代功能</span>
+<ul>
+<li><span>优化数据预览刷新机制</span></li>
+<li><span>优化全部字段面板</span></li>
+</ul>
+</li>
+<li><span style="font-size: 14pt;">Bug修复</span>
+<ul>
+<li>修复复制粘贴步骤的问题</li>
+<li>修复数据预览二级面板点选按钮异常问题</li>
+<li>修复自动识别后登录显示异常问题</li>
+<li>修复修改循环步骤方式页面异常跳转问题</li>
+<li>修复字段预览显示排序不正确问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.2.8（Beta）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2021-01-14</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li><span style="font-size: 14pt;">迭代功能</span>
+<ul>
+<li>
+<div>优化步骤高级选项中，设置重试的交互</div>
+</li>
+<li>
+<div>优化字段预览显示长空格字段，提高加载效率</div>
+</li>
+</ul>
+</li>
+<li><span style="font-size: 14pt;">Bug修复</span>
+<ul>
+<li>
+<div><span class="text-only " data-eleid="tztRpjJWCu">修复验证码识别失败的问题，提升了识别率</span></div>
+</li>
+<li>
+<div><span class="text-only " data-eleid="tztRpjJWCu"></span><span class="text-only " data-eleid="50Lo9h7xQS">修复提取数据步骤的触发器无法保存的问题</span></div>
+</li>
+<li>
+<div><span class="text-only " data-eleid="50Lo9h7xQS"></span><span class="text-only " data-eleid="Jngzv4LTFb">修复数据预览的二级面板无法应用和保存的问题</span></div>
+</li>
+<li>
+<div><span class="text-only " data-eleid="Jngzv4LTFb"></span><span class="text-only " data-eleid="63JppgLCJd">修复循环中字段无法设置XPath拼接的问题</span></div>
+</li>
+<li>
+<div><span class="text-only " data-eleid="63JppgLCJd"></span><span class="text-only " data-eleid="heU5dPWqqa">修复循环中某些步骤无法设置XPath拼接的问题</span></div>
+</li>
+<li>
+<div><span class="text-only " data-eleid="heU5dPWqqa"></span><span class="text-only " data-eleid="jR1aiMcdHy">修复了偶发的卡死问题</span></div>
+</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.2.6（Beta）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2021-01-06</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li><span style="font-size: 14pt;">迭代功能</span>
+<ul>
+<li>
+<div>更新自定义模式的布局，调整界面各部分尺寸，调整步骤高级选项的位置；</div>
+</li>
+<li>
+<div>调整高级选项的层级关系，统一XPath的配置。</div>
+</li>
+</ul>
+</li>
+<li><span style="font-size: 14pt;">Bug修复</span>
+<ul>
+<li>
+<div>修复部分包含下拉框任务无法采集完整问题。</div>
+</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.2.4（Beta）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2020-12-08</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li><span style="font-size: 14pt;">迭代功能</span>
+<ul>
+<li>更新了新增字段、修改字段、格式化数据的交互方式，将数据操作集中在数据预览区域</li>
+<li>针对不同类型的字段，区分操作项，点击可展开不同的菜单项</li>
+<li>优化了配置XPath的操作，即时显示XPath在页面中的识别结果</li>
+</ul>
+</li>
+<li><span style="font-size: 14pt;"><span style="font-size: 14pt;">Bug修复</span></span>
+<ul>
+<li>修复自定义下拉框类型网页无法正常获取问题</li>
+<li>修复同名的自定义任务无法正常保存问题</li>
+<li><span>修复对修改去重数据配置后应用未保存直接采集出现的报错问题</span></li>
+<li><span>修复部分采集产生错误报告无法正常采集数据问题</span></li>
+<li><span>修复网址栏修改网址出现丢失其他步骤相关场景问题</span></li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.2.2（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2020-12-02</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li><span style="font-size: 14pt;">迭代功能</span>
+<ul>
+<li><span style="font-size: 13.3333px;"><span style="color: #3366ff;"><a style="color: #3366ff;" href="javascript:;" target="_blank">【定时本地采集】</a></span><span>设置定时任务，在本地设备上运行本地采集。</span></span></li>
+</ul>
+</li>
+<li><span style="font-size: 14pt;">Bug修复</span>
+<ul>
+<li>修复自动识别生成的采集配置未包含高级选项（滚动和点击加载更多）的问题；</li>
+<li>修复步骤重试在本地采集不生效的问题；</li>
+<li>修复部分网址采集失败的问题（如Booking）；</li>
+<li>修复使用模板时，版本限制有误的问题；</li>
+<li>修复修改任务名，未弹出同名提示的问题；</li>
+<li>修复本地采集完成后采集状态错误的问题；</li>
+<li>修复设置去重字段，去重状态显示错误的问题。</li>
+</ul>
+</li>
+<li><span style="font-size: 12pt;">v8.2.2版本的下载文件移除了readme.txt，简化了解压和安装步骤，仅保留干净的.exe安装文件。</span></li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.2.0（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2020-11-19</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li><span style="font-size: 14pt;">迭代功能</span>
+<ul>
+<li><span style="font-size: 10pt;">页面无内容更新时，可提前结束滚动。</span></li>
+<li><span style="font-size: 10pt;">自动跳过无效的翻页操作。</span></li>
+<li><span style="font-size: 10pt;">支持瀑布流网页的<span style="color: #3366ff;"><a style="color: #3366ff;" href="javascript:;" target="_blank">边滚动边采集</a></span>。</span></li>
+<li><span style="font-size: 10pt;">支持网页的<span style="color: #3366ff;"><a style="color: #3366ff;" href="javascript:;" target="_blank">边点击加载更多内容，边采集</a></span>。</span></li>
+<li><span style="font-size: 10pt;">自动识别支持在列表项、详情信息等结果之间切换。</span></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li style="color: #ff0000;"><span style="font-size: 14pt;">温馨提示<br></span><span style="font-size: 10pt;">v8.2.0版本采用了边滚动边采集的技术，使用该版本制作的部分任务（包含循环滚动步骤的），无法直接在旧版客户端/云节点使用，仅支持在v8.2.0及以上的版本使用。 <br></span><span style="font-size: 10pt;">或请尝试在旧版本重新保存任务。如遇到云采集问题，请联系客服。</span></li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.1.24（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2020-09-02</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>Bug修复
+<ul>
+<li>解决无法采集JSON数据的问题。</li>
+</ul>
+</li>
+</ul>
+<p> </p>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.1.22（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2020-08-23</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>Bug修复
+<ul>
+<li>解决部分列表网页自动识别结果不正确的问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.1.20（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2020-08-07</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>Bug修复
+<ul>
+<li>解决本地采集同时运行任务数上限，有些情况下提示不对的问题</li>
+<li>解决采集步骤中重试时切换代理IP不生效的问题</li>
+<li>解决任务设置中修改了浏览器相关选项后浏览器不会自动刷新的问题</li>
+<li>解决启动需要代理IP的模板任务提示不对的问题</li>
+<li>解决触发器中设置结束循环不生效的问题</li>
+<li>解决自定义任务中输入网址列表，保存时不会去除空行的问题</li>
+<li>解决滚动一屏后7版本正常采集，8版本会漏采图片地址的问题</li>
+<li>解决自定义任务中有空循环列表会导致整个任务完全不采集数据的问题</li>
+<li>解决定时导出数据到数据库会失效的问题</li>
+<li>解决自定义配置中添加当前时间字段，示例数据显示错误的问题</li>
+<li>解决导出数据到CSV文件时出现多余字段行的问题</li>
+<li>解决字段找不到元素时设置“该步骤所有字段留空”，采集不正确的问题</li>
+<li>解决任务设置中不加载图片选项不生效的问题</li>
+<li>解决部分Iframe网页无法采集的问题</li>
+<li>解决部分JSON采集出现乱码或不能采集的问题</li>
+<li>解决自定义配置中部分网站，点击后卡死的问题</li>
+<li>解决自定义配置中日期时间格式化的问题</li>
+<li>解决字段多次提取合并为一行，采集不正确的问题</li>
+<li>解决自定义配置中循环列表项显示不正确的问题</li>
+<li>解决采集时输入文本没有覆盖输入框已有文本的问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.1.18（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2020-07-24</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>Bug修复
+<ul>
+<li>解决软件无法自动升级的问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.1.16（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2020-07-10</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li id="2076-1594290935183"><span>新增功能</span>
+<ul>
+<li>增加按字段去除重复数据功能 <span style="color: #ff0000;"><a style="color: #ff0000;" href="javascript:;" target="_blank">查看详情</a></span></li>
+<li>增加导出采集数据到Oracle功能 <span style="color: #ff0000;"><a style="color: #ff0000;" href="javascript:;" target="_blank">查看详情</a></span></li>
+<li>增加导出采集数据到JSON文件功能</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li id="8623-1594291084658"><span>Bug修复</span>
+<ul>
+<li>解决自定义配置中拖动步骤到判断条件中异常的问题</li>
+<li>解决自定义配置中多次复制字段后导致字段丢失的问题</li>
+<li>解决自定义配置中在数据预览中操作字段相关的问题</li>
+<li>解决自定义配置中有时不同网页内容重叠在一起的问题</li>
+<li>解决部分任务本地采集时错误的提示需要补采的问题</li>
+<li>解决自定义配置中编辑任务后未显示修改未保存标识的问题</li>
+<li>解决采集模板详情中有时信息显示不全的问题</li>
+<li>解决自定义配置中流程图添加采集步骤菜单显示不全的问题</li>
+<li>解决自定义配置中流程图中有时循环项显示不正确的问题</li>
+<li>解决点击侧边菜单栏最近编辑任务打开任务不显示网页的问题</li>
+</ul>
+</li>
+</ul>
+<p><!--5f39ae17-8c62-4a45-bc43-b32064c9388a:W3siYmxvY2tJZCI6IjIwNzYtMTU5NDI5MDkzNTE4MyIsImJsb2NrVHlwZSI6ImhlYWRpbmciLCJzdHlsZXMiOnsiYWxpZ24iOiJsZWZ0IiwiaW5kZW50IjowLCJ0ZXh0LWluZGVudCI6MCwibGluZS1oZWlnaHQiOjEuNzUsImJhY2stY29sb3IiOiIiLCJwYWRkaW5nIjoiIn0sInR5cGUiOiJoZWFkaW5nIiwicmljaFRleHQiOnsiZGF0YSI6W3siY2hhciI6IuS9kyIsInN0eWxlcyI6eyJib2xkIjp0cnVlLCJmb250LXNpemUiOjE2fX0seyJjaGFyIjoi6aqMIiwic3R5bGVzIjp7ImJvbGQiOnRydWUsImZvbnQtc2l6ZSI6MTZ9fSx7ImNoYXIiOiLmlLkiLCJzdHlsZXMiOnsiYm9sZCI6dHJ1ZSwiZm9udC1zaXplIjoxNn19LHsiY2hhciI6Iui/myIsInN0eWxlcyI6eyJib2xkIjp0cnVlLCJmb250LXNpemUiOjE2fX0seyJjaGFyIjoi5ZKMIiwic3R5bGVzIjp7ImJvbGQiOnRydWUsImZvbnQtc2l6ZSI6MTZ9fSx7ImNoYXIiOiLmlrAiLCJzdHlsZXMiOnsiYm9sZCI6dHJ1ZSwiZm9udC1zaXplIjoxNn19LHsiY2hhciI6IuWiniIsInN0eWxlcyI6eyJib2xkIjp0cnVlLCJmb250LXNpemUiOjE2fX0seyJjaGFyIjoi5YqfIiwic3R5bGVzIjp7ImJvbGQiOnRydWUsImZvbnQtc2l6ZSI6MTZ9fSx7ImNoYXIiOiLog70iLCJzdHlsZXMiOnsiYm9sZCI6dHJ1ZSwiZm9udC1zaXplIjoxNn19XSwiaXNSaWNoVGV4dCI6dHJ1ZSwia2VlcExpbmVCcmVhayI6dHJ1ZX0sImxldmVsIjoiMyJ9LHsiYmxvY2tJZCI6IjkyNjItMTU5NDI5MTA4MzE2OCIsImJsb2NrVHlwZSI6InBhcmFncmFwaCIsInN0eWxlcyI6eyJhbGlnbiI6ImxlZnQiLCJpbmRlbnQiOjAsInRleHQtaW5kZW50IjowLCJsaW5lLWhlaWdodCI6MS43NSwiYmFjay1jb2xvciI6IiIsInBhZGRpbmciOiIifSwidHlwZSI6InBhcmFncmFwaCIsInJpY2hUZXh0Ijp7ImRhdGEiOlt7ImNoYXIiOiLlop4ifSx7ImNoYXIiOiLliqAifSx7ImNoYXIiOiLmjIkifSx7ImNoYXIiOiLlrZcifSx7ImNoYXIiOiLmrrUifSx7ImNoYXIiOiLljrsifSx7ImNoYXIiOiLpmaQifSx7ImNoYXIiOiLph40ifSx7ImNoYXIiOiLlpI0ifSx7ImNoYXIiOiLmlbAifSx7ImNoYXIiOiLmja4ifSx7ImNoYXIiOiLlip8ifSx7ImNoYXIiOiLog70ifSx7ImNoYXIiOiIgIn0seyJjaGFyIjoi5p+lIiwic3R5bGVzIjp7InVuZGVybGluZSI6dHJ1ZSwiY29sb3IiOiIjMDAzODg0IiwiaHJlZiI6Imh0dHBzOi8vd3d3LmJhemh1YXl1LmNvbS90dXRvcmlhbDgvemRxYyJ9fSx7ImNoYXIiOiLnnIsiLCJzdHlsZXMiOnsidW5kZXJsaW5lIjp0cnVlLCJjb2xvciI6IiMwMDM4ODQiLCJocmVmIjoiaHR0cHM6Ly93d3cuYmF6aHVheXUuY29tL3R1dG9yaWFsOC96ZHFjIn19LHsiY2hhciI6IuivpiIsInN0eWxlcyI6eyJ1bmRlcmxpbmUiOnRydWUsImNvbG9yIjoiIzAwMzg4NCIsImhyZWYiOiJodHRwczovL3d3dy5iYXpodWF5dS5jb20vdHV0b3JpYWw4L3pkcWMifX0seyJjaGFyIjoi5oOFIiwic3R5bGVzIjp7InVuZGVybGluZSI6dHJ1ZSwiY29sb3IiOiIjMDAzODg0IiwiaHJlZiI6Imh0dHBzOi8vd3d3LmJhemh1YXl1LmNvbS90dXRvcmlhbDgvemRxYyJ9fV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9fSx7ImJsb2NrSWQiOiIzNjQ1LTE1OTQyOTE5NzQ0MzIiLCJibG9ja1R5cGUiOiJwYXJhZ3JhcGgiLCJzdHlsZXMiOnsiYWxpZ24iOiJsZWZ0IiwiaW5kZW50IjowLCJ0ZXh0LWluZGVudCI6MCwibGluZS1oZWlnaHQiOjEuNzUsImJhY2stY29sb3IiOiIiLCJwYWRkaW5nIjoiIn0sInR5cGUiOiJwYXJhZ3JhcGgiLCJyaWNoVGV4dCI6eyJkYXRhIjpbeyJjaGFyIjoi5aKeIn0seyJjaGFyIjoi5YqgIn0seyJjaGFyIjoi5a+8In0seyJjaGFyIjoi5Ye6In0seyJjaGFyIjoi6YeHIn0seyJjaGFyIjoi6ZuGIn0seyJjaGFyIjoi5pWwIn0seyJjaGFyIjoi5o2uIn0seyJjaGFyIjoi5YiwIn0seyJjaGFyIjoiTyJ9LHsiY2hhciI6InIifSx7ImNoYXIiOiJhIn0seyJjaGFyIjoiYyJ9LHsiY2hhciI6ImwifSx7ImNoYXIiOiJlIn0seyJjaGFyIjoi5YqfIn0seyJjaGFyIjoi6IO9In0seyJjaGFyIjoiICJ9LHsiY2hhciI6IuafpSIsInN0eWxlcyI6eyJ1bmRlcmxpbmUiOnRydWUsImNvbG9yIjoiIzAwMzg4NCIsImhyZWYiOiJodHRwczovL3d3dy5iYXpodWF5dS5jb20vdHV0b3JpYWw4Lzgxb3JhY2xlIn19LHsiY2hhciI6IueciyIsInN0eWxlcyI6eyJ1bmRlcmxpbmUiOnRydWUsImNvbG9yIjoiIzAwMzg4NCIsImhyZWYiOiJodHRwczovL3d3dy5iYXpodWF5dS5jb20vdHV0b3JpYWw4Lzgxb3JhY2xlIn19LHsiY2hhciI6IuivpiIsInN0eWxlcyI6eyJ1bmRlcmxpbmUiOnRydWUsImNvbG9yIjoiIzAwMzg4NCIsImhyZWYiOiJodHRwczovL3d3dy5iYXpodWF5dS5jb20vdHV0b3JpYWw4Lzgxb3JhY2xlIn19LHsiY2hhciI6IuaDhSIsInN0eWxlcyI6eyJ1bmRlcmxpbmUiOnRydWUsImNvbG9yIjoiIzAwMzg4NCIsImhyZWYiOiJodHRwczovL3d3dy5iYXpodWF5dS5jb20vdHV0b3JpYWw4Lzgxb3JhY2xlIn19XSwiaXNSaWNoVGV4dCI6dHJ1ZSwia2VlcExpbmVCcmVhayI6dHJ1ZX19LHsiYmxvY2tJZCI6IjAwNzgtMTU5NDI5MTA4MzQyOCIsImJsb2NrVHlwZSI6InBhcmFncmFwaCIsInN0eWxlcyI6eyJhbGlnbiI6ImxlZnQiLCJpbmRlbnQiOjAsInRleHQtaW5kZW50IjowLCJsaW5lLWhlaWdodCI6MS43NSwiYmFjay1jb2xvciI6IiIsInBhZGRpbmciOiIifSwidHlwZSI6InBhcmFncmFwaCIsInJpY2hUZXh0Ijp7ImRhdGEiOlt7ImNoYXIiOiLlop4ifSx7ImNoYXIiOiLliqAifSx7ImNoYXIiOiLlr7wifSx7ImNoYXIiOiLlh7oifSx7ImNoYXIiOiLph4cifSx7ImNoYXIiOiLpm4YifSx7ImNoYXIiOiLmlbAifSx7ImNoYXIiOiLmja4ifSx7ImNoYXIiOiLliLAifSx7ImNoYXIiOiJKIn0seyJjaGFyIjoiUyJ9LHsiY2hhciI6Ik8ifSx7ImNoYXIiOiJOIn0seyJjaGFyIjoi5paHIn0seyJjaGFyIjoi5Lu2In0seyJjaGFyIjoi5YqfIn0seyJjaGFyIjoi6IO9In1dLCJpc1JpY2hUZXh0Ijp0cnVlLCJrZWVwTGluZUJyZWFrIjp0cnVlfX0seyJibG9ja0lkIjoiODY1OC0xNTk0MjkyMTc0NzIwIiwiYmxvY2tUeXBlIjoicGFyYWdyYXBoIiwic3R5bGVzIjp7ImFsaWduIjoibGVmdCIsImluZGVudCI6MCwidGV4dC1pbmRlbnQiOjAsImxpbmUtaGVpZ2h0IjoxLjc1LCJiYWNrLWNvbG9yIjoiIiwicGFkZGluZyI6IiJ9LCJ0eXBlIjoicGFyYWdyYXBoIiwicmljaFRleHQiOnsiZGF0YSI6W10sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9fSx7ImJsb2NrSWQiOiIzNDc1LTE1OTQyOTIxMjM5MTAiLCJibG9ja1R5cGUiOiJwYXJhZ3JhcGgiLCJzdHlsZXMiOnsiYWxpZ24iOiJsZWZ0IiwiaW5kZW50IjowLCJ0ZXh0LWluZGVudCI6MCwibGluZS1oZWlnaHQiOjEuNzUsImJhY2stY29sb3IiOiIiLCJwYWRkaW5nIjoiIn0sInR5cGUiOiJwYXJhZ3JhcGgiLCJyaWNoVGV4dCI6eyJkYXRhIjpbXSwiaXNSaWNoVGV4dCI6dHJ1ZSwia2VlcExpbmVCcmVhayI6dHJ1ZX19LHsiYmxvY2tJZCI6Ijg2MjMtMTU5NDI5MTA4NDY1OCIsImJsb2NrVHlwZSI6ImhlYWRpbmciLCJzdHlsZXMiOnsiYWxpZ24iOiJsZWZ0IiwiaW5kZW50IjowLCJ0ZXh0LWluZGVudCI6MCwibGluZS1oZWlnaHQiOjEuNzUsImJhY2stY29sb3IiOiIiLCJwYWRkaW5nIjoiIn0sInR5cGUiOiJoZWFkaW5nIiwicmljaFRleHQiOnsiZGF0YSI6W3siY2hhciI6IkIiLCJzdHlsZXMiOnsiYm9sZCI6dHJ1ZSwiZm9udC1zaXplIjoxNn19LHsiY2hhciI6InUiLCJzdHlsZXMiOnsiYm9sZCI6dHJ1ZSwiZm9udC1zaXplIjoxNn19LHsiY2hhciI6ImciLCJzdHlsZXMiOnsiYm9sZCI6dHJ1ZSwiZm9udC1zaXplIjoxNn19LHsiY2hhciI6IuS/riIsInN0eWxlcyI6eyJib2xkIjp0cnVlLCJmb250LXNpemUiOjE2fX0seyJjaGFyIjoi5aSNIiwic3R5bGVzIjp7ImJvbGQiOnRydWUsImZvbnQtc2l6ZSI6MTZ9fV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9LCJsZXZlbCI6IjMifSx7ImJsb2NrSWQiOiI2MDY3LTE1OTQyOTEwODk5OTAiLCJibG9ja1R5cGUiOiJwYXJhZ3JhcGgiLCJzdHlsZXMiOnsiYWxpZ24iOiJsZWZ0IiwiaW5kZW50IjowLCJ0ZXh0LWluZGVudCI6MCwibGluZS1oZWlnaHQiOjEuNzUsImJhY2stY29sb3IiOiIiLCJwYWRkaW5nIjoiIn0sInR5cGUiOiJwYXJhZ3JhcGgiLCJyaWNoVGV4dCI6eyJkYXRhIjpbeyJjaGFyIjoi6KejIn0seyJjaGFyIjoi5YazIn0seyJjaGFyIjoi6IeqIn0seyJjaGFyIjoi5a6aIn0seyJjaGFyIjoi5LmJIn0seyJjaGFyIjoi6YWNIn0seyJjaGFyIjoi572uIn0seyJjaGFyIjoi5LitIn0seyJjaGFyIjoi5ouWIn0seyJjaGFyIjoi5YqoIn0seyJjaGFyIjoi5q2lIn0seyJjaGFyIjoi6aqkIn0seyJjaGFyIjoi5YiwIn0seyJjaGFyIjoi5YikIn0seyJjaGFyIjoi5patIn0seyJjaGFyIjoi5p2hIn0seyJjaGFyIjoi5Lu2In0seyJjaGFyIjoi5LitIn0seyJjaGFyIjoi5byCIn0seyJjaGFyIjoi5bi4In0seyJjaGFyIjoi55qEIn0seyJjaGFyIjoi6ZeuIn0seyJjaGFyIjoi6aKYIn1dLCJpc1JpY2hUZXh0Ijp0cnVlLCJrZWVwTGluZUJyZWFrIjp0cnVlfX0seyJibG9ja0lkIjoiNDM3OS0xNTk0MjkyMjU4ODM1IiwiYmxvY2tUeXBlIjoicGFyYWdyYXBoIiwic3R5bGVzIjp7ImFsaWduIjoibGVmdCIsImluZGVudCI6MCwidGV4dC1pbmRlbnQiOjAsImxpbmUtaGVpZ2h0IjoxLjc1LCJiYWNrLWNvbG9yIjoiIiwicGFkZGluZyI6IiJ9LCJ0eXBlIjoicGFyYWdyYXBoIiwicmljaFRleHQiOnsiZGF0YSI6W3siY2hhciI6IuinoyJ9LHsiY2hhciI6IuWGsyJ9LHsiY2hhciI6IuiHqiJ9LHsiY2hhciI6IuWumiJ9LHsiY2hhciI6IuS5iSJ9LHsiY2hhciI6IumFjSJ9LHsiY2hhciI6Iue9riJ9LHsiY2hhciI6IuS4rSJ9LHsiY2hhciI6IuWkmiJ9LHsiY2hhciI6IuasoSJ9LHsiY2hhciI6IuWkjSJ9LHsiY2hhciI6IuWItiJ9LHsiY2hhciI6IuWtlyJ9LHsiY2hhciI6IuautSJ9LHsiY2hhciI6IuWQjiJ9LHsiY2hhciI6IuWvvCJ9LHsiY2hhciI6IuiHtCJ9LHsiY2hhciI6IuWtlyJ9LHsiY2hhciI6IuautSJ9LHsiY2hhciI6IuS4oiJ9LHsiY2hhciI6IuWksSJ9LHsiY2hhciI6IueahCJ9LHsiY2hhciI6IumXriJ9LHsiY2hhciI6IumimCJ9XSwiaXNSaWNoVGV4dCI6dHJ1ZSwia2VlcExpbmVCcmVhayI6dHJ1ZX19LHsiYmxvY2tJZCI6IjgwOTYtMTU5NDI5MjM0NDExNyIsImJsb2NrVHlwZSI6InBhcmFncmFwaCIsInN0eWxlcyI6eyJhbGlnbiI6ImxlZnQiLCJpbmRlbnQiOjAsInRleHQtaW5kZW50IjowLCJsaW5lLWhlaWdodCI6MS43NSwiYmFjay1jb2xvciI6IiIsInBhZGRpbmciOiIifSwidHlwZSI6InBhcmFncmFwaCIsInJpY2hUZXh0Ijp7ImRhdGEiOlt7ImNoYXIiOiLop6MifSx7ImNoYXIiOiLlhrMifSx7ImNoYXIiOiLoh6oifSx7ImNoYXIiOiLlrpoifSx7ImNoYXIiOiLkuYkifSx7ImNoYXIiOiLphY0ifSx7ImNoYXIiOiLnva4ifSx7ImNoYXIiOiLkuK0ifSx7ImNoYXIiOiLlnKgifSx7ImNoYXIiOiLmlbAifSx7ImNoYXIiOiLmja4ifSx7ImNoYXIiOiLpooQifSx7ImNoYXIiOiLop4gifSx7ImNoYXIiOiLkuK0ifSx7ImNoYXIiOiLmk40ifSx7ImNoYXIiOiLkvZwifSx7ImNoYXIiOiLlrZcifSx7ImNoYXIiOiLmrrUifSx7ImNoYXIiOiLnm7gifSx7ImNoYXIiOiLlhbMifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLpl64ifSx7ImNoYXIiOiLpopgifV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9fSx7ImJsb2NrSWQiOiI3OTMwLTE1OTQzNDQ0NDY2MzciLCJibG9ja1R5cGUiOiJwYXJhZ3JhcGgiLCJzdHlsZXMiOnsiYWxpZ24iOiJsZWZ0IiwiaW5kZW50IjowLCJ0ZXh0LWluZGVudCI6MCwibGluZS1oZWlnaHQiOjEuNzUsImJhY2stY29sb3IiOiIiLCJwYWRkaW5nIjoiIn0sInR5cGUiOiJwYXJhZ3JhcGgiLCJyaWNoVGV4dCI6eyJkYXRhIjpbeyJjaGFyIjoi6KejIn0seyJjaGFyIjoi5YazIn0seyJjaGFyIjoi6IeqIn0seyJjaGFyIjoi5a6aIn0seyJjaGFyIjoi5LmJIn0seyJjaGFyIjoi6YWNIn0seyJjaGFyIjoi572uIn0seyJjaGFyIjoi5LitIn0seyJjaGFyIjoi5pyJIn0seyJjaGFyIjoi5pe2In0seyJjaGFyIjoi5LiNIn0seyJjaGFyIjoi5ZCMIn0seyJjaGFyIjoi572RIn0seyJjaGFyIjoi6aG1In0seyJjaGFyIjoi5YaFIn0seyJjaGFyIjoi5a65In0seyJjaGFyIjoi6YeNIn0seyJjaGFyIjoi5Y+gIn0seyJjaGFyIjoi5ZyoIn0seyJjaGFyIjoi5LiAIn0seyJjaGFyIjoi6LW3In0seyJjaGFyIjoi55qEIn0seyJjaGFyIjoi6ZeuIn0seyJjaGFyIjoi6aKYIn1dLCJpc1JpY2hUZXh0Ijp0cnVlLCJrZWVwTGluZUJyZWFrIjp0cnVlfX0seyJibG9ja0lkIjoiMTQ5NC0xNTk0MzQ1MzgxMDQ0IiwiYmxvY2tUeXBlIjoicGFyYWdyYXBoIiwic3R5bGVzIjp7ImFsaWduIjoibGVmdCIsImluZGVudCI6MCwidGV4dC1pbmRlbnQiOjAsImxpbmUtaGVpZ2h0IjoxLjc1LCJiYWNrLWNvbG9yIjoiIiwicGFkZGluZyI6IiJ9LCJ0eXBlIjoicGFyYWdyYXBoIiwicmljaFRleHQiOnsiZGF0YSI6W3siY2hhciI6IuinoyJ9LHsiY2hhciI6IuWGsyJ9LHsiY2hhciI6IumDqCJ9LHsiY2hhciI6IuWIhiJ9LHsiY2hhciI6IuS7uyJ9LHsiY2hhciI6IuWKoSJ9LHsiY2hhciI6IuacrCJ9LHsiY2hhciI6IuWcsCJ9LHsiY2hhciI6IumHhyJ9LHsiY2hhciI6IumbhiJ9LHsiY2hhciI6IuaXtiJ9LHsiY2hhciI6IumUmSJ9LHsiY2hhciI6IuivryJ9LHsiY2hhciI6IueahCJ9LHsiY2hhciI6IuaPkCJ9LHsiY2hhciI6IuekuiJ9LHsiY2hhciI6IumcgCJ9LHsiY2hhciI6IuimgSJ9LHsiY2hhciI6IuihpSJ9LHsiY2hhciI6IumHhyJ9LHsiY2hhciI6IueahCJ9LHsiY2hhciI6IumXriJ9LHsiY2hhciI6IumimCJ9XSwiaXNSaWNoVGV4dCI6dHJ1ZSwia2VlcExpbmVCcmVhayI6dHJ1ZX19LHsiYmxvY2tJZCI6Ijc5NjYtMTU5NDM0NTQwNTg0NiIsImJsb2NrVHlwZSI6InBhcmFncmFwaCIsInN0eWxlcyI6eyJhbGlnbiI6ImxlZnQiLCJpbmRlbnQiOjAsInRleHQtaW5kZW50IjowLCJsaW5lLWhlaWdodCI6MS43NSwiYmFjay1jb2xvciI6IiIsInBhZGRpbmciOiIifSwidHlwZSI6InBhcmFncmFwaCIsInJpY2hUZXh0Ijp7ImRhdGEiOlt7ImNoYXIiOiLop6MifSx7ImNoYXIiOiLlhrMifSx7ImNoYXIiOiLoh6oifSx7ImNoYXIiOiLlrpoifSx7ImNoYXIiOiLkuYkifSx7ImNoYXIiOiLphY0ifSx7ImNoYXIiOiLnva4ifSx7ImNoYXIiOiLkuK0ifSx7ImNoYXIiOiLnvJYifSx7ImNoYXIiOiLovpEifSx7ImNoYXIiOiLku7sifSx7ImNoYXIiOiLliqEifSx7ImNoYXIiOiLlkI4ifSx7ImNoYXIiOiLmnKoifSx7ImNoYXIiOiLmmL4ifSx7ImNoYXIiOiLnpLoifSx7ImNoYXIiOiLkv64ifSx7ImNoYXIiOiLmlLkifSx7ImNoYXIiOiLmnKoifSx7ImNoYXIiOiLkv50ifSx7ImNoYXIiOiLlrZgifSx7ImNoYXIiOiLmoIcifSx7ImNoYXIiOiLor4YifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLpl64ifSx7ImNoYXIiOiLpopgifV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9fSx7ImJsb2NrSWQiOiI0NzgyLTE1OTQzNDU3MjY5MzIiLCJibG9ja1R5cGUiOiJwYXJhZ3JhcGgiLCJzdHlsZXMiOnsiYWxpZ24iOiJsZWZ0IiwiaW5kZW50IjowLCJ0ZXh0LWluZGVudCI6MCwibGluZS1oZWlnaHQiOjEuNzUsImJhY2stY29sb3IiOiIiLCJwYWRkaW5nIjoiIn0sInR5cGUiOiJwYXJhZ3JhcGgiLCJyaWNoVGV4dCI6eyJkYXRhIjpbeyJjaGFyIjoi6KejIn0seyJjaGFyIjoi5YazIn0seyJjaGFyIjoi6YeHIn0seyJjaGFyIjoi6ZuGIn0seyJjaGFyIjoi5qihIn0seyJjaGFyIjoi5p2/In0seyJjaGFyIjoi6K+mIn0seyJjaGFyIjoi5oOFIn0seyJjaGFyIjoi5LitIn0seyJjaGFyIjoi5pyJIn0seyJjaGFyIjoi5pe2In0seyJjaGFyIjoi5L+hIn0seyJjaGFyIjoi5oGvIn0seyJjaGFyIjoi5pi+In0seyJjaGFyIjoi56S6In0seyJjaGFyIjoi5LiNIn0seyJjaGFyIjoi5YWoIn0seyJjaGFyIjoi55qEIn0seyJjaGFyIjoi6ZeuIn0seyJjaGFyIjoi6aKYIn1dLCJpc1JpY2hUZXh0Ijp0cnVlLCJrZWVwTGluZUJyZWFrIjp0cnVlfX0seyJibG9ja0lkIjoiNDA3MC0xNTk0MzQ1ODA3MDQ3IiwiYmxvY2tUeXBlIjoicGFyYWdyYXBoIiwic3R5bGVzIjp7ImFsaWduIjoibGVmdCIsImluZGVudCI6MCwidGV4dC1pbmRlbnQiOjAsImxpbmUtaGVpZ2h0IjoxLjc1LCJiYWNrLWNvbG9yIjoiIiwicGFkZGluZyI6IiJ9LCJ0eXBlIjoicGFyYWdyYXBoIiwicmljaFRleHQiOnsiZGF0YSI6W3siY2hhciI6IuinoyJ9LHsiY2hhciI6IuWGsyJ9LHsiY2hhciI6IuiHqiJ9LHsiY2hhciI6IuWumiJ9LHsiY2hhciI6IuS5iSJ9LHsiY2hhciI6IumFjSJ9LHsiY2hhciI6Iue9riJ9LHsiY2hhciI6IuS4rSJ9LHsiY2hhciI6Iua1gSJ9LHsiY2hhciI6IueoiyJ9LHsiY2hhciI6IuWbviJ9LHsiY2hhciI6Iua3uyJ9LHsiY2hhciI6IuWKoCJ9LHsiY2hhciI6IumHhyJ9LHsiY2hhciI6IumbhiJ9LHsiY2hhciI6IuatpSJ9LHsiY2hhciI6IumqpCJ9LHsiY2hhciI6IuiPnCJ9LHsiY2hhciI6IuWNlSJ9LHsiY2hhciI6IuaYviJ9LHsiY2hhciI6IuekuiJ9LHsiY2hhciI6IuS4jSJ9LHsiY2hhciI6IuWFqCJ9LHsiY2hhciI6IueahCJ9LHsiY2hhciI6IumXriJ9LHsiY2hhciI6IumimCJ9XSwiaXNSaWNoVGV4dCI6dHJ1ZSwia2VlcExpbmVCcmVhayI6dHJ1ZX19LHsiYmxvY2tJZCI6Ijc5MzAtMTU5NDM0NTg5ODY3MyIsImJsb2NrVHlwZSI6InBhcmFncmFwaCIsInN0eWxlcyI6eyJhbGlnbiI6ImxlZnQiLCJpbmRlbnQiOjAsInRleHQtaW5kZW50IjowLCJsaW5lLWhlaWdodCI6MS43NSwiYmFjay1jb2xvciI6IiIsInBhZGRpbmciOiIifSwidHlwZSI6InBhcmFncmFwaCIsInJpY2hUZXh0Ijp7ImRhdGEiOlt7ImNoYXIiOiLop6MifSx7ImNoYXIiOiLlhrMifSx7ImNoYXIiOiLoh6oifSx7ImNoYXIiOiLlrpoifSx7ImNoYXIiOiLkuYkifSx7ImNoYXIiOiLphY0ifSx7ImNoYXIiOiLnva4ifSx7ImNoYXIiOiLkuK0ifSx7ImNoYXIiOiLmtYEifSx7ImNoYXIiOiLnqIsifSx7ImNoYXIiOiLlm74ifSx7ImNoYXIiOiLkuK0ifSx7ImNoYXIiOiLmnIkifSx7ImNoYXIiOiLml7YifSx7ImNoYXIiOiLlvqoifSx7ImNoYXIiOiLnjq8ifSx7ImNoYXIiOiLpobkifSx7ImNoYXIiOiLmmL4ifSx7ImNoYXIiOiLnpLoifSx7ImNoYXIiOiLkuI0ifSx7ImNoYXIiOiLmraMifSx7ImNoYXIiOiLnoa4ifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLpl64ifSx7ImNoYXIiOiLpopgifV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9fSx7ImJsb2NrSWQiOiI1NDc2LTE1OTQzNDYwNjUwNzQiLCJibG9ja1R5cGUiOiJwYXJhZ3JhcGgiLCJzdHlsZXMiOnsiYWxpZ24iOiJsZWZ0IiwiaW5kZW50IjowLCJ0ZXh0LWluZGVudCI6MCwibGluZS1oZWlnaHQiOjEuNzUsImJhY2stY29sb3IiOiIiLCJwYWRkaW5nIjoiIn0sInR5cGUiOiJwYXJhZ3JhcGgiLCJyaWNoVGV4dCI6eyJkYXRhIjpbeyJjaGFyIjoi6KejIn0seyJjaGFyIjoi5YazIn0seyJjaGFyIjoi54K5In0seyJjaGFyIjoi5Ye7In0seyJjaGFyIjoi5L6nIn0seyJjaGFyIjoi6L65In0seyJjaGFyIjoi6I+cIn0seyJjaGFyIjoi5Y2VIn0seyJjaGFyIjoi5qCPIn0seyJjaGFyIjoi5pyAIn0seyJjaGFyIjoi6L+RIn0seyJjaGFyIjoi57yWIn0seyJjaGFyIjoi6L6RIn0seyJjaGFyIjoi5Lu7In0seyJjaGFyIjoi5YqhIn0seyJjaGFyIjoi5omTIn0seyJjaGFyIjoi5byAIn0seyJjaGFyIjoi5Lu7In0seyJjaGFyIjoi5YqhIn0seyJjaGFyIjoi5LiNIn0seyJjaGFyIjoi5pi+In0seyJjaGFyIjoi56S6In0seyJjaGFyIjoi572RIn0seyJjaGFyIjoi6aG1In0seyJjaGFyIjoi55qEIn0seyJjaGFyIjoi6ZeuIn0seyJjaGFyIjoi6aKYIn1dLCJpc1JpY2hUZXh0Ijp0cnVlLCJrZWVwTGluZUJyZWFrIjp0cnVlfX0seyJibG9ja0lkIjoiNDkyMS0xNTk0MzQ2MTUxMTczIiwiYmxvY2tUeXBlIjoicGFyYWdyYXBoIiwic3R5bGVzIjp7ImFsaWduIjoibGVmdCIsImluZGVudCI6MCwidGV4dC1pbmRlbnQiOjAsImxpbmUtaGVpZ2h0IjoxLjc1LCJiYWNrLWNvbG9yIjoiIiwicGFkZGluZyI6IiJ9LCJ0eXBlIjoicGFyYWdyYXBoIiwicmljaFRleHQiOnsiZGF0YSI6W10sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9fV0=--></p>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.1.14（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2020-05-29</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>主要体验改进
+<ul>
+<li>自定义任务配置中增加列表相关的设置引导</li>
+<li><span>自定义任务配置中增加网页中没有要采集数据时的设置引导</span></li>
+<li><span>自定义任务配置中优化检测到Ajax后的设置引导</span></li>
+<li><span>自定义任务配置中优化自动识别结果的设置引导</span></li>
+<li><span>自定义任务配置中加入表单类是网页自动识别，识别率约80%+</span></li>
+</ul>
+</li>
+<li>Bug修复
+<ul>
+<li>解决八爪鱼打开后，电脑长时间睡眠，重新唤醒后八爪鱼白屏问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.1.12（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2020-04-29</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>主要体验改进
+<ul>
+<li><span>本地采集增加了对7版本采集任务的正则兼容</span></li>
+<li><span>优化自定义配置中在全部字段中删除字段后预览数据的刷新机制</span></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Bug修复
+<ul>
+<li>解决自定义配置中添加采集步骤菜单显示位置不正确的问题</li>
+<li>解决升级新版本后任务列表打不开的问题</li>
+<li>解决自定义配置中拖动调整数据预览中字段顺序白屏的问题</li>
+<li>解决自定义配置中删除数据预览中字段或数据行时提示操作框显示错误的问题</li>
+<li>解决采集模板中列表类型的参数无法配置的问题</li>
+<li>解决本地采集中鼠标移动到元素上不生效的问题</li>
+<li>解决定时采集中设置日期会出错的问题</li>
+<li>解决自定义配置中JSON任务添加字段会白屏的问题</li>
+<li>解决任务列表中任务组模式下批量启动云采集会长时间卡住的问题</li>
+<li>解决自定义配置中添加固定字段后修改字段名错误的问题</li>
+<li>解决自定义配置中循环提取固定元素列表预览数据不显示的问题</li>
+<li>解决自定义配置中部分网站无法获取Cookie的问题</li>
+<li>解决定时采集中设置按周、按月定时采集下一次采集时间不正确的问题</li>
+<li>解决定时采集中设置间隔时间1分钟采集不生效的问题</li>
+<li>解决自定义配置中有时修改任务名保存不生效的问题</li>
+<li>解决自定义配置中设置字段抓取属性值-选择属性值的时候流程图区域会隐藏的问题</li>
+<li>解决自定义配置中第一次进入时引导提示背景出现用户调查界面的问题</li>
+<li>解决任务列表中刷新后筛选条件重置的问题</li>
+<li>解决自定义配置中修改任务名时标签页中的任务保存标识不正确的问题</li>
+</ul>
+</li>
+</ul>
+<p><!--5f39ae17-8c62-4a45-bc43-b32064c9388a:W3siYmxvY2tJZCI6IjE4OTktMTU4ODEyODAyMDkwNiIsImJsb2NrVHlwZSI6Imxpc3QtaXRlbSIsInN0eWxlcyI6eyJhbGlnbiI6ImxlZnQiLCJpbmRlbnQiOjAsInRleHQtaW5kZW50IjowLCJsaW5lLWhlaWdodCI6MS43NSwiYmFjay1jb2xvciI6IiIsInBhZGRpbmciOiIifSwidHlwZSI6Imxpc3QtaXRlbSIsInJpY2hUZXh0Ijp7ImRhdGEiOlt7ImNoYXIiOiLop6MifSx7ImNoYXIiOiLlhrMifSx7ImNoYXIiOiLoh6oifSx7ImNoYXIiOiLlrpoifSx7ImNoYXIiOiLkuYkifSx7ImNoYXIiOiLphY0ifSx7ImNoYXIiOiLnva4ifSx7ImNoYXIiOiLkuK0ifSx7ImNoYXIiOiLmt7sifSx7ImNoYXIiOiLliqAifSx7ImNoYXIiOiLph4cifSx7ImNoYXIiOiLpm4YifSx7ImNoYXIiOiLmraUifSx7ImNoYXIiOiLpqqQifSx7ImNoYXIiOiLoj5wifSx7ImNoYXIiOiLljZUifSx7ImNoYXIiOiLmmL4ifSx7ImNoYXIiOiLnpLoifSx7ImNoYXIiOiLkvY0ifSx7ImNoYXIiOiLnva4ifSx7ImNoYXIiOiLkuI0ifSx7ImNoYXIiOiLmraMifSx7ImNoYXIiOiLnoa4ifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLpl64ifSx7ImNoYXIiOiLpopgifV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9LCJsZXZlbCI6MSwiaW5kZXgiOjEsImxpc3RJZCI6IjI1MjUtMTU4ODEyODAyODA0NCIsImxpc3RUeXBlIjoidW5vcmRlcmVkIn0seyJibG9ja0lkIjoiMjAyOS0xNTg4MTI4MDIxMjIzIiwiYmxvY2tUeXBlIjoibGlzdC1pdGVtIiwic3R5bGVzIjp7fSwidHlwZSI6Imxpc3QtaXRlbSIsInJpY2hUZXh0Ijp7ImRhdGEiOlt7ImNoYXIiOiLop6MifSx7ImNoYXIiOiLlhrMifSx7ImNoYXIiOiLljYcifSx7ImNoYXIiOiLnuqcifSx7ImNoYXIiOiLmlrAifSx7ImNoYXIiOiLniYgifSx7ImNoYXIiOiLmnKwifSx7ImNoYXIiOiLlkI4ifSx7ImNoYXIiOiLku7sifSx7ImNoYXIiOiLliqEifSx7ImNoYXIiOiLliJcifSx7ImNoYXIiOiLooagifSx7ImNoYXIiOiLmiZMifSx7ImNoYXIiOiLkuI0ifSx7ImNoYXIiOiLlvIAifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLpl64ifSx7ImNoYXIiOiLpopgifV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9LCJsZXZlbCI6MSwiaW5kZXgiOjIsImxpc3RJZCI6IjI1MjUtMTU4ODEyODAyODA0NCIsImxpc3RUeXBlIjoidW5vcmRlcmVkIn0seyJibG9ja0lkIjoiMDA2MC0xNTg4MTI4MDIxMjIzIiwiYmxvY2tUeXBlIjoibGlzdC1pdGVtIiwic3R5bGVzIjp7fSwidHlwZSI6Imxpc3QtaXRlbSIsInJpY2hUZXh0Ijp7ImRhdGEiOlt7ImNoYXIiOiLop6MifSx7ImNoYXIiOiLlhrMifSx7ImNoYXIiOiLoh6oifSx7ImNoYXIiOiLlrpoifSx7ImNoYXIiOiLkuYkifSx7ImNoYXIiOiLphY0ifSx7ImNoYXIiOiLnva4ifSx7ImNoYXIiOiLkuK0ifSx7ImNoYXIiOiLmi5YifSx7ImNoYXIiOiLliqgifSx7ImNoYXIiOiLosIMifSx7ImNoYXIiOiLmlbQifSx7ImNoYXIiOiLmlbAifSx7ImNoYXIiOiLmja4ifSx7ImNoYXIiOiLpooQifSx7ImNoYXIiOiLop4gifSx7ImNoYXIiOiLkuK0ifSx7ImNoYXIiOiLlrZcifSx7ImNoYXIiOiLmrrUifSx7ImNoYXIiOiLpoboifSx7ImNoYXIiOiLluo8ifSx7ImNoYXIiOiLnmb0ifSx7ImNoYXIiOiLlsY8ifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLpl64ifSx7ImNoYXIiOiLpopgifV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9LCJsZXZlbCI6MSwiaW5kZXgiOjMsImxpc3RJZCI6IjI1MjUtMTU4ODEyODAyODA0NCIsImxpc3RUeXBlIjoidW5vcmRlcmVkIn0seyJibG9ja0lkIjoiNjQyMy0xNTg4MTI4MDIxMjIzIiwiYmxvY2tUeXBlIjoibGlzdC1pdGVtIiwic3R5bGVzIjp7fSwidHlwZSI6Imxpc3QtaXRlbSIsInJpY2hUZXh0Ijp7ImRhdGEiOlt7ImNoYXIiOiLop6MifSx7ImNoYXIiOiLlhrMifSx7ImNoYXIiOiLoh6oifSx7ImNoYXIiOiLlrpoifSx7ImNoYXIiOiLkuYkifSx7ImNoYXIiOiLphY0ifSx7ImNoYXIiOiLnva4ifSx7ImNoYXIiOiLkuK0ifSx7ImNoYXIiOiLliKAifSx7ImNoYXIiOiLpmaQifSx7ImNoYXIiOiLmlbAifSx7ImNoYXIiOiLmja4ifSx7ImNoYXIiOiLpooQifSx7ImNoYXIiOiLop4gifSx7ImNoYXIiOiLkuK0ifSx7ImNoYXIiOiLlrZcifSx7ImNoYXIiOiLmrrUifSx7ImNoYXIiOiLmiJYifSx7ImNoYXIiOiLmlbAifSx7ImNoYXIiOiLmja4ifSx7ImNoYXIiOiLooYwifSx7ImNoYXIiOiLml7YifSx7ImNoYXIiOiLmj5AifSx7ImNoYXIiOiLnpLoifSx7ImNoYXIiOiLmk40ifSx7ImNoYXIiOiLkvZwifSx7ImNoYXIiOiLmoYYifSx7ImNoYXIiOiLmmL4ifSx7ImNoYXIiOiLnpLoifSx7ImNoYXIiOiLplJkifSx7ImNoYXIiOiLor68ifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLpl64ifSx7ImNoYXIiOiLpopgifV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9LCJsZXZlbCI6MSwiaW5kZXgiOjQsImxpc3RJZCI6IjI1MjUtMTU4ODEyODAyODA0NCIsImxpc3RUeXBlIjoidW5vcmRlcmVkIn0seyJibG9ja0lkIjoiNjA4OS0xNTg4MTI4MDIxMjIzIiwiYmxvY2tUeXBlIjoibGlzdC1pdGVtIiwic3R5bGVzIjp7fSwidHlwZSI6Imxpc3QtaXRlbSIsInJpY2hUZXh0Ijp7ImRhdGEiOlt7ImNoYXIiOiLop6MifSx7ImNoYXIiOiLlhrMifSx7ImNoYXIiOiLph4cifSx7ImNoYXIiOiLpm4YifSx7ImNoYXIiOiLmqKEifSx7ImNoYXIiOiLmnb8ifSx7ImNoYXIiOiLkuK0ifSx7ImNoYXIiOiLliJcifSx7ImNoYXIiOiLooagifSx7ImNoYXIiOiLnsbsifSx7ImNoYXIiOiLlnosifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLlj4IifSx7ImNoYXIiOiLmlbAifSx7ImNoYXIiOiLml6AifSx7ImNoYXIiOiLms5UifSx7ImNoYXIiOiLphY0ifSx7ImNoYXIiOiLnva4ifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLpl64ifSx7ImNoYXIiOiLpopgifV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9LCJsZXZlbCI6MSwiaW5kZXgiOjUsImxpc3RJZCI6IjI1MjUtMTU4ODEyODAyODA0NCIsImxpc3RUeXBlIjoidW5vcmRlcmVkIn0seyJibG9ja0lkIjoiNjc0My0xNTg4MTI4MDIxMjIzIiwiYmxvY2tUeXBlIjoibGlzdC1pdGVtIiwic3R5bGVzIjp7fSwidHlwZSI6Imxpc3QtaXRlbSIsInJpY2hUZXh0Ijp7ImRhdGEiOlt7ImNoYXIiOiLop6MifSx7ImNoYXIiOiLlhrMifSx7ImNoYXIiOiLmnKwifSx7ImNoYXIiOiLlnLAifSx7ImNoYXIiOiLph4cifSx7ImNoYXIiOiLpm4YifSx7ImNoYXIiOiLkuK0ifSx7ImNoYXIiOiLpvKAifSx7ImNoYXIiOiLmoIcifSx7ImNoYXIiOiLnp7sifSx7ImNoYXIiOiLliqgifSx7ImNoYXIiOiLliLAifSx7ImNoYXIiOiLlhYMifSx7ImNoYXIiOiLntKAifSx7ImNoYXIiOiLkuIoifSx7ImNoYXIiOiLkuI0ifSx7ImNoYXIiOiLnlJ8ifSx7ImNoYXIiOiLmlYgifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLpl64ifSx7ImNoYXIiOiLpopgifV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9LCJsZXZlbCI6MSwiaW5kZXgiOjYsImxpc3RJZCI6IjI1MjUtMTU4ODEyODAyODA0NCIsImxpc3RUeXBlIjoidW5vcmRlcmVkIn0seyJibG9ja0lkIjoiODc3OC0xNTg4MTI4MDIxMjIzIiwiYmxvY2tUeXBlIjoibGlzdC1pdGVtIiwic3R5bGVzIjp7fSwidHlwZSI6Imxpc3QtaXRlbSIsInJpY2hUZXh0Ijp7ImRhdGEiOlt7ImNoYXIiOiLop6MifSx7ImNoYXIiOiLlhrMifSx7ImNoYXIiOiLlrpoifSx7ImNoYXIiOiLml7YifSx7ImNoYXIiOiLph4cifSx7ImNoYXIiOiLpm4YifSx7ImNoYXIiOiLkuK0ifSx7ImNoYXIiOiLorr4ifSx7ImNoYXIiOiLnva4ifSx7ImNoYXIiOiLml6UifSx7ImNoYXIiOiLmnJ8ifSx7ImNoYXIiOiLkvJoifSx7ImNoYXIiOiLlh7oifSx7ImNoYXIiOiLplJkifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLpl64ifSx7ImNoYXIiOiLpopgifV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9LCJsZXZlbCI6MSwiaW5kZXgiOjcsImxpc3RJZCI6IjI1MjUtMTU4ODEyODAyODA0NCIsImxpc3RUeXBlIjoidW5vcmRlcmVkIn0seyJibG9ja0lkIjoiNzg0Mi0xNTg4MTI4MDIxMjIzIiwiYmxvY2tUeXBlIjoibGlzdC1pdGVtIiwic3R5bGVzIjp7fSwidHlwZSI6Imxpc3QtaXRlbSIsInJpY2hUZXh0Ijp7ImRhdGEiOlt7ImNoYXIiOiLop6MifSx7ImNoYXIiOiLlhrMifSx7ImNoYXIiOiLoh6oifSx7ImNoYXIiOiLlrpoifSx7ImNoYXIiOiLkuYkifSx7ImNoYXIiOiLphY0ifSx7ImNoYXIiOiLnva4ifSx7ImNoYXIiOiLkuK0ifSx7ImNoYXIiOiJKIn0seyJjaGFyIjoiUyJ9LHsiY2hhciI6Ik8ifSx7ImNoYXIiOiJOIn0seyJjaGFyIjoi5Lu7In0seyJjaGFyIjoi5YqhIn0seyJjaGFyIjoi5re7In0seyJjaGFyIjoi5YqgIn0seyJjaGFyIjoi5a2XIn0seyJjaGFyIjoi5q61In0seyJjaGFyIjoi5LyaIn0seyJjaGFyIjoi55m9In0seyJjaGFyIjoi5bGPIn0seyJjaGFyIjoi55qEIn0seyJjaGFyIjoi6ZeuIn0seyJjaGFyIjoi6aKYIn1dLCJpc1JpY2hUZXh0Ijp0cnVlLCJrZWVwTGluZUJyZWFrIjp0cnVlfSwibGV2ZWwiOjEsImluZGV4Ijo4LCJsaXN0SWQiOiIyNTI1LTE1ODgxMjgwMjgwNDQiLCJsaXN0VHlwZSI6InVub3JkZXJlZCJ9LHsiYmxvY2tJZCI6IjUyODgtMTU4ODEyODAyMTIyMyIsImJsb2NrVHlwZSI6Imxpc3QtaXRlbSIsInN0eWxlcyI6e30sInR5cGUiOiJsaXN0LWl0ZW0iLCJyaWNoVGV4dCI6eyJkYXRhIjpbeyJjaGFyIjoi6KejIn0seyJjaGFyIjoi5YazIn0seyJjaGFyIjoi5Lu7In0seyJjaGFyIjoi5YqhIn0seyJjaGFyIjoi5YiXIn0seyJjaGFyIjoi6KGoIn0seyJjaGFyIjoi5LitIn0seyJjaGFyIjoi5Lu7In0seyJjaGFyIjoi5YqhIn0seyJjaGFyIjoi57uEIn0seyJjaGFyIjoi5qihIn0seyJjaGFyIjoi5byPIn0seyJjaGFyIjoi5LiLIn0seyJjaGFyIjoi5om5In0seyJjaGFyIjoi6YePIn0seyJjaGFyIjoi5ZCvIn0seyJjaGFyIjoi5YqoIn0seyJjaGFyIjoi5LqRIn0seyJjaGFyIjoi6YeHIn0seyJjaGFyIjoi6ZuGIn0seyJjaGFyIjoi5LyaIn0seyJjaGFyIjoi6ZW/In0seyJjaGFyIjoi5pe2In0seyJjaGFyIjoi6Ze0In0seyJjaGFyIjoi5Y2hIn0seyJjaGFyIjoi5L2PIn0seyJjaGFyIjoi55qEIn0seyJjaGFyIjoi6ZeuIn0seyJjaGFyIjoi6aKYIn1dLCJpc1JpY2hUZXh0Ijp0cnVlLCJrZWVwTGluZUJyZWFrIjp0cnVlfSwibGV2ZWwiOjEsImluZGV4Ijo5LCJsaXN0SWQiOiIyNTI1LTE1ODgxMjgwMjgwNDQiLCJsaXN0VHlwZSI6InVub3JkZXJlZCJ9LHsiYmxvY2tJZCI6IjQ4ODUtMTU4ODEyODAyMTIyMyIsImJsb2NrVHlwZSI6Imxpc3QtaXRlbSIsInN0eWxlcyI6e30sInR5cGUiOiJsaXN0LWl0ZW0iLCJyaWNoVGV4dCI6eyJkYXRhIjpbeyJjaGFyIjoi6KejIn0seyJjaGFyIjoi5YazIn0seyJjaGFyIjoi6IeqIn0seyJjaGFyIjoi5a6aIn0seyJjaGFyIjoi5LmJIn0seyJjaGFyIjoi6YWNIn0seyJjaGFyIjoi572uIn0seyJjaGFyIjoi5LitIn0seyJjaGFyIjoi5re7In0seyJjaGFyIjoi5YqgIn0seyJjaGFyIjoi5Zu6In0seyJjaGFyIjoi5a6aIn0seyJjaGFyIjoi5a2XIn0seyJjaGFyIjoi5q61In0seyJjaGFyIjoi5ZCOIn0seyJjaGFyIjoi5L+uIn0seyJjaGFyIjoi5pS5In0seyJjaGFyIjoi5a2XIn0seyJjaGFyIjoi5q61In0seyJjaGFyIjoi5ZCNIn0seyJjaGFyIjoi6ZSZIn0seyJjaGFyIjoi6K+vIn0seyJjaGFyIjoi55qEIn0seyJjaGFyIjoi6ZeuIn0seyJjaGFyIjoi6aKYIn1dLCJpc1JpY2hUZXh0Ijp0cnVlLCJrZWVwTGluZUJyZWFrIjp0cnVlfSwibGV2ZWwiOjEsImluZGV4IjoxMCwibGlzdElkIjoiMjUyNS0xNTg4MTI4MDI4MDQ0IiwibGlzdFR5cGUiOiJ1bm9yZGVyZWQifSx7ImJsb2NrSWQiOiI4MDM4LTE1ODgxMjgwMjEyMjMiLCJibG9ja1R5cGUiOiJsaXN0LWl0ZW0iLCJzdHlsZXMiOnt9LCJ0eXBlIjoibGlzdC1pdGVtIiwicmljaFRleHQiOnsiZGF0YSI6W3siY2hhciI6IuinoyJ9LHsiY2hhciI6IuWGsyJ9LHsiY2hhciI6IuiHqiJ9LHsiY2hhciI6IuWumiJ9LHsiY2hhciI6IuS5iSJ9LHsiY2hhciI6IumFjSJ9LHsiY2hhciI6Iue9riJ9LHsiY2hhciI6IuS4rSJ9LHsiY2hhciI6IuW+qiJ9LHsiY2hhciI6IueOryJ9LHsiY2hhciI6IuaPkCJ9LHsiY2hhciI6IuWPliJ9LHsiY2hhciI6IuWbuiJ9LHsiY2hhciI6IuWumiJ9LHsiY2hhciI6IuWFgyJ9LHsiY2hhciI6Iue0oCJ9LHsiY2hhciI6IuWIlyJ9LHsiY2hhciI6IuihqCJ9LHsiY2hhciI6IumihCJ9LHsiY2hhciI6IuiniCJ9LHsiY2hhciI6IuaVsCJ9LHsiY2hhciI6IuaNriJ9LHsiY2hhciI6IuS4jSJ9LHsiY2hhciI6IuaYviJ9LHsiY2hhciI6IuekuiJ9LHsiY2hhciI6IueahCJ9LHsiY2hhciI6IumXriJ9LHsiY2hhciI6IumimCJ9XSwiaXNSaWNoVGV4dCI6dHJ1ZSwia2VlcExpbmVCcmVhayI6dHJ1ZX0sImxldmVsIjoxLCJpbmRleCI6MTEsImxpc3RJZCI6IjI1MjUtMTU4ODEyODAyODA0NCIsImxpc3RUeXBlIjoidW5vcmRlcmVkIn0seyJibG9ja0lkIjoiNTI2Ni0xNTg4MTI4MDIxMjIzIiwiYmxvY2tUeXBlIjoibGlzdC1pdGVtIiwic3R5bGVzIjp7fSwidHlwZSI6Imxpc3QtaXRlbSIsInJpY2hUZXh0Ijp7ImRhdGEiOlt7ImNoYXIiOiLop6MifSx7ImNoYXIiOiLlhrMifSx7ImNoYXIiOiLoh6oifSx7ImNoYXIiOiLlrpoifSx7ImNoYXIiOiLkuYkifSx7ImNoYXIiOiLphY0ifSx7ImNoYXIiOiLnva4ifSx7ImNoYXIiOiLkuK0ifSx7ImNoYXIiOiLpg6gifSx7ImNoYXIiOiLliIYifSx7ImNoYXIiOiLnvZEifSx7ImNoYXIiOiLnq5kifSx7ImNoYXIiOiLml6AifSx7ImNoYXIiOiLms5UifSx7ImNoYXIiOiLojrcifSx7ImNoYXIiOiLlj5YifSx7ImNoYXIiOiJDIn0seyJjaGFyIjoibyJ9LHsiY2hhciI6Im8ifSx7ImNoYXIiOiJrIn0seyJjaGFyIjoiaSJ9LHsiY2hhciI6ImUifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLpl64ifSx7ImNoYXIiOiLpopgifV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9LCJsZXZlbCI6MSwiaW5kZXgiOjEyLCJsaXN0SWQiOiIyNTI1LTE1ODgxMjgwMjgwNDQiLCJsaXN0VHlwZSI6InVub3JkZXJlZCJ9LHsiYmxvY2tJZCI6IjcxNDQtMTU4ODEyODAyMTIyMyIsImJsb2NrVHlwZSI6Imxpc3QtaXRlbSIsInN0eWxlcyI6e30sInR5cGUiOiJsaXN0LWl0ZW0iLCJyaWNoVGV4dCI6eyJkYXRhIjpbeyJjaGFyIjoi6KejIn0seyJjaGFyIjoi5YazIn0seyJjaGFyIjoi5a6aIn0seyJjaGFyIjoi5pe2In0seyJjaGFyIjoi6YeHIn0seyJjaGFyIjoi6ZuGIn0seyJjaGFyIjoi5LitIn0seyJjaGFyIjoi6K6+In0seyJjaGFyIjoi572uIn0seyJjaGFyIjoi5oyJIn0seyJjaGFyIjoi5ZGoIn0seyJjaGFyIjoi44CBIn0seyJjaGFyIjoi5oyJIn0seyJjaGFyIjoi5pyIIn0seyJjaGFyIjoi5a6aIn0seyJjaGFyIjoi5pe2In0seyJjaGFyIjoi6YeHIn0seyJjaGFyIjoi6ZuGIn0seyJjaGFyIjoi5LiLIn0seyJjaGFyIjoi5LiAIn0seyJjaGFyIjoi5qyhIn0seyJjaGFyIjoi6YeHIn0seyJjaGFyIjoi6ZuGIn0seyJjaGFyIjoi5pe2In0seyJjaGFyIjoi6Ze0In0seyJjaGFyIjoi5LiNIn0seyJjaGFyIjoi5q2jIn0seyJjaGFyIjoi56GuIn0seyJjaGFyIjoi55qEIn0seyJjaGFyIjoi6ZeuIn0seyJjaGFyIjoi6aKYIn1dLCJpc1JpY2hUZXh0Ijp0cnVlLCJrZWVwTGluZUJyZWFrIjp0cnVlfSwibGV2ZWwiOjEsImluZGV4IjoxMywibGlzdElkIjoiMjUyNS0xNTg4MTI4MDI4MDQ0IiwibGlzdFR5cGUiOiJ1bm9yZGVyZWQifSx7ImJsb2NrSWQiOiIyMjUwLTE1ODgxMjgwMjEyMjMiLCJibG9ja1R5cGUiOiJsaXN0LWl0ZW0iLCJzdHlsZXMiOnt9LCJ0eXBlIjoibGlzdC1pdGVtIiwicmljaFRleHQiOnsiZGF0YSI6W3siY2hhciI6IuinoyJ9LHsiY2hhciI6IuWGsyJ9LHsiY2hhciI6IuWumiJ9LHsiY2hhciI6IuaXtiJ9LHsiY2hhciI6IumHhyJ9LHsiY2hhciI6IumbhiJ9LHsiY2hhciI6IuS4rSJ9LHsiY2hhciI6IuiuviJ9LHsiY2hhciI6Iue9riJ9LHsiY2hhciI6IumXtCJ9LHsiY2hhciI6IumalCJ9LHsiY2hhciI6IuaXtiJ9LHsiY2hhciI6IumXtCJ9LHsiY2hhciI6IjEifSx7ImNoYXIiOiLliIYifSx7ImNoYXIiOiLpkp8ifSx7ImNoYXIiOiLph4cifSx7ImNoYXIiOiLpm4YifSx7ImNoYXIiOiLkuI0ifSx7ImNoYXIiOiLnlJ8ifSx7ImNoYXIiOiLmlYgifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLpl64ifSx7ImNoYXIiOiLpopgifV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9LCJsZXZlbCI6MSwiaW5kZXgiOjE0LCJsaXN0SWQiOiIyNTI1LTE1ODgxMjgwMjgwNDQiLCJsaXN0VHlwZSI6InVub3JkZXJlZCJ9LHsiYmxvY2tJZCI6IjE2ODUtMTU4ODEyODAyMTIyMyIsImJsb2NrVHlwZSI6Imxpc3QtaXRlbSIsInN0eWxlcyI6e30sInR5cGUiOiJsaXN0LWl0ZW0iLCJyaWNoVGV4dCI6eyJkYXRhIjpbeyJjaGFyIjoi6KejIn0seyJjaGFyIjoi5YazIn0seyJjaGFyIjoi6IeqIn0seyJjaGFyIjoi5a6aIn0seyJjaGFyIjoi5LmJIn0seyJjaGFyIjoi6YWNIn0seyJjaGFyIjoi572uIn0seyJjaGFyIjoi5LitIn0seyJjaGFyIjoi5pyJIn0seyJjaGFyIjoi5pe2In0seyJjaGFyIjoi5L+uIn0seyJjaGFyIjoi5pS5In0seyJjaGFyIjoi5Lu7In0seyJjaGFyIjoi5YqhIn0seyJjaGFyIjoi5ZCNIn0seyJjaGFyIjoi5L+dIn0seyJjaGFyIjoi5a2YIn0seyJjaGFyIjoi5LiNIn0seyJjaGFyIjoi55SfIn0seyJjaGFyIjoi5pWIIn0seyJjaGFyIjoi55qEIn0seyJjaGFyIjoi6ZeuIn0seyJjaGFyIjoi6aKYIn1dLCJpc1JpY2hUZXh0Ijp0cnVlLCJrZWVwTGluZUJyZWFrIjp0cnVlfSwibGV2ZWwiOjEsImluZGV4IjoxNSwibGlzdElkIjoiMjUyNS0xNTg4MTI4MDI4MDQ0IiwibGlzdFR5cGUiOiJ1bm9yZGVyZWQifSx7ImJsb2NrSWQiOiIzODg0LTE1ODgxMjgwMjEyMjMiLCJibG9ja1R5cGUiOiJsaXN0LWl0ZW0iLCJzdHlsZXMiOnt9LCJ0eXBlIjoibGlzdC1pdGVtIiwicmljaFRleHQiOnsiZGF0YSI6W3siY2hhciI6IuinoyJ9LHsiY2hhciI6IuWGsyJ9LHsiY2hhciI6IuiHqiJ9LHsiY2hhciI6IuWumiJ9LHsiY2hhciI6IuS5iSJ9LHsiY2hhciI6IumFjSJ9LHsiY2hhciI6Iue9riJ9LHsiY2hhciI6IuS4rSJ9LHsiY2hhciI6IuiuviJ9LHsiY2hhciI6Iue9riJ9LHsiY2hhciI6IuWtlyJ9LHsiY2hhciI6IuautSJ9LHsiY2hhciI6IuaKkyJ9LHsiY2hhciI6IuWPliJ9LHsiY2hhciI6IuWxniJ9LHsiY2hhciI6IuaApyJ9LHsiY2hhciI6IuWAvCJ9LHsiY2hhciI6Ii0ifSx7ImNoYXIiOiLpgIkifSx7ImNoYXIiOiLmi6kifSx7ImNoYXIiOiLlsZ4ifSx7ImNoYXIiOiLmgKcifSx7ImNoYXIiOiLlgLwifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLml7YifSx7ImNoYXIiOiLlgJkifSx7ImNoYXIiOiLmtYEifSx7ImNoYXIiOiLnqIsifSx7ImNoYXIiOiLlm74ifSx7ImNoYXIiOiLljLoifSx7ImNoYXIiOiLln58ifSx7ImNoYXIiOiLkvJoifSx7ImNoYXIiOiLpmpAifSx7ImNoYXIiOiLol48ifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLpl64ifSx7ImNoYXIiOiLpopgifV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9LCJsZXZlbCI6MSwiaW5kZXgiOjE2LCJsaXN0SWQiOiIyNTI1LTE1ODgxMjgwMjgwNDQiLCJsaXN0VHlwZSI6InVub3JkZXJlZCJ9LHsiYmxvY2tJZCI6IjEwMjYtMTU4ODEyODAyMTIyMyIsImJsb2NrVHlwZSI6Imxpc3QtaXRlbSIsInN0eWxlcyI6e30sInR5cGUiOiJsaXN0LWl0ZW0iLCJyaWNoVGV4dCI6eyJkYXRhIjpbeyJjaGFyIjoi6KejIn0seyJjaGFyIjoi5YazIn0seyJjaGFyIjoi6IeqIn0seyJjaGFyIjoi5a6aIn0seyJjaGFyIjoi5LmJIn0seyJjaGFyIjoi6YWNIn0seyJjaGFyIjoi572uIn0seyJjaGFyIjoi5LitIn0seyJjaGFyIjoi56ysIn0seyJjaGFyIjoi5LiAIn0seyJjaGFyIjoi5qyhIn0seyJjaGFyIjoi6L+bIn0seyJjaGFyIjoi5YWlIn0seyJjaGFyIjoi5pe2In0seyJjaGFyIjoi5byVIn0seyJjaGFyIjoi5a+8In0seyJjaGFyIjoi5o+QIn0seyJjaGFyIjoi56S6In0seyJjaGFyIjoi6IOMIn0seyJjaGFyIjoi5pmvIn0seyJjaGFyIjoi5Ye6In0seyJjaGFyIjoi546wIn0seyJjaGFyIjoi55SoIn0seyJjaGFyIjoi5oi3In0seyJjaGFyIjoi6LCDIn0seyJjaGFyIjoi5p+lIn0seyJjaGFyIjoi55WMIn0seyJjaGFyIjoi6Z2iIn0seyJjaGFyIjoi55qEIn0seyJjaGFyIjoi6ZeuIn0seyJjaGFyIjoi6aKYIn1dLCJpc1JpY2hUZXh0Ijp0cnVlLCJrZWVwTGluZUJyZWFrIjp0cnVlfSwibGV2ZWwiOjEsImluZGV4IjoxNywibGlzdElkIjoiMjUyNS0xNTg4MTI4MDI4MDQ0IiwibGlzdFR5cGUiOiJ1bm9yZGVyZWQifSx7ImJsb2NrSWQiOiIxODMwLTE1ODgxMjgwMjEyMjMiLCJibG9ja1R5cGUiOiJsaXN0LWl0ZW0iLCJzdHlsZXMiOnt9LCJ0eXBlIjoibGlzdC1pdGVtIiwicmljaFRleHQiOnsiZGF0YSI6W3siY2hhciI6IuinoyJ9LHsiY2hhciI6IuWGsyJ9LHsiY2hhciI6IuS7uyJ9LHsiY2hhciI6IuWKoSJ9LHsiY2hhciI6IuWIlyJ9LHsiY2hhciI6IuihqCJ9LHsiY2hhciI6IuS4rSJ9LHsiY2hhciI6IuWItyJ9LHsiY2hhciI6IuaWsCJ9LHsiY2hhciI6IuWQjiJ9LHsiY2hhciI6IuetmyJ9LHsiY2hhciI6IumAiSJ9LHsiY2hhciI6IuadoSJ9LHsiY2hhciI6IuS7tiJ9LHsiY2hhciI6IumHjSJ9LHsiY2hhciI6Iue9riJ9LHsiY2hhciI6IueahCJ9LHsiY2hhciI6IumXriJ9LHsiY2hhciI6IumimCJ9XSwiaXNSaWNoVGV4dCI6dHJ1ZSwia2VlcExpbmVCcmVhayI6dHJ1ZX0sImxldmVsIjoxLCJpbmRleCI6MTgsImxpc3RJZCI6IjI1MjUtMTU4ODEyODAyODA0NCIsImxpc3RUeXBlIjoidW5vcmRlcmVkIn0seyJibG9ja0lkIjoiMjA3OS0xNTg4MTI4MDIxMjIzIiwiYmxvY2tUeXBlIjoibGlzdC1pdGVtIiwic3R5bGVzIjp7fSwidHlwZSI6Imxpc3QtaXRlbSIsInJpY2hUZXh0Ijp7ImRhdGEiOlt7ImNoYXIiOiLop6MifSx7ImNoYXIiOiLlhrMifSx7ImNoYXIiOiLoh6oifSx7ImNoYXIiOiLlrpoifSx7ImNoYXIiOiLkuYkifSx7ImNoYXIiOiLphY0ifSx7ImNoYXIiOiLnva4ifSx7ImNoYXIiOiLkuK0ifSx7ImNoYXIiOiLkv64ifSx7ImNoYXIiOiLmlLkifSx7ImNoYXIiOiLku7sifSx7ImNoYXIiOiLliqEifSx7ImNoYXIiOiLlkI0ifSx7ImNoYXIiOiLml7YifSx7ImNoYXIiOiLmoIcifSx7ImNoYXIiOiLnrb4ifSx7ImNoYXIiOiLpobUifSx7ImNoYXIiOiLkuK0ifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLku7sifSx7ImNoYXIiOiLliqEifSx7ImNoYXIiOiLkv50ifSx7ImNoYXIiOiLlrZgifSx7ImNoYXIiOiLmoIcifSx7ImNoYXIiOiLor4YifSx7ImNoYXIiOiLkuI0ifSx7ImNoYXIiOiLmraMifSx7ImNoYXIiOiLnoa4ifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLpl64ifSx7ImNoYXIiOiLpopgifV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9LCJsZXZlbCI6MSwiaW5kZXgiOjE5LCJsaXN0SWQiOiIyNTI1LTE1ODgxMjgwMjgwNDQiLCJsaXN0VHlwZSI6InVub3JkZXJlZCJ9XQ==--></p>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.1.8（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2020-03-27</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>主要体验改进：
+<ul>
+<li>改善安装卸载错误日志记录方式</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.1.6（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2020-03-21</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>Bug修复
+<ul>
+<li>解决自定义配置当前页面数据预览中对字段的相关操作不生效的问题</li>
+<li>解决本地采集中两个嵌套循环提取数据不正确的问题</li>
+<li>解决主界面左侧边栏对最近编辑下的任务部分操作不生效的问题</li>
+<li>解决主界面左侧边栏快速筛选拖动调整顺序时的样式问题</li>
+<li>解决主界面左下角刚登录到客户端时续费按钮没显示的问题</li>
+<li>解决主界面左下角点击用户名跳转的网页不正确的问题</li>
+<li>解决查看数据界面有些情况下会白屏的问题</li>
+<li>解决查看数据和导出数据会多出root字段的问题</li>
+<li>解决任务列表中有时候修改任务名提示重名的问题</li>
+<li>解决本地采集中日期格式化的问题</li>
+<li>解决自定义配置中有时设置循环项时流程图区域会自动隐藏的问题</li>
+<li>解决自定义配置中有些操作会导致提取步骤中字段被清空的问题</li>
+<li>解决打开网址来源为从另外任务导入的任务会白屏的问题</li>
+<li>解决新建任务组和删除任务组时任务列表中会显示“0”的问题</li>
+<li>解决任务设置中有些情况下设置自定义IP会出现白屏的问题</li>
+</ul>
+</li>
+</ul>
+<p><!--5f39ae17-8c62-4a45-bc43-b32064c9388a:W3siYmxvY2tJZCI6IjI5NTAtMTU4NDc5MDY0NjM4NCIsImJsb2NrVHlwZSI6InBhcmFncmFwaCIsInN0eWxlcyI6eyJiYWNrLWNvbG9yIjoiIiwicGFkZGluZyI6IiJ9LCJ0eXBlIjoicGFyYWdyYXBoIiwicmljaFRleHQiOnsiZGF0YSI6W3siY2hhciI6IjEifSx7ImNoYXIiOiIuIn0seyJjaGFyIjoiICJ9LHsiY2hhciI6IuinoyJ9LHsiY2hhciI6IuWGsyJ9LHsiY2hhciI6IuiHqiJ9LHsiY2hhciI6IuWumiJ9LHsiY2hhciI6IuS5iSJ9LHsiY2hhciI6IumFjSJ9LHsiY2hhciI6Iue9riJ9LHsiY2hhciI6IuW9kyJ9LHsiY2hhciI6IuWJjSJ9LHsiY2hhciI6IumhtSJ9LHsiY2hhciI6IumdoiJ9LHsiY2hhciI6IuaVsCJ9LHsiY2hhciI6IuaNriJ9LHsiY2hhciI6IumihCJ9LHsiY2hhciI6IuiniCJ9LHsiY2hhciI6IuS4rSJ9LHsiY2hhciI6IuWvuSJ9LHsiY2hhciI6IuWtlyJ9LHsiY2hhciI6IuautSJ9LHsiY2hhciI6IueahCJ9LHsiY2hhciI6IuebuCJ9LHsiY2hhciI6IuWFsyJ9LHsiY2hhciI6IuaTjSJ9LHsiY2hhciI6IuS9nCJ9LHsiY2hhciI6IuS4jSJ9LHsiY2hhciI6IueUnyJ9LHsiY2hhciI6IuaViCJ9LHsiY2hhciI6IueahCJ9LHsiY2hhciI6IumXriJ9LHsiY2hhciI6IumimCJ9XSwiaXNSaWNoVGV4dCI6dHJ1ZSwia2VlcExpbmVCcmVhayI6dHJ1ZX19LHsiYmxvY2tJZCI6Ijc2OTQtMTU4NDc5MDkxMzA3NiIsImJsb2NrVHlwZSI6InBhcmFncmFwaCIsInN0eWxlcyI6eyJiYWNrLWNvbG9yIjoiIiwicGFkZGluZyI6IiJ9LCJ0eXBlIjoicGFyYWdyYXBoIiwicmljaFRleHQiOnsiZGF0YSI6W3siY2hhciI6IjIifSx7ImNoYXIiOiIuIn0seyJjaGFyIjoiICJ9LHsiY2hhciI6IuinoyJ9LHsiY2hhciI6IuWGsyJ9LHsiY2hhciI6IuacrCJ9LHsiY2hhciI6IuWcsCJ9LHsiY2hhciI6IumHhyJ9LHsiY2hhciI6IumbhiJ9LHsiY2hhciI6IuS4rSJ9LHsiY2hhciI6IuS4pCJ9LHsiY2hhciI6IuS4qiJ9LHsiY2hhciI6IuW1jCJ9LHsiY2hhciI6IuWllyJ9LHsiY2hhciI6IuW+qiJ9LHsiY2hhciI6IueOryJ9LHsiY2hhciI6IuaPkCJ9LHsiY2hhciI6IuWPliJ9LHsiY2hhciI6IuaVsCJ9LHsiY2hhciI6IuaNriJ9LHsiY2hhciI6IuS4jSJ9LHsiY2hhciI6IuatoyJ9LHsiY2hhciI6IuehriJ9LHsiY2hhciI6IueahCJ9LHsiY2hhciI6IumXriJ9LHsiY2hhciI6IumimCJ9XSwiaXNSaWNoVGV4dCI6dHJ1ZSwia2VlcExpbmVCcmVhayI6dHJ1ZX19LHsiYmxvY2tJZCI6IjMyOTUtMTU4NDc5MTAzOTM2NiIsImJsb2NrVHlwZSI6InBhcmFncmFwaCIsInN0eWxlcyI6eyJiYWNrLWNvbG9yIjoiIiwicGFkZGluZyI6IiJ9LCJ0eXBlIjoicGFyYWdyYXBoIiwicmljaFRleHQiOnsiZGF0YSI6W3siY2hhciI6IjMifSx7ImNoYXIiOiIuIn0seyJjaGFyIjoiICJ9LHsiY2hhciI6IuinoyJ9LHsiY2hhciI6IuWGsyJ9LHsiY2hhciI6IuS4uyJ9LHsiY2hhciI6IueVjCJ9LHsiY2hhciI6IumdoiJ9LHsiY2hhciI6IuW3piJ9LHsiY2hhciI6IuS+pyJ9LHsiY2hhciI6Iui+uSJ9LHsiY2hhciI6IuagjyJ9LHsiY2hhciI6IuWvuSJ9LHsiY2hhciI6IuacgCJ9LHsiY2hhciI6Iui/kSJ9LHsiY2hhciI6Iue8liJ9LHsiY2hhciI6Iui+kSJ9LHsiY2hhciI6IuS4iyJ9LHsiY2hhciI6IueahCJ9LHsiY2hhciI6IuS7uyJ9LHsiY2hhciI6IuWKoSJ9LHsiY2hhciI6IumDqCJ9LHsiY2hhciI6IuWIhiJ9LHsiY2hhciI6IuaTjSJ9LHsiY2hhciI6IuS9nCJ9LHsiY2hhciI6IuS4jSJ9LHsiY2hhciI6IueUnyJ9LHsiY2hhciI6IuaViCJ9LHsiY2hhciI6IueahCJ9LHsiY2hhciI6IumXriJ9LHsiY2hhciI6IumimCJ9XSwiaXNSaWNoVGV4dCI6dHJ1ZSwia2VlcExpbmVCcmVhayI6dHJ1ZX19LHsiYmxvY2tJZCI6IjU5MzYtMTU4NDc5MTE0MTg3NCIsImJsb2NrVHlwZSI6InBhcmFncmFwaCIsInN0eWxlcyI6eyJiYWNrLWNvbG9yIjoiIiwicGFkZGluZyI6IiJ9LCJ0eXBlIjoicGFyYWdyYXBoIiwicmljaFRleHQiOnsiZGF0YSI6W3siY2hhciI6IjQifSx7ImNoYXIiOiIuIn0seyJjaGFyIjoiICJ9LHsiY2hhciI6IuinoyJ9LHsiY2hhciI6IuWGsyJ9LHsiY2hhciI6IuS4uyJ9LHsiY2hhciI6IueVjCJ9LHsiY2hhciI6IumdoiJ9LHsiY2hhciI6IuW3piJ9LHsiY2hhciI6IuS+pyJ9LHsiY2hhciI6Iui+uSJ9LHsiY2hhciI6IuagjyJ9LHsiY2hhciI6IuW/qyJ9LHsiY2hhciI6IumAnyJ9LHsiY2hhciI6IuetmyJ9LHsiY2hhciI6IumAiSJ9LHsiY2hhciI6IuaLliJ9LHsiY2hhciI6IuWKqCJ9LHsiY2hhciI6IuiwgyJ9LHsiY2hhciI6IuaVtCJ9LHsiY2hhciI6IumhuiJ9LHsiY2hhciI6IuW6jyJ9LHsiY2hhciI6IuaXtiJ9LHsiY2hhciI6IueahCJ9LHsiY2hhciI6IuagtyJ9LHsiY2hhciI6IuW8jyJ9LHsiY2hhciI6IumXriJ9LHsiY2hhciI6IumimCJ9XSwiaXNSaWNoVGV4dCI6dHJ1ZSwia2VlcExpbmVCcmVhayI6dHJ1ZX19LHsiYmxvY2tJZCI6IjkwNjktMTU4NDc5MTI3NTExMyIsImJsb2NrVHlwZSI6InBhcmFncmFwaCIsInN0eWxlcyI6eyJiYWNrLWNvbG9yIjoiIiwicGFkZGluZyI6IiJ9LCJ0eXBlIjoicGFyYWdyYXBoIiwicmljaFRleHQiOnsiZGF0YSI6W3siY2hhciI6IjUifSx7ImNoYXIiOiIuIn0seyJjaGFyIjoiICJ9LHsiY2hhciI6IuinoyJ9LHsiY2hhciI6IuWGsyJ9LHsiY2hhciI6IuS4uyJ9LHsiY2hhciI6IueVjCJ9LHsiY2hhciI6IumdoiJ9LHsiY2hhciI6IuW3piJ9LHsiY2hhciI6IuS4iyJ9LHsiY2hhciI6IuinkiJ9LHsiY2hhciI6IuWImiJ9LHsiY2hhciI6IueZuyJ9LHsiY2hhciI6IuW9lSJ9LHsiY2hhciI6IuWIsCJ9LHsiY2hhciI6IuWuoiJ9LHsiY2hhciI6IuaItyJ9LHsiY2hhciI6IuerryJ9LHsiY2hhciI6IuaXtiJ9LHsiY2hhciI6Iue7rSJ9LHsiY2hhciI6Iui0uSJ9LHsiY2hhciI6IuaMiSJ9LHsiY2hhciI6IumSriJ9LHsiY2hhciI6IuayoSJ9LHsiY2hhciI6IuaYviJ9LHsiY2hhciI6IuekuiJ9LHsiY2hhciI6IueahCJ9LHsiY2hhciI6IumXriJ9LHsiY2hhciI6IumimCJ9XSwiaXNSaWNoVGV4dCI6dHJ1ZSwia2VlcExpbmVCcmVhayI6dHJ1ZX19LHsiYmxvY2tJZCI6IjgyMzgtMTU4NDc5MTU0NjAxOCIsImJsb2NrVHlwZSI6InBhcmFncmFwaCIsInN0eWxlcyI6eyJiYWNrLWNvbG9yIjoiIiwicGFkZGluZyI6IiJ9LCJ0eXBlIjoicGFyYWdyYXBoIiwicmljaFRleHQiOnsiZGF0YSI6W3siY2hhciI6IjYifSx7ImNoYXIiOiIuIn0seyJjaGFyIjoiICJ9LHsiY2hhciI6IuinoyJ9LHsiY2hhciI6IuWGsyJ9LHsiY2hhciI6IuS4uyJ9LHsiY2hhciI6IueVjCJ9LHsiY2hhciI6IumdoiJ9LHsiY2hhciI6IuW3piJ9LHsiY2hhciI6IuS4iyJ9LHsiY2hhciI6IuinkiJ9LHsiY2hhciI6IueCuSJ9LHsiY2hhciI6IuWHuyJ9LHsiY2hhciI6IueUqCJ9LHsiY2hhciI6IuaItyJ9LHsiY2hhciI6IuWQjSJ9LHsiY2hhciI6Iui3syJ9LHsiY2hhciI6Iui9rCJ9LHsiY2hhciI6IueahCJ9LHsiY2hhciI6Iue9kSJ9LHsiY2hhciI6IumhtSJ9LHsiY2hhciI6IuS4jSJ9LHsiY2hhciI6IuatoyJ9LHsiY2hhciI6IuehriJ9LHsiY2hhciI6IueahCJ9LHsiY2hhciI6IumXriJ9LHsiY2hhciI6IumimCJ9XSwiaXNSaWNoVGV4dCI6dHJ1ZSwia2VlcExpbmVCcmVhayI6dHJ1ZX19LHsiYmxvY2tJZCI6IjUwNDctMTU4NDc5MTM0OTU4MiIsImJsb2NrVHlwZSI6InBhcmFncmFwaCIsInN0eWxlcyI6eyJiYWNrLWNvbG9yIjoiIiwicGFkZGluZyI6IiJ9LCJ0eXBlIjoicGFyYWdyYXBoIiwicmljaFRleHQiOnsiZGF0YSI6W3siY2hhciI6IjcifSx7ImNoYXIiOiIuIn0seyJjaGFyIjoiICJ9LHsiY2hhciI6IuinoyJ9LHsiY2hhciI6IuWGsyJ9LHsiY2hhciI6IuafpSJ9LHsiY2hhciI6IueciyJ9LHsiY2hhciI6IuaVsCJ9LHsiY2hhciI6IuaNriJ9LHsiY2hhciI6IueVjCJ9LHsiY2hhciI6IumdoiJ9LHsiY2hhciI6IuaciSJ9LHsiY2hhciI6IuS6myJ9LHsiY2hhciI6IuaDhSJ9LHsiY2hhciI6IuWGtSJ9LHsiY2hhciI6IuS4iyJ9LHsiY2hhciI6IuS8miJ9LHsiY2hhciI6IueZvSJ9LHsiY2hhciI6IuWxjyJ9LHsiY2hhciI6IueahCJ9LHsiY2hhciI6IumXriJ9LHsiY2hhciI6IumimCJ9XSwiaXNSaWNoVGV4dCI6dHJ1ZSwia2VlcExpbmVCcmVhayI6dHJ1ZX19LHsiYmxvY2tJZCI6IjE0MjQtMTU4NDc5MTc2ODkzMyIsImJsb2NrVHlwZSI6InBhcmFncmFwaCIsInN0eWxlcyI6eyJiYWNrLWNvbG9yIjoiIiwicGFkZGluZyI6IiJ9LCJ0eXBlIjoicGFyYWdyYXBoIiwicmljaFRleHQiOnsiZGF0YSI6W3siY2hhciI6IjgifSx7ImNoYXIiOiIuIn0seyJjaGFyIjoiICJ9LHsiY2hhciI6IuinoyJ9LHsiY2hhciI6IuWGsyJ9LHsiY2hhciI6IuafpSJ9LHsiY2hhciI6IueciyJ9LHsiY2hhciI6IuaVsCJ9LHsiY2hhciI6IuaNriJ9LHsiY2hhciI6IuWSjCJ9LHsiY2hhciI6IuWvvCJ9LHsiY2hhciI6IuWHuiJ9LHsiY2hhciI6IuaVsCJ9LHsiY2hhciI6IuaNriJ9LHsiY2hhciI6IuS8miJ9LHsiY2hhciI6IuWkmiJ9LHsiY2hhciI6IuWHuiJ9LHsiY2hhciI6InIifSx7ImNoYXIiOiJvIn0seyJjaGFyIjoibyJ9LHsiY2hhciI6InQifSx7ImNoYXIiOiLlrZcifSx7ImNoYXIiOiLmrrUifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLpl64ifSx7ImNoYXIiOiLpopgifV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9fSx7ImJsb2NrSWQiOiI1MjgxLTE1ODQ3OTE0MTIzNTYiLCJibG9ja1R5cGUiOiJwYXJhZ3JhcGgiLCJzdHlsZXMiOnsiYmFjay1jb2xvciI6IiIsInBhZGRpbmciOiIifSwidHlwZSI6InBhcmFncmFwaCIsInJpY2hUZXh0Ijp7ImRhdGEiOlt7ImNoYXIiOiI5In0seyJjaGFyIjoiLiJ9LHsiY2hhciI6IiAifSx7ImNoYXIiOiLop6MifSx7ImNoYXIiOiLlhrMifSx7ImNoYXIiOiLku7sifSx7ImNoYXIiOiLliqEifSx7ImNoYXIiOiLliJcifSx7ImNoYXIiOiLooagifSx7ImNoYXIiOiLkuK0ifSx7ImNoYXIiOiLmnIkifSx7ImNoYXIiOiLml7YifSx7ImNoYXIiOiLlgJkifSx7ImNoYXIiOiLkv64ifSx7ImNoYXIiOiLmlLkifSx7ImNoYXIiOiLku7sifSx7ImNoYXIiOiLliqEifSx7ImNoYXIiOiLlkI0ifSx7ImNoYXIiOiLmj5AifSx7ImNoYXIiOiLnpLoifSx7ImNoYXIiOiLph40ifSx7ImNoYXIiOiLlkI0ifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLpl64ifSx7ImNoYXIiOiLpopgifV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9fSx7ImJsb2NrSWQiOiI5MTIwLTE1ODQ3OTE0NzI0NzYiLCJibG9ja1R5cGUiOiJwYXJhZ3JhcGgiLCJzdHlsZXMiOnsiYmFjay1jb2xvciI6IiIsInBhZGRpbmciOiIifSwidHlwZSI6InBhcmFncmFwaCIsInJpY2hUZXh0Ijp7ImRhdGEiOlt7ImNoYXIiOiIxIn0seyJjaGFyIjoiMCJ9LHsiY2hhciI6Ii4ifSx7ImNoYXIiOiIgIn0seyJjaGFyIjoi6KejIn0seyJjaGFyIjoi5YazIn0seyJjaGFyIjoi5pysIn0seyJjaGFyIjoi5ZywIn0seyJjaGFyIjoi6YeHIn0seyJjaGFyIjoi6ZuGIn0seyJjaGFyIjoi5LitIn0seyJjaGFyIjoi5pelIn0seyJjaGFyIjoi5pyfIn0seyJjaGFyIjoi5qC8In0seyJjaGFyIjoi5byPIn0seyJjaGFyIjoi5YyWIn0seyJjaGFyIjoi55qEIn0seyJjaGFyIjoi6ZeuIn0seyJjaGFyIjoi6aKYIn1dLCJpc1JpY2hUZXh0Ijp0cnVlLCJrZWVwTGluZUJyZWFrIjp0cnVlfX0seyJibG9ja0lkIjoiMzg2OC0xNTg0NzkxNTE1NjI2IiwiYmxvY2tUeXBlIjoicGFyYWdyYXBoIiwic3R5bGVzIjp7ImJhY2stY29sb3IiOiIiLCJwYWRkaW5nIjoiIn0sInR5cGUiOiJwYXJhZ3JhcGgiLCJyaWNoVGV4dCI6eyJkYXRhIjpbeyJjaGFyIjoiMSJ9LHsiY2hhciI6IjEifSx7ImNoYXIiOiIuIn0seyJjaGFyIjoiICJ9LHsiY2hhciI6IuinoyJ9LHsiY2hhciI6IuWGsyJ9LHsiY2hhciI6IuiHqiJ9LHsiY2hhciI6IuWumiJ9LHsiY2hhciI6IuS5iSJ9LHsiY2hhciI6IumFjSJ9LHsiY2hhciI6Iue9riJ9LHsiY2hhciI6IuS4rSJ9LHsiY2hhciI6IuaciSJ9LHsiY2hhciI6IuaXtiJ9LHsiY2hhciI6IuiuviJ9LHsiY2hhciI6Iue9riJ9LHsiY2hhciI6IuW+qiJ9LHsiY2hhciI6IueOryJ9LHsiY2hhciI6IumhuSJ9LHsiY2hhciI6IuaXtiJ9LHsiY2hhciI6Iua1gSJ9LHsiY2hhciI6IueoiyJ9LHsiY2hhciI6IuWbviJ9LHsiY2hhciI6IuWMuiJ9LHsiY2hhciI6IuWfnyJ9LHsiY2hhciI6IuS8miJ9LHsiY2hhciI6IuiHqiJ9LHsiY2hhciI6IuWKqCJ9LHsiY2hhciI6IumakCJ9LHsiY2hhciI6IuiXjyJ9LHsiY2hhciI6IueahCJ9LHsiY2hhciI6IumXriJ9LHsiY2hhciI6IumimCJ9XSwiaXNSaWNoVGV4dCI6dHJ1ZSwia2VlcExpbmVCcmVhayI6dHJ1ZX19LHsiYmxvY2tJZCI6IjQwOTUtMTU4NDc5MTgyNjAyMyIsImJsb2NrVHlwZSI6InBhcmFncmFwaCIsInN0eWxlcyI6eyJiYWNrLWNvbG9yIjoiIiwicGFkZGluZyI6IiJ9LCJ0eXBlIjoicGFyYWdyYXBoIiwicmljaFRleHQiOnsiZGF0YSI6W3siY2hhciI6IjEifSx7ImNoYXIiOiIyIn0seyJjaGFyIjoiLiJ9LHsiY2hhciI6IiAifSx7ImNoYXIiOiLop6MifSx7ImNoYXIiOiLlhrMifSx7ImNoYXIiOiLoh6oifSx7ImNoYXIiOiLlrpoifSx7ImNoYXIiOiLkuYkifSx7ImNoYXIiOiLphY0ifSx7ImNoYXIiOiLnva4ifSx7ImNoYXIiOiLkuK0ifSx7ImNoYXIiOiLmnIkifSx7ImNoYXIiOiLkupsifSx7ImNoYXIiOiLmk40ifSx7ImNoYXIiOiLkvZwifSx7ImNoYXIiOiLkvJoifSx7ImNoYXIiOiLlr7wifSx7ImNoYXIiOiLoh7QifSx7ImNoYXIiOiLmj5AifSx7ImNoYXIiOiLlj5YifSx7ImNoYXIiOiLmraUifSx7ImNoYXIiOiLpqqQifSx7ImNoYXIiOiLkuK0ifSx7ImNoYXIiOiLlrZcifSx7ImNoYXIiOiLmrrUifSx7ImNoYXIiOiLooqsifSx7ImNoYXIiOiLmuIUifSx7ImNoYXIiOiLnqboifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLpl64ifSx7ImNoYXIiOiLpopgifV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9fSx7ImJsb2NrSWQiOiI3NTgxLTE1ODQ3OTE5ODM3NzkiLCJibG9ja1R5cGUiOiJwYXJhZ3JhcGgiLCJzdHlsZXMiOnsiYmFjay1jb2xvciI6IiIsInBhZGRpbmciOiIifSwidHlwZSI6InBhcmFncmFwaCIsInJpY2hUZXh0Ijp7ImRhdGEiOlt7ImNoYXIiOiIxIn0seyJjaGFyIjoiMyJ9LHsiY2hhciI6Ii4ifSx7ImNoYXIiOiIgIn0seyJjaGFyIjoi6KejIn0seyJjaGFyIjoi5YazIn0seyJjaGFyIjoi5omTIn0seyJjaGFyIjoi5byAIn0seyJjaGFyIjoi572RIn0seyJjaGFyIjoi5Z2AIn0seyJjaGFyIjoi5p2lIn0seyJjaGFyIjoi5rqQIn0seyJjaGFyIjoi5Li6In0seyJjaGFyIjoi5LuOIn0seyJjaGFyIjoi5Y+mIn0seyJjaGFyIjoi5aSWIn0seyJjaGFyIjoi5Lu7In0seyJjaGFyIjoi5YqhIn0seyJjaGFyIjoi5a+8In0seyJjaGFyIjoi5YWlIn0seyJjaGFyIjoi55qEIn0seyJjaGFyIjoi5Lu7In0seyJjaGFyIjoi5YqhIn0seyJjaGFyIjoi5LyaIn0seyJjaGFyIjoi55m9In0seyJjaGFyIjoi5bGPIn0seyJjaGFyIjoi55qEIn0seyJjaGFyIjoi6ZeuIn0seyJjaGFyIjoi6aKYIn1dLCJpc1JpY2hUZXh0Ijp0cnVlLCJrZWVwTGluZUJyZWFrIjp0cnVlfX0seyJibG9ja0lkIjoiNTUyMS0xNTg0NzkyMDU5NTkyIiwiYmxvY2tUeXBlIjoicGFyYWdyYXBoIiwic3R5bGVzIjp7ImJhY2stY29sb3IiOiIiLCJwYWRkaW5nIjoiIn0sInR5cGUiOiJwYXJhZ3JhcGgiLCJyaWNoVGV4dCI6eyJkYXRhIjpbeyJjaGFyIjoiMSJ9LHsiY2hhciI6IjQifSx7ImNoYXIiOiIuIn0seyJjaGFyIjoiICJ9LHsiY2hhciI6IuinoyJ9LHsiY2hhciI6IuWGsyJ9LHsiY2hhciI6IuaWsCJ9LHsiY2hhciI6IuW7uiJ9LHsiY2hhciI6IuS7uyJ9LHsiY2hhciI6IuWKoSJ9LHsiY2hhciI6Iue7hCJ9LHsiY2hhciI6IuWSjCJ9LHsiY2hhciI6IuWIoCJ9LHsiY2hhciI6IumZpCJ9LHsiY2hhciI6IuS7uyJ9LHsiY2hhciI6IuWKoSJ9LHsiY2hhciI6Iue7hCJ9LHsiY2hhciI6IuaXtiJ9LHsiY2hhciI6IuS7uyJ9LHsiY2hhciI6IuWKoSJ9LHsiY2hhciI6IuWIlyJ9LHsiY2hhciI6IuihqCJ9LHsiY2hhciI6IuS4rSJ9LHsiY2hhciI6IuS8miJ9LHsiY2hhciI6IuaYviJ9LHsiY2hhciI6IuekuiJ9LHsiY2hhciI6IuKAnCJ9LHsiY2hhciI6IjAifSx7ImNoYXIiOiLigJ0ifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLpl64ifSx7ImNoYXIiOiLpopgifV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9fSx7ImJsb2NrSWQiOiI5NTc2LTE1ODQ3OTIxNzA4ODIiLCJibG9ja1R5cGUiOiJwYXJhZ3JhcGgiLCJzdHlsZXMiOnsiYmFjay1jb2xvciI6IiIsInBhZGRpbmciOiIifSwidHlwZSI6InBhcmFncmFwaCIsInJpY2hUZXh0Ijp7ImRhdGEiOlt7ImNoYXIiOiIxIn0seyJjaGFyIjoiNSJ9LHsiY2hhciI6Ii4ifSx7ImNoYXIiOiIgIn0seyJjaGFyIjoi6KejIn0seyJjaGFyIjoi5YazIn0seyJjaGFyIjoi5Lu7In0seyJjaGFyIjoi5YqhIn0seyJjaGFyIjoi6K6+In0seyJjaGFyIjoi572uIn0seyJjaGFyIjoi5LitIn0seyJjaGFyIjoi5pyJIn0seyJjaGFyIjoi5LqbIn0seyJjaGFyIjoi5oOFIn0seyJjaGFyIjoi5Ya1In0seyJjaGFyIjoi5LiLIn0seyJjaGFyIjoi6K6+In0seyJjaGFyIjoi572uIn0seyJjaGFyIjoi6IeqIn0seyJjaGFyIjoi5a6aIn0seyJjaGFyIjoi5LmJIn0seyJjaGFyIjoiSSJ9LHsiY2hhciI6IlAifSx7ImNoYXIiOiLkvJoifSx7ImNoYXIiOiLlh7oifSx7ImNoYXIiOiLnjrAifSx7ImNoYXIiOiLnmb0ifSx7ImNoYXIiOiLlsY8ifSx7ImNoYXIiOiLnmoQifSx7ImNoYXIiOiLpl64ifSx7ImNoYXIiOiLpopgifV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9fV0=--></p>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.1.4（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2020-03-18</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>主要体验改进
+<ul>
+<li>
+<div>优化网页列表数据自动识别，将识别率提高到90%以上</div>
+<!--5f39ae17-8c62-4a45-bc43-b32064c9388a:W3siYmxvY2tJZCI6IjEyOTAtMTU4MzM4OTA4NzM3OSIsImJsb2NrVHlwZSI6InBhcmFncmFwaCIsInN0eWxlcyI6eyJhbGlnbiI6ImxlZnQiLCJpbmRlbnQiOjAsInRleHQtaW5kZW50IjowLCJsaW5lLWhlaWdodCI6MS43NSwiYmFjay1jb2xvciI6IiIsInBhZGRpbmciOiIifSwidHlwZSI6InBhcmFncmFwaCIsInJpY2hUZXh0Ijp7ImRhdGEiOlt7ImNoYXIiOiLkvJgifSx7ImNoYXIiOiLljJYifSx7ImNoYXIiOiLnvZEifSx7ImNoYXIiOiLpobUifSx7ImNoYXIiOiLmlbAifSx7ImNoYXIiOiLmja4ifSx7ImNoYXIiOiLoh6oifSx7ImNoYXIiOiLliqgifSx7ImNoYXIiOiLor4YifSx7ImNoYXIiOiLliKsifSx7ImNoYXIiOiLvvIwifSx7ImNoYXIiOiLlsIYifSx7ImNoYXIiOiLor4YifSx7ImNoYXIiOiLliKsifSx7ImNoYXIiOiLnjocifSx7ImNoYXIiOiLmj5AifSx7ImNoYXIiOiLpq5gifSx7ImNoYXIiOiLliLAifSx7ImNoYXIiOiI5In0seyJjaGFyIjoiMCJ9LHsiY2hhciI6IiUifSx7ImNoYXIiOiLku6UifSx7ImNoYXIiOiLkuIoifV0sImlzUmljaFRleHQiOnRydWUsImtlZXBMaW5lQnJlYWsiOnRydWV9fV0=--></li>
+</ul>
+</li>
+<li><span>Bug修复</span>
+<ul>
+<li>解决自定义配置中循环输入文本中循环项重复的问题</li>
+<li>解决自定义配置当前页面数据预览中有时会多出一列空数据的问题</li>
+<li>解决自定义配置中有时候自动识别生成的采集流程不正确的问题</li>
+<li>解决自定义配置当前页面数据预览中拖动改变字段顺序后修改字段名错误的问题</li>
+<li>解决本地采集中部分网页Cookie不生效问题</li>
+<li>解决自定义配置中自动识别生成的采集字段中有空格的问题</li>
+<li>解决本地采集中部分网站无法滚动加载数据的问题</li>
+<li>解决本地采集中某些情况下数据格式化不正确的问题</li>
+<li>解决自定义配置提取数据配置中修改字段后没有应用也生效的问题</li>
+<li>解决自定义配置中部分网页自动识别有时会卡住的问题</li>
+<li>解决自定义配置自动识别的数据预览中有时修改字段名会白屏的问题</li>
+<li>解决主界面左侧账户过期时间显示的问题</li>
+<li>解决自定义配置中某些操作会造成流程图错乱的问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.1.2（Beta）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2020-03-05</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>主要体验改进
+<ul>
+<li>优化自定义配置中对网页列表数据的自动识别，大幅提高识别成功率</li>
+<li>第一次进入自定义配置界面时加入功能引导提示</li>
+<li>左侧菜单栏快速筛选中增加拖动调整顺序功能</li>
+<li>其它一些界面显示优化</li>
+</ul>
+</li>
+<li><span>Bug修复</span>
+<ul>
+<li>解决自定义配置中有些字段配置导出不正确的问题</li>
+<li>解决导出数据到MySql时无法读取7版本中已保存配置的问题</li>
+<li>解决自定义配置中删除数据预览字段不正确的问题</li>
+<li>解决任务列表中在任务组模式下选择筛选条件后界面显示不正确的问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.1.0（Beta）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2020-02-21</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>主要体验改进<a style="color: #ff0000;" href="javascript:;" target="_blank" title="查看8.1Beta版详细介绍">查看详细介绍</a>
+<ul>
+<li>自动识别网页，智能推荐采集方案</li>
+<li>采集数据实时展现，字段操作更加直观</li>
+<li>采集任务管理升级，优化组合筛选，提升工作效率</li>
+<li>快速定位最近编辑任务，管理更便捷</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.0.20（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2020-02-19</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>Bug修复
+<ul>
+<li>解决打开部分网页会弹出保存文件窗口的问题</li>
+<li>解决部分网页链接列表中只能打开第一个链接的问题</li>
+<li>解决本地采集中只有一个分支条件的时候采集不正确的问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.0.18（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2020-01-16</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>Bug修复
+<ul>
+<li><span>解决无法配置和采集有弹出提示框的网页的问题</span></li>
+<li><span>解决本地采集中不弹出输入验证码弹窗的问题</span></li>
+<li><span>解决采集模板详情中示例数据有空格时显示不正确的问题</span></li>
+<li><span>解决自定义配置中部分网页点击元素后会以弹窗的方式显示新页面的问题</span></li>
+<li><span>解决删除任务组后任务列表中任务数量显示不正确的问题</span></li>
+<li><span>解决无法配置和采集本地网页文件（File协议）的问题</span></li>
+<li><span>解决本地采集中部分网页设置Cookie不生效的问题</span></li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.0.16（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2019-12-20</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li><span>Bug修复（紧急修复8.0.14版本中问题）</span>
+<ul>
+<li><span>解决本地采集中部分网站会在新窗口弹出网页的问题</span></li>
+<li>解决自定义配置中重新编辑任务有些步骤XPath不显示的问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.0.14（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2019-12-20</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>主要体验改进
+<ul>
+<li>云采集实况刷新时体验优化</li>
+</ul>
+</li>
+<li><span>Bug修复</span>
+<ul>
+<li><span>解决本地采集中将数据替换为空格时不生效的问题</span></li>
+<li><span>解决自定义配置中手动执行条件分支时XPath输入框中会多出一些字符的问题</span></li>
+<li><span>解决自定义配置中部分任务在7版本中配置的触发器在8版本中不显示的问题</span></li>
+<li><span>解决自定义配置中修改循环项有时候保存不生效的问题</span></li>
+<li><span>解决自定义配置中触发器部分选项无法正常设置的问题</span></li>
+<li><span>解决自定义配置中字段配置导入导出不正确的问题</span></li>
+<li><span>解决自定义配置中单个元素循环的XPath修改后之前的XPath元素还在页面中高亮显示的问题</span></li>
+<li><span>解决本地采集中部分网站outerHTML不正确问题</span></li>
+<li><span>解决自定义配置中有时候出现字段名修改后保存不生效的问题</span></li>
+<li><span>解决自定义配置中JSON任务字段数据为空时格式化-添加前后缀不正确的问题</span></li>
+<li><span>解决网页中关闭窗口操作会触发关闭客户端提示的问题<br>解决本地采集界面使用Alt+F4关闭弹窗后再点击主窗口关闭图标不生效的问题</span></li>
+<li><span>解决部分网页提交表单打开新窗口后页面内容不正确的问题</span></li>
+<li><span>解决自定义配置中Ajax提示会覆盖之前用户操作提示的问题<br><br></span></li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.0.12（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2019-12-12</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>Bug修复
+<ul>
+<li><span>解决8.0.10版本中配置的规则无法云采集的问题</span></li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.0.10（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2019-12-06</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li><span>Bug修复</span>
+<ul>
+<li><span>解决本地采集中在新页面打开网页后没有记录网页登录状态问题</span></li>
+<li><span>解决本地采集中采集到的数据包含很多空格的问题</span></li>
+<li><span>解决查看数据-数据详情中数据量太大时卡顿问题</span></li>
+<li><span>解决自定义配置中重试条件无法保存问题</span></li>
+<li><span>解决部分采集模板无法配置使用问题</span></li>
+<li><span>解决部分采集规则在8版本中无法正常采集问题</span></li>
+<li><span>解决自定义配置中部分网站设置为手机浏览器无法采集问题</span></li>
+<li><span>解决自定义配置中部分任务启用触发器无法正常采集问题</span></li>
+<li><span>解决部分任务云采集数据无法正常导出到文件问题</span></li>
+<li><span>解决自定义配置中部分网站无法正常打开问题</span></li>
+<li><span>解决自定义配置中打开网页默认UserAgent不对导致部分网站打开异常的问题</span></li>
+<li><span>增强弹出窗口的容错性解决有时候弹窗空白的问题</span></li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.0.8（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2019-11-22</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li><span>主要体验改进</span>
+<ul>
+<li>查看采集数据中加入复制单元格/整行/整列/整个表格的功能。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><span>Bug修复</span>
+<ul>
+<li>解决本地采集中部分网页Cookie不生效问题。</li>
+<li>解决本地采集中部分网页输入文字的问题。</li>
+<li>解决本地采集中部分网页最后一个采集字段数据不正确问题。</li>
+<li>解决本地采集中部分网页点击不生效问题。</li>
+<li>解决本地采集中判断条件和条件分支执行前等待时间不生效问题。</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.0.6（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2019-11-08</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li><span>主要体验改进</span>
+<ul>
+<li>将正则工具改成在独立的窗口中显示。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><span>Bug修复</span>
+<ul>
+<li>解决iframe网页无法识别和采集问题。</li>
+<li><!--StartFragment -->
+<div>解决本地本地采集中不显示二级页面数据的问题。</div>
+</li>
+<li>解决使用日期参数批量生成URL的问题。</li>
+<li>解决提取字段XPath只提取第一个匹配的元素问题。</li>
+<li>解决导出采集数据到SqlSever界面点击取消和关闭无响应问题。</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V8.0.4（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2019-10-24</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>主要体验改进 <span style="color: #ff0000;"><a style="color: #ff0000;" href="javascript:;" target="_blank" title="查看8.0详细改进及与7版本差异">全新的8.0有哪些改进</a>？</span>
+<ul>
+<li>更好的操作体验：全新软件设计架构，更稳定，更流畅，解决卡慢问题<span style="color: #ff0000;"></span></li>
+<li>更高的网站兼容性：​内置浏览器内核更新为<strong>Chrome</strong>，网页兼容性更强</li>
+<li>更快的采集速度：「本地采集」速度明显提升</li>
+<li>更简洁的UI交互：界面更简洁、逻辑更清晰</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V7.6.4（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2019-04-29</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <p><span style="font-size: 14pt; margin: 15px; color: #145ccd;"><a id="v7" href="javascript:;">【V7.6.4 下载】</a></span></p>
+<ul>
+<li>主要体验改进
+<ul>
+<li>【云采集】新增云采集实况功能，展现任务的云端运行情况，如任务的拆分，分配节点，采集数据等过程，<span style="color: #ff0000;"><a style="color: #ff0000;" href="javascript:;">点击查看具体教程</a></span></li>
+<li>【云采集】新增云采集通知功能，可针对每个任务设置采集完成 、采集停止时进行邮件通知</li>
+<li>【云采集】新增单个子任务重启功能，对采集量较少或状态是已停止的子任务进行重启，可减少数据遗漏</li>
+</ul>
+</li>
+<li>Bug修复
+<ul>
+<li>修复「重试次数设置不生效」问题</li>
+<li>修复「循环URL异常」问题</li>
+<li>修复「最后一个字段，修改字段名保存无效」问题</li>
+<li>提升性能，修复若干卡顿问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V7.6.2（Beta）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2019-03-08</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>主要体验改进
+<ul>
+<li>上线新版客服系统，优化沟通体验</li>
+</ul>
+</li>
+<li>Bug修复
+<ul>
+<li>修复「修改最后一个字段导致卡死」问题</li>
+<li>修复部分简易模板问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V7.6.0（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2019-01-04</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>主要体验改进
+<ul>
+<li>【自定义模式】新增JSON采集功能</li>
+<li>【自定义模式】新增滑动验证码识别</li>
+<li>【自定义模式】优化效率，列表识别速度翻倍</li>
+<li>【自定义模式】自动识别网页Ajax点击，自动配置Ajax超时时间，配置任务更方便</li>
+<li>【自定义模式】改进算法，选择网页元素更精准</li>
+<li>【本地采集】采集速度整体提升10~30%，采集效率大幅提高</li>
+<li>【任务列表】重构任务列表界面，大幅提高性能表现，大量任务管理不再卡顿</li>
+<li>【任务列表】任务列表加入自动刷新机制，可随时查看任务最新状态</li>
+</ul>
+</li>
+<li>Bug修复
+<ul>
+<li>修复云采集查看数据缓慢问题</li>
+<li>修复采集错误报告排版错乱问题</li>
+<li>修复「打开网页时会出现乱码」问题</li>
+<li>修复拖动流程后突然消失的问题</li>
+<li>修复定时导出、自动入库工具自动弹出问题</li>
+<li>修复格式化时间类型数据出错问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V7.5.12（Beta）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2018-11-26</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>主要体验改进
+<ul>
+<li>【本地采集】采集速度整体提升10~30%，采集效率大幅提高</li>
+<li>【自定义模式】改进算法，选择网页元素更精准</li>
+<li>【自定义模式】优化效率，列表识别速度翻倍</li>
+<li>【自定义模式】自动识别网页Ajax点击，自动配置Ajax超时时间，配置任务更方便</li>
+<li>【任务列表】任务列表加入自动刷新机制，可随时查看任务最新状态</li>
+</ul>
+</li>
+<li>Bug修复
+<ul>
+<li>修复「打开网页时会出现乱码」问题</li>
+<li>修复拖动流程后突然消失的问题</li>
+<li>修正汽车之家元素识别失效问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V7.5.10（Beta）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2018-11-02</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>主要体验改进
+<ul>
+<li>【自定义模式】新增JSON采集功能</li>
+<li>【自定义模式】新增滑动验证码识别</li>
+</ul>
+</li>
+<li>Bug修复
+<ul>
+<li>修复云采集查看数据缓慢问题</li>
+<li>修复采集错误报告排版错乱问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V7.5.8（Beta）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2018-10-18</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>Bug修复
+<ul>
+<li>修复套餐相关Bug</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V7.5.6（Beta）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2018-10-13</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>主要体验改进
+<ul>
+<li>重构客户端任务列表界面，大幅提高性能表现，大量任务管理不再卡顿</li>
+</ul>
+</li>
+<li>Bug修复
+<ul>
+<li>循环列表过长时，修正提示文案</li>
+<li>修复若干小问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>v7.5.4（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2018-09-28</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>主要体验改进
+<ul>
+<li>优化触发器交互和视觉</li>
+</ul>
+</li>
+<li>Bug修复
+<ul>
+<li>修复跟随任务完成后显示运行中问题</li>
+<li>修复定时云采集问题</li>
+<li>修复正则设置的问题</li>
+<li>修复若干小问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>v7.5.0（正式）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2018-09-27</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>主要体验改进
+<ul>
+<li>【自定义模式】新增触发器功能，可根据特定条件进行采集，详细教程可查看：http://www.bazhuayu.com/tutorial/cfq</li>
+<li>【自定义模式】新增浏览器模式，方便配置滑动验证码等网站采集规则</li>
+<li>【自定义模式】提供八爪鱼6内核模式，有效解决部分网站在八爪鱼7上打不开的问题</li>
+<li>【自定义模式】支持采集网址数量，从2万扩展到100万级别</li>
+<li>【自定义模式】网址输入支持文本导入，支持txt、xls、xlsx、csv格式</li>
+<li>【自定义模式】网址输入支持批量生成网址参数，包括数字变化、字母变化、时间变化、自定义列表四种生成方式</li>
+<li>【自定义模式】支持任务跟随采集，A采集的网址作为B任务的输入源进行关联采集，拓宽使用场景</li>
+<li>【自定义模式】提高创建列表速度</li>
+<li>【本地采集】提升采集性能</li>
+<li>【简易模式】增加搜索功能，可搜索模板</li>
+<li>【简易模式】目前可按模板名和模板上线时间进行排序</li>
+<li>【简易模式】增加「热门」分类</li>
+</ul>
+</li>
+<li>Bug修复
+<ul>
+<li>修复部分定时任务出错问题</li>
+<li>修复本地采集卡死问题</li>
+<li>修复若干问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V7.4.10（Beta）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2018-09-07</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>主要体验改进
+<ul>
+<li>【自定义模式】提高创建列表速度</li>
+<li>【自定义模式】新增浏览器模式，方便配置滑动验证码等网站采集规则</li>
+<li>【本地采集】提高本地采集性能</li>
+<li>【其他】点击头像可直接跳转用户中心</li>
+</ul>
+</li>
+<li>Bug修复
+<ul>
+<li>修复本地采集卡死问题</li>
+<li>修复导出数据库保存的配置无法重新编辑问题</li>
+<li>修复导出到Mysql数据库异常问题</li>
+<li>修复云采集报告显示错误问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+    <h3>
+        <span>V7.4.8（Beta）</span>
+        <small>
+            <span class="itemWithIcon calendar"> 2018-08-11</span>
+        </small>
+    </h3>
+    <div>
+        <ul>
+            <li>
+                <ul>
+<li>主要体验改进
+<ul>
+<li>【自定义模式】新增触发器功能，可根据特定条件进行采集，<a data-id="9202" href="javascript:;" target="_blank" title="触发器">点击查看详细教程</a>：</li>
+<li>【自定义模式】提供八爪鱼6内核模式，有效解决部分网站在八爪鱼7上打不开的问题</li>
+<li>【自定义模式】滚动页面功能间隔时间最小支持0.5秒</li>
+<li>【自定义模式】选中所有链接时，新增「采集以下链接文本+链接」选项</li>
+<li>【自定义模式】选中所有链接时，新增「采集以下元素Inner Html」和「采集以下元素Outer Html」选项</li>
+<li>【自定义模式】关联任务采集支持增量模式</li>
+<li>【自定义模式】设置关联任务时，支持搜索任务组名和任务名</li>
+<li>【简易模式】增加「热门」分类</li>
+<li>【简易模式】目前可按模板名和模板上线时间进行排序</li>
+<li>【简易模式】增加搜索功能，可搜索模板</li>
+<li>【其他】增强导出到数据库的健壮性</li>
+<li>【其他】导出数据库选择数据表时，增加搜索功能</li>
+</ul>
+</li>
+<li>Bug修复
+<ul>
+<li>修复手动输入多个网址时，循环项消失问题</li>
+<li>修复「从文本导入」网址后，采集时速度慢的问题</li>
+<li>修复部分定时任务出错问题</li>
+<li>修复「在iframe中循环输入文字采集时点击元素无效」问题</li>
+<li>修复若干小问题</li>
+</ul>
+</li>
+</ul>
+                
+            </li>
+        </ul>
+    </div>
+
+
+
+             
+        </div>
+    </div>
+
+</div>
+
+		
+
+    </div>
+
+    <div class="modal fade" id="commonModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default cancel" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary ok">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<style>
+        .kefu-content{
+        width: 297px;
+        box-shadow: 1px 1px 1px black;
+        }
+        .kefu-dialog {
+            position: relative;
+            width: auto;
+            background-color: #fff;
+            -webkit-background-clip: padding-box;
+                    background-clip: padding-box;
+            border: 1px solid #999;
+            border: 1px solid rgba(0, 0, 0, .2);
+            border-radius: 6px;
+            outline: 0;
+            -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+                    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+        }
+        .kefu-body{
+            padding: 22px 15px;
+            /* height: 60px;
+            line-height: 60px; */
+        }
+        .kefu-headers {
+            height: 50px;
+            padding-top: 14px;
+            border-bottom: 0.5px solid #e2e0e0;
+        }
+        .kefu-headers span{
+            padding-right: 12px;
+        }
+        .modal-dialog{
+            margin-top: 364px !important;
+        }
+    </style>
+	
+    <div class="modal fade" id="serviceTip">
+        <div class="modal-dialog modal-sm">
+            <div class="kefu-content">
+                <div class="kefu-headers">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                    <h4 class="modal-title" style="margin-left:40%">服务提示</h4>
+                </div>
+                <div class="kefu-body">
+                    <div style="text-align:center;" id="detailTipContent">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:center;">
+                        <a class="btn btn-default" href="../index2.html" target="_blank" id="consultNow">论坛求助</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a class="btn btn-primary" href="javascript:;" target="_blank" id="upgradeNow">立即升级套餐</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="consult-modal" style="display: none;">
+        <div class="consult-header">
+            <h3>咨询顾问</h3><span class="close-modal">×</span>
+        </div>
+        <div class="consult-body">
+            <form>
+                <input name="__RequestVerificationToken" type="hidden" value="UyGo3k4MHYUiH2uK2tcRHH2ZkKSb3UqbgXlmMi9puwbFpFKGr_LVIQ78UY_P4Lcsis0c0NA0fH9seE74zZWTGmVoT3_B5MpI4kORlksfTP01">;
+                <p><input type="text" name="name" pattern="^\w{2,50}$" title="字符个数在2-50个之间" placeholder="姓名"></p>
+                <p><input type="text" name="mobile" pattern="^(?:\+?86)?1(?:3\d{3}|5[^4\D]\d{2}|8\d{3}|7(?:[235-8]\d{2}|4(?:0\d|1[0-2]|9\d))|9[0-35-9]\d{2}|66\d{2})\d{6}$" placeholder="手机"></p>
+                <p><input type="text" name="title" pattern="^\w{3,50}$" title="字符个数在3-50个之间" placeholder="职位"></p>
+                <p><input type="text" name="company" pattern="^\w{3,50}$" title="字符个数在3-50个之间" placeholder="公司"></p>
+                <p>咨询顾问联系方式 0755-86702246
+</p>
+                <button class="submit-btn" type="button">提交</button>
+            </form>
+        </div>
+    </div>
+<style>
+    #free-trial .modal-dialog {
+        width: 514px;
+    }
+
+    #free-trial .modal-content .modal-header {
+        border: none;
+        padding-top: 27px;
+        padding-bottom: 0;
+    }
+
+    #free-trial .modal-header .close {
+        margin-top: -11px;
+    }
+
+        #free-trial .modal-header .close .close-sig {
+            line-height: 24px;
+            display: inline-block;
+            height: 24px;
+            font-size: 36px;
+            width: 24px;
+            font-weight: 100;
+            color: #7E87A0;
+        }
+
+    #free-trial .modal-content h4.modal-title {
+        font-size: 20px;
+        margin-left: 202px;
+        line-height: 32px;
+    }
+
+    #free-trial .modal-content p.modal-subtitle {
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(126,135,160,1);
+        text-align: center;
+    }
+
+    #free-trial .modal-content .modal-body {
+        padding-top: 0;
+    }
+
+        #free-trial .modal-content .modal-body .modal-body-hint, #trial-form, #submitPlan {
+            display: none;
+        }
+
+    .modal-body .plan-form-title {
+        font-weight: bold;
+        color: rgba(28,29,30,1);
+        line-height: 24px;
+        margin: 28px 0 10px 21px;
+    }
+
+    .modal-body .plan-form-control {
+        margin-left: 21px;
+    }
+
+        .modal-body .plan-form-control .form-control-label {
+            display: inline-block;
+            width: 80px;
+            margin-right: 4px;
+        }
+
+        .modal-body .plan-form-control .form-required label::before {
+            content: '*';
+            color: #D0021B;
+            margin-right: 4px;
+        }
+
+        .modal-body .plan-form-control .form-control-item {
+            display: inline-block;
+            width: 358px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+            .modal-body .plan-form-control .form-control-item label.error ,
+            .modal-body .plan-form-control .form-control-item p.error{
+                position: absolute;
+                font-size: 12px;
+                font-weight: 500;
+                color: rgba(208,2,27,1);
+                line-height: 20px;
+                left: 0;
+                bottom: -20px;
+            }
+
+            .modal-body .plan-form-control .form-control-item input {
+                width: 100%;
+                border: 1px solid rgba(234,238,244,1);
+                border-radius: 4px;
+                height: 32px;
+                line-height: 32px;
+                color: #1C1D1E;
+                padding-left: 12px;
+            }
+
+            .modal-body .plan-form-control .form-control-item textarea {
+                width: 100%;
+                border: 1px solid rgba(234,238,244,1);
+                border-radius: 4px;
+                color: #1C1D1E;
+                padding-left: 12px;
+                min-height: 63px;
+                max-height: 63px;
+                padding: 5px 12px;
+            }
+
+            .modal-body .plan-form-control .form-control-item textarea::placeholder{
+                font-size: 12px;
+                color: #b2b8cc;
+            }
+
+            .modal-body .plan-form-control .form-control-item select {
+                width: 170px;
+                font-size: 14px;
+                font-weight: 500;
+                color: rgba(28,29,30,1);
+                line-height: 32px;
+                height: 32px;
+                border: 1px solid rgba(234,238,244,1);
+                border-radius: 4px;
+                padding-left: 12px;
+            }
+
+        .modal-body .plan-form-control #MobileCode {
+            padding-right: 108px;
+        }
+
+        .modal-body .plan-form-control .sendCode {
+            position: absolute;
+            right: 16px;
+            bottom: 4px;
+            padding-left: 15px;
+            border-left: 1px solid #EAEEF4;
+            color: #025CDF;
+            cursor: pointer;
+        }
+
+    .modal-body .form-useage {
+        display: flex;
+        justify-content: space-between;
+        margin: 32px 15px 10px 21px;
+        align-items: center;
+    }
+
+        .modal-body .form-useage .form-useage-checkbox label {
+            font-size: 16px;
+            font-weight: bold;
+            color: rgba(28,29,30,1);
+        }
+
+        .modal-body .form-useage .form-useage-checkbox input {
+            margin-right: 6px;
+        }
+
+        .modal-body .form-useage .form-useage-txt {
+            font-size: 12px;
+            color: #b2b8cc;
+            line-height: 20px;
+            height: 20px;
+        }
+
+    .modal-body .user-card-upload {
+        position: relative;
+        display: inline-block;
+    }
+
+    .modal-body .form-upload #userCardImg {
+        width: 80px;
+        height: 80px;
+        display: inline-block;
+        border-radius: 4px;
+        background-color: #EAEEF4;
+    }
+
+    .modal-body .form-upload .upload-btn {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+        .modal-body .form-upload .upload-btn input {
+            width: 80px;
+            height: 80px;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+    .modal-body .user-card-upload label.error {
+        position: absolute;
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(208,2,27,1);
+        line-height: 20px;
+        left: 0;
+        bottom: -20px;
+    }
+
+    #try-other-version {
+        display: none;
+    }
+
+    #free-trial .modal-content .modal-footer {
+        border: none;
+        padding-bottom: 36px;
+        padding-top: 64px;
+    }
+
+    #free-trial .modal-footer .btn-primary {
+        width: 200px;
+        border-radius: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    #free-trial .none .modal-body .modal-body-hint, #free-trial .invalid .modal-body .modal-body-hint {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        color: rgba(28,29,30,1);
+        line-height: 24px;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    #free-trial .invalid #try-other-version {
+        display: inline-block;
+        margin-bottom: 16px;
+    }
+
+    #free-trial .invalid .modal-footer {
+        padding-top: 25px;
+    }
+
+    #free-trial .trial-plan #trial-form {
+        display: block;
+    }
+
+    #free-trial .trial-plan #submitPlan {
+        display: block;
+        width: 200px;
+        border-radius: 20px;
+        margin: 32px auto 0;
+        height: 40px;
+    }
+
+        #free-trial .trial-plan #submitPlan:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+    #free-trial .trial-plan .modal-body {
+        padding-bottom: 0;
+    }
+
+    #free-trial .trial-plan .modal-footer {
+        padding-top: 15px;
+    }
+
+    #sendMobileCode[disabled] {
+        pointer-events: none;
+        color: #666;
+    }
+
+    #successMsg {
+        position: fixed;
+        top: 100px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        z-index: 9999999999999;
+    }
+
+        #successMsg div {
+            width: 330px;
+            padding: 10px 16px;
+            background: #fff;
+            margin: 0 auto;
+            border-radius: 2px;
+            -webkit-box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+            color: rgba(0, 0, 0, 0.85);
+            animation-name: slide;
+            animation-duration: 200ms;
+            animation-delay: 0ms;
+            animation-fill-mode: forwards;
+            position: relative;
+        }
+
+        #successMsg .text{
+            display: flex;
+            align-items: center;
+            height: 20px;
+            justify-content: center;
+        }
+
+    @keyframes slide {
+        0% {
+            top: 0;
+        }
+
+        100% {
+            top: 20px;
+        }
+    }
+
+    .margintop {
+        margin-top:58px !important;
+    }
+</style>
+<div class="modal fade" id="free-trial">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true" class="close-sig">×</span>
+                    <span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">申请试用</h4>
+                <p class="modal-subtitle">当前版本：<span id="currentAccountName"></span></p>
+            </div>
+            <div class="modal-body">
+                <p class="modal-body-hint">您当前不满足试用条件。
+                    <a href="../tutorial8/sywt.html" target="_blank" style="color:#025CDF">（试用规则？）</a>
+                </p>
+                <form id="trial-form" autocomplete="off">
+                    <h3 class="plan-form-title">选择版本</h3>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>试用版本</label>
+                        </div>
+                        <div class="form-control-item" style="margin: 0;">
+                            <select name="AvailableTypes" id="AvailableTypes">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="plan-form-control" style='padding-top:12px;padding-bottom:8px;'>
+                        <div class="form-control-label">
+                            <label style='padding-left: 9px;'> 试用天数</label>
+                        </div>
+                        <div class="form-control-item" style="margin: 0;">
+                            <p class="form-useage-txt">
+                                3天
+                            </p>
+                        </div>
+                    </div>
+                    <h3 class="plan-form-title" style="margin-top: 12px;">填写信息</h3>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>联系人</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="Contact" name="Contact" type="text" required="">
+                        </div>
+                    </div>
+                    <div class="plan-form-control telphone">
+                        <div class="form-control-label form-required">
+                            <label>手机号</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="Telphone" name="Telphone" type="text">
+                            <p class="error"></p>
+                        </div>
+                    </div>
+                    <div class="plan-form-control mobile-code">
+                        <div class="form-control-label form-required">
+                            <label>验证码</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="MobileCode" name="MobileCode" type="text" required="">
+                            <div class="sendCode" id="sendMobileCode"><span>发送验证码</span></div>
+                        </div>
+                    </div>
+                    <div class="plan-form-control form-useage" style="display:none">
+                        <div class="form-useage-checkbox" id="radioSwitch">
+                            <label style="margin-right:16px;"><input type="radio" name="ApplicantType" id="entertainmentPlan" value="1" checked="">企业使用</label>
+                            <label><input type="radio" name="ApplicantType" id="personPlan" value="0">个人使用</label>
+                        </div>
+                    </div>
+                <div id="entertainmentPlanForm">
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>公司名称</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="CompanyName" name="CompanyName" type="text" required="">
+                        </div>
+                    </div>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>职位</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="JobTitle" name="JobTitle" type="text" required="">
+                        </div>
+                    </div>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>试用用途</label>
+                        </div>
+                        <div class="form-control-item">
+                            <textarea rows="3" placeholder="请备注您的行业，想要采集的网站，采集的用途等信息。" id="Reason" name="Reason" type="text" required=""></textarea>
+                        </div>
+                    </div>
+                    <div class="plan-form-control form-upload">
+                        <div class="form-control-label form-required">
+                            <label>上传名片</label>
+                        </div>
+                        <div class="user-card-upload">
+                            <div class="user-card-img">
+                                <img id="userCardImg" src="../static/picture/add.png" class="">
+                            </div>
+                            <div class="upload-btn">
+                                <label>
+                                    <input type="file" id="filecard" name="filecard" onchange="fileChange(this)" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <input class="btn btn-primary" type="submit" id="submitPlan" value="提交申请">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div style="text-align:center;">
+                    <a class="btn btn-primary" href="javascript:;" id="try-other-version">试试其他版本</a>
+                    <p style="font-size: 12px;color:#7e87a0;">咨询顾问电话：0755-86702246&nbsp;&nbsp 010-87987723;&nbsp;&nbsp;企业合作邮箱：sales@skieer.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="successMsg" class="hidden">
+    <div>
+        <p class="text">
+            <img style="height: 20px;margin-right: 8px;" src="../static/picture/zf_sucess.png" alt="">
+            <span></span>
+        </p>
+        <p class="sub-text hidden"></p>
+    </div>
+</div>
+<script src="../static/js/jquery.validate.min.js"></script>
+<script src="../static/js/jquery.validate.messages_zh.js"></script>
+<style>
+
+    .zhiCustomBtn {
+        visibility: hidden;
+        height: 50px;
+        width: 120px;
+        border-radius: 25px;
+        color: #fff;
+        background-color: #2282f2;
+        box-shadow: rgba(15, 66, 76, 0.45) 0px 0px 14px 0px;
+        border: 0px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+
+    .pZhichiCustomBtn {
+        float: right;
+        height: 50px;
+        width: 120px;
+        border-radius: 25px;
+        color: #fff;
+        background-color: #2282f2;
+        box-shadow: rgba(15, 66, 76, 0.45) 0px 0px 14px 0px;
+        border: 0px;
+        box-sizing: border-box;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .pZhichiCustomBtnClose {
+        float: right;
+        height: 70px;
+        width: 70px;
+        border-radius: 35px;
+        color: #fff;
+        background-color: #2282f2;
+        box-shadow: rgba(15, 66, 76, 0.45) 0px 0px 14px 0px;
+        border: 0px;
+        box-sizing: border-box;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+<style>
+
+    .floating_ck dl dd {
+        background-position: center;
+    }
+
+        .floating_ck dl dd.return {
+            background-size: 19px;
+            background-position: center;
+        }
+
+    .floating_ck .quote {
+        background-image: url(../static/image/icon-qq.png);
+        background-size: 24px;
+    }
+
+    .floating_ck .kefu {
+        background-image: url(../static/image/icon-kefu.png);
+        background-size: 38px;
+    }
+
+    .floating_ck .qiye {
+        background-image: url(../static/image/icon-qiye.png);
+        position: relative;
+        background-size: 35px;
+    }
+
+        .floating_ck .qiye::after {
+            content: "";
+            background-image: url(../static/image/free.png);
+            width: 30px;
+            height: 19px;
+            position: absolute;
+            right: -7px;
+            top: -4px;
+        }
+
+    .floating_ck .floating {
+        position: absolute;
+        left: -154px;
+        top: 10px;
+        padding: 15px;
+        line-height: 1.2;
+        color: #FFFFFF !important;
+        background: rgba(0,0,0,0.6);
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 4px;
+        z-index: 999999;
+        max-width: 315px;
+        font-size: 14px;
+        display: none;
+    }
+
+        .floating_ck .floating::after {
+            content: "";
+            width: 0;
+            height: 0;
+            display: block;
+            border-style: solid;
+            border-width: 8px;
+            border-color: transparent transparent transparent rgba(0,0,0,0.6);
+            position: absolute;
+            z-index: 999998;
+            right: -16px;
+            top: 13px;
+        }
+
+    .floating_ck .quote .flex {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .quote .floating {
+        left: -330px;
+        width: 315px;
+    }
+
+    .quote .floating li{
+        cursor: text;
+        line-height: 1.2;
+    }
+    .quote .floating .qq-title{
+        line-height: 22px;
+    }
+
+    #gotoTrial .floating {
+        left: -139px;
+    }
+
+    .floating_ck dl dd {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+    }
+
+    .floating_ck .pZhichiCustomBtn {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: none;
+    }
+
+    .floating_ck dl dd .txt {
+        color: #fff;
+        position: absolute;
+        bottom: 0px;
+        width: 70px;
+        text-align: center;
+    }
+
+    #zhichi-div:hover .floating-kefu, #gotoTrial:hover .floating-qiye, .quote:hover .floating {
+        display: block;
+    }
+</style>
+<div class="floating_ck">
+    <dl>
+        <dt></dt>
+        <a href="javascript:void(0);" id="onlineChatAnchor" target="_blank" style="">
+            <p>
+
+            </p>
+        </a>
+        <dd class="kefu" id="zhichi-div" title="点击联系客服">
+            <button id="btn" class="zhiCustomBtn"></button>
+            <p id="chatFlag" data-mtype="0"></p>
+            <button id="pbtn" class="pZhichiCustomBtn"></button>
+            <div class="floating floating-kefu">
+                <div>欢迎咨询在线客服</div>
+            </div>
+        </dd>
+        <dd class="quote">
+            <div class="floating">
+                <div class="flex">
+                    <ul>
+                        <li class="qq-title">免费版QQ群</li>
+                        <li>
+                            <span>159956780</span>
+                        </li>
+                        <li>
+                            <span>257583266</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="qq-title">专业版QQ群</li>
+                        <li>
+                            <span>1065566150</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="qq-title">月旗舰版QQ群</li>
+                        <li>
+                            <span>196097783</span>
+                        </li>
+                        <li>
+                            <span>157692830</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex">
+                    <ul>
+                        <li class="qq-title">月旗舰+QQ群</li>
+                        <li>
+                            <span>431013573</span>
+                        </li>
+                    </ul>
+                    <ul style="">
+                        <li class="qq-title">年旗舰版QQ群</li>
+                        <li>
+                            <span>415864512</span>
+                        </li>
+                    </ul>
+                    <ul style="">
+                        <li class="qq-title">年旗舰+QQ群</li>
+                        <li>
+                            <span>592777128</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </dd>
+        <dt></dt>
+        <dd class="qiye" id="gotoTrial" title="免费试用" onclick="javascript: window.location.href = '/trial/index';">
+            <div class="floating floating-qiye">
+                <div id="qiye">欢迎您申请试用</div>
+            </div>
+        </dd>
+        <dd class="return" onclick="gotoTop();return false;" title="回到顶部">
+        </dd>
+    </dl>
+
+</div>
+<!-- <div title="在线客服" id="zhichi-div" style="position: fixed;bottom: 120px;right: 20px;z-index: 999">
+    <button id="btn" class="zhiCustomBtn">欢迎咨询</button>
+    <p id="chatFlag" data-mType="0"></p>
+    <button id="pbtn" class="pZhichiCustomBtn">欢迎咨询</button>
+</div> -->
+<script src="../static/js/entrance.js" id="zhichiScript" class="zhiCustomBtn"></script>
+
+<div class="modal fade" id="serviceTip" style="margin-top: 230px;font-size:14px;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                <h4 class="modal-title" style="margin-left:40%">服务提示</h4>
+            </div>
+            <div class="modal-body">
+                <div style="text-align:center;" id="detailTipContent">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="text-align:center;">
+                    <a class="btn btn-default" href="../index2.html" target="_blank" id="consultNow">论坛求助</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-primary" href="javascript:;" target="_blank" id="upgradeNow">立即升级套餐</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../static/js/rightFixedBar.js"></script>
+<div class="site-footer">
+  <div class="bottom-banner" style="position:unset">
+    <div class="inner-main banner-content" style="position:relative;margin: 0;">
+      <p style="font-size:24px">开始简单高效的数据采集</p>
+      <div class="footer-download">
+        <span class="btn-download"><a href="">
+            免费下载
+          </a></span>
+        <span class="btn-signup"><a href="../account/register.html">
+            免费注册
+          </a></span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-info">
+    <div class="inner-main">
+      <div class="part1">
+        <ul>
+          <li class="title"><a href="javascript:;">关于我们</a></li>
+          <li><a href="../intro.html">公司介绍</a></li>
+          <li><a href="../HonorWall.html">公司荣誉</a></li>
+          <li><a href="javascript:;" target="_blank">加入我们</a></li>
+          <li><a href="../contactus.html">联系我们</a></li>
+        </ul>
+        <ul>
+          <li class="title"><a href="javascript:;">产品</a></li>
+          <li><a href="../about.html">八爪鱼采集器</a></li>
+          <li><a href="../enterprise/index.html" target="_blank">八爪鱼企业版</a></li>
+          <li><a href="../qiyeban/index.html" target="_blank">八爪鱼私有化部署版</a></li>
+          <li><a href="javascript:;" target="_blank">客户体验管理</a></li>
+        </ul>
+        <ul>
+          <li class="title"><a href="javascript:;">服务</a></li>
+          
+          <li><a href="../aboutus.html">商务合作</a></li>
+          
+          <li>
+            <a href="../edu.html">教育公益计划</a>
+          </li>
+        </ul>
+        <ul>
+          <li class="title"><a href="javascript:;">资源中心</a></li>
+          <li><a href="../tutorial8/hottutorial.html">图文教程</a></li>
+          <li><a href="../tutorial8/videotutorial.html">视频教程</a></li>
+          <li>
+            <a href="../tutorial8/faq.html">常见问题</a>
+          </li>
+          <li>
+            <a href="../blog.html">博客文章</a>
+          </li>
+          <li>
+            <a href="../tutorial8/81api.html">API文档</a>
+          </li>
+          <li>
+            <a href="../tutorialindex.html">旧版教程</a>
+          </li>
+        </ul>
+        <div>
+          <dl>
+            <dt><img src="../static/picture/qrcode1.jpg" alt="微信服务号"></dt>
+            <dd>微信服务号</dd>
+          </dl>
+          <dl>
+            <dt>
+              <img src="../static/picture/qrcode2.jpg" alt="八爪鱼采集研究院微信订阅号">
+            </dt>
+            <dd>采集研究院</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="part2">
+        <ul class="tools">
+
+          
+			<li>
+            <a href="javascript:;" target="_blank">web scraping</a>
+          </li>	
+			<li>
+            <a href="javascript:;" target="_blank">webスクレイピング</a>
+          </li>
+			<li>
+            <a href="javascript:;" target="_blank">Herramienta de Web Scraping Gratis</a>
+          </li>
+			<li>
+            <a href="javascript:;" target="_blank">kostenloser Web Crawler</a>
+          </li>	
+			<li>
+            <a href="javascript:;" target="_blank">Outil de Web Scraping gratuits</a>
+          </li>	
+			<li>
+            <a href="javascript:;" target="_blank">data extraction</a>
+          </li>	
+						
+        </ul>
+      </div>
+
+      <div class="company-info">
+        <p>
+          深圳视界信息技术有限公司版权所有 © 2013-2021 . All rights reserved.
+          <a target="_blank" href="javascript:;" rel="nofollow">粤ICP备14092314号</a> <a href="../ServiceTerms.html" rel="nofollow">服务协议</a>
+		  | <a href="../octServicePrivacy.html" rel="nofollow">隐私协议</a> | <a href="../octServiceCompetence.html" rel="nofollow">版本</a>
+		  | <a href="../octServiceCompetence.html" rel="nofollow">开发者名称</a> | <a href="../octServiceCompetence.html" rel="nofollow">权限</a>
+        </p>
+        <p>公司地址：深圳市南山区西丽街道禹洲广场A座5楼</p>
+        <p>粤公网安备 44030502000701号</p>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  var matchUrlLoaction = function() {
+    urlConfig = [
+      {
+        name: "about",
+        navIndex: 1
+      },
+      {
+        name: "plan",
+        navIndex: 2
+      },
+      {
+        name: "solution",
+        navIndex: 3
+      },
+      {
+        name: "download",
+        navIndex: 4
+      },
+      {
+        name: "app",
+        navIndex: 5
+      },
+      {
+        name: "tutorial",
+        navIndex: 6
+      },
+      {
+        name: "faqIndex",
+        navIndex: 7
+      },
+      {
+        name: "faq",
+        navIndex: 7
+      }
+    ];
+    var currentHref = window.location.href;
+    urlConfig.some(function(v) {
+      if (currentHref.lastIndexOf(v.name) > -1) {
+        $(".site-nav >li")
+          .eq(v.navIndex)
+          .addClass("active");
+      } else {
+        $(".site-nav >li")
+          .eq(v.navIndex)
+          .removeClass("active");
+      }
+    });
+  };
+  matchUrlLoaction();
+</script>
+
+
+    <script>
+        (function () {
+            var canonicalURL, curProtocol;
+            //Get the <link> tag
+            var x = document.getElementsByTagName("link");
+            //Find the last canonical URL
+            if (x.length > 0) {
+                for (i = 0; i < x.length; i++) {
+                    if (x[i].rel.toLowerCase() == 'canonical' && x[i].href) {
+                        canonicalURL = x[i].href;
+                    }
+                }
+            }
+            //Get protocol
+            if (!canonicalURL) {
+                curProtocol = window.location.protocol.split(':')[0];
+            }
+            else {
+                curProtocol = canonicalURL.split(':')[0];
+            }
+            //Get current URL if the canonical URL does not exist
+            if (!canonicalURL) canonicalURL = window.location.href;
+            //Assign script content. Replace current URL with the canonical URL
+            !function () { var e = /([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi, r = canonicalURL, t = document.referrer; if (!e.test(r)) { var n = (String(curProtocol).toLowerCase() === 'https') ? "https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif" : "//api.share.baidu.com/s.gif"; t ? (n += "?r=" + encodeURIComponent(document.referrer), r && (n += "&l=" + r)) : r && (n += "?l=" + r); var i = new Image; i.src = n } }(window);
+        })();
+    </script>
+    <script>
+        $(function () {
+            $("a[url]").click(function () {
+                var $th = $(this);
+                var url = $th.attr("url");
+                var title = $th.text();
+                layer.open({
+                    type: 2,
+                    title: title,
+                    shadeClose: false,
+                    shade: 0.8,
+                    area: ['350px', '460px'],
+                    anim: 2,
+                    content: [url, 'no'],
+                });
+            })
+
+            var appendUtmToLandPage = function () {
+                var utmList = ["utm_campaign", "utm_content", "utm_medium", "utm_source", "utm_term"];
+                var utmInfo = "";
+                var hasUtm = false;
+                utmList.forEach(utm => {
+                    var c = $.cookie(utm);
+                    if (c) {
+                        utmInfo += utm + "=" + c + "&";
+                        hasUtm = true;
+                    }
+                });
+                utmInfo = utmInfo.replace(/&$/, '');
+                if (hasUtm) {
+                    var utmLinks = document.querySelectorAll("a[data-utm]");
+                    if (utmLinks && utmLinks.length > 0) {
+                        utmLinks.forEach(a => {
+                            if (a.href.indexOf('?') != -1) {
+                                a.href = a.href + '&' + utmInfo;
+                            } else {
+                                a.href = a.href + '?' + utmInfo;
+                            }
+                        });
+                    }
+                }
+            };
+            appendUtmToLandPage();
+        })
+    </script>
+    
+
+        <script>
+            $(function () {
+                $(function () { $("#accordion").accordion({ collapsible: true }); });
+                $("#accordion").accordion();
+            });
+            //document.documentElement.clientHeight - 70
+            $(function () {
+                $(".dl-banner").css({
+                    height: 867
+                });
+                $("#dl_arrow").click(function () {
+                    $("html,body").animate(
+                        { scrollTop: $("#dl_attention").offset().top - 70 },
+                        500
+                    );
+                });
+                $("#dl_v7").click(function () {
+                    $("html,body").animate({ scrollTop: $("#v7").offset().top - 70 }, 500);
+                });
+            });
+        </script>
+
+        <script>
+    var hasBeta = true;
+    $(function () {
+        if (hasBeta) {
+            $('.down-top .dl-banner .dl-container .dl-mid .dl-mid-btnbox').css("width", "653px")
+            $('.down-top .dl-banner .dl-container .dl-mid .dl-mid-instruction').css("width", "653px");
+            $('.btn-showbeta').css('display', 'inlin-block')
+
+        } else {
+            $('.btn-showbeta').css('display', 'none')
+        }
+    })
+        </script>
+    
+
+    <script type="text/javascript" src="../static/js/rightFixedBar.js"></script>
+    <script type="text/javascript" src="../static/js/stat.js"></script>
+</body>
+</html>

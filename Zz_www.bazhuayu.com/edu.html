@@ -1,0 +1,3634 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    
+    
+<title>八爪鱼教育公益计划 - 八爪鱼采集器</title>
+<meta name="keywords" content="八爪鱼教育公益计划">
+<meta name="description" content="八爪鱼教育公益计划是深圳视界信息技术有限公司面向全球职业院校及全日制本科类院校的师生所出的公益项目，该项目旨在为高校师生在大数据学术科研和人才培养方向提供软件、数据以及培训等相关支持。所有符合条件的在校师生均可免费申请。">
+    
+
+
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0">
+    <meta name="baidu-site-verification" content="my5tMHFCbI">
+    <meta name="author" content="八爪鱼采集器 - 视界科技旗下产品">
+    <meta http-equiv="Cache-Control" content="no-transform ">
+    <meta name="baidu-site-verification" content="zpPiFXIJuf">
+
+    <link rel="shortcut icon" href="https://www.bazhuayu.com/favicon-new.ico">
+
+    <!-- Le styles -->
+    <link href="static/css/zui.min.css" rel="stylesheet">
+    <link href="static/css/common.css" rel="stylesheet">
+    <link href="static/css/site.min.css" rel="stylesheet">
+    
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/jquery.cookie.js"></script>
+    <script src="static/js/zui.min.js"></script>
+    <script src="static/js/common.js"></script>
+    <script src="static/js/layer.js" type="text/javascript"></script>
+<style>
+    #promotionAd{
+        border-radius: 1.5%;
+        width: 100%;
+    }
+    .modal-contents{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 41.68%;
+        height: 53.4%;
+        /* background-color: pink; */
+    }
+    .promotion-ad-wrapper {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .activoty-cancel-icon {
+        position: absolute;
+        width: 2.7%;
+        height: 4%;
+        right: 1.6%;
+        top: 3%;
+        cursor: pointer;
+        /* transition: opacity 0.3s ease; */
+    }
+
+        /* .activoty-cancel-icon:hover {
+            opacity: 0.5;
+        } */
+
+    .activoty-bottom-btn {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 20.7%;
+        padding: 3.3% 15%;
+        /* border-radius: 3px; */
+        cursor: pointer;
+        /* background-color: #f6fc63; */
+        /* transition: background-color 0.3s ease; */
+    }
+    .activoty-bottom-btn-after{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 12.7%;
+        padding: 3.3% 15%;
+        cursor: pointer;
+    }
+
+        /* .activoty-bottom-btn:hover {
+            background-color: #ffda24;
+        } */
+
+        /* .activoty-bottom-btn span {
+            font-size: 20px;
+            line-height: 1;
+            font-weight: bold;
+            color: #3620b8;
+        } */
+</style>
+<div class="modal fade" tabindex="-1" id="adModal" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-contents">
+        <div class="promotion-ad-wrapper">
+            <img id="promotionAd" src="">
+            <div class="activoty-cancel-icon" onclick="closeAd()"></div>
+            <a id="activoty-bottom-btn" href="javascript:;" target="_blank" onclick="closeAd()">
+            </a>
+        </div>
+    </div>
+</div>
+    <!-- 修改 -->
+    <!-- var special = GlobalCache.ActivitySpecialDate.ToString("yyyy/MM/dd HH:mm:ss"); -->
+    <!-- 添加返场时间 -->
+
+<script>
+
+    window.onload = function () {
+        displayAd();
+
+    };
+
+
+    var activityPopConfig = {
+        excludePaths: [
+            /^\/(A|a)ccount/, /^\/(C|c)loud/, /^\/(F|f)ee/, /^\/(L|l)og/, /^\/six/, /^\/pay/, /^\/(A|a)ctivity/
+        ],
+        imgs: {
+            pre: "/images/act/202112/pc_pre.jpeg",
+            dayOne: "/images/act/202112/pc_first.jpeg",
+            afterDayOne: "/images/act/202112/pc_activity.jpeg",
+            // afterDayOne: "/images/act/202012/pc_afterDayOne_pop.png"
+            returnDay: "/images/act/202112/pc_fc.jpeg"
+        }
+    };
+
+    var currTime = new Date().getTime();
+    var activityPreStart = new Date("2021/12/07 22:30:00").getTime()
+    // 预热结束的时间就是活动开始的时间
+    var activityPreEnd = new Date("2021/12/14 15:00:00").getTime()
+    // 首日结束的时间就是正常活动日开始的时间
+    var activityDayOneEnd = new Date("2021/12/16 00:00:00").getTime()
+    // 正常活动日结束的时间就是返场开始的时间
+    // 添加
+    var activityNormalEnd = new Date("2021/12/22 00:00:00").getTime()
+    var activityEnd = new Date("2021/12/31 23:59:59").getTime()
+    // 检测是否看过广告，若有则不显示广告，否则3S后显示广告
+    function displayAd() {
+        var promotionAd = document.getElementById("promotionAd");
+        var btn = document.getElementById("activoty-bottom-btn");
+        var imgUrl;
+        var isShow = false;
+        if (currTime < activityPreStart)
+            return;
+        if (currTime < activityPreEnd) {
+            //预热时间
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.pre;
+            if (!localStorage[activityPreEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.dayOne;
+            if (!localStorage[activityDayOneEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.afterDayOne;
+            if (!localStorage[activityNormalEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.returnDay;
+            if (!localStorage[activityEnd]) {
+                isShow = true
+            }
+        }
+
+        if (isShow && checkPathValid()) {
+            // 为避免广告图片加载卡顿，应先加载后显示
+            promotionAd.setAttribute("src", imgUrl);
+            setTimeout(function () {
+                $("#adModal").modal({
+                    backdrop: "static",
+                    keyboard: false
+                });
+            }, 500);
+        }
+
+
+    }
+
+    // 校验当前path，个人中心下属页面及支付页面不显示
+    function checkPathValid() {
+        var currPath = window.location.pathname;
+        for (var i of activityPopConfig.excludePaths) {
+            if (i.test(currPath)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 关闭广告弹窗
+    function closeAd() {
+        if (currTime < activityPreEnd) {
+            //预热时间
+            localStorage[activityPreEnd] = true
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            localStorage[activityDayOneEnd] = true
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            localStorage[activityNormalEnd] = true
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            isShow = localStorage[activityEnd] = true
+        }
+
+        $("#adModal").modal("hide");
+    }
+</script> 
+    
+	<link rel="alternate" href="https://www.octoparse.com/" hreflang="en-us">
+    <link rel="alternate" href="https://www.octoparse.jp/" hreflang="ja-jp">
+    <link rel="alternate" href="index1.html" hreflang="zh-cn">
+	<link rel="alternate" href="https://www.octoparse.es/" hreflang="es-es">
+	<link rel="alternate" href="https://www.octoparse.fr/" hreflang="fr-fr">
+	<link rel="alternate" href="https://www.octoparse.de/" hreflang="de">
+		<!--百度统计-异步-->
+        <script type="text/javascript">
+            var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+            document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F7515d7bccdb62c11803f90ca8071f05b' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+    <!--百度统计-异步-->
+        <script type='text/javascript'>
+            var _vds = _vds || [];
+            window._vds = _vds;
+            (function () {
+                _vds.push(['setAccountId', 'a7c11699fcd726cf']);
+                (function () {
+                    var vds = document.createElement('script');
+                    vds.type = 'text/javascript';
+                    vds.async = true;
+                    vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'assets.growingio.com/vds.js';
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(vds, s);
+                })();
+            })();
+        </script>
+    <!--用户来源统计-->
+        <script type="text/javascript">
+
+            var utm_campaign = getQueryStringMaster("utm_campaign");
+            var utmFlag = 0;
+            if (utm_campaign != null && utm_campaign != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_campaign=" + encodeURI(utm_campaign) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_medium = getQueryStringMaster("utm_medium");
+            if (utm_medium != null && utm_medium != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_medium=" + encodeURI(utm_medium) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_source = getQueryStringMaster("utm_source");
+            if (utm_source != null && utm_source != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_source=" + encodeURI(utm_source) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_content = getQueryStringMaster("utm_content");
+            if (utm_content != null && utm_content != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_content=" + encodeURI(utm_content) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_term = getQueryStringMaster("utm_term");
+            if (utm_term != null && utm_term != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_term=" + encodeURI(utm_term) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_url = decodeURI(window.location);
+            if (utm_url != null && utm_url != "") {
+                if (getCookie("url") == "") {
+                    var exp = new Date();
+                    exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                    document.cookie = "url=" + encodeURI(utm_url) + ";expires=" + exp.toGMTString();
+                }
+            }
+
+            var referrerUrl = document.referrer;
+            var keys = ["wd", "q", "query", "word"];
+            var searchWord = "";
+            for (var i = 0; i < keys.length; i++) {
+                var reg = new RegExp("(^|&)" + keys[i] + "=([^&]*)(&|$)", "i");
+                var r = referrerUrl.substr(1).match(reg);
+                if (r && r[2]) {
+                    searchWord = decodeURI(r[2]);
+                    var exp = new Date();
+                    exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                    document.cookie = "search_word=" + encodeURI(searchWord) + ";expires=" + exp.toGMTString();// 写入Cookie，注册时使用
+                    break;
+                }
+            }     
+            if (searchWord != "") {
+                utmFlag = 1;
+            }
+            else
+            {
+                if (getCookie("search_word") != "") {
+                     searchWord = getCookie("search_word");
+                     utmFlag = 1;
+               }
+            }
+
+            if (utmFlag == 1) {
+                $.ajax({
+                    url: "/Common/AjaxPostUtm",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        "utm_campaign": utm_campaign,
+                        "utm_medium": utm_medium,
+                        "utm_source": utm_source,
+                        "utm_content": utm_content,
+                        "utm_term": utm_term,
+                        "utm_url": utm_url,
+                        "search_word": searchWord
+                    },
+                });
+            }
+
+            function getCookie(Name) {
+                var search = Name + "="
+                if (document.cookie.length > 0) {
+                    offset = document.cookie.indexOf(search)
+                    if (offset != -1) {
+                        offset += search.length
+                        end = document.cookie.indexOf(";", offset)
+                        if (end == -1) end = document.cookie.length
+                        return unescape(document.cookie.substring(offset, end))
+                    }
+                    else return ""
+                }
+            }
+
+            function getQueryStringMaster(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return decodeURI(r[2]); return null;
+            }
+
+            $(document).ready(function () {
+                var jihuoH = $('#jihuoH').val();
+                if (jihuoH == '0') {
+                    $('#jihuop').show();
+                }
+                logFromChannelCookie();
+                function logFromChannelCookie() {
+                    var fromChannel = getQueryStringMaster("fromchannel");
+                    if (fromChannel) {
+                        var exp = new Date();
+                        exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24 * 7);//过期时间1天
+                        document.cookie = "_bzytg=" + fromChannel + ";expires=" + exp.toGMTString();
+                    }
+                }
+            });
+
+        </script>
+    <!--用户来源统计-->
+			
+
+
+    
+    
+    <script>
+    var isTest = 0;
+    </script>
+    <!-- Insert "cp_head" markup here -->
+    <link rel="stylesheet" href="static/css/home.min.css">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <style>
+
+
+        .banner {
+            position: relative;
+        }
+
+            .banner .jumbotron {
+                padding: 0;
+                margin: 0;
+            }
+
+            .banner .topic {
+                width: 100%;
+                position: absolute;
+                top: 50%;
+                -webkit-transform: translate(0, -50%);
+                transform: translate(0, -50%);
+                color: rgba(255,255,255,1);
+                text-align: center;
+            }
+
+        .part {
+        }
+
+        .row-video .row-video-play {
+            position: relative;
+            text-align: center;
+        }
+
+            .row-video .row-video-play a {
+                width: 100%;
+                height: 100%
+            }
+
+            .row-video .row-video-play #divBtnPlay {
+                display: block;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+            }
+
+                .row-video .row-video-play #divBtnPlay img {
+                    max-width: 88px;
+                }
+
+                .row-video .row-video-play #divBtnPlay > div {
+                    margin-top: 20px;
+                    color: #fff
+                }
+
+        .part .row-version {
+        }
+
+            .part .row-version .row-version-topic {
+                text-align: center;
+                color: rgba(34,34,34,1);
+                font-weight: 500;
+            }
+
+
+            .part .row-version .versionName {
+                font-weight: 400;
+                color: rgba(34,34,34,1);
+            }
+
+            .part .row-version .versionTime {
+                color: rgba(46,46,46,1);
+            }
+
+            .part .row-version .versionDesc {
+            }
+
+            .part .row-version ul {
+            }
+
+                .part .row-version ul li {
+                    list-style: disc;
+                    color: rgba(46,46,46,1);
+                }
+
+            .part .row-version .btns {
+            }
+
+                .part .row-version .btns > a {
+                    display: inline-block;
+                    text-align: center;
+                    cursor: pointer;
+                }
+
+                .part .row-version .btns .btn-act {
+                    background: rgba(0,100,205,1);
+                    color: rgba(255,255,255,1);
+                }
+
+                .part .row-version .btns .btn-more {
+                    border: 1px solid rgba(0,100,205,1);
+                    color: rgba(0,100,205,1);
+                    /*margin-left: 25px;*/
+                }
+
+        /* msg */
+        .part .row-msg #carousel-message .carousel-indicators li.active {
+            background-color: #000;
+        }
+
+        .part .row-msg #carousel-message .carousel-indicators li {
+            background-color: #666;
+        }
+
+
+        .part .row {
+            max-width: 968px;
+            margin: 0 auto;
+        }
+
+
+
+        .div-line {
+            margin: 0 auto;
+            height: 1px;
+            width: 45%;
+            background: radial-gradient(#ccc 12%, white 80%);
+        }
+
+        .modal .modal-content {
+            color: #fff !important;
+            z-index: 9999;
+            background: rgba(00,00,00,.9) !important;           
+        }
+
+            .modal .modal-content tr td:first-child {
+                border-left: 1px solid #323232;
+            }
+
+            .modal .modal-content tr th:first-child {
+            }
+
+            .modal .modal-content tr:first-child td {
+                border-top: 1px solid #323232
+            }
+
+            .modal .modal-content tr td {
+                border-right: 1px solid #323232;
+                border-bottom: 1px solid #323232
+            }
+
+            .modal .modal-content tr th {
+                text-align: center;
+                border-bottom: 1px solid #323232;
+                border-top: 0;
+            }
+
+            .modal .modal-content .modal-header {
+                border: 0;
+            }
+
+                .modal .modal-content .modal-header button span {
+                    color: #fff;
+                }
+
+            .modal .modal-content .modal-footer {
+                border-top: 0;
+            }
+
+
+
+            .modal .modal-content .modal-body {
+                color: #fff !important;
+            }
+
+            .modal .modal-content .form-group {
+                width: 95%;
+                margin: 10px auto;
+            }
+
+                .modal .modal-content .form-group.form-group-require {
+                    position: relative;
+                }
+
+                    .modal .modal-content .form-group.form-group-require::after {
+                        position: absolute;
+                        right: -15px;
+                        top: 25px;
+                        font-size: 20px;
+                        content: "*";
+                        color: red;
+                    }
+
+                    .modal .modal-content .form-group.form-group-require .divTips {
+                        color: red;
+                        display: block;
+                    }
+
+        #tabType {
+            border-color: rgba(0,100,205,1) !important;
+        }
+
+            #tabType li a {
+                background-color: transparent !important;
+                color: #fff;
+                border-color: transparent !important;
+            }
+
+            #tabType li.active a {
+                background-color: rgba(0,100,205,1) !important;
+                color: #fff;
+                border-color: rgba(0,100,205,1) !important;
+            }
+
+        .form-group button.btn {
+            padding: 5px 60px;
+            background: #0064CD;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        #txtFileName {
+            width: 100%;
+            height: 20px;
+            line-height: 20px;
+            font-size: 18px;
+            margin: 0 auto;
+            text-align: center;
+            display: block;
+            white-space: nowrap;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+        <style>
+
+            .tipIcon {
+                width: 56px;
+                height: 5px;
+                background: rgba(0,100,205,1);
+            }
+
+
+            .div-line {
+                margin: 50px auto;
+            }
+
+            .part {
+                padding: 70px 0;
+            }
+
+            .banner .topic .title {
+                height: 45px;
+                line-height: 45px;
+                font-size: 44px;
+                font-weight: 400;
+            }
+
+            .banner .topic .subTitle {
+                margin-top: 50px;
+                height: 22px;
+                line-height: 22px;
+                font-size: 21px;
+                font-weight: 100;
+            }
+            /* video */
+            .row-video .row-video-desc {
+                margin-left: 10px;
+            }
+
+                .row-video .row-video-desc .row-video-desc-cont {
+                    max-width: 390px;
+                    margin-top: 20px;
+                    font-size: 16px;
+                    line-height: 34px;
+                }
+
+            /*版本信息*/
+            .row-version .versionRight {
+                padding-left: 120px;
+            }
+
+            .row-version .row-version-topic {
+                line-height: 40px;
+                height: 40px;
+                font-size: 32px;
+                margin-bottom: 70px;
+            }
+
+
+
+
+            .part .row-version .versionName {
+                margin-top: 20px;
+                font-size: 25px;
+            }
+
+            .part .row-version .versionTime {
+                margin-top: 20px;
+                font-size: 20px;
+            }
+
+            .part .row-version .versionDesc {
+                margin-top: 35px;
+                padding: 0px 0px 20px 20px;
+            }
+
+            .part .row-version ul {
+            }
+
+                .part .row-version ul li {
+                    height: 25px;
+                    line-height: 25px;
+                    font-size: 14px;
+                    font-weight: 400;
+                }
+
+            .part .row-version .btns {
+            }
+
+                .part .row-version .btns > a {
+                    width: 128px;
+                    font-size: 14px;
+                    font-weight: 400;
+                    height: 40px;
+                    line-height: 40px;
+                    border-radius: 4px;
+                }
+
+                .part .row-version .btns .btn-act {
+                }
+
+                .part .row-version .btns .btn-more {
+                    margin-left: 25px;
+                }
+
+            /* msg */
+            .part .row-msg {
+            }
+
+                .part .row-msg .msgInfo {
+                    margin-bottom: 50px;
+                }
+
+                .part .row-msg .msgDesc {
+                    margin: 20px 0;
+                    font-size: 16px;
+                    font-weight: 400;
+                    color: rgba(46,46,46,1);
+                    line-height: 34px;
+                }
+
+                .part .row-msg .msgUser {
+                    text-align: right;
+                }
+
+                    .part .row-msg .msgUser .msgName {
+                        font-size: 16px;
+                        font-weight: 400;
+                        color: rgba(46,46,46,1);
+                        line-height: 42px;
+                    }
+
+                    .part .row-msg .msgUser .msgSplit {
+                    }
+
+                    .part .row-msg .msgUser .msgCollage {
+                        font-size: 16px;
+                        font-weight: 400;
+                        color: rgba(46,46,46,1);
+                        line-height: 42px;
+                    }
+
+            /*collage*/
+            .part .row-collage {
+            }
+
+                .part .row-collage #carousel-collage .carousel-indicators {
+                    bottom: -30px !important;
+                }
+
+                .part .row-collage .row-collage-topic {
+                    text-align: center;
+                    height: 40px;
+                    font-size: 32px;
+                    font-weight: 500;
+                    color: rgba(255,255,255,1);
+                    letter-spacing: 10px;
+                    line-height: 40px;
+                    margin-bottom: 60px;
+                }
+
+                .part .row-collage .divCollages {
+                }
+
+                    .part .row-collage .divCollages > div {
+                        float: left;
+                        width: 25%;
+                        margin: 10px 0;
+                    }
+
+
+                        .part .row-collage .divCollages > div > img {
+                            display: block;
+                            max-width: 202px;
+                        }
+
+            /*link*/
+            .part .row-link {
+                clear: both;
+            }
+
+                .part .row-link .row-link-topic {
+                    text-align: center;
+                    height: 40px;
+                    font-size: 32px;
+                    font-weight: 500;
+                    color: rgba(255,255,255,1);
+                    letter-spacing: 10px;
+                    line-height: 40px;
+                    margin-bottom: 30px;
+                }
+
+                .part .row-link .row-link-code {
+                    text-align: right;
+                    border-right: 1px solid rgba(67,67,67,1);
+                    clear: both;
+                }
+
+                    .part .row-link .row-link-code img {
+                        text-align: center;
+                        margin: auto;
+                        display: block;
+                    }
+
+                    .part .row-link .row-link-code div {
+                        color: #fff;
+                        margin-top: 15px;
+                        text-align: center;
+                    }
+
+                .part .row-link .row-link-type {
+                    margin-left: 20px;
+                    line-height: 50px;
+                    height: 50px;
+                    font-size: 16px;
+                    font-weight: 400;
+                    color: rgba(255,255,255,1);
+                }
+
+
+
+
+          
+                #modal-video .modal-dialog {
+                width: 680px;
+            }
+
+                #modal-video .modal-dialog #divVideo {
+                    height: 453px;
+                    padding: 2px
+                }
+
+            #modal-freeInfo .modal-dialog {
+                width: 320px;
+            }
+
+            #modal-link .modal-dialog {
+                width: 720px;
+            }
+
+                #modal-link .modal-dialog .form {
+                    width: 450px;
+                    margin: 0 auto;
+                    padding-bottom: 50px;
+                }
+
+            #modal-free .modal-dialog {
+                width: 720px;
+            }
+
+                #modal-free .modal-dialog .form {
+                    width: 450px;
+                    margin: 0 auto;
+                    padding-bottom: 50px;
+                }
+
+            #btnReImageCode, #btnReImageCode2 {
+                width: 120px;
+                padding: 1px 0px;
+                height: 32px;
+            }
+
+
+            img.imgChkcode {
+                display:inline-block;
+                width:100%;
+                height:100%;
+            }
+
+            .modal .modal-content {
+                opacity:.9;
+            }
+        </style>
+
+    <style>
+    .reco-link {
+        height: 30px;
+        line-height: 30px;
+        width: 100%;
+        margin-top: 45px;
+    }
+
+    .reco-link ul {
+        margin: 0 auto;
+        height: 100%;
+        width: 800px;
+        padding-top: 7px;
+    }
+
+    .reco-link ul li {
+        float: left;
+        margin-right: 15px;
+        font-size:14px;
+        font-family:PingFang-SC-Medium,PingFang-SC;
+        font-weight:500;
+        color:rgba(255,255,255,1);
+    }
+    .reco-link ul li a:hover {
+        color: rgba(255,255,255,1);
+    }
+    </style>
+
+</head>
+<body>
+
+
+
+<style>
+    .site-header-pro:hover .sub-list {
+        height: 360px !important;
+    }
+
+    .site-header .site-tutorial:hover .solution-sub-list {
+        display: block;
+        height: 130px;
+    }
+
+.site-header .site-tutorial2:hover .solution-sub-list {
+        display: block;
+        height: 84px;
+    }
+
+  .site-header .site-tutorial3:hover .solution-sub-list {
+        display: block;
+        height: 300px;
+    }
+
+</style>
+<header class="site-header">
+    <ul class="site-nav" style="width: 1045px">
+        <li class="site-bzy-logo">
+            <a href="index1.html"></a>
+        </li>
+        <li class='site-header-pro'>
+            <a href="javascript:;">
+                产品
+                <i class="icon icon-angle-down"></i>
+            </a>
+            <ul class="pro-sub-list sub-list">
+                <li>
+                    <a href="about.html">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>关于八爪鱼</p>
+                            <p>人人可用的数据采集器</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="enterprise/index.html" data-utm="1" target="_blank">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>八爪鱼企业版</p>
+                            <p>企业级数据采集解决方案</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="qiyeban/index.html" data-utm="1">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>八爪鱼私有化部署版</p>
+                            <p>支持内网采集与OEM集成</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="" data-utm="1">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>教育公益计划</p>
+                            <p>教学科研的大数据助手</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" target="_blank">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>客户体验管理</p>
+                            <p>聚合全网客户声音</p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="plan.html">价格</a>
+        </li>
+        <li class='site-header-solution site-tutorial3'>
+            <a href="javascript:;">
+                解决方案
+                <i class="icon icon-angle-down"></i>
+            </a>
+            <ul class="solution-sub-list sub-list" style="left: -100%;">
+                <li>
+                    <a href="" data-utm="1" target="_blank" style="font-size: 16px;color: #919194;font-weight: bold;">数据采集</a>
+                </li>
+                <li>
+                    <a href="newscrawler/index.html" data-utm="1" target="_blank">新闻采集</a>
+                </li>
+                <li>
+                    <a href="ecdatacrawler/index.html" data-utm="1" target="_blank">电商采集</a>
+                </li>
+                <li>
+                    <a href="socialmediacrawler/index.html" data-utm="1" target="_blank">社交采集</a>
+                </li>
+                <li>
+                    <a href="realestate/index.html" data-utm="1" target="_blank">房产采集</a>
+                </li>
+                <li>
+                    <a href="zhaotoubiao/index.html" data-utm="1" target="_blank">招投标采集</a>
+                </li>
+				
+
+
+                
+            </ul>
+            <ul class="solution-sub-list sub-list">
+                <li>
+                    <a href="" data-utm="1" target="_blank" style="font-size: 16px;color: #919194;font-weight: bold;">场景应用</a>
+                </li>
+				<li>
+                    <a href="marketresearch/index.html" data-utm="1" target="_blank">市场研究</a>
+                </li>
+              
+                <li>
+                    <a href="dscomment/index.html" data-utm="1" target="_blank">评论分析</a>
+                </li>
+                <li>
+                    <a href="gaoxiaojiaoyu/index.html" data-utm="1" target="_blank">高校教育</a>
+                </li>
+                <li>
+                    <a href="jingwaiyuqing/index.html" data-utm="1" target="_blank">境外舆情</a>
+                </li>				 
+				<li>
+                    <a href="cross-border-electricity/index.html" data-utm="1" target="_blank">跨境电商采集</a>
+                </li>
+				<li>
+                    <a href="voc/index.html" data-utm="1" target="_blank">客户之声</a>
+                </li>
+				
+                
+
+
+            </ul>
+        </li>
+
+
+
+<li class='site-header-solution site-tutorial2'>
+            <a href="javascript:;">
+                采集模板
+                <i class="icon icon-angle-down"></i>
+            </a>           
+            <ul class="solution-sub-list sub-list">               				
+                <li>
+                    <a href="kjdscjmb/index.html" data-utm="1" target="_blank">跨境电商</a>
+                </li>  
+				<li>
+                    <a href="news/index.html" data-utm="1" target="_blank">新闻传媒</a>
+                </li>		
+			
+            </ul>
+        </li>
+
+
+
+        <li>
+            <a href="download/windows.html">软件下载</a>
+        </li>
+        
+        <li class='site-header-solution site-tutorial'>
+            <a href="tutorialIndex8.html">
+                教程与帮助
+                <i class="icon icon-angle-down"></i>
+            </a>
+            <div>
+                <ul class="edu-sub-list solution-sub-list sub-list sub-list-edu">
+                    <li class="sub-edu">
+                        <a href="tutorial8/hottutorial.html">
+                            <div class="sub-item">
+                                <p>图文教程</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="tutorial8/videotutorial.html">
+                            <div class="sub-item">
+                                <p>视频教程</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="tutorial8/faq.html">
+                            <div class="sub-item sub-edu-item">
+                                <p>常见问题</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+        <li></li>
+        <li class='site-header-solution site-tutorial2'>
+            
+			 <a href="javascript:;">
+                关于我们
+                <i class="icon icon-angle-down"></i>
+            </a>           
+            <ul class="solution-sub-list sub-list">               				
+                <li>
+                    <a href="intro.html" data-utm="1">关于我们</a>
+                </li>  
+				<li>
+                    <a href="contactus.html" data-utm="1">联系我们</a>
+                </li>				
+            </ul>
+        </li>
+        
+<style>
+    .site-header .signin, .site-header .signup {
+        width: 48px;
+        height: 26px;
+        display: inline-block !important;
+        vertical-align: middle;
+        border-radius: 3px;
+        line-height: 26px;
+        border: 1px solid #D9D9D9;
+        background: #FAFAFA;
+    }
+
+        .site-header .signin:hover, .site-header .signup:hover {
+            color: #0059B8;
+            border: 1px solid #0059B8;
+        }
+
+        .site-header .signup:hover {
+            color: #fff;
+            background: #0059B8;
+        }
+
+    .site-header .signup {
+        color: #fff;
+        background: #096ACF;
+        border-color: #096ACF;
+    }
+</style>
+﻿    <ul class="right-bar">
+        <li class="right-bar"><a href="Account/Login.html" class="signin">登录</a></li>
+        <li class="s" style="width: 10px"><a href="javascript:;">&nbsp;</a></li>
+        <li><a class="signup" href="account/register.html">注册</a></li>
+    </ul>
+
+    </ul>
+</header>
+
+<style>
+    #promotionAd{
+        border-radius: 1.5%;
+        width: 100%;
+    }
+    .modal-contents{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 41.68%;
+        height: 53.4%;
+        /* background-color: pink; */
+    }
+    .promotion-ad-wrapper {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .activoty-cancel-icon {
+        position: absolute;
+        width: 2.7%;
+        height: 4%;
+        right: 1.6%;
+        top: 3%;
+        cursor: pointer;
+        /* transition: opacity 0.3s ease; */
+    }
+
+        /* .activoty-cancel-icon:hover {
+            opacity: 0.5;
+        } */
+
+    .activoty-bottom-btn {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 20.7%;
+        padding: 3.3% 15%;
+        /* border-radius: 3px; */
+        cursor: pointer;
+        /* background-color: #f6fc63; */
+        /* transition: background-color 0.3s ease; */
+    }
+    .activoty-bottom-btn-after{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 12.7%;
+        padding: 3.3% 15%;
+        cursor: pointer;
+    }
+
+        /* .activoty-bottom-btn:hover {
+            background-color: #ffda24;
+        } */
+
+        /* .activoty-bottom-btn span {
+            font-size: 20px;
+            line-height: 1;
+            font-weight: bold;
+            color: #3620b8;
+        } */
+</style>
+<div class="modal fade" tabindex="-1" id="adModal" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-contents">
+        <div class="promotion-ad-wrapper">
+            <img id="promotionAd" src="">
+            <div class="activoty-cancel-icon" onclick="closeAd()"></div>
+            <a id="activoty-bottom-btn" href="javascript:;" target="_blank" onclick="closeAd()">
+            </a>
+        </div>
+    </div>
+</div>
+    <!-- 修改 -->
+    <!-- var special = GlobalCache.ActivitySpecialDate.ToString("yyyy/MM/dd HH:mm:ss"); -->
+    <!-- 添加返场时间 -->
+
+<script>
+
+    window.onload = function () {
+        displayAd();
+
+    };
+
+
+    var activityPopConfig = {
+        excludePaths: [
+            /^\/(A|a)ccount/, /^\/(C|c)loud/, /^\/(F|f)ee/, /^\/(L|l)og/, /^\/six/, /^\/pay/, /^\/(A|a)ctivity/
+        ],
+        imgs: {
+            pre: "/images/act/202112/pc_pre.jpeg",
+            dayOne: "/images/act/202112/pc_first.jpeg",
+            afterDayOne: "/images/act/202112/pc_activity.jpeg",
+            // afterDayOne: "/images/act/202012/pc_afterDayOne_pop.png"
+            returnDay: "/images/act/202112/pc_fc.jpeg"
+        }
+    };
+
+    var currTime = new Date().getTime();
+    var activityPreStart = new Date("2021/12/07 22:30:00").getTime()
+    // 预热结束的时间就是活动开始的时间
+    var activityPreEnd = new Date("2021/12/14 15:00:00").getTime()
+    // 首日结束的时间就是正常活动日开始的时间
+    var activityDayOneEnd = new Date("2021/12/16 00:00:00").getTime()
+    // 正常活动日结束的时间就是返场开始的时间
+    // 添加
+    var activityNormalEnd = new Date("2021/12/22 00:00:00").getTime()
+    var activityEnd = new Date("2021/12/31 23:59:59").getTime()
+    // 检测是否看过广告，若有则不显示广告，否则3S后显示广告
+    function displayAd() {
+        var promotionAd = document.getElementById("promotionAd");
+        var btn = document.getElementById("activoty-bottom-btn");
+        var imgUrl;
+        var isShow = false;
+        if (currTime < activityPreStart)
+            return;
+        if (currTime < activityPreEnd) {
+            //预热时间
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.pre;
+            if (!localStorage[activityPreEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.dayOne;
+            if (!localStorage[activityDayOneEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.afterDayOne;
+            if (!localStorage[activityNormalEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.returnDay;
+            if (!localStorage[activityEnd]) {
+                isShow = true
+            }
+        }
+
+        if (isShow && checkPathValid()) {
+            // 为避免广告图片加载卡顿，应先加载后显示
+            promotionAd.setAttribute("src", imgUrl);
+            setTimeout(function () {
+                $("#adModal").modal({
+                    backdrop: "static",
+                    keyboard: false
+                });
+            }, 500);
+        }
+
+
+    }
+
+    // 校验当前path，个人中心下属页面及支付页面不显示
+    function checkPathValid() {
+        var currPath = window.location.pathname;
+        for (var i of activityPopConfig.excludePaths) {
+            if (i.test(currPath)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 关闭广告弹窗
+    function closeAd() {
+        if (currTime < activityPreEnd) {
+            //预热时间
+            localStorage[activityPreEnd] = true
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            localStorage[activityDayOneEnd] = true
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            localStorage[activityNormalEnd] = true
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            isShow = localStorage[activityEnd] = true
+        }
+
+        $("#adModal").modal("hide");
+    }
+</script>
+
+    <div class="content" style="margin-top:64px;overflow:hidden;background:rgba(247,251,255,1);">
+        
+
+
+
+<div class="eduPage">
+    <!-- banner -->
+    <div class="banner">
+        <div class="jumbotron">
+            <img src="static/picture/banner@2x.png">
+            <div class="topic">
+                <div class="title">八爪鱼教育公益计划</div>
+                <div class="subTitle">教学科研助手 让数据触手可及</div>
+            </div>
+        </div>
+    </div>
+    <!-- main -->
+    <!-- video -->
+    <div class="part">
+        <div class="row row-video">
+            
+            <div class="col-sm-6">
+                <div class="row-video-play">
+                    <a href="javascript:;" id="play" data-toggle="modal" data-target="#modal-video">
+                        <img src="static/picture/palybg@2x.png" alt="play">
+                    </a>
+                    <div id="divBtnPlay">
+                        <a href="" id="play1" data-toggle="modal" data-target="#modal-video" onclick="return false;">
+                            <img src="static/picture/paly.png" alt="play">
+                        </a>
+                        <div>产品操作视频</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-sm-6">
+                <div class="row-video-desc">
+                    <div class="tipIcon" style="margin-top:30px;"></div>
+                    <div class="row-video-desc-cont">无论您是为论文收集数据的学生，还是苦于数据挖掘的科研学者，亦或是致力于“专业+大数据”复合型人才培养的高校，八爪鱼采集器都可以赋予您快速、简易、全面的数据抓取能力，并提供最佳的高校大数据解决方案。</div>
+                </div>
+            </div>
+        </div>
+        <div class="div-line"> </div>
+        <!-- version -->
+
+        <div class="row row-version">
+            <div class="col-12">
+                <div class="row-version-topic">
+                    适用于所有学生、教师和学校的采集器
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="tipIcon"></div>
+                <div class="versionName">公益版</div>
+                <div class="versionTime">认证免费使用12个月</div>
+                <div class="versionDesc">
+                    <ul>
+                        <li>
+                            零编程基础，快速掌握数据采集技能
+                        </li>
+                        <li>
+                            加入高校社区，免费获取科研数据资源
+                        </li>
+                        <li>
+                            参与八爪鱼数据人才培养计划，解锁更多大数据技能
+                        </li>
+                    </ul>
+                </div>
+                <div class="btns">
+                    <a href="javascript:;" class="btn-act" data-toggle="modal" data-target="#modal-free">免费使用</a>
+                    <a href="javascript:;" class="btn-more" data-toggle="modal" data-target="#modal-freeInfo">了解详情 </a>
+                    
+                </div>
+            </div>
+            <div class="col-sm-6 versionRight">
+                <div class="tipIcon"></div>
+                <div class="versionName">教育版</div>
+                <div class="versionTime">将数据采集整合到您的课程中去</div>
+                <div class="versionDesc">
+                    <ul>
+                        <li>
+                            获取海量数据，兼顾教学科研
+                        </li>
+                        <li>
+                            配备专业的数据、课程、案例和培训
+                        </li>
+                        <li>
+                            行业定制化大数据教学解决方案
+                        </li>
+                    </ul>
+                </div>
+                <div class="btns">
+                    <a href="javascript:;" class="btn-act" data-toggle="modal" data-target="#modal-link">联系我们</a>
+                    <a href="javascript:;" style="display:none" class="btn-more" data-toggle="modal" data-target="#modal-linkInfo">了解详情 &nbsp;<span><img src="static/picture/arr@2x.png" style="max-width:25px"></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- message -->
+    <div class="part" style="background: rgba(245,247,250,1);">
+        <div class="row row-msg">
+            <div id="carousel-message" class="carousel slide" data-ride="carousel" data-interval="5000">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-message" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-message" data-slide-to="1"></li>
+                </ol>
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <div class="msgInfo">
+                            <div class="tipIcon"></div>
+                            <div class="msgDesc">
+                                社会化媒体的发展导致市场营销研究领域，特别是网络营销领域产生了大量亟待探究的新兴课题。展开这些课题研究的一
+                                个首要前提就是数据获取。八爪鱼提供了技术成熟，功能强大，操作简单的网络数据爬取解决方案，为研究者提供了极大便利，使我们不必在数据获取上花费过多精力，可以更多地专注在数据分析与研究上。
+                            </div>
+                            <div class="msgUser">
+                                <span class="msgName">廖俊云老师</span> <span class="msgSplit">/</span>  <span class="msgCollage">暨南大学管理学院</span>
+                            </div>
+                        </div>
+                        
+                        <div class="msgInfo">
+                            <div class="tipIcon"></div>
+                            <div class="msgDesc">
+                                八爪鱼数据采集器同样适合文科专业使用。在《信息可视化》课程教学中，设计学的本科专业和研究生均用此软件进行了有趣的尝试，出来的可视化作品除了让人惊叹的美（这是设计学院应该做到的）之外，数据的来源和数量级也前所未有的丰富，这就是“八爪鱼采集器”的功劳。如果说艺术院校也能使用八爪鱼，其深入浅出和易用性可见一斑。推荐大家尝试着迎接人工智能吧！
+                            </div>
+                            <div class="msgUser">
+                                <span class="msgName">吴祐昕教授</span> <span class="msgSplit">/</span>  <span class="msgCollage">江南大学设计学院</span>
+                            </div>
+                        </div>
+                        <div class="msgInfo">
+                            <div class="tipIcon"></div>
+                            <div class="msgDesc">
+                                八爪鱼采集器解决了我们做实验的对数据量的需求问题。同时可以自定义抓取的数据方式，有利于我们构建相对应的数学模型。节省大数据方向学生做毕业论文的工作量。
+                            </div>
+                            <div class="msgUser">
+                                <span class="msgName">张能波研二学生</span> <span class="msgSplit">/</span>  <span class="msgCollage">深圳大学电子与信息工程学院</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="msgInfo">
+                            <div class="tipIcon"></div>
+                            <div class="msgDesc">
+                                在高校的日常教学和科研中，越来越多的工作围绕从网络上收集的特定领域的数据展开。数据采集虽然不是问题的重点，但往往是最费时费力的部分。我们对比了当下流行的多种数据采集工具，八爪鱼使用起来是最简洁高效的，能够使我们轻松完成数据的采集和整理，将更多的时间和精力投入到问题的核心上。
+                            </div>
+                            <div class="msgUser">
+                                <span class="msgName">杨坦老师</span> <span class="msgSplit">/</span>  <span class="msgCollage">华南师范大学数学科学学院</span>
+                            </div>
+                        </div>
+                        <div class="msgInfo">
+                            <div class="tipIcon"></div>
+                            <div class="msgDesc">
+                                作为文科生，每次想做数据采集都无从下手，爬虫编程屡战屡败。八爪鱼用户设计很友好，不用编代码，可视化的采集过程，解决了一直困扰我的论文数据获取的难题
+                            </div>
+                            <div class="msgUser">
+                                <span class="msgName">莫环大四学生</span> <span class="msgSplit">/</span>  <span class="msgCollage">上海大学文学院</span>
+                            </div>
+                        </div>
+                        <div class="msgInfo">
+                            <div class="tipIcon"></div>
+                            <div class="msgDesc">
+                                将复杂的事情简单化是我对八爪鱼最大的使用感受。对于传播学来说，文本研究是非常重要的一环，八爪鱼顺利帮助我获取到了海量的文本数据，帮助我将研究范围扩大到了网络世界的各个角落。在科研和学习的过程中，八爪鱼真正帮助我快速进入到了大数据研究的世界。
+                            </div>
+                            <div class="msgUser">
+                                <span class="msgName">黄浩增研二学生</span> <span class="msgSplit">/</span>  <span class="msgCollage">暨南大学传播学院</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- collage -->
+    <div class="part" style="background: rgba(66,66,66,1);">
+        <div class="row row-collage">
+            <div class="col-12">
+                <div class="row-collage-topic">
+                    合作高校
+                </div>
+            </div>
+
+            <div id="carousel-collage" class="carousel slide" data-ride="carousel" data-interval="5000">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-collage" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-collage" data-slide-to="1"></li>
+                    <li data-target="#carousel-collage" data-slide-to="2"></li>
+                </ol>
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <div class="divCollages">
+                            <div>
+                                <img src="static/picture/c-qhdx@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-szzyjsxy@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-jndx@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-gldzkjdx@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-zsdx@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-scygydx@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-xgdx@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-amdx@2x.png">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="divCollages">
+                            <div>
+                                <img src="static/picture/c-cqgsdx@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-hdsfdx@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-szdx@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-whdx@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-hnlgdx@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-gltwkjdx@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-ahsmjsxy@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-jldx@2x.png">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="divCollages">
+                            <div>
+                                <img src="static/picture/c-scdx@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-glpddx@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-hzsfdx@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-gzykdx@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-shcjdx@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-xgkjdx@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-szdx1@2x.png">
+                            </div>
+                            <div>
+                                <img src="static/picture/c-bjsfdx@2x.png">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- links -->
+    <!-- <div class="part" style="background:rgba(40,40,40,1);">
+        <div class="row row-link">
+            <div class="col-12">
+                <div class="row-link-topic">
+                    联系我们
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row ">
+                    <div class="col-md-2"> </div>
+                    <div class="col-md-5">
+                        <div class="row-link-code">
+                            <img src="~/image/edu/wechart.png" />
+                            <div>八爪鱼教育</div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row-link-code">
+                            <img src="~/image/edu/QQ.png" />
+                            <div>公益版QQ群</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="row-link-type">
+                    <div>
+                        邮箱：  suxun@skieer.com
+                    </div>
+                    <div>
+                        QQ群： 874632087
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</div>
+<!-- Modal -->
+
+<div class="modal fade" tabindex="-1" id="modal-video" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document" style="">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="divVideo" style="">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-free" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form">
+                    <div class="form-group">
+                        <div>
+                            八爪鱼教育公益计划是深圳视界信息技术有限公司面向全球职业院校及全日制本科类院校的师生所推出的公益项目，该项目旨在为高校师生在大数据学术科研和人才培养方向提供软件、数据以及培训等相关支持。所有在校师生均可凭借以下信息免费申请。
+                        </div>
+                    </div>
+                    <div id="tabBase">
+                        <div class="form-group  form-group-require">
+                            <label for="recipient-name" class="control-label">学校</label>
+                            <input type="text" class="form-control" id="txtSchoolName" placeholder="学校全名">
+                            <span class="divTips" id="txtSchoolNameTips"></span>
+                        </div>
+                        <div class="form-group  form-group-require">
+                            <label for="message-text" class="control-label">院系</label>
+                            <input type="text" class="form-control" id="txtDepartmentName" placeholder="下属院系">
+                            <span class="divTips" id="txtDepartmentNameTips"></span>
+                        </div>
+                        <div class="form-group  form-group-require">
+                            <div class="radio-inline">
+                                <label class="radio">
+                                    <input type="radio" name="radioPos" value="0" checked="checked">学生
+                                </label>
+                            </div>
+                            <div class="radio-inline">
+                                <label class="radio">
+                                    <input type="radio" name="radioPos" value="1">老师
+                                </label>
+                            </div>
+                            <span class="divTips" id="radioPosTips"></span>
+                        </div>
+                    </div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist" style="padding: 0 10px;" id="tabType">
+                        <li role="presentation" id="chkEDU" class="active"><a href="#tabEDU" aria-controls="tabEDU" role="tab" data-toggle="tab">EDU邮箱认证</a></li>
+                        <li role="presentation" id="chkCard"><a href="#tabCard" aria-controls="tabCard" role="tab" data-toggle="tab">学生证认证</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="tabEDU">
+                            <div class="form-group form-group-require">
+                                <label for="message-text" class="control-label">EDU邮箱</label>
+                                <input type="text" class="form-control" placeholder="支持edu.*、edu结尾的域名邮箱" id="txtEmail">
+
+                                <span class="divTips" id="txtEmailTips"></span>
+                            </div>
+                            <div class="form-group  form-group-require">
+                                <label for="message-text" class="control-label">邮箱验证码</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="txtCode" placeholder="EDU邮箱接收到的验证码">
+                                    <span class="input-group-btn">
+                                        <a href="javascript:;" class="btn btn-default" id="btnGetCheckCode" data-loading-text="发送中...">获取验证码</a>
+                                    </span>
+                                </div><!-- /input-group -->
+                                <span class="divTips" id="txtCodeTips"></span>
+                            </div>
+                            <div class="form-group  form-group-require">
+                                <label for="message-text" class="control-label">设置登录密码</label>
+                                <input type="password" class="form-control" id="txtPwd" placeholder="6-16位，且至少包含2种不同字符">
+                                <span class="divTips" id="txtPwdTips"></span>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-lg btn-primary" id="btnSaveFreeInfo" data-loading-text="提交中...">提交</button>
+                                <div id="divPostFreeTips" style="color:red"></div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tabCard">
+                            <div class="form-group form-group-require">
+                                <label for="message-text" class="control-label">学生证照片</label>
+
+                                <label for="upfile" style="display:block">
+                                    <span type="file" class="form-control" placeholder="您的学生证">
+                                        <span id="txtFileName" style="" aria-hidden="true">+</span>
+                                    </span>
+                                    <input type="file" id="upfile" style="display:none" accept="image/png, image/jpeg, image/jpg">
+                                </label>
+                                <span style="display:block;margin-top:5px;font-size:12px;font-weight:400"><span style="display:inline-block;width:14px; height:14px; font-size:12px; margin-right:5px; text-align:center; color:#000; border-radius:50%;background-color:#fff">!</span>上传的学生证图片中包含学校印戳、姓名、学号及有效期，上传的图片只用于身份认证，不做其他用途</span>
+
+                                <span class="divTips" id="txtUpfileTips"></span>
+                            </div>
+                            <div class="form-group form-group-require">
+                                <label for="message-text" class="control-label">手机号码</label>
+                                <input type="text" class="form-control" placeholder="您的手机号码" id="txtPhone">
+                                <span class="divTips" id="txtPhoneTips"></span>
+                            </div>
+                            <div class="form-group form-group-require">
+                                <label for="message-text" class="control-label" id="txtPwd">图片验证码</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" maxlength="4" id="txtImageCode2" placeholder="图片验证码">
+                                    <span class="input-group-btn">
+                                        <a href="javascript:;" style="" class="btn btn-default" id="btnReImageCode2"><img class="imgChkcode" src=""></a>
+                                    </span>
+                                </div><!-- /input-group -->
+                                <span class="divTips" id="txtImageCode2Tips"></span>
+                            </div>
+                            <div class="form-group  form-group-require">
+                                <label for="message-text" class="control-label">短信验证码</label>
+                                <div class="input-group">
+                                    <input type="text" maxlength="4" class="form-control" id="txtPhoneCode" placeholder="手机接收到的验证码">
+                                    <span class="input-group-btn">
+                                        <a href="javascript:;" id="btnGetPhoneCheckCode" style="width: 120px;" class="btn btn-default">获取验证码</a>
+                                    </span>
+                                </div><!-- /input-group -->
+                                <span class="divTips" id="txtPhoneCodeTips"></span>
+                            </div>
+                            <div class="form-group  form-group-require">
+                                <label for="message-text" class="control-label">设置登录密码</label>
+                                <input type="password" class="form-control" id="txtPwd2" placeholder="6-16位，且至少包含2种不同字符">
+                                <span class="divTips" id="txtPwd2Tips"></span>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-lg btn-primary" id="btnSaveFreeInfo2" data-loading-text="提交中...">提交</button>
+                                <div id="divPostFree2Tips" style="color:red"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-link" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form">
+                    <input name="__RequestVerificationToken" type="hidden" value="Mfelg6NH6edLoE07nMflRB1w3Am_Er65RATeNwnWcNAPB4IzJyhXqeYXdiYCGrSGu5220FJZWhueeB8ZCz0Ahqy21qepmPGc5G91IdckuT81">
+                    <div class="form-group">
+                        <div> 请填写以下资料 </div>
+                        <div> 提交成功后会有工作人员与您联系 </div>
+                    </div>
+                    <div class="form-group  form-group-require">
+                        <label for="recipient-name" class="control-label">学校</label>
+                        <input type="text" class="form-control" id="txtLinkSchoolName" placeholder="学校全名">
+                        <span class="divTips" id="txtLinkSchoolNameTips"></span>
+                    </div>
+                    <div class="form-group  form-group-require">
+                        <label for="message-text" class="control-label">院系</label>
+                        <input type="text" class="form-control" id="txtLinkDepartmentName" placeholder="下属院系">
+                        <span class="divTips" id="txtLinkDepartmentNameTips"></span>
+                    </div>
+                    <div class="form-group  form-group-require">
+                        <label for="message-text" class="control-label">联系人</label>
+                        <input type="text" class="form-control" id="txtLinker" placeholder="联系人姓名">
+                        <span class="divTips" id="txtLinkerTips"></span>
+                    </div>
+                    <div class="form-group  form-group-require">
+                        <label for="message-text" class="control-label">联系电话</label>
+                        <input type="text" class="form-control" id="txtLinkTel" placeholder="联系人手机/固定电话">
+                        <span class="divTips" id="txtLinkTelTips"></span>
+                    </div>
+                    <div class="form-group  form-group-require">
+                        <label for="message-text" class="control-label">联系人邮箱</label>
+                        <input type="text" class="form-control" placeholder="联系人常用邮箱" id="txtLinkEmail">
+                        <span class="divTips" id="txtLinkEmailTips"></span>
+                    </div>
+                    <div class="form-group  form-group-require">
+                        <label for="message-text" class="control-label" id="txtCode">职位</label>
+                        <input type="text" class="form-control" id="txtLinkJob" placeholder="联系人职位">
+                        <span class="divTips" id="txtLinkJobTips"></span>
+                    </div>
+                    <div class="form-group  form-group-require">
+                        <label for="message-text" class="control-label" id="txtPwd">需求描述</label>
+                        <textarea type="text" class="form-control" id="txtLinkDesc" placeholder="您的需求"> </textarea>
+                        <span class="divTips" id="txtLinkDescTips"></span>
+                    </div>
+                    <div class="form-group form-group-require">
+                        <label for="message-text" class="control-label" id="txtPwd">图片验证码</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" maxlength="4" id="txtImageCode" placeholder="图片验证码">
+                            <span class="input-group-btn">
+                                <a href="javascript:;" style="" class="btn btn-default" id="btnReImageCode"><img class="imgChkcode" src=""></a>
+                            </span>
+                        </div><!-- /input-group -->
+                        <span class="divTips" id="txtImageCodeTips"></span>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-lg btn-primary" id="btnSaveLinkInfo" data-loading-text="提交中...">提交</button>
+                        <div id="divPostLinkTips" style="color:red"></div>
+                    </div>
+                    <div class="form-group">
+                        <span>咨询顾问电话：0755-86702246 </span> <span>&nbsp;&nbsp;企业合作邮箱：suxun@skieer.com </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-freeInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <tr><td colspan="2" align="center">公益版</td></tr>
+                    <tr><td>采集网站：</td><td>不限制</td></tr>
+                    <tr><td>任务数：</td><td>100</td></tr>
+                    <tr><td>客户端同时登陆数：</td><td>2</td></tr>
+                    <tr><td>本地任务并行数：</td><td>2</td></tr>
+                    <tr><td>本地采集导出上限：</td><td>10万条/次</td></tr>
+                    <tr><td>导出支持：</td><td> 本地文件、数据库 </td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-linkInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <tr><th width="110px">版本</th><th>基础版</th><th>进阶版</th></tr>
+                    <tr><td>价格</td><td>49800元/年</td><td>119800元/年 </td></tr>
+                    <tr>
+                        <td>客户权益</td>
+                        <td colspan="2">
+                            享有软件所有功能使用权
+                            一对一专属客服服务
+                            采集速度30-100倍及以上
+                            软件，硬件，运维全包含
+                            课程，案例，数据培训定期共享服务
+                        </td>
+                    </tr>
+                    <tr><td>节点数量</td><td> 40</td><td>100 </td></tr>
+                    <tr><td>管理员账号</td><td>1 </td><td> 1</td></tr>
+                    <tr><td>子账户数量</td><td> 10</td><td> 60</td></tr>
+                    <tr>
+                        <td>培训</td>
+                        <td>
+                            <ul class="">
+                                <li class="">培训方式：线上远程培训</li>
+                                <li class="">培训内容：八爪鱼软件操作</li>
+                                <li class="">培训时长：入门培训/2小时</li>
+                                <li style="text-indent:70px;">进阶培训/2小时</li>
+                                <li class="">培训资料：提供学习资料</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="">
+                                <li class="">培训方式：现场培训</li>
+                                <li class="">培训内容：商务数据采集与分析</li>
+                                <li class="">培训时长：2天</li>
+                                <li class="">培训资料：提供学习资料</li>
+                                <li style="text-indent:70px;">教学案例</li>
+                                <li style="text-indent:70px;">实验数据</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr><td>代理IP</td><td> 500</td><td> 2000</td></tr>
+                    <tr><td>验证码</td><td> 500</td><td>2000 </td></tr>
+                    <tr><td>付费模板余额</td><td> 4980 元</td><td> 9980 元</td></tr>
+                    <tr>
+                        <td>备注</td>
+                        <td colspan="2">
+                            额外购买子账户：1000元/个/年<br>
+                            可以超额购买付费模板余额<br>
+                            额外节点增加价格：10000/10个/年<br>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-success" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="divTipSucc  divTipSucc1">
+                    <div class="form-group">
+                        <span>您已通过八爪鱼公益版认证，有效期截止到：</span> <span id="divExpTime"></span>
+                    </div>
+                </div>
+                <div class="divTipSucc divTipSucc2">
+                    <div class="form-group">
+                        <span>您的信息已提交，我们会尽快与您联系。</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="divTipSucc  divTipSucc1">
+                    <a href="download/windows.html" style="padding:5px 20px;color:#0064CD;">下载软件使用</a>
+                    <a href="#" id="userProfile" style="padding:5px 20px;color:#0064CD;">用户中心</a>
+                </div>
+                <div class="divTipSucc divTipSucc2">
+                    <a href="javascript:;" style="padding:5px 20px;color:#0064CD;" data-dismiss="modal" aria-label="Close">关闭</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+		
+
+    </div>
+
+    <div class="modal fade" id="commonModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default cancel" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary ok">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<style>
+        .kefu-content{
+        width: 297px;
+        box-shadow: 1px 1px 1px black;
+        }
+        .kefu-dialog {
+            position: relative;
+            width: auto;
+            background-color: #fff;
+            -webkit-background-clip: padding-box;
+                    background-clip: padding-box;
+            border: 1px solid #999;
+            border: 1px solid rgba(0, 0, 0, .2);
+            border-radius: 6px;
+            outline: 0;
+            -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+                    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+        }
+        .kefu-body{
+            padding: 22px 15px;
+            /* height: 60px;
+            line-height: 60px; */
+        }
+        .kefu-headers {
+            height: 50px;
+            padding-top: 14px;
+            border-bottom: 0.5px solid #e2e0e0;
+        }
+        .kefu-headers span{
+            padding-right: 12px;
+        }
+        .modal-dialog{
+            margin-top: 364px !important;
+        }
+    </style>
+	
+    <div class="modal fade" id="serviceTip">
+        <div class="modal-dialog modal-sm">
+            <div class="kefu-content">
+                <div class="kefu-headers">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                    <h4 class="modal-title" style="margin-left:40%">服务提示</h4>
+                </div>
+                <div class="kefu-body">
+                    <div style="text-align:center;" id="detailTipContent">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:center;">
+                        <a class="btn btn-default" href="index2.html" target="_blank" id="consultNow">论坛求助</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a class="btn btn-primary" href="javascript:;" target="_blank" id="upgradeNow">立即升级套餐</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="consult-modal" style="display: none;">
+        <div class="consult-header">
+            <h3>咨询顾问</h3><span class="close-modal">×</span>
+        </div>
+        <div class="consult-body">
+            <form>
+                <input name="__RequestVerificationToken" type="hidden" value="VuheQ4K8CzReIEsmiLKgLdtr4qwo6tVSkY1EudojqSqhH6CRbQb7Gjj5eCZXCrduzs1824Z3hvAh2JqM9CuNLIx6ScmFypYjRk4BMVLhfOc1">;
+                <p><input type="text" name="name" pattern="^\w{2,50}$" title="字符个数在2-50个之间" placeholder="姓名"></p>
+                <p><input type="text" name="mobile" pattern="^(?:\+?86)?1(?:3\d{3}|5[^4\D]\d{2}|8\d{3}|7(?:[235-8]\d{2}|4(?:0\d|1[0-2]|9\d))|9[0-35-9]\d{2}|66\d{2})\d{6}$" placeholder="手机"></p>
+                <p><input type="text" name="title" pattern="^\w{3,50}$" title="字符个数在3-50个之间" placeholder="职位"></p>
+                <p><input type="text" name="company" pattern="^\w{3,50}$" title="字符个数在3-50个之间" placeholder="公司"></p>
+                <p>咨询顾问联系方式 0755-86702246
+</p>
+                <button class="submit-btn" type="button">提交</button>
+            </form>
+        </div>
+    </div>
+<style>
+    #free-trial .modal-dialog {
+        width: 514px;
+    }
+
+    #free-trial .modal-content .modal-header {
+        border: none;
+        padding-top: 27px;
+        padding-bottom: 0;
+    }
+
+    #free-trial .modal-header .close {
+        margin-top: -11px;
+    }
+
+        #free-trial .modal-header .close .close-sig {
+            line-height: 24px;
+            display: inline-block;
+            height: 24px;
+            font-size: 36px;
+            width: 24px;
+            font-weight: 100;
+            color: #7E87A0;
+        }
+
+    #free-trial .modal-content h4.modal-title {
+        font-size: 20px;
+        margin-left: 202px;
+        line-height: 32px;
+    }
+
+    #free-trial .modal-content p.modal-subtitle {
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(126,135,160,1);
+        text-align: center;
+    }
+
+    #free-trial .modal-content .modal-body {
+        padding-top: 0;
+    }
+
+        #free-trial .modal-content .modal-body .modal-body-hint, #trial-form, #submitPlan {
+            display: none;
+        }
+
+    .modal-body .plan-form-title {
+        font-weight: bold;
+        color: rgba(28,29,30,1);
+        line-height: 24px;
+        margin: 28px 0 10px 21px;
+    }
+
+    .modal-body .plan-form-control {
+        margin-left: 21px;
+    }
+
+        .modal-body .plan-form-control .form-control-label {
+            display: inline-block;
+            width: 80px;
+            margin-right: 4px;
+        }
+
+        .modal-body .plan-form-control .form-required label::before {
+            content: '*';
+            color: #D0021B;
+            margin-right: 4px;
+        }
+
+        .modal-body .plan-form-control .form-control-item {
+            display: inline-block;
+            width: 358px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+            .modal-body .plan-form-control .form-control-item label.error ,
+            .modal-body .plan-form-control .form-control-item p.error{
+                position: absolute;
+                font-size: 12px;
+                font-weight: 500;
+                color: rgba(208,2,27,1);
+                line-height: 20px;
+                left: 0;
+                bottom: -20px;
+            }
+
+            .modal-body .plan-form-control .form-control-item input {
+                width: 100%;
+                border: 1px solid rgba(234,238,244,1);
+                border-radius: 4px;
+                height: 32px;
+                line-height: 32px;
+                color: #1C1D1E;
+                padding-left: 12px;
+            }
+
+            .modal-body .plan-form-control .form-control-item textarea {
+                width: 100%;
+                border: 1px solid rgba(234,238,244,1);
+                border-radius: 4px;
+                color: #1C1D1E;
+                padding-left: 12px;
+                min-height: 63px;
+                max-height: 63px;
+                padding: 5px 12px;
+            }
+
+            .modal-body .plan-form-control .form-control-item textarea::placeholder{
+                font-size: 12px;
+                color: #b2b8cc;
+            }
+
+            .modal-body .plan-form-control .form-control-item select {
+                width: 170px;
+                font-size: 14px;
+                font-weight: 500;
+                color: rgba(28,29,30,1);
+                line-height: 32px;
+                height: 32px;
+                border: 1px solid rgba(234,238,244,1);
+                border-radius: 4px;
+                padding-left: 12px;
+            }
+
+        .modal-body .plan-form-control #MobileCode {
+            padding-right: 108px;
+        }
+
+        .modal-body .plan-form-control .sendCode {
+            position: absolute;
+            right: 16px;
+            bottom: 4px;
+            padding-left: 15px;
+            border-left: 1px solid #EAEEF4;
+            color: #025CDF;
+            cursor: pointer;
+        }
+
+    .modal-body .form-useage {
+        display: flex;
+        justify-content: space-between;
+        margin: 32px 15px 10px 21px;
+        align-items: center;
+    }
+
+        .modal-body .form-useage .form-useage-checkbox label {
+            font-size: 16px;
+            font-weight: bold;
+            color: rgba(28,29,30,1);
+        }
+
+        .modal-body .form-useage .form-useage-checkbox input {
+            margin-right: 6px;
+        }
+
+        .modal-body .form-useage .form-useage-txt {
+            font-size: 12px;
+            color: #b2b8cc;
+            line-height: 20px;
+            height: 20px;
+        }
+
+    .modal-body .user-card-upload {
+        position: relative;
+        display: inline-block;
+    }
+
+    .modal-body .form-upload #userCardImg {
+        width: 80px;
+        height: 80px;
+        display: inline-block;
+        border-radius: 4px;
+        background-color: #EAEEF4;
+    }
+
+    .modal-body .form-upload .upload-btn {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+        .modal-body .form-upload .upload-btn input {
+            width: 80px;
+            height: 80px;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+    .modal-body .user-card-upload label.error {
+        position: absolute;
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(208,2,27,1);
+        line-height: 20px;
+        left: 0;
+        bottom: -20px;
+    }
+
+    #try-other-version {
+        display: none;
+    }
+
+    #free-trial .modal-content .modal-footer {
+        border: none;
+        padding-bottom: 36px;
+        padding-top: 64px;
+    }
+
+    #free-trial .modal-footer .btn-primary {
+        width: 200px;
+        border-radius: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    #free-trial .none .modal-body .modal-body-hint, #free-trial .invalid .modal-body .modal-body-hint {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        color: rgba(28,29,30,1);
+        line-height: 24px;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    #free-trial .invalid #try-other-version {
+        display: inline-block;
+        margin-bottom: 16px;
+    }
+
+    #free-trial .invalid .modal-footer {
+        padding-top: 25px;
+    }
+
+    #free-trial .trial-plan #trial-form {
+        display: block;
+    }
+
+    #free-trial .trial-plan #submitPlan {
+        display: block;
+        width: 200px;
+        border-radius: 20px;
+        margin: 32px auto 0;
+        height: 40px;
+    }
+
+        #free-trial .trial-plan #submitPlan:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+    #free-trial .trial-plan .modal-body {
+        padding-bottom: 0;
+    }
+
+    #free-trial .trial-plan .modal-footer {
+        padding-top: 15px;
+    }
+
+    #sendMobileCode[disabled] {
+        pointer-events: none;
+        color: #666;
+    }
+
+    #successMsg {
+        position: fixed;
+        top: 100px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        z-index: 9999999999999;
+    }
+
+        #successMsg div {
+            width: 330px;
+            padding: 10px 16px;
+            background: #fff;
+            margin: 0 auto;
+            border-radius: 2px;
+            -webkit-box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+            color: rgba(0, 0, 0, 0.85);
+            animation-name: slide;
+            animation-duration: 200ms;
+            animation-delay: 0ms;
+            animation-fill-mode: forwards;
+            position: relative;
+        }
+
+        #successMsg .text{
+            display: flex;
+            align-items: center;
+            height: 20px;
+            justify-content: center;
+        }
+
+    @keyframes slide {
+        0% {
+            top: 0;
+        }
+
+        100% {
+            top: 20px;
+        }
+    }
+
+    .margintop {
+        margin-top:58px !important;
+    }
+</style>
+<div class="modal fade" id="free-trial">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true" class="close-sig">×</span>
+                    <span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">申请试用</h4>
+                <p class="modal-subtitle">当前版本：<span id="currentAccountName"></span></p>
+            </div>
+            <div class="modal-body">
+                <p class="modal-body-hint">您当前不满足试用条件。
+                    <a href="tutorial8/sywt.html" target="_blank" style="color:#025CDF">（试用规则？）</a>
+                </p>
+                <form id="trial-form" autocomplete="off">
+                    <h3 class="plan-form-title">选择版本</h3>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>试用版本</label>
+                        </div>
+                        <div class="form-control-item" style="margin: 0;">
+                            <select name="AvailableTypes" id="AvailableTypes">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="plan-form-control" style='padding-top:12px;padding-bottom:8px;'>
+                        <div class="form-control-label">
+                            <label style='padding-left: 9px;'> 试用天数</label>
+                        </div>
+                        <div class="form-control-item" style="margin: 0;">
+                            <p class="form-useage-txt">
+                                3天
+                            </p>
+                        </div>
+                    </div>
+                    <h3 class="plan-form-title" style="margin-top: 12px;">填写信息</h3>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>联系人</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="Contact" name="Contact" type="text" required="">
+                        </div>
+                    </div>
+                    <div class="plan-form-control telphone">
+                        <div class="form-control-label form-required">
+                            <label>手机号</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="Telphone" name="Telphone" type="text">
+                            <p class="error"></p>
+                        </div>
+                    </div>
+                    <div class="plan-form-control mobile-code">
+                        <div class="form-control-label form-required">
+                            <label>验证码</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="MobileCode" name="MobileCode" type="text" required="">
+                            <div class="sendCode" id="sendMobileCode"><span>发送验证码</span></div>
+                        </div>
+                    </div>
+                    <div class="plan-form-control form-useage" style="display:none">
+                        <div class="form-useage-checkbox" id="radioSwitch">
+                            <label style="margin-right:16px;"><input type="radio" name="ApplicantType" id="entertainmentPlan" value="1" checked="">企业使用</label>
+                            <label><input type="radio" name="ApplicantType" id="personPlan" value="0">个人使用</label>
+                        </div>
+                    </div>
+                <div id="entertainmentPlanForm">
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>公司名称</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="CompanyName" name="CompanyName" type="text" required="">
+                        </div>
+                    </div>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>职位</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="JobTitle" name="JobTitle" type="text" required="">
+                        </div>
+                    </div>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>试用用途</label>
+                        </div>
+                        <div class="form-control-item">
+                            <textarea rows="3" placeholder="请备注您的行业，想要采集的网站，采集的用途等信息。" id="Reason" name="Reason" type="text" required=""></textarea>
+                        </div>
+                    </div>
+                    <div class="plan-form-control form-upload">
+                        <div class="form-control-label form-required">
+                            <label>上传名片</label>
+                        </div>
+                        <div class="user-card-upload">
+                            <div class="user-card-img">
+                                <img id="userCardImg" src="static/picture/add.png" class="">
+                            </div>
+                            <div class="upload-btn">
+                                <label>
+                                    <input type="file" id="filecard" name="filecard" onchange="fileChange(this)" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <input class="btn btn-primary" type="submit" id="submitPlan" value="提交申请">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div style="text-align:center;">
+                    <a class="btn btn-primary" href="javascript:;" id="try-other-version">试试其他版本</a>
+                    <p style="font-size: 12px;color:#7e87a0;">咨询顾问电话：0755-86702246&nbsp;&nbsp 010-87987723;&nbsp;&nbsp;企业合作邮箱：sales@skieer.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="successMsg" class="hidden">
+    <div>
+        <p class="text">
+            <img style="height: 20px;margin-right: 8px;" src="static/picture/zf_sucess.png" alt="">
+            <span></span>
+        </p>
+        <p class="sub-text hidden"></p>
+    </div>
+</div>
+<script src="static/js/jquery.validate.min.js"></script>
+<script src="static/js/jquery.validate.messages_zh.js"></script>
+<style>
+
+    .zhiCustomBtn {
+        visibility: hidden;
+        height: 50px;
+        width: 120px;
+        border-radius: 25px;
+        color: #fff;
+        background-color: #2282f2;
+        box-shadow: rgba(15, 66, 76, 0.45) 0px 0px 14px 0px;
+        border: 0px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+
+    .pZhichiCustomBtn {
+        float: right;
+        height: 50px;
+        width: 120px;
+        border-radius: 25px;
+        color: #fff;
+        background-color: #2282f2;
+        box-shadow: rgba(15, 66, 76, 0.45) 0px 0px 14px 0px;
+        border: 0px;
+        box-sizing: border-box;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .pZhichiCustomBtnClose {
+        float: right;
+        height: 70px;
+        width: 70px;
+        border-radius: 35px;
+        color: #fff;
+        background-color: #2282f2;
+        box-shadow: rgba(15, 66, 76, 0.45) 0px 0px 14px 0px;
+        border: 0px;
+        box-sizing: border-box;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+<style>
+
+    .floating_ck dl dd {
+        background-position: center;
+    }
+
+        .floating_ck dl dd.return {
+            background-size: 19px;
+            background-position: center;
+        }
+
+    .floating_ck .quote {
+        background-image: url(static/image/icon-qq.png);
+        background-size: 24px;
+    }
+
+    .floating_ck .kefu {
+        background-image: url(static/image/icon-kefu.png);
+        background-size: 38px;
+    }
+
+    .floating_ck .qiye {
+        background-image: url(static/image/icon-qiye.png);
+        position: relative;
+        background-size: 35px;
+    }
+
+        .floating_ck .qiye::after {
+            content: "";
+            background-image: url(static/image/free.png);
+            width: 30px;
+            height: 19px;
+            position: absolute;
+            right: -7px;
+            top: -4px;
+        }
+
+    .floating_ck .floating {
+        position: absolute;
+        left: -154px;
+        top: 10px;
+        padding: 15px;
+        line-height: 1.2;
+        color: #FFFFFF !important;
+        background: rgba(0,0,0,0.6);
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 4px;
+        z-index: 999999;
+        max-width: 315px;
+        font-size: 14px;
+        display: none;
+    }
+
+        .floating_ck .floating::after {
+            content: "";
+            width: 0;
+            height: 0;
+            display: block;
+            border-style: solid;
+            border-width: 8px;
+            border-color: transparent transparent transparent rgba(0,0,0,0.6);
+            position: absolute;
+            z-index: 999998;
+            right: -16px;
+            top: 13px;
+        }
+
+    .floating_ck .quote .flex {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .quote .floating {
+        left: -330px;
+        width: 315px;
+    }
+
+    .quote .floating li{
+        cursor: text;
+        line-height: 1.2;
+    }
+    .quote .floating .qq-title{
+        line-height: 22px;
+    }
+
+    #gotoTrial .floating {
+        left: -139px;
+    }
+
+    .floating_ck dl dd {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+    }
+
+    .floating_ck .pZhichiCustomBtn {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: none;
+    }
+
+    .floating_ck dl dd .txt {
+        color: #fff;
+        position: absolute;
+        bottom: 0px;
+        width: 70px;
+        text-align: center;
+    }
+
+    #zhichi-div:hover .floating-kefu, #gotoTrial:hover .floating-qiye, .quote:hover .floating {
+        display: block;
+    }
+</style>
+<div class="floating_ck">
+    <dl>
+        <dt></dt>
+        <a href="javascript:void(0);" id="onlineChatAnchor" target="_blank" style="">
+            <p>
+
+            </p>
+        </a>
+        <dd class="kefu" id="zhichi-div" title="点击联系客服">
+            <button id="btn" class="zhiCustomBtn"></button>
+            <p id="chatFlag" data-mtype="0"></p>
+            <button id="pbtn" class="pZhichiCustomBtn"></button>
+            <div class="floating floating-kefu">
+                <div>欢迎咨询在线客服</div>
+            </div>
+        </dd>
+        <dd class="quote">
+            <div class="floating">
+                <div class="flex">
+                    <ul>
+                        <li class="qq-title">免费版QQ群</li>
+                        <li>
+                            <span>159956780</span>
+                        </li>
+                        <li>
+                            <span>257583266</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="qq-title">专业版QQ群</li>
+                        <li>
+                            <span>1065566150</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="qq-title">月旗舰版QQ群</li>
+                        <li>
+                            <span>196097783</span>
+                        </li>
+                        <li>
+                            <span>157692830</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex">
+                    <ul>
+                        <li class="qq-title">月旗舰+QQ群</li>
+                        <li>
+                            <span>431013573</span>
+                        </li>
+                    </ul>
+                    <ul style="">
+                        <li class="qq-title">年旗舰版QQ群</li>
+                        <li>
+                            <span>415864512</span>
+                        </li>
+                    </ul>
+                    <ul style="">
+                        <li class="qq-title">年旗舰+QQ群</li>
+                        <li>
+                            <span>592777128</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </dd>
+        <dt></dt>
+        <dd class="qiye" id="gotoTrial" title="免费试用" onclick="javascript: window.location.href = '/trial/index';">
+            <div class="floating floating-qiye">
+                <div id="qiye">欢迎您申请试用</div>
+            </div>
+        </dd>
+        <dd class="return" onclick="gotoTop();return false;" title="回到顶部">
+        </dd>
+    </dl>
+
+</div>
+<!-- <div title="在线客服" id="zhichi-div" style="position: fixed;bottom: 120px;right: 20px;z-index: 999">
+    <button id="btn" class="zhiCustomBtn">欢迎咨询</button>
+    <p id="chatFlag" data-mType="0"></p>
+    <button id="pbtn" class="pZhichiCustomBtn">欢迎咨询</button>
+</div> -->
+<script src="static/js/entrance.js" id="zhichiScript" class="zhiCustomBtn"></script>
+
+<div class="modal fade" id="serviceTip" style="margin-top: 230px;font-size:14px;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                <h4 class="modal-title" style="margin-left:40%">服务提示</h4>
+            </div>
+            <div class="modal-body">
+                <div style="text-align:center;" id="detailTipContent">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="text-align:center;">
+                    <a class="btn btn-default" href="index2.html" target="_blank" id="consultNow">论坛求助</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-primary" href="javascript:;" target="_blank" id="upgradeNow">立即升级套餐</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="static/js/rightFixedBar.js"></script>
+<div class="site-footer">
+  <div class="bottom-banner" style="position:unset">
+    <div class="inner-main banner-content" style="position:relative;margin: 0;">
+      <p style="font-size:24px">开始简单高效的数据采集</p>
+      <div class="footer-download">
+        <span class="btn-download"><a href="download/windows.html">
+            免费下载
+          </a></span>
+        <span class="btn-signup"><a href="account/register.html">
+            免费注册
+          </a></span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-info">
+    <div class="inner-main">
+      <div class="part1">
+        <ul>
+          <li class="title"><a href="javascript:;">关于我们</a></li>
+          <li><a href="intro.html">公司介绍</a></li>
+          <li><a href="HonorWall.html">公司荣誉</a></li>
+          <li><a href="javascript:;" target="_blank">加入我们</a></li>
+          <li><a href="contactus.html">联系我们</a></li>
+        </ul>
+        <ul>
+          <li class="title"><a href="javascript:;">产品</a></li>
+          <li><a href="about.html">八爪鱼采集器</a></li>
+          <li><a href="enterprise/index.html" target="_blank">八爪鱼企业版</a></li>
+          <li><a href="qiyeban/index.html" target="_blank">八爪鱼私有化部署版</a></li>
+          <li><a href="javascript:;" target="_blank">客户体验管理</a></li>
+        </ul>
+        <ul>
+          <li class="title"><a href="javascript:;">服务</a></li>
+          
+          <li><a href="aboutus.html">商务合作</a></li>
+          
+          <li>
+            <a href="">教育公益计划</a>
+          </li>
+        </ul>
+        <ul>
+          <li class="title"><a href="javascript:;">资源中心</a></li>
+          <li><a href="tutorial8/hottutorial.html">图文教程</a></li>
+          <li><a href="tutorial8/videotutorial.html">视频教程</a></li>
+          <li>
+            <a href="tutorial8/faq.html">常见问题</a>
+          </li>
+          <li>
+            <a href="blog.html">博客文章</a>
+          </li>
+          <li>
+            <a href="tutorial8/81api.html">API文档</a>
+          </li>
+          <li>
+            <a href="tutorialindex.html">旧版教程</a>
+          </li>
+        </ul>
+        <div>
+          <dl>
+            <dt><img src="static/picture/qrcode1.jpg" alt="微信服务号"></dt>
+            <dd>微信服务号</dd>
+          </dl>
+          <dl>
+            <dt>
+              <img src="static/picture/qrcode2.jpg" alt="八爪鱼采集研究院微信订阅号">
+            </dt>
+            <dd>采集研究院</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="part2">
+        <ul class="tools">
+
+          
+			<li>
+            <a href="javascript:;" target="_blank">web scraping</a>
+          </li>	
+			<li>
+            <a href="javascript:;" target="_blank">webスクレイピング</a>
+          </li>
+			<li>
+            <a href="javascript:;" target="_blank">Herramienta de Web Scraping Gratis</a>
+          </li>
+			<li>
+            <a href="javascript:;" target="_blank">kostenloser Web Crawler</a>
+          </li>	
+			<li>
+            <a href="javascript:;" target="_blank">Outil de Web Scraping gratuits</a>
+          </li>	
+			<li>
+            <a href="javascript:;" target="_blank">data extraction</a>
+          </li>	
+						
+        </ul>
+      </div>
+
+      <div class="company-info">
+        <p>
+          深圳视界信息技术有限公司版权所有 © 2013-2021 . All rights reserved.
+          <a target="_blank" href="javascript:;" rel="nofollow">粤ICP备14092314号</a> <a href="ServiceTerms.html" rel="nofollow">服务协议</a>
+		  | <a href="octServicePrivacy.html" rel="nofollow">隐私协议</a> | <a href="octServiceCompetence.html" rel="nofollow">版本</a>
+		  | <a href="octServiceCompetence.html" rel="nofollow">开发者名称</a> | <a href="octServiceCompetence.html" rel="nofollow">权限</a>
+        </p>
+        <p>公司地址：深圳市南山区西丽街道禹洲广场A座5楼</p>
+        <p>粤公网安备 44030502000701号</p>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  var matchUrlLoaction = function() {
+    urlConfig = [
+      {
+        name: "about",
+        navIndex: 1
+      },
+      {
+        name: "plan",
+        navIndex: 2
+      },
+      {
+        name: "solution",
+        navIndex: 3
+      },
+      {
+        name: "download",
+        navIndex: 4
+      },
+      {
+        name: "app",
+        navIndex: 5
+      },
+      {
+        name: "tutorial",
+        navIndex: 6
+      },
+      {
+        name: "faqIndex",
+        navIndex: 7
+      },
+      {
+        name: "faq",
+        navIndex: 7
+      }
+    ];
+    var currentHref = window.location.href;
+    urlConfig.some(function(v) {
+      if (currentHref.lastIndexOf(v.name) > -1) {
+        $(".site-nav >li")
+          .eq(v.navIndex)
+          .addClass("active");
+      } else {
+        $(".site-nav >li")
+          .eq(v.navIndex)
+          .removeClass("active");
+      }
+    });
+  };
+  matchUrlLoaction();
+</script>
+
+
+    <script>
+        (function () {
+            var canonicalURL, curProtocol;
+            //Get the <link> tag
+            var x = document.getElementsByTagName("link");
+            //Find the last canonical URL
+            if (x.length > 0) {
+                for (i = 0; i < x.length; i++) {
+                    if (x[i].rel.toLowerCase() == 'canonical' && x[i].href) {
+                        canonicalURL = x[i].href;
+                    }
+                }
+            }
+            //Get protocol
+            if (!canonicalURL) {
+                curProtocol = window.location.protocol.split(':')[0];
+            }
+            else {
+                curProtocol = canonicalURL.split(':')[0];
+            }
+            //Get current URL if the canonical URL does not exist
+            if (!canonicalURL) canonicalURL = window.location.href;
+            //Assign script content. Replace current URL with the canonical URL
+            !function () { var e = /([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi, r = canonicalURL, t = document.referrer; if (!e.test(r)) { var n = (String(curProtocol).toLowerCase() === 'https') ? "https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif" : "//api.share.baidu.com/s.gif"; t ? (n += "?r=" + encodeURIComponent(document.referrer), r && (n += "&l=" + r)) : r && (n += "?l=" + r); var i = new Image; i.src = n } }(window);
+        })();
+    </script>
+    <script>
+        $(function () {
+            $("a[url]").click(function () {
+                var $th = $(this);
+                var url = $th.attr("url");
+                var title = $th.text();
+                layer.open({
+                    type: 2,
+                    title: title,
+                    shadeClose: false,
+                    shade: 0.8,
+                    area: ['350px', '460px'],
+                    anim: 2,
+                    content: [url, 'no'],
+                });
+            })
+
+            var appendUtmToLandPage = function () {
+                var utmList = ["utm_campaign", "utm_content", "utm_medium", "utm_source", "utm_term"];
+                var utmInfo = "";
+                var hasUtm = false;
+                utmList.forEach(utm => {
+                    var c = $.cookie(utm);
+                    if (c) {
+                        utmInfo += utm + "=" + c + "&";
+                        hasUtm = true;
+                    }
+                });
+                utmInfo = utmInfo.replace(/&$/, '');
+                if (hasUtm) {
+                    var utmLinks = document.querySelectorAll("a[data-utm]");
+                    if (utmLinks && utmLinks.length > 0) {
+                        utmLinks.forEach(a => {
+                            if (a.href.indexOf('?') != -1) {
+                                a.href = a.href + '&' + utmInfo;
+                            } else {
+                                a.href = a.href + '?' + utmInfo;
+                            }
+                        });
+                    }
+                }
+            };
+            appendUtmToLandPage();
+        })
+    </script>
+    
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script>
+        let hasUploadfile = false;
+        $('document').ready(function () {
+
+            //var htmlVideo = '<video src="/dist/media/bzy-video.mp4" type="video/mp4" id="video" playsinline controls controlslist="nodownload" width="100%" height="auto"></video>';
+
+            var htmlVideo = '<iframe src="//1251101074.vod2.myqcloud.com/vod-player/1251101074/5285890791306088133/tcplayer/console/vod-player.html?autoplay=false&width=720&height=480" frameborder="0" scrolling="no" width="100%" height="480" allowfullscreen > </iframe> ';
+            //http://1251101074.vod2.myqcloud.com/vod-player/1251101074/5285890791306088133/tcplayer/console/vod-player.html?autoplay=true&width=720&height=480
+            $('#modal-video').on('show.zui.modal', function (e) {
+                setTimeout(function () {
+                    $("#divVideo").html(htmlVideo);
+                }, 500)
+
+            })
+
+            $('#modal-video').on('hidden.zui.modal', function (e) {
+                $("#divVideo").html("");
+            })
+
+
+
+
+            $('input[name="radioPos"]').bind("change", function () {
+                let v = $('input[name="radioPos"]:checked').val();
+                if (v == 1) {
+                    $("#chkCard").css("display", "none");
+                    $("#chkCard").removeClass("active");
+                    $("#tabCard").removeClass("active");
+
+                    $("#tabEDU").addClass("active");
+                    $("#chkEDU").addClass("active");
+                } else {
+                    $("#chkCard").css("display", "block")
+                }
+            })
+
+
+
+            //输入检测
+            bindInputCheck()
+
+            //绑定发送验证码
+            registerSendCheckCode();
+
+            //绑定保存事件
+            registerSavaFreeInfo();
+
+            //绑定保存事件
+            registerSavaLinkInfo();
+
+            //学生证注册
+            registerSavaFreeInfoByStudentCard();
+
+            resetCode()
+
+            resetSMSCode()
+        });
+
+
+        function bindInputCheck() {
+
+            $("input").blur(function () {
+                var p = $(this).parents(".form-group");
+                if (p && p.hasClass("form-group-require")) {
+                    regexInput($(this))
+                }
+            })
+
+            //输入
+            $("input").click(function () {
+                var p = $(this).parents(".form-group");
+                if (p && p.hasClass("form-group-require")) {
+                    p.find(".divTips").html("");
+                }
+            })
+
+        }
+
+        function regexInput(obj) {
+            var txt = obj.val();
+            var p = obj.parents(".form-group");
+            var id = obj.prop("id");
+            var tipName = p.find("label").html();
+
+            switch (id) {
+                case "txtSchoolName":
+                case "txtDepartmentName":
+                case "txtLinkSchoolName":
+                case "txtLinkDepartmentName":
+                case "txtLinker":
+                case "txtLinkJob":
+                case "txtLinkDesc":               
+                    if (txt.length < 1)
+                        p.find(".divTips").html("请输入" + tipName);
+                    break;
+                case "txtPhoneCode":
+                case "txtImageCode":
+                case "txtImageCode2":
+                    if (txt.length < 4)
+                        p.find(".divTips").html("请输入正确的" + tipName);
+                    break;
+                case "txtEmail":
+                    var str = checkEduEmail(txt);
+                    if (str) p.find(".divTips").html("请输入正确格式的" + tipName);
+                    break;
+                case "txtLinkEmail":
+                    var str = checkEmail(txt);
+                    if (!str) p.find(".divTips").html("请输入正确格式的" + tipName);
+                    break;
+                case "txtCode":
+                    if (txt.length !== 6) p.find(".divTips").html("请输入" + tipName);
+                    break;
+                case "txtPhone":
+                case "txtLinkTel":
+                    if (txt.length > 12 || txt.length < 9 || parseInt(txt) < 1000) p.find(".divTips").html("请输入正确格式的" + tipName);
+                    break;
+                case "txtPwd":
+                case "txtPwd2":
+                    if (txt.length > 16 || txt.length < 6) p.find(".divTips").html("请输入正确格式的" + tipName);
+                    break;
+                case "upfileTips":
+                    break
+                default:
+                    break;
+            }
+        }
+
+        function checkEduEmail(str) {
+            var res = '请输入正确的EDU邮箱';
+            if (!str || str.length < 8) return res;
+
+            if (!isTest) {
+               // if (str.indexOf('edu.cn') < 2) return res;
+
+                var reg = /^[^.'_\-][\.0-9a-zA-Z_\-']+@(\w+\.){0,3}edu(\.\w+){0,}$/;
+                if (!reg.test(str)) {
+                    return res;
+                }
+            }
+
+            return '';
+        }
+
+        function registerSendCheckCode() {
+
+            var email = $("#txtEmail").val();
+            var str = checkEduEmail(email);
+            if (!str) {
+                return;
+            }
+
+            $("#btnGetCheckCode").unbind("click").click(function (e) {
+
+                var $btn = $(this);
+                var email = $("#txtEmail").val();
+                var str = checkEduEmail(email);
+               
+                if (!!str) {
+                    return false;
+                }
+
+                $.ajax({
+                    url: "/account/AjaxSendEduEmailCode",
+                    beforeSend: function () {
+                        $btn = $btn.button('loading');
+                    },
+                    data: {
+                        email: email
+                    },
+                    type: "post",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.status == 1) {
+                            alert("验证码已发送到您的邮箱。")
+                        } else {
+                            $("#txtEmailTips").html(data.message);
+                        }
+                    },
+                    complete: function () {
+                        setTimeout(function () {
+                            $btn.button('reset');
+                        }, 2000)
+                    }
+                })
+            })
+        }
+
+        function registerSavaFreeInfo() {
+            $("#btnSaveFreeInfo").click(function () {
+
+                $("#tabBase .form-group.form-group-require").each(function () {
+                    var inp = $(this).find('input.form-control') || $(this).find('input[type="input"]');
+                    regexInput(inp);
+                });
+
+                $("#tabEDU .form-group.form-group-require").each(function () {
+                    var inp = $(this).find('input.form-control') || $(this).find('input[type="input"]');
+                    regexInput(inp);
+                });
+
+                $("#tabBase .divTips").each(function () {
+                    if ($(this).html() != "")
+                        return;
+                });
+
+                $("#tabEDU .divTips").each(function () {
+                    if ($(this).html() != "")
+                        return;
+                });
+
+
+                var $btn = $(this);
+                var schoolName = $("#txtSchoolName").val();
+
+                var departmentName = $("#txtDepartmentName").val();
+                var email = $("#txtEmail").val();
+                var code = $("#txtCode").val();
+                var pwd = $("#txtPwd").val();
+                var type = $('input[name="radioPos"]:checked').val();
+
+                if (schoolName == "" || departmentName == "" || email == "" || pwd == "" || code == "") {
+                    return;
+                }
+
+
+                $.ajax({
+                    url: "/account/AjaxSaveEduPublic",
+                    beforeSend: function () {
+                        $btn = $btn.button('loading');
+                    },
+                    data: {
+                        school: schoolName,
+                        major: departmentName,
+                        type: type,
+                        email: email,
+                        validateCode: code,
+                        password: pwd,
+                        verifyType: 0
+
+                    },
+                    type: "post",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.status == 1) {
+                            $(".modal").modal('hide');
+                            $(".divTipSucc").hide();
+                            setTimeout(function () {
+                                $("#divExpTime").html(data.expiredDate);
+                                $("#userProfile").attr("href", data.authUserProfileUrl);
+                                $(".divTipSucc1").show();
+                                $("#modal-success").modal('show');
+                            }, 500)
+                        } else {
+                            $("#divPostFreeTips").html(data.message);
+                            setTimeout(function () {
+                                $("#divPostFreeTips").html("");
+                            }, 2000)
+                        }
+                    },
+                    complete: function () {
+                        setTimeout(function () {
+                            $btn.button('reset');
+                        }, 1000)
+                    }
+                })
+
+            })
+
+
+
+        }
+
+
+        function registerSavaLinkInfo() {
+
+            $("#btnReImageCode").click(function () {
+                resetCode()
+            })
+
+            $("#btnSaveLinkInfo").click(function () {
+
+
+                $("#modal-link .form-group.form-group-require").each(function () {
+                    var inp = $(this).find('input[type="text"]') || $(this).find('input[type="password"]');
+                    regexInput(inp);
+                });
+
+                $("#modal-link .divTips").each(function () {
+                    if ($(this).html() != "")
+                        return;
+                });
+                var $btn = $(this);
+                var schoolName = $("#txtLinkSchoolName").val();
+                var departmentName = $("#txtLinkDepartmentName").val();
+                var name = $("#txtLinker").val();
+                var tel = $("#txtLinkTel").val();
+                var email = $("#txtLinkEmail").val();
+                var job = $("#txtLinkJob").val();
+                var desc = $("#txtLinkDesc").val();
+                var imageCode = $("#txtImageCode").val();
+
+                if (schoolName == "" || departmentName == "" || email == "" || tel == "" || name == "") {
+                    return;
+                };
+
+                $.ajax({
+                    url: "/account/AjaxSaveEduPrivate",
+                    beforeSend: function () {
+                        $btn = $btn.button('loading');
+                    },
+                    data: {
+                        school: schoolName,
+                        major: departmentName,
+                        contact: name,
+                        phone: tel,
+                        email: email,
+                        jobTitle: job,
+                        description: desc,
+                        checkcode: imageCode
+                    },
+                    type: "post",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.status == 1) {
+                            $(".modal").modal('hide');
+                            $(".divTipSucc").hide();
+                            setTimeout(function () {
+                                $(".divTipSucc2").show();
+                                $("#modal-success").modal('show');
+                            }, 500)
+                        } else {
+                            resetCode();
+                            $("#divPostLinkTips").html(data.message);
+                            setTimeout(function () {
+                                $("#divPostLinkTips").html("");
+                            }, 2000)
+                        }
+                    },
+                    complete: function () {
+                        setTimeout(function () {
+                            $btn.button('reset');
+                        }, 1000)
+                    }
+                })
+            })
+        }
+
+
+        //学生证验证
+        function registerSavaFreeInfoByStudentCard() {
+
+            $("#upfile").bind("change", function (e) {
+                //console.log($("#upfile").val());
+                //console.log(this.files[0].name);
+                //console.log("上传图片");
+                hasUploadfile = true;
+                if (this.files && this.files.length>0)
+                    $("#txtFileName").html(this.files[0].name);
+                $("#txtUpfileTips").html("");
+            })
+
+            $("#btnReImageCode2").click(function () {
+                resetSMSCode()
+            })
+
+            //发送手机验证码
+            $("#btnGetPhoneCheckCode").click(function () {
+               
+                regexInput($("#txtPhone"));
+                regexInput($("#txtImageCode2"))
+                let phone = $("#txtPhone").val();
+                let code = $("#txtImageCode2").val();
+
+                if (phone.length > 12 || phone.length < 9 || parseInt(phone) < 1000) {
+                    resetSMSCode();
+                    return;
+                }
+
+                if (code.length < 4) {
+                    resetSMSCode();
+                    return;
+                }
+
+                var btn = $("#btn_login");
+               
+
+                var $btn = $(this);
+                //$btn.button('loading');
+         
+
+                $.ajax({
+                    url: "/account/AjaxGetEduPublicMobileSmsCode",
+                    beforeSend: function () {                       
+                    },
+                    data: {
+                        mobile: phone,
+                        checkcode: code
+                    },
+                    type: "post",
+                    dataType: "json",
+                    success: function (res) {                        
+                        $("#txtPhoneCodeTips").html(res.message);
+                        if (res.status == 1) {
+                            let time = 60;
+                            let timer = setInterval(function () {
+                                $btn.text(time-- + ' 秒后重新获取');
+                                $btn.attr("disabled", "ture");
+                                $btn.css("color", "red");
+                                if (time == -1) {
+                                    $btn.css("color", "#353535");
+                                    $btn.removeAttr("disabled");
+                                    $btn.text('获取验证码');
+                                    clearInterval(timer);
+                                }
+                            }, 1000);
+                        } else {
+                            resetSMSCode();
+                        }                       
+                    },
+                    complete: function () {                       
+                    }
+                })
+
+
+            })
+
+            $("#btnSaveFreeInfo2").click(function () {
+
+                $("#tabBase .form-group.form-group-require").each(function () {
+                    var inp = $(this).find('input.form-control') || $(this).find('input[type="input"]');
+                    regexInput(inp);
+                });
+
+                $("#tabCard .form-group.form-group-require").each(function () {
+                    var inp = $(this).find('input.form-control') || $(this).find('input[type="input"]');
+                    regexInput(inp);
+                });
+
+                $("#tabBase .divTips").each(function () {
+                    if ($(this).html() != "")
+                        return;
+                });
+
+                $("#tabCard .divTips").each(function () {
+                    if ($(this).html() != "")
+                        return;
+                });
+
+
+                if (!hasUploadfile) {
+                    $("#txtUpfileTips").html("请上传证件");
+                    return;
+                }
+
+
+                var $btn = $(this);
+                var schoolName = $("#txtSchoolName").val();
+
+                var departmentName = $("#txtDepartmentName").val();
+                //var email = $("#txtEmail").val();
+                //var code = $("#txtCode").val();
+
+                let phone = $("#txtPhone").val();
+                let code = $("#txtImageCode2").val()
+
+                var pwd = $("#txtPwd2").val();
+                var type = $('input[name="radioPos"]:checked').val();
+
+                let smscode = $("#txtPhoneCode").val();
+
+
+                if (schoolName == "" || departmentName == "" || phone == "" || pwd == "" || code == "") {
+                    return;
+                }
+
+                var oData = new FormData();          
+
+                oData.append("CertificateImg", $("#upfile")[0].files[0]);  //提交文件
+                oData.append("verifyType", 1);
+                oData.append("school", schoolName);
+                oData.append("major", departmentName);
+                oData.append("type", type);
+                oData.append("mobile", phone);
+                oData.append("validateCode", smscode);
+                //oData.append("smscode", smscode); 
+                oData.append("password", pwd);
+
+
+                $.ajax({
+                    url: "/account/AjaxSaveEduPublic",
+                    beforeSend: function () {
+                        $btn = $btn.button('loading');
+                    },
+                    data: oData,
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: "post",
+                    success: function (data) {
+                        if (data.status == 1) {
+                            $(".modal").modal('hide');
+                            $(".divTipSucc").hide();
+                            setTimeout(function () {
+                                $("#divExpTime").html(data.expiredDate);
+                                $("#userProfile").attr("href", data.authUserProfileUrl);
+                                $(".divTipSucc1").show();
+                                $("#modal-success").modal('show');
+                            }, 500)
+                        } else {
+                            resetSMSCode();
+                            $("#divPostFree2Tips").html(data.message);
+                            setTimeout(function () {
+                                $("#divPostFree2Tips").html("");
+                            }, 2000)
+                        }
+                    },
+                    error: function (data) {
+                        $("#divPostFree2Tips").html(data.message);
+                        setTimeout(function () {
+                            $("#divPostFree2Tips").html("");
+                        }, 2000)
+                    },
+                    complete: function () {
+                        setTimeout(function () {
+                            $btn.button('reset');
+                        }, 1000)
+                    }
+                }).done(function (res) {                   
+                }).fail(function (res) {                 
+                });
+
+            })
+
+
+
+        }
+
+        //重置图片验证码
+        function resetCode() {
+            let src = "/RandomImg?type=8";
+            //let h = $("#btnReImageCode img").prop("src");
+            $("#btnReImageCode img").prop("src", src + "&y=" + new Date().getTime());
+        }
+
+        //重置图片验证码
+        function resetSMSCode() {
+            let src = "/RandomImg?type=9";
+            $("#btnReImageCode2 img").prop("src", src + "&y=" + new Date().getTime());
+        }
+
+
+
+    </script>
+
+
+    <script type="text/javascript" src="static/js/rightFixedBar.js"></script>
+    <script type="text/javascript" src="static/js/stat.js"></script>
+</body>
+</html>

@@ -1,0 +1,2302 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    
+    
+<title>抖音数据采集 | 看孙颖莎打球时大家都讨论些什么？ - 八爪鱼采集器</title>
+<meta name="keywords" content="东京奥运会  孙颖莎  伊藤美诚  ">
+<meta name="description" content="抖音数据采集 | 看孙颖莎打球时大家都讨论些什么？">
+    
+
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0">
+    <meta name="baidu-site-verification" content="my5tMHFCbI">
+    <meta name="author" content="八爪鱼采集器 - 视界科技旗下产品">
+    <meta http-equiv="Cache-Control" content="no-transform ">
+    <meta name="baidu-site-verification" content="zpPiFXIJuf">
+
+    <link rel="shortcut icon" href="https://www.bazhuayu.com/favicon-new.ico">
+
+    <!-- Le styles -->
+    <link href="../static/css/zui.min.css" rel="stylesheet">
+    <link href="../static/css/common.css" rel="stylesheet">
+    <link href="../static/css/site.min.css" rel="stylesheet">
+    
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/jquery.cookie.js"></script>
+    <script src="../static/js/zui.min.js"></script>
+    <script src="../static/js/common.js"></script>
+    <script src="../static/js/layer.js" type="text/javascript"></script>
+<style>
+    #promotionAd{
+        border-radius: 1.5%;
+        width: 100%;
+    }
+    .modal-contents{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 41.68%;
+        height: 53.4%;
+        /* background-color: pink; */
+    }
+    .promotion-ad-wrapper {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .activoty-cancel-icon {
+        position: absolute;
+        width: 2.7%;
+        height: 4%;
+        right: 1.6%;
+        top: 3%;
+        cursor: pointer;
+        /* transition: opacity 0.3s ease; */
+    }
+
+        /* .activoty-cancel-icon:hover {
+            opacity: 0.5;
+        } */
+
+    .activoty-bottom-btn {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 20.7%;
+        padding: 3.3% 15%;
+        /* border-radius: 3px; */
+        cursor: pointer;
+        /* background-color: #f6fc63; */
+        /* transition: background-color 0.3s ease; */
+    }
+    .activoty-bottom-btn-after{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 12.7%;
+        padding: 3.3% 15%;
+        cursor: pointer;
+    }
+
+        /* .activoty-bottom-btn:hover {
+            background-color: #ffda24;
+        } */
+
+        /* .activoty-bottom-btn span {
+            font-size: 20px;
+            line-height: 1;
+            font-weight: bold;
+            color: #3620b8;
+        } */
+</style>
+<div class="modal fade" tabindex="-1" id="adModal" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-contents">
+        <div class="promotion-ad-wrapper">
+            <img id="promotionAd" src="">
+            <div class="activoty-cancel-icon" onclick="closeAd()"></div>
+            <a id="activoty-bottom-btn" href="javascript:;" target="_blank" onclick="closeAd()">
+            </a>
+        </div>
+    </div>
+</div>
+    <!-- 修改 -->
+    <!-- var special = GlobalCache.ActivitySpecialDate.ToString("yyyy/MM/dd HH:mm:ss"); -->
+    <!-- 添加返场时间 -->
+
+<script>
+
+    window.onload = function () {
+        displayAd();
+
+    };
+
+
+    var activityPopConfig = {
+        excludePaths: [
+            /^\/(A|a)ccount/, /^\/(C|c)loud/, /^\/(F|f)ee/, /^\/(L|l)og/, /^\/six/, /^\/pay/, /^\/(A|a)ctivity/
+        ],
+        imgs: {
+            pre: "/images/act/202112/pc_pre.jpeg",
+            dayOne: "/images/act/202112/pc_first.jpeg",
+            afterDayOne: "/images/act/202112/pc_activity.jpeg",
+            // afterDayOne: "/images/act/202012/pc_afterDayOne_pop.png"
+            returnDay: "/images/act/202112/pc_fc.jpeg"
+        }
+    };
+
+    var currTime = new Date().getTime();
+    var activityPreStart = new Date("2021/12/07 22:30:00").getTime()
+    // 预热结束的时间就是活动开始的时间
+    var activityPreEnd = new Date("2021/12/14 15:00:00").getTime()
+    // 首日结束的时间就是正常活动日开始的时间
+    var activityDayOneEnd = new Date("2021/12/16 00:00:00").getTime()
+    // 正常活动日结束的时间就是返场开始的时间
+    // 添加
+    var activityNormalEnd = new Date("2021/12/22 00:00:00").getTime()
+    var activityEnd = new Date("2021/12/31 23:59:59").getTime()
+    // 检测是否看过广告，若有则不显示广告，否则3S后显示广告
+    function displayAd() {
+        var promotionAd = document.getElementById("promotionAd");
+        var btn = document.getElementById("activoty-bottom-btn");
+        var imgUrl;
+        var isShow = false;
+        if (currTime < activityPreStart)
+            return;
+        if (currTime < activityPreEnd) {
+            //预热时间
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.pre;
+            if (!localStorage[activityPreEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.dayOne;
+            if (!localStorage[activityDayOneEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.afterDayOne;
+            if (!localStorage[activityNormalEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.returnDay;
+            if (!localStorage[activityEnd]) {
+                isShow = true
+            }
+        }
+
+        if (isShow && checkPathValid()) {
+            // 为避免广告图片加载卡顿，应先加载后显示
+            promotionAd.setAttribute("src", imgUrl);
+            setTimeout(function () {
+                $("#adModal").modal({
+                    backdrop: "static",
+                    keyboard: false
+                });
+            }, 500);
+        }
+
+
+    }
+
+    // 校验当前path，个人中心下属页面及支付页面不显示
+    function checkPathValid() {
+        var currPath = window.location.pathname;
+        for (var i of activityPopConfig.excludePaths) {
+            if (i.test(currPath)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 关闭广告弹窗
+    function closeAd() {
+        if (currTime < activityPreEnd) {
+            //预热时间
+            localStorage[activityPreEnd] = true
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            localStorage[activityDayOneEnd] = true
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            localStorage[activityNormalEnd] = true
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            isShow = localStorage[activityEnd] = true
+        }
+
+        $("#adModal").modal("hide");
+    }
+</script> 
+    
+	<link rel="alternate" href="https://www.octoparse.com/" hreflang="en-us">
+    <link rel="alternate" href="https://www.octoparse.jp/" hreflang="ja-jp">
+    <link rel="alternate" href="../index1.html" hreflang="zh-cn">
+	<link rel="alternate" href="https://www.octoparse.es/" hreflang="es-es">
+	<link rel="alternate" href="https://www.octoparse.fr/" hreflang="fr-fr">
+	<link rel="alternate" href="https://www.octoparse.de/" hreflang="de">
+		<!--百度统计-异步-->
+        <script type="text/javascript">
+            var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+            document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F7515d7bccdb62c11803f90ca8071f05b' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+    <!--百度统计-异步-->
+        <script type='text/javascript'>
+            var _vds = _vds || [];
+            window._vds = _vds;
+            (function () {
+                _vds.push(['setAccountId', 'a7c11699fcd726cf']);
+                (function () {
+                    var vds = document.createElement('script');
+                    vds.type = 'text/javascript';
+                    vds.async = true;
+                    vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'assets.growingio.com/vds.js';
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(vds, s);
+                })();
+            })();
+        </script>
+    <!--用户来源统计-->
+        <script type="text/javascript">
+
+            var utm_campaign = getQueryStringMaster("utm_campaign");
+            var utmFlag = 0;
+            if (utm_campaign != null && utm_campaign != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_campaign=" + encodeURI(utm_campaign) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_medium = getQueryStringMaster("utm_medium");
+            if (utm_medium != null && utm_medium != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_medium=" + encodeURI(utm_medium) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_source = getQueryStringMaster("utm_source");
+            if (utm_source != null && utm_source != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_source=" + encodeURI(utm_source) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_content = getQueryStringMaster("utm_content");
+            if (utm_content != null && utm_content != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_content=" + encodeURI(utm_content) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_term = getQueryStringMaster("utm_term");
+            if (utm_term != null && utm_term != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_term=" + encodeURI(utm_term) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_url = decodeURI(window.location);
+            if (utm_url != null && utm_url != "") {
+                if (getCookie("url") == "") {
+                    var exp = new Date();
+                    exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                    document.cookie = "url=" + encodeURI(utm_url) + ";expires=" + exp.toGMTString();
+                }
+            }
+
+            var referrerUrl = document.referrer;
+            var keys = ["wd", "q", "query", "word"];
+            var searchWord = "";
+            for (var i = 0; i < keys.length; i++) {
+                var reg = new RegExp("(^|&)" + keys[i] + "=([^&]*)(&|$)", "i");
+                var r = referrerUrl.substr(1).match(reg);
+                if (r && r[2]) {
+                    searchWord = decodeURI(r[2]);
+                    var exp = new Date();
+                    exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                    document.cookie = "search_word=" + encodeURI(searchWord) + ";expires=" + exp.toGMTString();// 写入Cookie，注册时使用
+                    break;
+                }
+            }     
+            if (searchWord != "") {
+                utmFlag = 1;
+            }
+            else
+            {
+                if (getCookie("search_word") != "") {
+                     searchWord = getCookie("search_word");
+                     utmFlag = 1;
+               }
+            }
+
+            if (utmFlag == 1) {
+                $.ajax({
+                    url: "/Common/AjaxPostUtm",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        "utm_campaign": utm_campaign,
+                        "utm_medium": utm_medium,
+                        "utm_source": utm_source,
+                        "utm_content": utm_content,
+                        "utm_term": utm_term,
+                        "utm_url": utm_url,
+                        "search_word": searchWord
+                    },
+                });
+            }
+
+            function getCookie(Name) {
+                var search = Name + "="
+                if (document.cookie.length > 0) {
+                    offset = document.cookie.indexOf(search)
+                    if (offset != -1) {
+                        offset += search.length
+                        end = document.cookie.indexOf(";", offset)
+                        if (end == -1) end = document.cookie.length
+                        return unescape(document.cookie.substring(offset, end))
+                    }
+                    else return ""
+                }
+            }
+
+            function getQueryStringMaster(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return decodeURI(r[2]); return null;
+            }
+
+            $(document).ready(function () {
+                var jihuoH = $('#jihuoH').val();
+                if (jihuoH == '0') {
+                    $('#jihuop').show();
+                }
+                logFromChannelCookie();
+                function logFromChannelCookie() {
+                    var fromChannel = getQueryStringMaster("fromchannel");
+                    if (fromChannel) {
+                        var exp = new Date();
+                        exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24 * 7);//过期时间1天
+                        document.cookie = "_bzytg=" + fromChannel + ";expires=" + exp.toGMTString();
+                    }
+                }
+            });
+
+        </script>
+    <!--用户来源统计-->
+			
+
+
+    
+    
+	<style type="text/css">
+	body{
+			background:#F1F1F1;
+		     	
+		}
+		.leftbar .row{
+			background: #fff;
+		}
+		.blog-left-bar,.blog-detail{
+			background: #fff;
+		}
+		    .mini-banner {
+        letter-spacing: 1px;
+        height: 160px;
+        background: #fff url('../static/image/banner1.png') center bottom no-repeat;
+        
+    }
+	.mini-banner p {
+            font-size: 24px;
+            text-align: center;
+            line-height: 160px;
+            color: #0064Cd;
+        }
+
+		.nav-center .nav-faq a{color: #006DCC!important;}
+		.bzy-navbar{background: #FBFBFB;}
+		.blog-detail{border:1px solid #BDBDBD;overflow: hidden;padding: 20px;}
+		.blog-title{border-bottom: 1px solid #E5E5E5;margin-bottom: 20px;}
+		.blog-title h1{margin:0;margin-bottom: 10px;font-size: 20px;font-weight: 600;}
+		.user{margin-right: 10px;}
+		.calendar{margin-right: 20px;}
+		.breadcrumb {padding-left:0;margin-bottom: 6px;}
+		.breadcrumb a{font-size: 14px;color: #006DCC;}
+		.bloglist .title{font-size: 18px;margin-bottom: 3px;width: 100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;display: block;}
+		.blog-left-bar .contact-info,
+.toturial-left-bar .contact-info {
+	width: 100%;
+    border: 1px solid #BDBDBD;
+    margin-top: 10px;
+    /*border-top: 1px solid #F1F1F1;*/
+    padding-top: 5px
+}
+
+.blog-left-bar .contact-info img,
+.toturial-left-bar .contact-info img {
+    width: 156px;
+    height: 156px
+}
+
+.blog-left-bar .contact-info .contact-inner,
+.toturial-left-bar .contact-info .contact-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    color: #666
+}
+
+.blog-left-bar .contact-info .contact-inner .bzy-btn,
+.toturial-left-bar .contact-info .contact-inner .bzy-btn {
+    display: block;
+    width: 150px;
+    margin: 25px auto 15px;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    background: url(../static/image/icon-download.png) 26px center no-repeat #0064Cd;
+    color: #fff
+}
+
+.blog-left-bar .contact-info .contact-inner .bzy-btn:hover,
+.toturial-left-bar .contact-info .contact-inner .bzy-btn:hover {
+    opacity: .8
+}
+
+.blog-left-bar .contact-info .contact-inner .qq-panel,
+.toturial-left-bar .contact-info .contact-inner .qq-panel {
+    width: 100%;
+    padding-left: 10px
+}
+
+.blog-left-bar .contact-info .contact-inner .qq-title,
+.toturial-left-bar .contact-info .contact-inner .qq-title {
+    color: #333;
+    line-height: 40px
+}
+
+.blog-left-bar .contact-info .contact-inner a,
+.toturial-left-bar .contact-info .contact-inner a {
+    color: #666
+}
+	</style>
+
+    <style>
+    .reco-link {
+        height: 30px;
+        line-height: 30px;
+        width: 100%;
+        margin-top: 45px;
+    }
+
+    .reco-link ul {
+        margin: 0 auto;
+        height: 100%;
+        width: 800px;
+        padding-top: 7px;
+    }
+
+    .reco-link ul li {
+        float: left;
+        margin-right: 15px;
+        font-size:14px;
+        font-family:PingFang-SC-Medium,PingFang-SC;
+        font-weight:500;
+        color:rgba(255,255,255,1);
+    }
+    .reco-link ul li a:hover {
+        color: rgba(255,255,255,1);
+    }
+    </style>
+
+</head>
+<body>
+
+
+
+<style>
+    .site-header-pro:hover .sub-list {
+        height: 360px !important;
+    }
+
+    .site-header .site-tutorial:hover .solution-sub-list {
+        display: block;
+        height: 130px;
+    }
+
+.site-header .site-tutorial2:hover .solution-sub-list {
+        display: block;
+        height: 84px;
+    }
+
+  .site-header .site-tutorial3:hover .solution-sub-list {
+        display: block;
+        height: 300px;
+    }
+
+</style>
+<header class="site-header">
+    <ul class="site-nav" style="width: 1045px">
+        <li class="site-bzy-logo">
+            <a href="../index1.html"></a>
+        </li>
+        <li class='site-header-pro'>
+            <a href="javascript:;">
+                产品
+                <i class="icon icon-angle-down"></i>
+            </a>
+            <ul class="pro-sub-list sub-list">
+                <li>
+                    <a href="../about.html">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>关于八爪鱼</p>
+                            <p>人人可用的数据采集器</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="../enterprise/index.html" data-utm="1" target="_blank">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>八爪鱼企业版</p>
+                            <p>企业级数据采集解决方案</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="../qiyeban/index.html" data-utm="1">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>八爪鱼私有化部署版</p>
+                            <p>支持内网采集与OEM集成</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="../edu.html" data-utm="1">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>教育公益计划</p>
+                            <p>教学科研的大数据助手</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" target="_blank">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>客户体验管理</p>
+                            <p>聚合全网客户声音</p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="../plan.html">价格</a>
+        </li>
+        <li class='site-header-solution site-tutorial3'>
+            <a href="javascript:;">
+                解决方案
+                <i class="icon icon-angle-down"></i>
+            </a>
+            <ul class="solution-sub-list sub-list" style="left: -100%;">
+                <li>
+                    <a href="" data-utm="1" target="_blank" style="font-size: 16px;color: #919194;font-weight: bold;">数据采集</a>
+                </li>
+                <li>
+                    <a href="../newscrawler/index.html" data-utm="1" target="_blank">新闻采集</a>
+                </li>
+                <li>
+                    <a href="../ecdatacrawler/index.html" data-utm="1" target="_blank">电商采集</a>
+                </li>
+                <li>
+                    <a href="../socialmediacrawler/index.html" data-utm="1" target="_blank">社交采集</a>
+                </li>
+                <li>
+                    <a href="../realestate/index.html" data-utm="1" target="_blank">房产采集</a>
+                </li>
+                <li>
+                    <a href="../zhaotoubiao/index.html" data-utm="1" target="_blank">招投标采集</a>
+                </li>
+				
+
+
+                
+            </ul>
+            <ul class="solution-sub-list sub-list">
+                <li>
+                    <a href="" data-utm="1" target="_blank" style="font-size: 16px;color: #919194;font-weight: bold;">场景应用</a>
+                </li>
+				<li>
+                    <a href="../marketresearch/index.html" data-utm="1" target="_blank">市场研究</a>
+                </li>
+              
+                <li>
+                    <a href="../dscomment/index.html" data-utm="1" target="_blank">评论分析</a>
+                </li>
+                <li>
+                    <a href="../gaoxiaojiaoyu/index.html" data-utm="1" target="_blank">高校教育</a>
+                </li>
+                <li>
+                    <a href="../jingwaiyuqing/index.html" data-utm="1" target="_blank">境外舆情</a>
+                </li>				 
+				<li>
+                    <a href="../cross-border-electricity/index.html" data-utm="1" target="_blank">跨境电商采集</a>
+                </li>
+				<li>
+                    <a href="../voc/index.html" data-utm="1" target="_blank">客户之声</a>
+                </li>
+				
+                
+
+
+            </ul>
+        </li>
+
+
+
+<li class='site-header-solution site-tutorial2'>
+            <a href="javascript:;">
+                采集模板
+                <i class="icon icon-angle-down"></i>
+            </a>           
+            <ul class="solution-sub-list sub-list">               				
+                <li>
+                    <a href="../kjdscjmb/index.html" data-utm="1" target="_blank">跨境电商</a>
+                </li>  
+				<li>
+                    <a href="../news/index.html" data-utm="1" target="_blank">新闻传媒</a>
+                </li>		
+			
+            </ul>
+        </li>
+
+
+
+        <li>
+            <a href="../download/windows.html">软件下载</a>
+        </li>
+        
+        <li class='site-header-solution site-tutorial'>
+            <a href="../tutorialIndex8.html">
+                教程与帮助
+                <i class="icon icon-angle-down"></i>
+            </a>
+            <div>
+                <ul class="edu-sub-list solution-sub-list sub-list sub-list-edu">
+                    <li class="sub-edu">
+                        <a href="../tutorial8/hottutorial.html">
+                            <div class="sub-item">
+                                <p>图文教程</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../tutorial8/videotutorial.html">
+                            <div class="sub-item">
+                                <p>视频教程</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../tutorial8/faq.html">
+                            <div class="sub-item sub-edu-item">
+                                <p>常见问题</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+        <li></li>
+        <li class='site-header-solution site-tutorial2'>
+            
+			 <a href="javascript:;">
+                关于我们
+                <i class="icon icon-angle-down"></i>
+            </a>           
+            <ul class="solution-sub-list sub-list">               				
+                <li>
+                    <a href="../intro.html" data-utm="1">关于我们</a>
+                </li>  
+				<li>
+                    <a href="../contactus.html" data-utm="1">联系我们</a>
+                </li>				
+            </ul>
+        </li>
+        
+<style>
+    .site-header .signin, .site-header .signup {
+        width: 48px;
+        height: 26px;
+        display: inline-block !important;
+        vertical-align: middle;
+        border-radius: 3px;
+        line-height: 26px;
+        border: 1px solid #D9D9D9;
+        background: #FAFAFA;
+    }
+
+        .site-header .signin:hover, .site-header .signup:hover {
+            color: #0059B8;
+            border: 1px solid #0059B8;
+        }
+
+        .site-header .signup:hover {
+            color: #fff;
+            background: #0059B8;
+        }
+
+    .site-header .signup {
+        color: #fff;
+        background: #096ACF;
+        border-color: #096ACF;
+    }
+</style>
+﻿    <ul class="right-bar">
+        <li class="right-bar"><a href="../Account/Login.html" class="signin">登录</a></li>
+        <li class="s" style="width: 10px"><a href="javascript:;">&nbsp;</a></li>
+        <li><a class="signup" href="../account/register.html">注册</a></li>
+    </ul>
+
+    </ul>
+</header>
+
+<style>
+    #promotionAd{
+        border-radius: 1.5%;
+        width: 100%;
+    }
+    .modal-contents{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 41.68%;
+        height: 53.4%;
+        /* background-color: pink; */
+    }
+    .promotion-ad-wrapper {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .activoty-cancel-icon {
+        position: absolute;
+        width: 2.7%;
+        height: 4%;
+        right: 1.6%;
+        top: 3%;
+        cursor: pointer;
+        /* transition: opacity 0.3s ease; */
+    }
+
+        /* .activoty-cancel-icon:hover {
+            opacity: 0.5;
+        } */
+
+    .activoty-bottom-btn {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 20.7%;
+        padding: 3.3% 15%;
+        /* border-radius: 3px; */
+        cursor: pointer;
+        /* background-color: #f6fc63; */
+        /* transition: background-color 0.3s ease; */
+    }
+    .activoty-bottom-btn-after{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 12.7%;
+        padding: 3.3% 15%;
+        cursor: pointer;
+    }
+
+        /* .activoty-bottom-btn:hover {
+            background-color: #ffda24;
+        } */
+
+        /* .activoty-bottom-btn span {
+            font-size: 20px;
+            line-height: 1;
+            font-weight: bold;
+            color: #3620b8;
+        } */
+</style>
+<div class="modal fade" tabindex="-1" id="adModal" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-contents">
+        <div class="promotion-ad-wrapper">
+            <img id="promotionAd" src="">
+            <div class="activoty-cancel-icon" onclick="closeAd()"></div>
+            <a id="activoty-bottom-btn" href="javascript:;" target="_blank" onclick="closeAd()">
+            </a>
+        </div>
+    </div>
+</div>
+    <!-- 修改 -->
+    <!-- var special = GlobalCache.ActivitySpecialDate.ToString("yyyy/MM/dd HH:mm:ss"); -->
+    <!-- 添加返场时间 -->
+
+<script>
+
+    window.onload = function () {
+        displayAd();
+
+    };
+
+
+    var activityPopConfig = {
+        excludePaths: [
+            /^\/(A|a)ccount/, /^\/(C|c)loud/, /^\/(F|f)ee/, /^\/(L|l)og/, /^\/six/, /^\/pay/, /^\/(A|a)ctivity/
+        ],
+        imgs: {
+            pre: "/images/act/202112/pc_pre.jpeg",
+            dayOne: "/images/act/202112/pc_first.jpeg",
+            afterDayOne: "/images/act/202112/pc_activity.jpeg",
+            // afterDayOne: "/images/act/202012/pc_afterDayOne_pop.png"
+            returnDay: "/images/act/202112/pc_fc.jpeg"
+        }
+    };
+
+    var currTime = new Date().getTime();
+    var activityPreStart = new Date("2021/12/07 22:30:00").getTime()
+    // 预热结束的时间就是活动开始的时间
+    var activityPreEnd = new Date("2021/12/14 15:00:00").getTime()
+    // 首日结束的时间就是正常活动日开始的时间
+    var activityDayOneEnd = new Date("2021/12/16 00:00:00").getTime()
+    // 正常活动日结束的时间就是返场开始的时间
+    // 添加
+    var activityNormalEnd = new Date("2021/12/22 00:00:00").getTime()
+    var activityEnd = new Date("2021/12/31 23:59:59").getTime()
+    // 检测是否看过广告，若有则不显示广告，否则3S后显示广告
+    function displayAd() {
+        var promotionAd = document.getElementById("promotionAd");
+        var btn = document.getElementById("activoty-bottom-btn");
+        var imgUrl;
+        var isShow = false;
+        if (currTime < activityPreStart)
+            return;
+        if (currTime < activityPreEnd) {
+            //预热时间
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.pre;
+            if (!localStorage[activityPreEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.dayOne;
+            if (!localStorage[activityDayOneEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.afterDayOne;
+            if (!localStorage[activityNormalEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.returnDay;
+            if (!localStorage[activityEnd]) {
+                isShow = true
+            }
+        }
+
+        if (isShow && checkPathValid()) {
+            // 为避免广告图片加载卡顿，应先加载后显示
+            promotionAd.setAttribute("src", imgUrl);
+            setTimeout(function () {
+                $("#adModal").modal({
+                    backdrop: "static",
+                    keyboard: false
+                });
+            }, 500);
+        }
+
+
+    }
+
+    // 校验当前path，个人中心下属页面及支付页面不显示
+    function checkPathValid() {
+        var currPath = window.location.pathname;
+        for (var i of activityPopConfig.excludePaths) {
+            if (i.test(currPath)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 关闭广告弹窗
+    function closeAd() {
+        if (currTime < activityPreEnd) {
+            //预热时间
+            localStorage[activityPreEnd] = true
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            localStorage[activityDayOneEnd] = true
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            localStorage[activityNormalEnd] = true
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            isShow = localStorage[activityEnd] = true
+        }
+
+        $("#adModal").modal("hide");
+    }
+</script>
+
+    <div class="content" style="margin-top:64px;overflow:hidden;background:rgba(247,251,255,1);">
+        
+
+
+<div class="mini-banner">
+			<p>八爪鱼，百万用户信赖的网络爬虫工具</p>
+		</div>
+	<div style="margin-top:50px;">
+	<div style="margin-top:50px;margin-bottom:50px;">
+		<div class="container">
+			<div class="row custom-col">
+				<div class="col-md-3">	
+					<div class="leftbar">			
+						<div class="container" style="z-index:9999999;padding-left:0;padding-right:0;">
+							<div class="row" style="border:1px solid #BDBDBD;margin-bottom:20px;">
+									<div class="row">
+										<h3 style="background-color:#006DCC;padding:5px;;color:white;margin-top:0;">热门博客</h3>
+									</div>
+
+                                    
+            <div class="row bloglist" style="padding:5px 5px;">
+                <div class="col-md-12">
+                    <a class="title" href="javascript:;" target="_blank" style="font-size:14px;" title="火狐firebug和firepath插件安装方法（最新）">
+                        火狐firebug和firep...
+                    </a>
+                </div>
+            </div>
+            <div class="row bloglist" style="padding:5px 5px;">
+                <div class="col-md-12">
+                    <a class="title" href="javascript:;" target="_blank" style="font-size:14px;" title="干货｜国内外十大主流采集软件盘点">
+                        干货｜国内外十大主流采集软件盘...
+                    </a>
+                </div>
+            </div>
+            <div class="row bloglist" style="padding:5px 5px;">
+                <div class="col-md-12">
+                    <a class="title" href="javascript:;" target="_blank" style="font-size:14px;" title="12款常用的数据挖掘工具推荐">
+                        12款常用的数据挖掘工具推荐
+                    </a>
+                </div>
+            </div>
+            <div class="row bloglist" style="padding:5px 5px;">
+                <div class="col-md-12">
+                    <a class="title" href="javascript:;" target="_blank" style="font-size:14px;" title="怎么复制网页上不能复制的文字">
+                        怎么复制网页上不能复制的文字
+                    </a>
+                </div>
+            </div>
+            <div class="row bloglist" style="padding:5px 5px;">
+                <div class="col-md-12">
+                    <a class="title" href="javascript:;" target="_blank" style="font-size:14px;" title="八爪鱼7版本安装说明">
+                        八爪鱼7版本安装说明
+                    </a>
+                </div>
+            </div>
+            <div class="row bloglist" style="padding:5px 5px;">
+                <div class="col-md-12">
+                    <a class="title" href="javascript:;" target="_blank" style="font-size:14px;" title="别跑，教你微信公众号采集！">
+                        别跑，教你微信公众号采集！
+                    </a>
+                </div>
+            </div>
+
+							</div>
+							<div class="row" style="border:1px solid #BDBDBD;margin-bottom:20px;">
+									<div class="row">
+										<h3 style="background-color:#006DCC;padding:5px;;color:white;margin-top:0;">最新博客</h3>
+									</div>
+										<div class="row bloglist" style="padding:5px 5px;">
+											<div class="col-md-12">
+												<a class="title" href="zbsjy.html" target="_blank" style="font-size:14px;" title="史上最全！招投标行业114个数据源盘点">
+													史上最全！招投标行业114个数...</a>
+											</div>
+										</div>
+										<div class="row bloglist" style="padding:5px 5px;">
+											<div class="col-md-12">
+												<a class="title" href="yaojianju.html" target="_blank" style="font-size:14px;" title="洞察药监局数据，挖掘万亿价值">
+													洞察药监局数据，挖掘万亿价值</a>
+											</div>
+										</div>
+										<div class="row bloglist" style="padding:5px 5px;">
+											<div class="col-md-12">
+												<a class="title" href="zhibo1222.html" target="_blank" style="font-size:14px;" title="【直播预告】从入门到大神③，数据采集进阶课开讲，更有9周年狂欢价加码！">
+													【直播预告】从入门到大神③，数...</a>
+											</div>
+										</div>
+										<div class="row bloglist" style="padding:5px 5px;">
+											<div class="col-md-12">
+												<a class="title" href="zhaotoubiao.html" target="_blank" style="font-size:14px;" title="一文学会招投标数据采集分析 | 中国政府采购网1~11月数据详解">
+													一文学会招投标数据采集分析 |...</a>
+											</div>
+										</div>
+										<div class="row bloglist" style="padding:5px 5px;">
+											<div class="col-md-12">
+												<a class="title" href="javascript:;" target="_blank" style="font-size:14px;" title="低至五折！最高直降1300元！八爪鱼9周年大促提前开抢">
+													低至五折！最高直降1300元！...</a>
+											</div>
+										</div>
+										<div class="row bloglist" style="padding:5px 5px;">
+											<div class="col-md-12">
+												<a class="title" href="javascript:;" target="_blank" style="font-size:14px;" title="【今晚直播】从入门到大神②，数据采集“疑难杂症”一次搞定！">
+													【今晚直播】从入门到大神②，数...</a>
+											</div>
+										</div>
+							</div>
+						</div>
+								<div class="blog-left-bar">
+ <div class="contact-info">
+                    <div class="contact-inner">
+                        <img src="../static/picture/qrcode2.jpg" style="width:auto;height:auto" alt="八爪鱼采集研究院微信订阅号">
+                        <span>扫码关注我们</span>
+                        <a class="bzy-btn" style="background-image:none;margin-top:15px;margin-bottom:15px;height:84px" target="_blank" href="javascript:;"><div>整套学习资料下载</div><div>提取码：rnfm</div></a>
+                        <div class="qq-panel">
+                            <ul>
+                                <li class="qq-title">免费版QQ群</li>
+                                <li><span>1群：</span><a href="javascript:void(0);"> 159956780</a></li>
+                                <li><span>2群：</span>
+                                    <a href="javascript:void(0);" rel="nofollow">257583266</a>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li class="qq-title">专业版QQ群</li>
+                                    <li><span>1群：</span>
+                                        <a href="javascript:void(0);">1065566150</a>
+                                    </li>
+                                    <li><span>2群：</span>
+                                        <a href="javascript:void(0);">1065566150</a>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li class="qq-title">旗舰版QQ群</li>
+                                    <li><span>1群：</span>
+                                        <a href="javascript:void(0);">196097783</a>
+                                    </li>
+                                    <li><span>2群：</span>
+                                        <a href="javascript:void(0);">130849246</a>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li class="qq-title">旗舰版+QQ群</li>
+                                    <li><span>1群：</span>
+                                        <a href="javascript:void(0);">431013573</a>
+                                    </li>
+                                </ul>
+                                <!-- <ul>
+                                    <li class="qq-title">站长采集交流群</li>
+                                    <li><span>1群：</span>
+                                        <a href="http://shang.qq.com/wpa/qunwpa?idkey=3b82c9c0b8e7bedc227eda339a1391c752967de3527f934f235c9732d0c441f6" rel="nofollow">304456535</a>
+                                    </li>
+                                    <li><span>2群：</span>
+                                        <a href="http://shang.qq.com/wpa/qunwpa?idkey=cb82bf90b638113e34c72d05e45b70abdacf15baa49a603b26dbbe8cbc522f20" rel="nofollow">492396817</a>
+                                    </li>
+                                </ul> -->
+                                <!-- <ul>
+                                    <li class="qq-title">付费数据定制</li>
+                                    <li>
+                                        <a href="javascript:void(0);" rel="nofollow">439945889</a>
+                                    </li>
+                                </ul> -->
+                                  <a href="../download/windows.html" class="bzy-btn">软件下载</a>
+                        </div>
+                    </div>
+                </div>
+					</div>
+					</div>
+				</div>				
+				<div class="col-md-9">
+					
+					<ol class="breadcrumb">
+					  <li><a href="../index1.html">首页</a></li>
+					  <li><a href="../blog.html">博客</a></li>
+					  <li class="active">抖音数据采集 | 看孙颖莎打球时大家都讨论些什么？</li>
+					</ol>
+					
+					<div class="blog-detail">	
+						<div class="blog-title">
+							<h1>抖音数据采集 | 看孙颖莎打球时大家都讨论些什么？</h1>
+						</div>				
+						
+						
+						<div class="row">
+							<div class="col-md-9">
+								<span class="itemWithIcon user">作者：keven</span>
+								<span class="itemWithIcon calendar">发布时间：2021/8/6 9:47:14 </span>
+								<span class="itemWithIcon calendar">
+8761 人已阅读</span>
+								<br><br>
+								<div class="alert alert-info">摘要：莎气藤藤的人间止藤片</div>
+							</div>
+						</div>
+								
+						<p><span style="font-size: 12pt;">2021年7月23日，由于疫情延期一年的东京奥运会终于开启，伴随着大家对东京奥运会开幕式的吐槽和对08年北京奥运开幕式的怀念，东京奥运会正式拉开了序幕。</span></p>
+<p><span style="font-size: 12pt;">我们采集了抖音平台10个新闻媒体从7月23日至8月3日发布的1027条视频数据，包括环球网、中国日报、新华每日电讯等。从中分析近期的新闻热度及网友讨论情况。</span></p>
+<blockquote><span style="font-size: 12pt;">采集平台：抖音</span><br><span style="font-size: 12pt;">采集内容：</span><br><span style="font-size: 12pt;">1.中国日报、新华每日电讯、央视频、今日关注、新华网、环球网、四川观察、中国吉林网、江苏广播、小鱼视频共10个新闻账号近期发布的1027条视频；</span><br><span style="font-size: 12pt;">2.孙颖莎相关视频下4756条热门评论。</span><br><span style="font-size: 12pt;">采集时间: 2021年8月3日14:00</span></blockquote>
+<p class="ztext-empty-paragraph"> </p>
+<p><strong><span style="font-size: 12pt;">01. 新闻媒体近期发布的视频内容及热度分析</span></strong></p>
+<p><strong><span style="font-size: 12pt;">1. 主题新闻视频占比</span></strong></p>
+<p style="text-align: left;"><span style="font-size: 12pt;"><img style="display: block; margin-left: auto; margin-right: auto;" class="origin_image zh-lightbox-thumb lazy" src="../static/picture/v2-ffd28c582b70ec77497595d7a74c7b4f_720w.jpg" alt="" width="600" data-caption="" data-size="normal" data-rawwidth="600" data-rawheight="510" data-original="https://pic4.zhimg.com/v2-ffd28c582b70ec77497595d7a74c7b4f_r.jpg" data-actualsrc="https://pic4.zhimg.com/v2-ffd28c582b70ec77497595d7a74c7b4f_b.jpg" data-lazy-status="ok"></span></p>
+<p class="ztext-empty-paragraph"> </p>
+<p><span style="font-size: 12pt;">东京奥运会的相关新闻最多，占比超过4成。从7月以来，东京奥运会就常驻热搜榜，无论是前期造型奇特的人脸气球、诡异的巨型人偶，还有后来被众多网友吐槽的“阴间”开幕式，都向大家展示着这次奥运会的与众不同。</span></p>
+<p style="text-align: left;"><span style="font-size: 12pt;"><img style="display: block; margin-left: auto; margin-right: auto;" class="origin_image zh-lightbox-thumb lazy" src="../static/picture/v2-74e722deca54ab4d7db4498b8061c45a_720w.jpg" alt="" width="440" data-size="normal" data-rawwidth="440" data-rawheight="351" data-original="https://pic3.zhimg.com/v2-74e722deca54ab4d7db4498b8061c45a_r.jpg" data-actualsrc="https://pic3.zhimg.com/v2-74e722deca54ab4d7db4498b8061c45a_b.jpg" data-lazy-status="ok"></span></p>
+<p style="text-align: center;"><span style="font-size: 12pt;">人脸气球</span></p>
+<p style="text-align: center;" class="ztext-empty-paragraph"> </p>
+<div class="RichText-gifPlaceholder" style="text-align: center;">
+<div class="GifPlayer" data-size="normal" data-za-detail-view-path-module="GifItem"><span style="font-size: 12pt;"><img class="ztext-gif GifPlayer-gif2mp4Image" src="../static/picture/v2-0c44a64297b243b6f7ba28caa84faf71_b.jpg" alt="" data-thumbnail="https://pic2.zhimg.com/v2-0c44a64297b243b6f7ba28caa84faf71_b.jpg" data-size="normal"></span></div>
+</div>
+<p style="text-align: center;"><span style="font-size: 12pt;">巨型人偶</span></p>
+<p><span style="font-size: 12pt;">从采集的10个新闻媒体的报道内容来看，官方媒体关于奥运会的内容集中在运动员、奖牌等正面报道上，鲜少对于开幕式直接做出主观评价，只有少部分类似“日本名导演北野武差评吐槽东京奥运会开幕式：我睡得可香了！”的转载新闻，吐槽内容更多来自个人博主。</span></p>
+<p><span style="font-size: 12pt;">近期疫情相关的报道占比近20%，由南京禄口机场所引发的关联疫情扩散十分迅速，已经扩散至全国多个省市，多地开启了全员核酸检测，张家界发布声明号召游客近期停止前往张家界游玩。</span></p>
+<p><span style="font-size: 12pt;">7月20日，河南暴雨牵动了全国人民的心。</span></p>
+<p><span style="font-size: 12pt;">7月31日，北京朝阳警方通报了吴亦凡因涉嫌强奸罪被刑拘，随后中央政法委官网、《中国妇女报》等多个官方媒体发文评论此次事件，吴亦凡及其工作室的微博、微博超话、抖音、贴吧等多个平台的账号均被关闭。</span></p>
+<p><strong><span style="font-size: 12pt;">2. 主题视频平均热度</span></strong></p>
+<p class="ztext-empty-paragraph"> </p>
+<div class="RichText-gifPlaceholder">
+<div class="GifPlayer" data-size="normal" data-za-detail-view-path-module="GifItem"><span style="font-size: 12pt;"><img style="display: block; margin-left: auto; margin-right: auto;" class="ztext-gif" src="../static/picture/v2-455121b21e9554359a622255cbb15537_b.jpg" alt="" data-thumbnail="https://pic4.zhimg.com/v2-455121b21e9554359a622255cbb15537_b.jpg" data-size="normal"></span></div>
+</div>
+<p><span style="font-size: 12pt;">尽管在近期的抖音视频新闻中，关于吴亦凡事件的占比非常有限，但可以从视频的平均热度来看，吴亦凡相关事件的点赞量和评论数都远超其他新闻报道。</span></p>
+<p><span style="font-size: 12pt;">新闻占比最多的奥运会，平均热度在吴亦凡事件和国际新闻的热度之下；相较而言，国际新闻有着更高的点赞热度，特别是外交部发言人的“霸气”回应，激发了广大网友的认同和点赞。</span></p>
+<p><span style="font-size: 12pt;">3. 近期热门新闻</span></p>
+<p style="text-align: left;"><span style="font-size: 12pt;"><img class="origin_image zh-lightbox-thumb lazy" src="../static/picture/v2-c08c7f14d776882fc9fb87eb4efa1ad3_720w.jpg" alt="" width="800" data-caption="" data-size="normal" data-rawwidth="800" data-rawheight="1000" data-original="https://pic4.zhimg.com/v2-c08c7f14d776882fc9fb87eb4efa1ad3_r.jpg" data-actualsrc="https://pic4.zhimg.com/v2-c08c7f14d776882fc9fb87eb4efa1ad3_b.jpg" data-lazy-status="ok"></span></p>
+<p><span style="font-size: 12pt;">从采集到的1027条视频新闻来看，热度最高的视频是外交部发言人赵立坚发言称：“如果美国真的透明负责，请从以下四件事做起”喊话美国，认为美国需要对国际疫情负起更多的责任，这条视频收获了566W点赞和20W评论，受到了广大网友的认同。</span></p>
+<p><span style="font-size: 12pt;">同时网友对吴亦凡被刑拘这件事也有着极高的关注度和讨论热情。7月31日，北京朝阳警方通报吴某凡事件的视频新闻收获了517W点赞和近80W讨论。</span></p>
+<p><span style="font-size: 12pt;">4. 运动员讨论热度</span></p>
+<p class="ztext-empty-paragraph"> </p>
+<div class="RichText-gifPlaceholder">
+<div class="GifPlayer" data-size="normal" data-za-detail-view-path-module="GifItem"><span style="font-size: 12pt;"><img class="ztext-gif" src="../static/picture/v2-1dd68ce81a64e1a4bcc46f121b3e76fc_b.jpg" alt="" data-thumbnail="https://pic1.zhimg.com/v2-1dd68ce81a64e1a4bcc46f121b3e76fc_b.jpg" data-size="normal"></span></div>
+</div>
+<p><span style="font-size: 12pt;">近期热度最高的运动员是苏炳添，苏炳添在东京奥运会中以9秒83的成绩成功晋级百米决赛，成为首位闯入奥运会男子百米决赛的中国人，被网友称为“苏神”；</span></p>
+<p style="text-align: left;"><span style="font-size: 12pt;"><img class="origin_image zh-lightbox-thumb lazy" src="../static/picture/v2-1d7b132caacecc5ba99717bdbe6aacce_720w.jpg" alt="" width="437" data-caption="" data-size="normal" data-rawwidth="437" data-rawheight="273" data-original="https://pic3.zhimg.com/v2-1d7b132caacecc5ba99717bdbe6aacce_r.jpg" data-actualsrc="https://pic3.zhimg.com/v2-1d7b132caacecc5ba99717bdbe6aacce_b.jpg" data-lazy-status="ok"></span></p>
+<p><span style="font-size: 12pt;">排名第二的是张雨霏，她在200米蝶泳、4X200米自由泳接力项目中收获两枚金牌，在100米蝶泳和男女混合4X100米混合泳接力项目中收获两枚银牌，由于参加的比赛太多且收获满满，张雨霏小姐姐也被网友称为“劳模”；</span></p>
+<p style="text-align: left;"><span style="font-size: 12pt;"><img class="origin_image zh-lightbox-thumb lazy" src="../static/picture/v2-19cc6fbdc32feaa8595666024fea4e8d_720w.jpg" alt="" width="1080" data-size="normal" data-rawwidth="1080" data-rawheight="694" data-original="https://pic2.zhimg.com/v2-19cc6fbdc32feaa8595666024fea4e8d_r.jpg" data-actualsrc="https://pic2.zhimg.com/v2-19cc6fbdc32feaa8595666024fea4e8d_b.jpg" data-lazy-status="ok">张雨霏</span></p>
+<p><span style="font-size: 12pt;">乒乓球半决赛中国选手孙颖莎战胜日本名将伊藤美诚，与陈梦成功会师决赛，为中国队拿下了乒乓球金牌和银牌。三位运动员都有着超高的讨论度，其中伊藤美诚是讨论热度最高的外国运动员。</span></p>
+<p style="text-align: left;"><span style="font-size: 12pt;"><img class="origin_image zh-lightbox-thumb lazy" src="../static/picture/v2-22499005d409492d5800ae04d73320b1_720w.jpg" alt="" width="440" data-caption="" data-size="normal" data-rawwidth="440" data-rawheight="293" data-original="https://pic2.zhimg.com/v2-22499005d409492d5800ae04d73320b1_r.jpg" data-actualsrc="https://pic2.zhimg.com/v2-22499005d409492d5800ae04d73320b1_b.jpg" data-lazy-status="ok"></span></p>
+<p><span style="font-size: 12pt;">此外，讨论热度较高的运动员还有汪顺（男子200米个人混合泳金牌）、巩立姣（东京奥运田径首金、女子铅球金牌，）、杨倩（东京奥运中国队首金、女子10米气步枪金牌、10米气步枪混团金牌）、郎平（前中国女子排球运动员，现任中国女排总教练）、吕小军（举重81公斤金牌）。</span></p>
+<p><span style="font-size: 12pt;">02. 孙颖莎相关视频热门评论分析</span></p>
+<p><span style="font-size: 12pt;">在本次东京奥运会中，孙颖莎对战伊藤美诚的乒乓球半决赛可以说是受关注度最高的比赛之一，在此前的乒乓球混双决赛中，中国队许昕刘诗雯对战日本队水谷隼伊藤美诚，最终中国队不敌日本队，自2004年后首次失掉奥运金牌，遗憾摘银，给网友带来了不小的冲击。</span></p>
+<p><span style="font-size: 12pt;">拿到了混双金牌的伊藤不止让她背后的日本球迷信心爆棚，也让中国网友心中的“仇恨值”直线上升。有着这些铺垫在前，网友对于孙颖莎对战伊藤美诚抱有非常大的期待。</span></p>
+<p><span style="font-size: 12pt;">在7月29日的半决赛中，孙颖莎不负众望，以4:0战胜伊藤，拿到了决赛的竞争名额，为中国队摘金扫平了障碍，这位00年的小将也走到了大众视野中。</span></p>
+<p><span style="font-size: 12pt;">1. 评论的典型意见</span></p>
+<p><span style="font-size: 12pt;">我们采集了抖音平台孙颖莎相关视频下的4756条热门评论，使用聚类算法，提取出100条典型意见，以词云图展示：</span></p>
+<p style="text-align: left;"><span style="font-size: 12pt;"><img class="origin_image zh-lightbox-thumb lazy" src="../static/picture/v2-1313a3611f78f93c82d9b95706338380_720w.jpg" alt="" width="1280" data-caption="" data-size="normal" data-rawwidth="1280" data-rawheight="804" data-original="https://pic1.zhimg.com/v2-1313a3611f78f93c82d9b95706338380_r.jpg" data-actualsrc="https://pic1.zhimg.com/v2-1313a3611f78f93c82d9b95706338380_b.jpg" data-lazy-status="ok"></span></p>
+<p><span style="font-size: 12pt;">典型评论可以分为几个大类：</span></p>
+<p><span style="font-size: 12pt;">孙颖莎相关：太可爱了、莎莎不错、是我孙颖莎、莎莎做到了、未来可期、喜欢莎莎、小魔王、我就想捏捏她的脸；</span></p>
+<p><span style="font-size: 12pt;">比赛相关：干的好看、中国加油、打得不错、太解气了；</span></p>
+<p><span style="font-size: 12pt;">与孙颖莎的偶像周杰伦相关的：喜欢周杰伦、杰伦安排；</span></p>
+<p><span style="font-size: 12pt;">对手伊藤美诚相关：傻气藤藤、伊藤妈骗伊藤了、伊藤美诚发际线堪忧、关键是赢了伊藤美成、打趴伊藤、咋不笑了；</span></p>
+<p><span style="font-size: 12pt;">其中在多个平台广为流传的一条评论是：“晚上伊藤美诚入睡了，孙颖莎悄悄来到她身边”。（伊藤美诚从小接受魔鬼训练，伊藤美诚妈妈在小伊藤一边睡觉的时候一边对她说“只有你可以打败中国队” ）</span></p>
+<p style="text-align: left;"><span style="font-size: 12pt;"><img class="content_image lazy" src="../static/picture/v2-02eae0d6c01fe9935b0d142cc256c7e1_720w.jpg" alt="" width="389" data-caption="" data-size="normal" data-rawwidth="389" data-rawheight="221" data-actualsrc="https://pic2.zhimg.com/v2-02eae0d6c01fe9935b0d142cc256c7e1_b.jpg" data-lazy-status="ok"></span></p>
+<p><span style="font-size: 12pt;">还有网友拿张怡宁和福原爱类比孙颖莎和伊藤：福原爱的时代有张怡宁，伊藤美诚的时代有孙颖莎。孙颖莎和伊藤同为00年出生，甚至孙颖莎还比伊藤小几天，不出意外的话，莎莎会伴随着伊藤整个职业生涯，而且从二人过往对战的成绩来看，孙颖莎或许会成为贯穿伊藤整个职业生涯的阴影。</span></p>
+<p><span style="font-size: 12pt;">2. 评论的高频词</span></p>
+<p><span style="font-size: 12pt;">从4756条评论内容中提取中前100个高频词，以词云图形式展示：</span></p>
+<p style="text-align: left;"><span style="font-size: 12pt;"><img class="origin_image zh-lightbox-thumb lazy" src="../static/picture/v2-28eaeca52def754354c47e8332e55fb5_720w.jpg" alt="" width="1280" data-caption="" data-size="normal" data-rawwidth="1280" data-rawheight="804" data-original="https://pic2.zhimg.com/v2-28eaeca52def754354c47e8332e55fb5_r.jpg" data-actualsrc="https://pic2.zhimg.com/v2-28eaeca52def754354c47e8332e55fb5_b.jpg" data-lazy-status="ok"></span></p>
+<p><span style="font-size: 12pt;">TOP20的高频词分别是：可爱、莎莎、孙颖莎、中国、喜欢、周杰伦、漂亮、妈妈、加油、大魔王、伊藤美诚、解气、真的、未来、冠军、好样的、日本、金牌、偶像、厉害。</span></p>
+<p><span style="font-size: 12pt;">“妈妈”和“伊藤美诚”排名分别位列第8和第11，看来网友真的很喜欢妈妈睡前说话这个梗</span></p>
+<p><span style="font-size: 12pt;">博学多才的网友们还根据这次事件造出了不少新词：“莎气藤藤”、“傻气藤藤”、“莎伊儆百”“人间止藤片”、“人间制藤片”。</span></p>
+<p style="text-align: left;"><span style="font-size: 12pt;"><img class="origin_image zh-lightbox-thumb lazy" src="../static/picture/v2-f48f4f923020b04443e733ce875d5d0a_720w.jpg" alt="" width="440" data-caption="" data-size="normal" data-rawwidth="440" data-rawheight="187" data-original="https://pic3.zhimg.com/v2-f48f4f923020b04443e733ce875d5d0a_r.jpg" data-actualsrc="https://pic3.zhimg.com/v2-f48f4f923020b04443e733ce875d5d0a_b.jpg" data-lazy-status="ok"><img class="origin_image zh-lightbox-thumb lazy" src="../static/picture/v2-44b7272918e3476db5a1d02d10492e4e_720w.jpg" alt="" width="440" data-caption="" data-size="normal" data-rawwidth="440" data-rawheight="438" data-original="https://pic3.zhimg.com/v2-44b7272918e3476db5a1d02d10492e4e_r.jpg" data-actualsrc="https://pic3.zhimg.com/v2-44b7272918e3476db5a1d02d10492e4e_b.jpg" data-lazy-status="ok"></span></p>
+<p><span style="font-size: 12pt;">比赛结束后，网友挖掘出许多孙颖莎日常生活的内容，比如队友们的庆祝方式是对孙颖莎进行“捏脸杀”、莎莎表示“打好了可以捏，打第一可以捏，不打第一不给捏”；台上成熟稳重，台下团宠小可爱的“反差萌”、还有喜欢#周杰伦 、打球动力是亲眼见到张继科等更多细节，莎莎散发出的可爱气质与人格魅力让网友更加“怜爱”。</span></p>
+<p><span style="font-size: 12pt;">尽管没能拿到金牌，孙颖莎仍然收获了大量的关注和点赞，甚至国乒的大满贯前辈邓亚萍都特意录制视频，表扬孙颖莎。才20岁的她，迎来自己的高光时刻或许只是时间问题，只要是看过莎莎比赛的人，谁能不说一句“未来可期”呢？</span></p>
+<p style="text-align: left;"><span style="font-size: 12pt;"><img class="origin_image zh-lightbox-thumb lazy" src="../static/picture/v2-07d162ac119f13b6deac0b7048d583e5_720w.jpg" alt="" width="440" data-caption="" data-size="normal" data-rawwidth="440" data-rawheight="399" data-original="https://pic2.zhimg.com/v2-07d162ac119f13b6deac0b7048d583e5_r.jpg" data-actualsrc="https://pic2.zhimg.com/v2-07d162ac119f13b6deac0b7048d583e5_b.jpg" data-lazy-status="ok"></span></p>
+<p><span style="font-size: 12pt;">注：本次数据仅采集了抖音平台的部分新闻媒体发布数据，数据较为片面，仅做抛砖引玉之用。如有需要讨论或详细了解的，欢迎添加小助手微信。</span></p>
+<p style="text-align: left;"><span style="font-size: 12pt;"><img class="origin_image zh-lightbox-thumb lazy" src="../static/picture/v2-7be31fde3106a3b02b19635f81432042_720w.jpg" alt="" width="430" data-caption="" data-size="normal" data-rawwidth="430" data-rawheight="430" data-original="https://pic3.zhimg.com/v2-7be31fde3106a3b02b19635f81432042_r.jpg" data-actualsrc="https://pic3.zhimg.com/v2-7be31fde3106a3b02b19635f81432042_b.jpg" data-lazy-status="ok"></span></p>
+<blockquote><span style="font-size: 12pt;">数据采集：八爪鱼采集器</span><br><span style="font-size: 12pt;">词云图：Python可视化图表：镝数图表</span><br><span style="font-size: 12pt;">策划：半仙</span><br><span style="font-size: 12pt;">数据采集：DJ</span><br><span style="font-size: 12pt;">文本分析：Langgg、Mango</span><br><span style="font-size: 12pt;">可视化：Langgg、Mango</span><br><span style="font-size: 12pt;">文章：Mango</span></blockquote>
+						
+						<div class="row">	
+								<div class="col-md-6">
+										<a href="xinwencaijixitong.html" class="btn btn-default" style="background-color:white;" title="疫情之下，一套支持私有化部署的新闻采集系统需要具备什么？">
+											上一篇：疫情之下，一套支持私有化部署的...
+										</a>
+								</div>
+								<div class="col-md-6" style="text-align:right;">
+										<a href="xinwenfenlei.html" class="btn btn-default" style="background-color:white;" title="干货 | 日采100W新闻数据，如何实现新闻自动分类？">
+											下一篇：干货 | 日采100W新闻数据...
+										</a>
+								</div>
+
+						</div>
+						<br>
+						<div style="margin-bottom:20px;padding-bottom:10px;">
+							<a href="../blog.html" class="btn btn-primary active" role="button">返回博文列表</a>
+						</div>
+					
+						
+					</div>	
+					
+
+				</div> <!-- end -->
+				
+			</div>
+			<div class="clearfix"></div>
+			
+			
+		</div>
+	</div>
+		
+
+    </div>
+
+    <div class="modal fade" id="commonModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default cancel" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary ok">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<style>
+        .kefu-content{
+        width: 297px;
+        box-shadow: 1px 1px 1px black;
+        }
+        .kefu-dialog {
+            position: relative;
+            width: auto;
+            background-color: #fff;
+            -webkit-background-clip: padding-box;
+                    background-clip: padding-box;
+            border: 1px solid #999;
+            border: 1px solid rgba(0, 0, 0, .2);
+            border-radius: 6px;
+            outline: 0;
+            -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+                    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+        }
+        .kefu-body{
+            padding: 22px 15px;
+            /* height: 60px;
+            line-height: 60px; */
+        }
+        .kefu-headers {
+            height: 50px;
+            padding-top: 14px;
+            border-bottom: 0.5px solid #e2e0e0;
+        }
+        .kefu-headers span{
+            padding-right: 12px;
+        }
+        .modal-dialog{
+            margin-top: 364px !important;
+        }
+    </style>
+	
+    <div class="modal fade" id="serviceTip">
+        <div class="modal-dialog modal-sm">
+            <div class="kefu-content">
+                <div class="kefu-headers">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                    <h4 class="modal-title" style="margin-left:40%">服务提示</h4>
+                </div>
+                <div class="kefu-body">
+                    <div style="text-align:center;" id="detailTipContent">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:center;">
+                        <a class="btn btn-default" href="../index2.html" target="_blank" id="consultNow">论坛求助</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a class="btn btn-primary" href="javascript:;" target="_blank" id="upgradeNow">立即升级套餐</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="consult-modal" style="display: none;">
+        <div class="consult-header">
+            <h3>咨询顾问</h3><span class="close-modal">×</span>
+        </div>
+        <div class="consult-body">
+            <form>
+                <input name="__RequestVerificationToken" type="hidden" value="pC-FQoD3qx4xxOblJQpgU7AAX5RI5kQpz6FlRHQk3mDHJfmTIIvOyGLCvL80e7agTbpeYSj36Fr2vVIAH79ZX4bGIFp0dnDxMOhCO5NaML01">;
+                <p><input type="text" name="name" pattern="^\w{2,50}$" title="字符个数在2-50个之间" placeholder="姓名"></p>
+                <p><input type="text" name="mobile" pattern="^(?:\+?86)?1(?:3\d{3}|5[^4\D]\d{2}|8\d{3}|7(?:[235-8]\d{2}|4(?:0\d|1[0-2]|9\d))|9[0-35-9]\d{2}|66\d{2})\d{6}$" placeholder="手机"></p>
+                <p><input type="text" name="title" pattern="^\w{3,50}$" title="字符个数在3-50个之间" placeholder="职位"></p>
+                <p><input type="text" name="company" pattern="^\w{3,50}$" title="字符个数在3-50个之间" placeholder="公司"></p>
+                <p>咨询顾问联系方式 0755-86702246
+</p>
+                <button class="submit-btn" type="button">提交</button>
+            </form>
+        </div>
+    </div>
+<style>
+    #free-trial .modal-dialog {
+        width: 514px;
+    }
+
+    #free-trial .modal-content .modal-header {
+        border: none;
+        padding-top: 27px;
+        padding-bottom: 0;
+    }
+
+    #free-trial .modal-header .close {
+        margin-top: -11px;
+    }
+
+        #free-trial .modal-header .close .close-sig {
+            line-height: 24px;
+            display: inline-block;
+            height: 24px;
+            font-size: 36px;
+            width: 24px;
+            font-weight: 100;
+            color: #7E87A0;
+        }
+
+    #free-trial .modal-content h4.modal-title {
+        font-size: 20px;
+        margin-left: 202px;
+        line-height: 32px;
+    }
+
+    #free-trial .modal-content p.modal-subtitle {
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(126,135,160,1);
+        text-align: center;
+    }
+
+    #free-trial .modal-content .modal-body {
+        padding-top: 0;
+    }
+
+        #free-trial .modal-content .modal-body .modal-body-hint, #trial-form, #submitPlan {
+            display: none;
+        }
+
+    .modal-body .plan-form-title {
+        font-weight: bold;
+        color: rgba(28,29,30,1);
+        line-height: 24px;
+        margin: 28px 0 10px 21px;
+    }
+
+    .modal-body .plan-form-control {
+        margin-left: 21px;
+    }
+
+        .modal-body .plan-form-control .form-control-label {
+            display: inline-block;
+            width: 80px;
+            margin-right: 4px;
+        }
+
+        .modal-body .plan-form-control .form-required label::before {
+            content: '*';
+            color: #D0021B;
+            margin-right: 4px;
+        }
+
+        .modal-body .plan-form-control .form-control-item {
+            display: inline-block;
+            width: 358px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+            .modal-body .plan-form-control .form-control-item label.error ,
+            .modal-body .plan-form-control .form-control-item p.error{
+                position: absolute;
+                font-size: 12px;
+                font-weight: 500;
+                color: rgba(208,2,27,1);
+                line-height: 20px;
+                left: 0;
+                bottom: -20px;
+            }
+
+            .modal-body .plan-form-control .form-control-item input {
+                width: 100%;
+                border: 1px solid rgba(234,238,244,1);
+                border-radius: 4px;
+                height: 32px;
+                line-height: 32px;
+                color: #1C1D1E;
+                padding-left: 12px;
+            }
+
+            .modal-body .plan-form-control .form-control-item textarea {
+                width: 100%;
+                border: 1px solid rgba(234,238,244,1);
+                border-radius: 4px;
+                color: #1C1D1E;
+                padding-left: 12px;
+                min-height: 63px;
+                max-height: 63px;
+                padding: 5px 12px;
+            }
+
+            .modal-body .plan-form-control .form-control-item textarea::placeholder{
+                font-size: 12px;
+                color: #b2b8cc;
+            }
+
+            .modal-body .plan-form-control .form-control-item select {
+                width: 170px;
+                font-size: 14px;
+                font-weight: 500;
+                color: rgba(28,29,30,1);
+                line-height: 32px;
+                height: 32px;
+                border: 1px solid rgba(234,238,244,1);
+                border-radius: 4px;
+                padding-left: 12px;
+            }
+
+        .modal-body .plan-form-control #MobileCode {
+            padding-right: 108px;
+        }
+
+        .modal-body .plan-form-control .sendCode {
+            position: absolute;
+            right: 16px;
+            bottom: 4px;
+            padding-left: 15px;
+            border-left: 1px solid #EAEEF4;
+            color: #025CDF;
+            cursor: pointer;
+        }
+
+    .modal-body .form-useage {
+        display: flex;
+        justify-content: space-between;
+        margin: 32px 15px 10px 21px;
+        align-items: center;
+    }
+
+        .modal-body .form-useage .form-useage-checkbox label {
+            font-size: 16px;
+            font-weight: bold;
+            color: rgba(28,29,30,1);
+        }
+
+        .modal-body .form-useage .form-useage-checkbox input {
+            margin-right: 6px;
+        }
+
+        .modal-body .form-useage .form-useage-txt {
+            font-size: 12px;
+            color: #b2b8cc;
+            line-height: 20px;
+            height: 20px;
+        }
+
+    .modal-body .user-card-upload {
+        position: relative;
+        display: inline-block;
+    }
+
+    .modal-body .form-upload #userCardImg {
+        width: 80px;
+        height: 80px;
+        display: inline-block;
+        border-radius: 4px;
+        background-color: #EAEEF4;
+    }
+
+    .modal-body .form-upload .upload-btn {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+        .modal-body .form-upload .upload-btn input {
+            width: 80px;
+            height: 80px;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+    .modal-body .user-card-upload label.error {
+        position: absolute;
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(208,2,27,1);
+        line-height: 20px;
+        left: 0;
+        bottom: -20px;
+    }
+
+    #try-other-version {
+        display: none;
+    }
+
+    #free-trial .modal-content .modal-footer {
+        border: none;
+        padding-bottom: 36px;
+        padding-top: 64px;
+    }
+
+    #free-trial .modal-footer .btn-primary {
+        width: 200px;
+        border-radius: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    #free-trial .none .modal-body .modal-body-hint, #free-trial .invalid .modal-body .modal-body-hint {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        color: rgba(28,29,30,1);
+        line-height: 24px;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    #free-trial .invalid #try-other-version {
+        display: inline-block;
+        margin-bottom: 16px;
+    }
+
+    #free-trial .invalid .modal-footer {
+        padding-top: 25px;
+    }
+
+    #free-trial .trial-plan #trial-form {
+        display: block;
+    }
+
+    #free-trial .trial-plan #submitPlan {
+        display: block;
+        width: 200px;
+        border-radius: 20px;
+        margin: 32px auto 0;
+        height: 40px;
+    }
+
+        #free-trial .trial-plan #submitPlan:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+    #free-trial .trial-plan .modal-body {
+        padding-bottom: 0;
+    }
+
+    #free-trial .trial-plan .modal-footer {
+        padding-top: 15px;
+    }
+
+    #sendMobileCode[disabled] {
+        pointer-events: none;
+        color: #666;
+    }
+
+    #successMsg {
+        position: fixed;
+        top: 100px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        z-index: 9999999999999;
+    }
+
+        #successMsg div {
+            width: 330px;
+            padding: 10px 16px;
+            background: #fff;
+            margin: 0 auto;
+            border-radius: 2px;
+            -webkit-box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+            color: rgba(0, 0, 0, 0.85);
+            animation-name: slide;
+            animation-duration: 200ms;
+            animation-delay: 0ms;
+            animation-fill-mode: forwards;
+            position: relative;
+        }
+
+        #successMsg .text{
+            display: flex;
+            align-items: center;
+            height: 20px;
+            justify-content: center;
+        }
+
+    @keyframes slide {
+        0% {
+            top: 0;
+        }
+
+        100% {
+            top: 20px;
+        }
+    }
+
+    .margintop {
+        margin-top:58px !important;
+    }
+</style>
+<div class="modal fade" id="free-trial">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true" class="close-sig">×</span>
+                    <span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">申请试用</h4>
+                <p class="modal-subtitle">当前版本：<span id="currentAccountName"></span></p>
+            </div>
+            <div class="modal-body">
+                <p class="modal-body-hint">您当前不满足试用条件。
+                    <a href="../tutorial8/sywt.html" target="_blank" style="color:#025CDF">（试用规则？）</a>
+                </p>
+                <form id="trial-form" autocomplete="off">
+                    <h3 class="plan-form-title">选择版本</h3>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>试用版本</label>
+                        </div>
+                        <div class="form-control-item" style="margin: 0;">
+                            <select name="AvailableTypes" id="AvailableTypes">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="plan-form-control" style='padding-top:12px;padding-bottom:8px;'>
+                        <div class="form-control-label">
+                            <label style='padding-left: 9px;'> 试用天数</label>
+                        </div>
+                        <div class="form-control-item" style="margin: 0;">
+                            <p class="form-useage-txt">
+                                3天
+                            </p>
+                        </div>
+                    </div>
+                    <h3 class="plan-form-title" style="margin-top: 12px;">填写信息</h3>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>联系人</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="Contact" name="Contact" type="text" required="">
+                        </div>
+                    </div>
+                    <div class="plan-form-control telphone">
+                        <div class="form-control-label form-required">
+                            <label>手机号</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="Telphone" name="Telphone" type="text">
+                            <p class="error"></p>
+                        </div>
+                    </div>
+                    <div class="plan-form-control mobile-code">
+                        <div class="form-control-label form-required">
+                            <label>验证码</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="MobileCode" name="MobileCode" type="text" required="">
+                            <div class="sendCode" id="sendMobileCode"><span>发送验证码</span></div>
+                        </div>
+                    </div>
+                    <div class="plan-form-control form-useage" style="display:none">
+                        <div class="form-useage-checkbox" id="radioSwitch">
+                            <label style="margin-right:16px;"><input type="radio" name="ApplicantType" id="entertainmentPlan" value="1" checked="">企业使用</label>
+                            <label><input type="radio" name="ApplicantType" id="personPlan" value="0">个人使用</label>
+                        </div>
+                    </div>
+                <div id="entertainmentPlanForm">
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>公司名称</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="CompanyName" name="CompanyName" type="text" required="">
+                        </div>
+                    </div>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>职位</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="JobTitle" name="JobTitle" type="text" required="">
+                        </div>
+                    </div>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>试用用途</label>
+                        </div>
+                        <div class="form-control-item">
+                            <textarea rows="3" placeholder="请备注您的行业，想要采集的网站，采集的用途等信息。" id="Reason" name="Reason" type="text" required=""></textarea>
+                        </div>
+                    </div>
+                    <div class="plan-form-control form-upload">
+                        <div class="form-control-label form-required">
+                            <label>上传名片</label>
+                        </div>
+                        <div class="user-card-upload">
+                            <div class="user-card-img">
+                                <img id="userCardImg" src="../static/picture/add.png" class="">
+                            </div>
+                            <div class="upload-btn">
+                                <label>
+                                    <input type="file" id="filecard" name="filecard" onchange="fileChange(this)" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <input class="btn btn-primary" type="submit" id="submitPlan" value="提交申请">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div style="text-align:center;">
+                    <a class="btn btn-primary" href="javascript:;" id="try-other-version">试试其他版本</a>
+                    <p style="font-size: 12px;color:#7e87a0;">咨询顾问电话：0755-86702246&nbsp;&nbsp 010-87987723;&nbsp;&nbsp;企业合作邮箱：sales@skieer.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="successMsg" class="hidden">
+    <div>
+        <p class="text">
+            <img style="height: 20px;margin-right: 8px;" src="../static/picture/zf_sucess.png" alt="">
+            <span></span>
+        </p>
+        <p class="sub-text hidden"></p>
+    </div>
+</div>
+<script src="../static/js/jquery.validate.min.js"></script>
+<script src="../static/js/jquery.validate.messages_zh.js"></script>
+<style>
+
+    .zhiCustomBtn {
+        visibility: hidden;
+        height: 50px;
+        width: 120px;
+        border-radius: 25px;
+        color: #fff;
+        background-color: #2282f2;
+        box-shadow: rgba(15, 66, 76, 0.45) 0px 0px 14px 0px;
+        border: 0px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+
+    .pZhichiCustomBtn {
+        float: right;
+        height: 50px;
+        width: 120px;
+        border-radius: 25px;
+        color: #fff;
+        background-color: #2282f2;
+        box-shadow: rgba(15, 66, 76, 0.45) 0px 0px 14px 0px;
+        border: 0px;
+        box-sizing: border-box;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .pZhichiCustomBtnClose {
+        float: right;
+        height: 70px;
+        width: 70px;
+        border-radius: 35px;
+        color: #fff;
+        background-color: #2282f2;
+        box-shadow: rgba(15, 66, 76, 0.45) 0px 0px 14px 0px;
+        border: 0px;
+        box-sizing: border-box;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+<style>
+
+    .floating_ck dl dd {
+        background-position: center;
+    }
+
+        .floating_ck dl dd.return {
+            background-size: 19px;
+            background-position: center;
+        }
+
+    .floating_ck .quote {
+        background-image: url(../static/image/icon-qq.png);
+        background-size: 24px;
+    }
+
+    .floating_ck .kefu {
+        background-image: url(../static/image/icon-kefu.png);
+        background-size: 38px;
+    }
+
+    .floating_ck .qiye {
+        background-image: url(../static/image/icon-qiye.png);
+        position: relative;
+        background-size: 35px;
+    }
+
+        .floating_ck .qiye::after {
+            content: "";
+            background-image: url(../static/image/free.png);
+            width: 30px;
+            height: 19px;
+            position: absolute;
+            right: -7px;
+            top: -4px;
+        }
+
+    .floating_ck .floating {
+        position: absolute;
+        left: -154px;
+        top: 10px;
+        padding: 15px;
+        line-height: 1.2;
+        color: #FFFFFF !important;
+        background: rgba(0,0,0,0.6);
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 4px;
+        z-index: 999999;
+        max-width: 315px;
+        font-size: 14px;
+        display: none;
+    }
+
+        .floating_ck .floating::after {
+            content: "";
+            width: 0;
+            height: 0;
+            display: block;
+            border-style: solid;
+            border-width: 8px;
+            border-color: transparent transparent transparent rgba(0,0,0,0.6);
+            position: absolute;
+            z-index: 999998;
+            right: -16px;
+            top: 13px;
+        }
+
+    .floating_ck .quote .flex {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .quote .floating {
+        left: -330px;
+        width: 315px;
+    }
+
+    .quote .floating li{
+        cursor: text;
+        line-height: 1.2;
+    }
+    .quote .floating .qq-title{
+        line-height: 22px;
+    }
+
+    #gotoTrial .floating {
+        left: -139px;
+    }
+
+    .floating_ck dl dd {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+    }
+
+    .floating_ck .pZhichiCustomBtn {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: none;
+    }
+
+    .floating_ck dl dd .txt {
+        color: #fff;
+        position: absolute;
+        bottom: 0px;
+        width: 70px;
+        text-align: center;
+    }
+
+    #zhichi-div:hover .floating-kefu, #gotoTrial:hover .floating-qiye, .quote:hover .floating {
+        display: block;
+    }
+</style>
+<div class="floating_ck">
+    <dl>
+        <dt></dt>
+        <a href="javascript:void(0);" id="onlineChatAnchor" target="_blank" style="">
+            <p>
+
+            </p>
+        </a>
+        <dd class="kefu" id="zhichi-div" title="点击联系客服">
+            <button id="btn" class="zhiCustomBtn"></button>
+            <p id="chatFlag" data-mtype="0"></p>
+            <button id="pbtn" class="pZhichiCustomBtn"></button>
+            <div class="floating floating-kefu">
+                <div>欢迎咨询在线客服</div>
+            </div>
+        </dd>
+        <dd class="quote">
+            <div class="floating">
+                <div class="flex">
+                    <ul>
+                        <li class="qq-title">免费版QQ群</li>
+                        <li>
+                            <span>159956780</span>
+                        </li>
+                        <li>
+                            <span>257583266</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="qq-title">专业版QQ群</li>
+                        <li>
+                            <span>1065566150</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="qq-title">月旗舰版QQ群</li>
+                        <li>
+                            <span>196097783</span>
+                        </li>
+                        <li>
+                            <span>157692830</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex">
+                    <ul>
+                        <li class="qq-title">月旗舰+QQ群</li>
+                        <li>
+                            <span>431013573</span>
+                        </li>
+                    </ul>
+                    <ul style="">
+                        <li class="qq-title">年旗舰版QQ群</li>
+                        <li>
+                            <span>415864512</span>
+                        </li>
+                    </ul>
+                    <ul style="">
+                        <li class="qq-title">年旗舰+QQ群</li>
+                        <li>
+                            <span>592777128</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </dd>
+        <dt></dt>
+        <dd class="qiye" id="gotoTrial" title="免费试用" onclick="javascript: window.location.href = '/trial/index';">
+            <div class="floating floating-qiye">
+                <div id="qiye">欢迎您申请试用</div>
+            </div>
+        </dd>
+        <dd class="return" onclick="gotoTop();return false;" title="回到顶部">
+        </dd>
+    </dl>
+
+</div>
+<!-- <div title="在线客服" id="zhichi-div" style="position: fixed;bottom: 120px;right: 20px;z-index: 999">
+    <button id="btn" class="zhiCustomBtn">欢迎咨询</button>
+    <p id="chatFlag" data-mType="0"></p>
+    <button id="pbtn" class="pZhichiCustomBtn">欢迎咨询</button>
+</div> -->
+<script src="../static/js/entrance.js" id="zhichiScript" class="zhiCustomBtn"></script>
+
+<div class="modal fade" id="serviceTip" style="margin-top: 230px;font-size:14px;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                <h4 class="modal-title" style="margin-left:40%">服务提示</h4>
+            </div>
+            <div class="modal-body">
+                <div style="text-align:center;" id="detailTipContent">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="text-align:center;">
+                    <a class="btn btn-default" href="../index2.html" target="_blank" id="consultNow">论坛求助</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-primary" href="javascript:;" target="_blank" id="upgradeNow">立即升级套餐</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../static/js/rightFixedBar.js"></script>
+<div class="site-footer">
+  <div class="bottom-banner" style="position:unset">
+    <div class="inner-main banner-content" style="position:relative;margin: 0;">
+      <p style="font-size:24px">开始简单高效的数据采集</p>
+      <div class="footer-download">
+        <span class="btn-download"><a href="../download/windows.html">
+            免费下载
+          </a></span>
+        <span class="btn-signup"><a href="../account/register.html">
+            免费注册
+          </a></span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-info">
+    <div class="inner-main">
+      <div class="part1">
+        <ul>
+          <li class="title"><a href="javascript:;">关于我们</a></li>
+          <li><a href="../intro.html">公司介绍</a></li>
+          <li><a href="../HonorWall.html">公司荣誉</a></li>
+          <li><a href="javascript:;" target="_blank">加入我们</a></li>
+          <li><a href="../contactus.html">联系我们</a></li>
+        </ul>
+        <ul>
+          <li class="title"><a href="javascript:;">产品</a></li>
+          <li><a href="../about.html">八爪鱼采集器</a></li>
+          <li><a href="../enterprise/index.html" target="_blank">八爪鱼企业版</a></li>
+          <li><a href="../qiyeban/index.html" target="_blank">八爪鱼私有化部署版</a></li>
+          <li><a href="javascript:;" target="_blank">客户体验管理</a></li>
+        </ul>
+        <ul>
+          <li class="title"><a href="javascript:;">服务</a></li>
+          
+          <li><a href="../aboutus.html">商务合作</a></li>
+          
+          <li>
+            <a href="../edu.html">教育公益计划</a>
+          </li>
+        </ul>
+        <ul>
+          <li class="title"><a href="javascript:;">资源中心</a></li>
+          <li><a href="../tutorial8/hottutorial.html">图文教程</a></li>
+          <li><a href="../tutorial8/videotutorial.html">视频教程</a></li>
+          <li>
+            <a href="../tutorial8/faq.html">常见问题</a>
+          </li>
+          <li>
+            <a href="../blog.html">博客文章</a>
+          </li>
+          <li>
+            <a href="../tutorial8/81api.html">API文档</a>
+          </li>
+          <li>
+            <a href="../tutorialindex.html">旧版教程</a>
+          </li>
+        </ul>
+        <div>
+          <dl>
+            <dt><img src="../static/picture/qrcode1.jpg" alt="微信服务号"></dt>
+            <dd>微信服务号</dd>
+          </dl>
+          <dl>
+            <dt>
+              <img src="../static/picture/qrcode2.jpg" alt="八爪鱼采集研究院微信订阅号">
+            </dt>
+            <dd>采集研究院</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="part2">
+        <ul class="tools">
+
+          
+			<li>
+            <a href="javascript:;" target="_blank">web scraping</a>
+          </li>	
+			<li>
+            <a href="javascript:;" target="_blank">webスクレイピング</a>
+          </li>
+			<li>
+            <a href="javascript:;" target="_blank">Herramienta de Web Scraping Gratis</a>
+          </li>
+			<li>
+            <a href="javascript:;" target="_blank">kostenloser Web Crawler</a>
+          </li>	
+			<li>
+            <a href="javascript:;" target="_blank">Outil de Web Scraping gratuits</a>
+          </li>	
+			<li>
+            <a href="javascript:;" target="_blank">data extraction</a>
+          </li>	
+						
+        </ul>
+      </div>
+
+      <div class="company-info">
+        <p>
+          深圳视界信息技术有限公司版权所有 © 2013-2021 . All rights reserved.
+          <a target="_blank" href="javascript:;" rel="nofollow">粤ICP备14092314号</a> <a href="../ServiceTerms.html" rel="nofollow">服务协议</a>
+		  | <a href="../octServicePrivacy.html" rel="nofollow">隐私协议</a> | <a href="../octServiceCompetence.html" rel="nofollow">版本</a>
+		  | <a href="../octServiceCompetence.html" rel="nofollow">开发者名称</a> | <a href="../octServiceCompetence.html" rel="nofollow">权限</a>
+        </p>
+        <p>公司地址：深圳市南山区西丽街道禹洲广场A座5楼</p>
+        <p>粤公网安备 44030502000701号</p>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  var matchUrlLoaction = function() {
+    urlConfig = [
+      {
+        name: "about",
+        navIndex: 1
+      },
+      {
+        name: "plan",
+        navIndex: 2
+      },
+      {
+        name: "solution",
+        navIndex: 3
+      },
+      {
+        name: "download",
+        navIndex: 4
+      },
+      {
+        name: "app",
+        navIndex: 5
+      },
+      {
+        name: "tutorial",
+        navIndex: 6
+      },
+      {
+        name: "faqIndex",
+        navIndex: 7
+      },
+      {
+        name: "faq",
+        navIndex: 7
+      }
+    ];
+    var currentHref = window.location.href;
+    urlConfig.some(function(v) {
+      if (currentHref.lastIndexOf(v.name) > -1) {
+        $(".site-nav >li")
+          .eq(v.navIndex)
+          .addClass("active");
+      } else {
+        $(".site-nav >li")
+          .eq(v.navIndex)
+          .removeClass("active");
+      }
+    });
+  };
+  matchUrlLoaction();
+</script>
+
+
+    <script>
+        (function () {
+            var canonicalURL, curProtocol;
+            //Get the <link> tag
+            var x = document.getElementsByTagName("link");
+            //Find the last canonical URL
+            if (x.length > 0) {
+                for (i = 0; i < x.length; i++) {
+                    if (x[i].rel.toLowerCase() == 'canonical' && x[i].href) {
+                        canonicalURL = x[i].href;
+                    }
+                }
+            }
+            //Get protocol
+            if (!canonicalURL) {
+                curProtocol = window.location.protocol.split(':')[0];
+            }
+            else {
+                curProtocol = canonicalURL.split(':')[0];
+            }
+            //Get current URL if the canonical URL does not exist
+            if (!canonicalURL) canonicalURL = window.location.href;
+            //Assign script content. Replace current URL with the canonical URL
+            !function () { var e = /([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi, r = canonicalURL, t = document.referrer; if (!e.test(r)) { var n = (String(curProtocol).toLowerCase() === 'https') ? "https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif" : "//api.share.baidu.com/s.gif"; t ? (n += "?r=" + encodeURIComponent(document.referrer), r && (n += "&l=" + r)) : r && (n += "?l=" + r); var i = new Image; i.src = n } }(window);
+        })();
+    </script>
+    <script>
+        $(function () {
+            $("a[url]").click(function () {
+                var $th = $(this);
+                var url = $th.attr("url");
+                var title = $th.text();
+                layer.open({
+                    type: 2,
+                    title: title,
+                    shadeClose: false,
+                    shade: 0.8,
+                    area: ['350px', '460px'],
+                    anim: 2,
+                    content: [url, 'no'],
+                });
+            })
+
+            var appendUtmToLandPage = function () {
+                var utmList = ["utm_campaign", "utm_content", "utm_medium", "utm_source", "utm_term"];
+                var utmInfo = "";
+                var hasUtm = false;
+                utmList.forEach(utm => {
+                    var c = $.cookie(utm);
+                    if (c) {
+                        utmInfo += utm + "=" + c + "&";
+                        hasUtm = true;
+                    }
+                });
+                utmInfo = utmInfo.replace(/&$/, '');
+                if (hasUtm) {
+                    var utmLinks = document.querySelectorAll("a[data-utm]");
+                    if (utmLinks && utmLinks.length > 0) {
+                        utmLinks.forEach(a => {
+                            if (a.href.indexOf('?') != -1) {
+                                a.href = a.href + '&' + utmInfo;
+                            } else {
+                                a.href = a.href + '?' + utmInfo;
+                            }
+                        });
+                    }
+                }
+            };
+            appendUtmToLandPage();
+        })
+    </script>
+    
+
+
+    <script type="text/javascript" src="../static/js/rightFixedBar.js"></script>
+    <script type="text/javascript" src="../static/js/stat.js"></script>
+</div></body>
+</html>

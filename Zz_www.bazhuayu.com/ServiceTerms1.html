@@ -1,0 +1,3066 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    
+    
+<title>八爪鱼服务条款 - 八爪鱼采集器</title>
+<meta name="keywords" content="八爪鱼服务条款">
+<meta name="description" content="八爪鱼服务条款">
+    
+
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0">
+    <meta name="baidu-site-verification" content="my5tMHFCbI">
+    <meta name="author" content="八爪鱼采集器 - 视界科技旗下产品">
+    <meta http-equiv="Cache-Control" content="no-transform ">
+    <meta name="baidu-site-verification" content="zpPiFXIJuf">
+
+    <link rel="shortcut icon" href="https://www.bazhuayu.com/favicon-new.ico">
+
+    <!-- Le styles -->
+    <link href="static/css/zui.min.css" rel="stylesheet">
+    <link href="static/css/common.css" rel="stylesheet">
+    <link href="static/css/site.min.css" rel="stylesheet">
+    
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/jquery.cookie.js"></script>
+    <script src="static/js/zui.min.js"></script>
+    <script src="static/js/common.js"></script>
+    <script src="static/js/layer.js" type="text/javascript"></script>
+<style>
+    #promotionAd{
+        border-radius: 1.5%;
+        width: 100%;
+    }
+    .modal-contents{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 41.68%;
+        height: 53.4%;
+        /* background-color: pink; */
+    }
+    .promotion-ad-wrapper {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .activoty-cancel-icon {
+        position: absolute;
+        width: 2.7%;
+        height: 4%;
+        right: 1.6%;
+        top: 3%;
+        cursor: pointer;
+        /* transition: opacity 0.3s ease; */
+    }
+
+        /* .activoty-cancel-icon:hover {
+            opacity: 0.5;
+        } */
+
+    .activoty-bottom-btn {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 20.7%;
+        padding: 3.3% 15%;
+        /* border-radius: 3px; */
+        cursor: pointer;
+        /* background-color: #f6fc63; */
+        /* transition: background-color 0.3s ease; */
+    }
+    .activoty-bottom-btn-after{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 12.7%;
+        padding: 3.3% 15%;
+        cursor: pointer;
+    }
+
+        /* .activoty-bottom-btn:hover {
+            background-color: #ffda24;
+        } */
+
+        /* .activoty-bottom-btn span {
+            font-size: 20px;
+            line-height: 1;
+            font-weight: bold;
+            color: #3620b8;
+        } */
+</style>
+<div class="modal fade" tabindex="-1" id="adModal" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-contents">
+        <div class="promotion-ad-wrapper">
+            <img id="promotionAd" src="">
+            <div class="activoty-cancel-icon" onclick="closeAd()"></div>
+            <a id="activoty-bottom-btn" href="javascript:;" target="_blank" onclick="closeAd()">
+            </a>
+        </div>
+    </div>
+</div>
+    <!-- 修改 -->
+    <!-- var special = GlobalCache.ActivitySpecialDate.ToString("yyyy/MM/dd HH:mm:ss"); -->
+    <!-- 添加返场时间 -->
+
+<script>
+
+    window.onload = function () {
+        displayAd();
+
+    };
+
+
+    var activityPopConfig = {
+        excludePaths: [
+            /^\/(A|a)ccount/, /^\/(C|c)loud/, /^\/(F|f)ee/, /^\/(L|l)og/, /^\/six/, /^\/pay/, /^\/(A|a)ctivity/
+        ],
+        imgs: {
+            pre: "/images/act/202112/pc_pre.jpeg",
+            dayOne: "/images/act/202112/pc_first.jpeg",
+            afterDayOne: "/images/act/202112/pc_activity.jpeg",
+            // afterDayOne: "/images/act/202012/pc_afterDayOne_pop.png"
+            returnDay: "/images/act/202112/pc_fc.jpeg"
+        }
+    };
+
+    var currTime = new Date().getTime();
+    var activityPreStart = new Date("2021/12/07 22:30:00").getTime()
+    // 预热结束的时间就是活动开始的时间
+    var activityPreEnd = new Date("2021/12/14 15:00:00").getTime()
+    // 首日结束的时间就是正常活动日开始的时间
+    var activityDayOneEnd = new Date("2021/12/16 00:00:00").getTime()
+    // 正常活动日结束的时间就是返场开始的时间
+    // 添加
+    var activityNormalEnd = new Date("2021/12/22 00:00:00").getTime()
+    var activityEnd = new Date("2021/12/31 23:59:59").getTime()
+    // 检测是否看过广告，若有则不显示广告，否则3S后显示广告
+    function displayAd() {
+        var promotionAd = document.getElementById("promotionAd");
+        var btn = document.getElementById("activoty-bottom-btn");
+        var imgUrl;
+        var isShow = false;
+        if (currTime < activityPreStart)
+            return;
+        if (currTime < activityPreEnd) {
+            //预热时间
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.pre;
+            if (!localStorage[activityPreEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.dayOne;
+            if (!localStorage[activityDayOneEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.afterDayOne;
+            if (!localStorage[activityNormalEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.returnDay;
+            if (!localStorage[activityEnd]) {
+                isShow = true
+            }
+        }
+
+        if (isShow && checkPathValid()) {
+            // 为避免广告图片加载卡顿，应先加载后显示
+            promotionAd.setAttribute("src", imgUrl);
+            setTimeout(function () {
+                $("#adModal").modal({
+                    backdrop: "static",
+                    keyboard: false
+                });
+            }, 500);
+        }
+
+
+    }
+
+    // 校验当前path，个人中心下属页面及支付页面不显示
+    function checkPathValid() {
+        var currPath = window.location.pathname;
+        for (var i of activityPopConfig.excludePaths) {
+            if (i.test(currPath)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 关闭广告弹窗
+    function closeAd() {
+        if (currTime < activityPreEnd) {
+            //预热时间
+            localStorage[activityPreEnd] = true
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            localStorage[activityDayOneEnd] = true
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            localStorage[activityNormalEnd] = true
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            isShow = localStorage[activityEnd] = true
+        }
+
+        $("#adModal").modal("hide");
+    }
+</script> 
+    
+	<link rel="alternate" href="https://www.octoparse.com/" hreflang="en-us">
+    <link rel="alternate" href="https://www.octoparse.jp/" hreflang="ja-jp">
+    <link rel="alternate" href="index1.html" hreflang="zh-cn">
+	<link rel="alternate" href="https://www.octoparse.es/" hreflang="es-es">
+	<link rel="alternate" href="https://www.octoparse.fr/" hreflang="fr-fr">
+	<link rel="alternate" href="https://www.octoparse.de/" hreflang="de">
+		<!--百度统计-异步-->
+        <script type="text/javascript">
+            var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+            document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F7515d7bccdb62c11803f90ca8071f05b' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+    <!--百度统计-异步-->
+        <script type='text/javascript'>
+            var _vds = _vds || [];
+            window._vds = _vds;
+            (function () {
+                _vds.push(['setAccountId', 'a7c11699fcd726cf']);
+                (function () {
+                    var vds = document.createElement('script');
+                    vds.type = 'text/javascript';
+                    vds.async = true;
+                    vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'assets.growingio.com/vds.js';
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(vds, s);
+                })();
+            })();
+        </script>
+    <!--用户来源统计-->
+        <script type="text/javascript">
+
+            var utm_campaign = getQueryStringMaster("utm_campaign");
+            var utmFlag = 0;
+            if (utm_campaign != null && utm_campaign != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_campaign=" + encodeURI(utm_campaign) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_medium = getQueryStringMaster("utm_medium");
+            if (utm_medium != null && utm_medium != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_medium=" + encodeURI(utm_medium) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_source = getQueryStringMaster("utm_source");
+            if (utm_source != null && utm_source != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_source=" + encodeURI(utm_source) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_content = getQueryStringMaster("utm_content");
+            if (utm_content != null && utm_content != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_content=" + encodeURI(utm_content) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_term = getQueryStringMaster("utm_term");
+            if (utm_term != null && utm_term != "") {
+                utmFlag = 1;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                document.cookie = "utm_term=" + encodeURI(utm_term) + ";expires=" + exp.toGMTString();
+            }
+
+            var utm_url = decodeURI(window.location);
+            if (utm_url != null && utm_url != "") {
+                if (getCookie("url") == "") {
+                    var exp = new Date();
+                    exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                    document.cookie = "url=" + encodeURI(utm_url) + ";expires=" + exp.toGMTString();
+                }
+            }
+
+            var referrerUrl = document.referrer;
+            var keys = ["wd", "q", "query", "word"];
+            var searchWord = "";
+            for (var i = 0; i < keys.length; i++) {
+                var reg = new RegExp("(^|&)" + keys[i] + "=([^&]*)(&|$)", "i");
+                var r = referrerUrl.substr(1).match(reg);
+                if (r && r[2]) {
+                    searchWord = decodeURI(r[2]);
+                    var exp = new Date();
+                    exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24);//过期时间1天
+                    document.cookie = "search_word=" + encodeURI(searchWord) + ";expires=" + exp.toGMTString();// 写入Cookie，注册时使用
+                    break;
+                }
+            }     
+            if (searchWord != "") {
+                utmFlag = 1;
+            }
+            else
+            {
+                if (getCookie("search_word") != "") {
+                     searchWord = getCookie("search_word");
+                     utmFlag = 1;
+               }
+            }
+
+            if (utmFlag == 1) {
+                $.ajax({
+                    url: "/Common/AjaxPostUtm",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        "utm_campaign": utm_campaign,
+                        "utm_medium": utm_medium,
+                        "utm_source": utm_source,
+                        "utm_content": utm_content,
+                        "utm_term": utm_term,
+                        "utm_url": utm_url,
+                        "search_word": searchWord
+                    },
+                });
+            }
+
+            function getCookie(Name) {
+                var search = Name + "="
+                if (document.cookie.length > 0) {
+                    offset = document.cookie.indexOf(search)
+                    if (offset != -1) {
+                        offset += search.length
+                        end = document.cookie.indexOf(";", offset)
+                        if (end == -1) end = document.cookie.length
+                        return unescape(document.cookie.substring(offset, end))
+                    }
+                    else return ""
+                }
+            }
+
+            function getQueryStringMaster(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return decodeURI(r[2]); return null;
+            }
+
+            $(document).ready(function () {
+                var jihuoH = $('#jihuoH').val();
+                if (jihuoH == '0') {
+                    $('#jihuop').show();
+                }
+                logFromChannelCookie();
+                function logFromChannelCookie() {
+                    var fromChannel = getQueryStringMaster("fromchannel");
+                    if (fromChannel) {
+                        var exp = new Date();
+                        exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24 * 7);//过期时间1天
+                        document.cookie = "_bzytg=" + fromChannel + ";expires=" + exp.toGMTString();
+                    }
+                }
+            });
+
+        </script>
+    <!--用户来源统计-->
+			
+
+
+    
+    
+    <style>
+        .bzy-navbar {
+            background: #FBFBFB;
+        }
+    </style>
+
+    <style>
+    .reco-link {
+        height: 30px;
+        line-height: 30px;
+        width: 100%;
+        margin-top: 45px;
+    }
+
+    .reco-link ul {
+        margin: 0 auto;
+        height: 100%;
+        width: 800px;
+        padding-top: 7px;
+    }
+
+    .reco-link ul li {
+        float: left;
+        margin-right: 15px;
+        font-size:14px;
+        font-family:PingFang-SC-Medium,PingFang-SC;
+        font-weight:500;
+        color:rgba(255,255,255,1);
+    }
+    .reco-link ul li a:hover {
+        color: rgba(255,255,255,1);
+    }
+    </style>
+
+</head>
+<body>
+
+
+
+<style>
+    .site-header-pro:hover .sub-list {
+        height: 360px !important;
+    }
+
+    .site-header .site-tutorial:hover .solution-sub-list {
+        display: block;
+        height: 130px;
+    }
+
+.site-header .site-tutorial2:hover .solution-sub-list {
+        display: block;
+        height: 84px;
+    }
+
+  .site-header .site-tutorial3:hover .solution-sub-list {
+        display: block;
+        height: 300px;
+    }
+
+</style>
+<header class="site-header">
+    <ul class="site-nav" style="width: 1045px">
+        <li class="site-bzy-logo">
+            <a href="index1.html"></a>
+        </li>
+        <li class='site-header-pro'>
+            <a href="javascript:;">
+                产品
+                <i class="icon icon-angle-down"></i>
+            </a>
+            <ul class="pro-sub-list sub-list">
+                <li>
+                    <a href="about.html">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>关于八爪鱼</p>
+                            <p>人人可用的数据采集器</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="enterprise/index.html" data-utm="1" target="_blank">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>八爪鱼企业版</p>
+                            <p>企业级数据采集解决方案</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="qiyeban/index.html" data-utm="1">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>八爪鱼私有化部署版</p>
+                            <p>支持内网采集与OEM集成</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="edu.html" data-utm="1">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>教育公益计划</p>
+                            <p>教学科研的大数据助手</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" target="_blank">
+                        <div class="sub-item-icon"></div>
+                        <div class="sub-item">
+                            <p>客户体验管理</p>
+                            <p>聚合全网客户声音</p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="plan.html">价格</a>
+        </li>
+        <li class='site-header-solution site-tutorial3'>
+            <a href="javascript:;">
+                解决方案
+                <i class="icon icon-angle-down"></i>
+            </a>
+            <ul class="solution-sub-list sub-list" style="left: -100%;">
+                <li>
+                    <a href="" data-utm="1" target="_blank" style="font-size: 16px;color: #919194;font-weight: bold;">数据采集</a>
+                </li>
+                <li>
+                    <a href="newscrawler/index.html" data-utm="1" target="_blank">新闻采集</a>
+                </li>
+                <li>
+                    <a href="ecdatacrawler/index.html" data-utm="1" target="_blank">电商采集</a>
+                </li>
+                <li>
+                    <a href="socialmediacrawler/index.html" data-utm="1" target="_blank">社交采集</a>
+                </li>
+                <li>
+                    <a href="realestate/index.html" data-utm="1" target="_blank">房产采集</a>
+                </li>
+                <li>
+                    <a href="zhaotoubiao/index.html" data-utm="1" target="_blank">招投标采集</a>
+                </li>
+				
+
+
+                
+            </ul>
+            <ul class="solution-sub-list sub-list">
+                <li>
+                    <a href="" data-utm="1" target="_blank" style="font-size: 16px;color: #919194;font-weight: bold;">场景应用</a>
+                </li>
+				<li>
+                    <a href="marketresearch/index.html" data-utm="1" target="_blank">市场研究</a>
+                </li>
+              
+                <li>
+                    <a href="dscomment/index.html" data-utm="1" target="_blank">评论分析</a>
+                </li>
+                <li>
+                    <a href="gaoxiaojiaoyu/index.html" data-utm="1" target="_blank">高校教育</a>
+                </li>
+                <li>
+                    <a href="jingwaiyuqing/index.html" data-utm="1" target="_blank">境外舆情</a>
+                </li>				 
+				<li>
+                    <a href="cross-border-electricity/index.html" data-utm="1" target="_blank">跨境电商采集</a>
+                </li>
+				<li>
+                    <a href="voc/index.html" data-utm="1" target="_blank">客户之声</a>
+                </li>
+				
+                
+
+
+            </ul>
+        </li>
+
+
+
+<li class='site-header-solution site-tutorial2'>
+            <a href="javascript:;">
+                采集模板
+                <i class="icon icon-angle-down"></i>
+            </a>           
+            <ul class="solution-sub-list sub-list">               				
+                <li>
+                    <a href="kjdscjmb/index.html" data-utm="1" target="_blank">跨境电商</a>
+                </li>  
+				<li>
+                    <a href="news/index.html" data-utm="1" target="_blank">新闻传媒</a>
+                </li>		
+			
+            </ul>
+        </li>
+
+
+
+        <li>
+            <a href="download/windows.html">软件下载</a>
+        </li>
+        
+        <li class='site-header-solution site-tutorial'>
+            <a href="tutorialIndex8.html">
+                教程与帮助
+                <i class="icon icon-angle-down"></i>
+            </a>
+            <div>
+                <ul class="edu-sub-list solution-sub-list sub-list sub-list-edu">
+                    <li class="sub-edu">
+                        <a href="tutorial8/hottutorial.html">
+                            <div class="sub-item">
+                                <p>图文教程</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="tutorial8/videotutorial.html">
+                            <div class="sub-item">
+                                <p>视频教程</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="tutorial8/faq.html">
+                            <div class="sub-item sub-edu-item">
+                                <p>常见问题</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+        <li></li>
+        <li class='site-header-solution site-tutorial2'>
+            
+			 <a href="javascript:;">
+                关于我们
+                <i class="icon icon-angle-down"></i>
+            </a>           
+            <ul class="solution-sub-list sub-list">               				
+                <li>
+                    <a href="intro.html" data-utm="1">关于我们</a>
+                </li>  
+				<li>
+                    <a href="contactus.html" data-utm="1">联系我们</a>
+                </li>				
+            </ul>
+        </li>
+        
+<style>
+    .site-header .signin, .site-header .signup {
+        width: 48px;
+        height: 26px;
+        display: inline-block !important;
+        vertical-align: middle;
+        border-radius: 3px;
+        line-height: 26px;
+        border: 1px solid #D9D9D9;
+        background: #FAFAFA;
+    }
+
+        .site-header .signin:hover, .site-header .signup:hover {
+            color: #0059B8;
+            border: 1px solid #0059B8;
+        }
+
+        .site-header .signup:hover {
+            color: #fff;
+            background: #0059B8;
+        }
+
+    .site-header .signup {
+        color: #fff;
+        background: #096ACF;
+        border-color: #096ACF;
+    }
+</style>
+﻿    <ul class="right-bar">
+        <li class="right-bar"><a href="Account/Login.html" class="signin">登录</a></li>
+        <li class="s" style="width: 10px"><a href="javascript:;">&nbsp;</a></li>
+        <li><a class="signup" href="account/register.html">注册</a></li>
+    </ul>
+
+    </ul>
+</header>
+
+<style>
+    #promotionAd{
+        border-radius: 1.5%;
+        width: 100%;
+    }
+    .modal-contents{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 41.68%;
+        height: 53.4%;
+        /* background-color: pink; */
+    }
+    .promotion-ad-wrapper {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .activoty-cancel-icon {
+        position: absolute;
+        width: 2.7%;
+        height: 4%;
+        right: 1.6%;
+        top: 3%;
+        cursor: pointer;
+        /* transition: opacity 0.3s ease; */
+    }
+
+        /* .activoty-cancel-icon:hover {
+            opacity: 0.5;
+        } */
+
+    .activoty-bottom-btn {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 20.7%;
+        padding: 3.3% 15%;
+        /* border-radius: 3px; */
+        cursor: pointer;
+        /* background-color: #f6fc63; */
+        /* transition: background-color 0.3s ease; */
+    }
+    .activoty-bottom-btn-after{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 12.7%;
+        padding: 3.3% 15%;
+        cursor: pointer;
+    }
+
+        /* .activoty-bottom-btn:hover {
+            background-color: #ffda24;
+        } */
+
+        /* .activoty-bottom-btn span {
+            font-size: 20px;
+            line-height: 1;
+            font-weight: bold;
+            color: #3620b8;
+        } */
+</style>
+<div class="modal fade" tabindex="-1" id="adModal" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-contents">
+        <div class="promotion-ad-wrapper">
+            <img id="promotionAd" src="">
+            <div class="activoty-cancel-icon" onclick="closeAd()"></div>
+            <a id="activoty-bottom-btn" href="javascript:;" target="_blank" onclick="closeAd()">
+            </a>
+        </div>
+    </div>
+</div>
+    <!-- 修改 -->
+    <!-- var special = GlobalCache.ActivitySpecialDate.ToString("yyyy/MM/dd HH:mm:ss"); -->
+    <!-- 添加返场时间 -->
+
+<script>
+
+    window.onload = function () {
+        displayAd();
+
+    };
+
+
+    var activityPopConfig = {
+        excludePaths: [
+            /^\/(A|a)ccount/, /^\/(C|c)loud/, /^\/(F|f)ee/, /^\/(L|l)og/, /^\/six/, /^\/pay/, /^\/(A|a)ctivity/
+        ],
+        imgs: {
+            pre: "/images/act/202112/pc_pre.jpeg",
+            dayOne: "/images/act/202112/pc_first.jpeg",
+            afterDayOne: "/images/act/202112/pc_activity.jpeg",
+            // afterDayOne: "/images/act/202012/pc_afterDayOne_pop.png"
+            returnDay: "/images/act/202112/pc_fc.jpeg"
+        }
+    };
+
+    var currTime = new Date().getTime();
+    var activityPreStart = new Date("2021/12/07 22:30:00").getTime()
+    // 预热结束的时间就是活动开始的时间
+    var activityPreEnd = new Date("2021/12/14 15:00:00").getTime()
+    // 首日结束的时间就是正常活动日开始的时间
+    var activityDayOneEnd = new Date("2021/12/16 00:00:00").getTime()
+    // 正常活动日结束的时间就是返场开始的时间
+    // 添加
+    var activityNormalEnd = new Date("2021/12/22 00:00:00").getTime()
+    var activityEnd = new Date("2021/12/31 23:59:59").getTime()
+    // 检测是否看过广告，若有则不显示广告，否则3S后显示广告
+    function displayAd() {
+        var promotionAd = document.getElementById("promotionAd");
+        var btn = document.getElementById("activoty-bottom-btn");
+        var imgUrl;
+        var isShow = false;
+        if (currTime < activityPreStart)
+            return;
+        if (currTime < activityPreEnd) {
+            //预热时间
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.pre;
+            if (!localStorage[activityPreEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            btn.classList.toggle('activoty-bottom-btn');
+            imgUrl = activityPopConfig.imgs.dayOne;
+            if (!localStorage[activityDayOneEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.afterDayOne;
+            if (!localStorage[activityNormalEnd]) {
+                isShow = true
+            }
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            btn.classList.toggle('activoty-bottom-btn-after');
+            imgUrl = activityPopConfig.imgs.returnDay;
+            if (!localStorage[activityEnd]) {
+                isShow = true
+            }
+        }
+
+        if (isShow && checkPathValid()) {
+            // 为避免广告图片加载卡顿，应先加载后显示
+            promotionAd.setAttribute("src", imgUrl);
+            setTimeout(function () {
+                $("#adModal").modal({
+                    backdrop: "static",
+                    keyboard: false
+                });
+            }, 500);
+        }
+
+
+    }
+
+    // 校验当前path，个人中心下属页面及支付页面不显示
+    function checkPathValid() {
+        var currPath = window.location.pathname;
+        for (var i of activityPopConfig.excludePaths) {
+            if (i.test(currPath)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 关闭广告弹窗
+    function closeAd() {
+        if (currTime < activityPreEnd) {
+            //预热时间
+            localStorage[activityPreEnd] = true
+        } else if (currTime >= activityPreEnd && currTime < activityDayOneEnd) {
+            //活动第一天
+            localStorage[activityDayOneEnd] = true
+        } else if (currTime >= activityDayOneEnd && currTime < activityNormalEnd) {
+            //正常活动日
+            localStorage[activityNormalEnd] = true
+        } else if (currTime >= activityNormalEnd && currTime < activityEnd) {
+            //返场
+            isShow = localStorage[activityEnd] = true
+        }
+
+        $("#adModal").modal("hide");
+    }
+</script>
+
+    <div class="content" style="margin-top:64px;overflow:hidden;background:rgba(247,251,255,1);">
+        
+
+
+<div style="padding:50px 0 70px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    <span style="font-size:18px;font-family:宋体;color:#000000;">
+                        <strong>《深圳视界注册协议》</strong>
+                    </span>
+                </p>
+                <p>
+                    <span style="font-size:18.0pt;font-family:宋体;"></span>
+                </p>
+                <p class="a" align="left">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">本文件更新日期于</span>
+                    <span style="font-size:14px;color:#000000;">2015</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">年</span>
+                    <span style="font-size:14px;color:#000000;">11</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">月</span>
+                    <span style="font-size:14px;color:#000000;">1</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">日并生效</span>
+                    <span></span>
+                </p>
+                <p class="a" align="left">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳视界下属网站：八爪鱼采集器官方网站（</span>
+                    <span style="font-size:14px;color:#000000;">www.bazhuayu.com）</span>
+                </p>
+                <p class="MsoNormal" style="margin-left:0cm;">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">&nbsp;</span>
+                </p>
+                <h1 style="margin-left:2.4pt;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">1</span>
+                    <span style="font-size:14px;color:#000000;">原则</span>
+                    <span></span>
+                </h1>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">1.1</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">八爪鱼采集器官方网站</span>
+                    <span style="font-size:14px;color:#000000;">(www.bazhuayu.com</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">，以下简称八爪鱼</span>
+                    <span style="font-size:14px;color:#000000;">)</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        为深圳视界信息技术有限公司（以下简称深圳视界）研发并运营，并统一管理，平台用户使用《深圳视界服务协议》，并受本服务协议约束。
+                    </span>
+                    <span></span>
+                </h2>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">1.2</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">用户应当同意本协议的条款并按照页面上的提示完成全部的注册程序。用户在进行注册程序过程中点击</span>
+                    <span style="font-size:14px;color:#000000;">"</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">同意</span>
+                    <span style="font-size:14px;color:#000000;">"</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">按钮即表示用户与深圳视界达成协议，完全接受本协议项下的全部条款。</span>
+                    <span></span>
+                </h2>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">1.3</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        用户注册成功后，深圳视界将给予每个用户一个用户帐号及相应的密码，该用户帐号和密码由用户负责保管；用户应当对以其用户帐号进行的所有活动和事件负法律责任。
+                    </span>
+                    <span></span>
+                </h2>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">1.4</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        用户可以使用深圳视界各个频道单项服务，当用户使用深圳视界各单项服务时，用户的使用行为视为其对该单项服务的服务条款以及深圳视界在该单项服务中发出的各类公告的同意。
+                    </span>
+                    <span></span>
+                </h2>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">1.5</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        除了本协议外，深圳视界用户必须阅读并遵守《深圳视界免责声明》，《深圳视界侵权处理》，《深圳视界隐私协议》等相关协议条款，并对其承担相关法律责任。
+                    </span>
+                    <span></span>
+                </h2>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">1.6</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳视界会员服务协议以及各个频道单项服务条款和公告可由深圳视界随时更新，且无需另行通知。用户在使用相关服务时</span>
+                    <span style="font-size:14px;color:#000000;">,</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        应关注并遵守其所适用的相关条款。用户在使用深圳视界提供的各项服务之前，应仔细阅读本服务协议。如用户不同意或不接受本服务协议及
+                    </span>
+                    <span style="font-size:14px;color:#000000;">/</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        或不接受对本服务协议的随时修改，用户可以主动取消深圳视界提供的服务；用户一旦使用深圳视界服务，即视为该用户已了解并完全同意本服务协议各项内容，包括深圳视界对服务协议随时所做的任何修改，并成为深圳视界用户。
+                    </span>
+                    <span></span>
+                </h2>
+                <h1 style="margin-left:2.4pt;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">2</span>
+                    <span style="font-size:14px;color:#000000;">注册信息和隐私保护</span>
+                    <span></span>
+                </h1>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">2.1</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳视界帐号（即深圳视界用户</span>
+                    <span style="font-size:14px;color:#000000;">ID</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        ）的所有权归深圳视界，用户完成注册申请手续后，获得深圳视界帐号的使用权。用户应提供及时、详尽及准确的个人资料，并不断更新注册资料，符合及时、详尽准确的要求。所有原始键入的资料将引用为注册资料。如果因注册信息不真实而引起的问题，并对问题发生所带来的后果，深圳视界不负任何责任。
+                    </span>
+                    <span></span>
+                </h2>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">2.2</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        用户不应将其帐号、密码转让或出借予他人使用。如用户发现其帐号遭他人非法使用，应立即通知深圳视界。因黑客行为或用户的保管疏忽导致帐号、密码遭他人非法使用，深圳视界不承担任何责任。
+                    </span>
+                    <span></span>
+                </h2>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">2.3</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳视界不对外公开或向第三方提供单个用户的注册资料，除非：</span>
+                    <span></span>
+                </h2>
+                <p class="a" style="margin-left:0cm;">
+                    <span style="font-family:'color:#333333;background:#FAFAFA;font-size:14px;color:#000000;">•</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">事先获得用户的明确授权；</span>
+                    <span></span>
+                </p>
+                <p class="a" style="margin-left:0cm;">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">•</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">只有透露用户的个人资料，才能为该用户提供其所要求的产品和服务；</span>
+                    <span></span>
+                </p>
+                <p class="a" style="margin-left:0cm;">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">•</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">根据有关的法律法规要求；</span>
+                    <span></span>
+                </p>
+                <p class="a" style="margin-left:0cm;">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">•</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">按照相关政府主管部门的要求；</span>
+                    <span></span>
+                </p>
+                <p class="a" style="margin-left:0cm;">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">•</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">为维护深圳视界的合法权益。</span>
+                    <span></span>
+                </p>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">2.4</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">在用户注册深圳视界账户，使用其他深圳视界产品或服务，访问深圳视界网页</span>
+                    <span style="font-size:14px;color:#000000;">,</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">或参加促销和有奖游戏时，深圳视界会收集该用户的个人身份识别资料，并会将这些资料用于：改进为该用户提供的服务及网页内容。</span>
+                    <span></span>
+                </h2>
+                <h1 style="margin-left:2.4pt;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">3</span>
+                    <span style="font-size:14px;color:#000000;">使用规则</span>
+                    <span></span>
+                </h1>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">3.1</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        用户在使用深圳视界服务时，必须遵守中华人民共和国相关法律法规的规定，用户应同意将不会利用本服务进行任何违法或不正当的活动，包括但不限于下列行为∶
+                    </span>
+                    <span></span>
+                </h2>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">上载、展示、张贴、传播、存储、链接含义下列内容信息（包括但不限于）：</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">侵犯他人知识产权</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">涉黄、涉毒、涉赌</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">诽谤他人</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">虚假信息</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">不利用深圳视界服务从事以下活动：</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">不得为任何非法目的而使用网络服务系统</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">未经允许，进入计算机信息网络或者使用计算机信息网络资源的；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">未经允许，对计算机信息网络功能进行删除、修改或者增加的；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">未经允许，对进入计算机信息网络中存储、处理或者传输的数据和应用程序进行删除、修改或者增加的；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">故意制作、传播计算机病毒等破坏性程序的；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">采集境外网站数据，下载或传播“反党反政府言论，攻击国家领导人”等行为；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">以出租、转售深圳视界帐号等方式牟利；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">其他危害计算机信息网络安全的行为。</span>
+                    <span></span>
+                </p>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">3.2</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        用户违反本协议或相关的服务条款的规定，导致任何第三方主张或提出任何索赔、要求或损失、费用（包括合理的律师费）之情形，该用户无条件同意赔偿由此给深圳视界及其合作公司、关联公司造成的任何损失。
+                    </span>
+                    <span></span>
+                </h2>
+                <p class="Char" style="margin-left:0cm;">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        为避免深圳视界及其合作公司、关联公司遭受损害。深圳视界有权视用户的行为性质，采取包括但不限于删除用户发布信息内容、暂停使用许可、终止服务、限制使用、回收深圳视界帐号、追究法律责任等措施。对恶意注册深圳视界帐号或利用深圳视界帐号进行违法活动、捣乱、骚扰、欺骗、及其他其他违反本协议的行为，深圳视界有权回收其帐号。同时，深圳视界会视司法部门的要求，协助调查。
+                    </span>
+                    <span></span>
+                </p>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">3.3</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">用户不得对本服务任何部分或本服务之使用或获得，进行复制、拷贝、出售、转售或用于任何其它商业目的。</span>
+                    <span></span>
+                </h2>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">3.4</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        用户须对自己在使用深圳视界服务过程中的行为承担法律责任。用户承担法律责任的形式包括但不限于：对受到侵害者进行赔偿，以及在深圳视界首先承担了因用户行为导致的行政处罚或侵权损害赔偿责任后，用户应给予深圳视界等额的赔偿。
+                    </span>
+                    <span></span>
+                </h2>
+                <h1 style="margin-left:2.4pt;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">4</span>
+                    <span style="font-size:14px;color:#000000;">服务内容</span>
+                    <span></span>
+                </h1>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">4.1</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳视界网络服务的具体内容由深圳视界根据实际情况提供。</span>
+                    <span></span>
+                </h2>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">4.2</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">除非本服务协议另有其它明示规定，深圳视界所推出的新产品、新功能、新服务，均受到本服务协议之规范。</span>
+                    <span></span>
+                </h2>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">4.3</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        为使用本服务，用户必须能够自行经有法律资格的第三方为您提供互联网接入服务，进入国际互联网，并应自行支付相关服务费用。此外，用户必须自行配备及负责与国际联网连线所需之一切必要装备，包括计算机、数据机或其它存取装置。
+                    </span>
+                    <span></span>
+                </h2>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">4.4</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        鉴于网络服务的特殊性，用户同意深圳视界有权不经事先通知，随时变更、中断或终止部分或全部的网络服务（包括收费网络服务）。深圳视界不担保网络服务不会中断，对网络服务的及时性、安全性、准确性也都不作担保。
+                    </span>
+                    <span></span>
+                </h2>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">4.5</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        深圳视界需要定期或不定期地对提供网络服务的平台或相关的设备进行检修或者维护，如因此类情况而造成网络服务（包括收费网络服务）在合理时间内的中断，深圳视界无需为此承担任何责任。深圳视界保留不经事先通知为维修保养、升级或其它目的暂停本服务任何部分的权利。
+                    </span>
+                    <span></span>
+                </h2>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">4.6</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        本服务或第三人可提供与其它国际互联网上之网站或资源之链接。由于深圳视界无法控制这些网站及资源，用户了解并同意，此类网站或资源是否可供利用，深圳视界不予负责，存在或源于此类网站或资源之任何内容、广告、产品或其它资料，深圳视界亦不予保证或负责。因使用或依赖任何此类网站或资源发布的或经由此类网站或资源获得的任何内容、商品或服务所产生的任何损害或损失，深圳视界不承担任何责任。
+                    </span>
+                    <span></span>
+                </h2>
+                <p class="Char" style="margin-left:0cm;">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">但深圳视界一旦发现链接的其他网站或网络资源涉嫌非法，深圳视界有权未经通知自行屏蔽或删除该等网站链接或网络资源。</span>
+                    <span></span>
+                </p>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">4.7</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        用户明确同意其使用深圳视界网络服务所存在的风险将完全由其自己承担。用户理解并接受下载或通过深圳视界服务取得的任何信息资料取决于用户自己，并由其承担系统受损、资料丢失以及其它任何风险。深圳视界对在服务网上得到的任何商品购物服务、交易进程、招聘信息，都不作担保。
+                    </span>
+                    <span></span>
+                </h2>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">4.8</span>
+                    <span style="font-size:14px;color:#000000;">6</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">个月未登录的帐号，深圳视界保留关闭的权利。</span>
+                    <span></span>
+                </h2>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">4.9</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        深圳视界有权于任何时间暂时或永久修改或终止本服务（或其任何部分），而无论其通知与否，深圳视界对用户和任何第三人均无需承担任何责任。
+                    </span>
+                    <span></span>
+                </h2>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">4.10</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">终止服务</span>
+                    <span></span>
+                </h2>
+                <p class="a" style="margin-left:0cm;">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        用户同意深圳视界得基于其网络安全和网络通畅之考虑，因任何理由，包含但不限于长时间未使用，或深圳视界认为您已经违反本服务协议的文字及精神，终止用户的密码、帐号或本服务之使用（或服务之任何部分），并将该用户在本服务内任何内容加以移除并删除。该用户同意依本服务协议任何规定提供之本服务，无需进行事先通知即可中断或终止，该用户承认并同意，深圳视界可立即关闭或删除其帐号及您帐号中所有相关信息及文件，及
+                    </span>
+                    <span style="font-size:14px;color:#000000;">/</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        或禁止继续使用前述文件或本服务。此外，该用户同意若本服务之使用被中断或终止或其帐号及相关信息和文件被关闭或删除，深圳视界对该用户或任何第三人均不承担任何责任。
+                    </span>
+                    <span></span>
+                </p>
+                <h1 style="margin-left:2.4pt;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">5</span>
+                    <span style="font-size:14px;color:#000000;">知识产权和其他合法权益（包括但不限于名誉权、商誉权）</span>
+                    <span></span>
+                </h1>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">5.1</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">用户专属权利</span>
+                    <span></span>
+                </h2>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        深圳视界尊重他人知识产权和合法权益，呼吁用户也要同样尊重知识产权和他人合法权益。若相关权利人认为其知识产权或其他合法权益被侵犯，请按照以下说明向深圳视界发出或授权他人发出权利通知并提供资料∶
+                    </span>
+                    <span></span>
+                </p>
+                <p class="Char" style="margin-left:0cm;">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        请注意：如果权利通知的陈述失实，权利主张者将承担对由此造成的全部法律责任（包括但不限于赔偿各种费用及律师费）。如果在不确定网络上可获取的资料是否侵犯了其知识产权和其他合法权益，深圳视界建议首先咨询专业人士。
+                    </span>
+                    <span></span>
+                </p>
+                <p class="Char" style="margin-left:0cm;">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">为了深圳视界有效处理上述权利通知，请使用以下格式（包括各条款的序号）：</span>
+                    <span></span>
+                </p>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">•</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">权利人对涉嫌侵权内容拥有知识产权或其他合法权益和</span>
+                    <span style="font-size:14px;color:#000000;">/</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">或依法可以行使知识产权或其他合法权益的权属证明。</span>
+                    <span></span>
+                </p>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">•</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">请充分、明确地描述被侵犯了知识产权或其他合法权益的情况并请提供涉嫌侵权的第三方网址（如果有）。</span>
+                    <span></span>
+                </p>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">•</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">请指明涉嫌侵权网页的哪些内容侵犯了第</span>
+                    <span style="font-size:14px;color:#000000;">2</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">项中列明的权利。</span>
+                    <span></span>
+                </p>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">•</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        请提供权利人具体的联络信息，包括姓名、身份证或护照复印件（对自然人）、单位登记证明复印件（对单位）、通信地址、电话号码、传真和电子邮件。
+                    </span>
+                    <span></span>
+                </p>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">•</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        请提供涉嫌侵权内容在信息网络上的位置（如指明您举报的含有侵权内容的出处，即：指网页地址或网页内的位置）以便我们与您举报的含有侵权内容的网页的所有权人
+                    </span>
+                    <span style="font-size:14px;color:#000000;">/</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">管理人联系。</span>
+                    <span></span>
+                </p>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">•</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">请在权利通知中加入如下关于通知内容真实性的声明：</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">“本人</span>
+                    <span style="font-size:14px;color:#000000;">/</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">本公司保证，本通知中所述信息是充分、真实、准确的，如果本权利通知内容不完全属实，本人</span>
+                    <span style="font-size:14px;color:#000000;">/</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">公司将承担由此产生的一切法律责任。”</span>
+                    <span></span>
+                </p>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">•</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">签署以上文件，如果是依法成立的机构或组织，请加盖公章。</span>
+                    <span></span>
+                </p>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">请把以上资料和联络方式书面发往以下地址：</span>
+                    <span></span>
+                </p>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳市南山区科技园中区深南大道9966号</span>
+                    <span style="font-size:14px;color:#000000;">威盛科技大厦318</span>
+                </p>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳视界　会员服务部</span>
+                    <span></span>
+                </p>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">邮政编码：</span>
+                    <span style="font-size:14px;color:#000000;">518000</span>
+                </p>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">5.2</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">对于用户通过深圳视界服务（包括但不限于贴吧、知道、</span>
+                    <span style="font-size:14px;color:#000000;">MP3</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        、影视等）上传到深圳视界网站上可公开获取区域的任何内容，用户同意深圳视界在全世界范围内具有免费的、永久性的、不可撤销的、非独家的和完全再许可的权利及可以免费使用、复制、修改、改编、出版、翻译并据以创作衍生作品、传播、表演和展示此等内容（整体或部分），或将此等内容编入当前已知的或以后开发的其他任何形式的作品、媒体或技术中。
+                    </span>
+                    <span></span>
+                </h2>
+                <p class="MsoNormal" style="margin-left:0cm;">
+                    <span style="font-size:14px;color:#000000;">5.3&nbsp;</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        深圳视界用户在深圳视界平台上传，下载数据包，必须经过实名认证，正确提交自已的身份证件，如是企业或机构请提供企业资质证明。并保证对数据的合法性负责。
+                    </span>
+                    <span></span>
+                </p>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">5.3</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳视界拥有本网站内所有资料的版权。任何被授权的浏览、复制、打印和传播属于本网站内的资料必须符合以下条件：</span>
+                    <span></span>
+                </h2>
+                <p class="Char">
+                    <span style="font-family:'color:#333333;background:#FAFAFA;font-size:14px;color:#000000;">•</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">所有的资料和图象均不得用于商业目的；</span>
+                    <span></span>
+                </p>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">•</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">所有的资料、图象及其任何部分都必须包括此版权声明；</span>
+                    <span></span>
+                </p>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">•</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">本网站（</span>
+                    <span style="font-size:14px;color:#000000;">www.bazhuayu.com,www.Dataduoduo.com</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">）所有的产品、技术与所有程序均属于深圳视界知识产权，在此并未授权。</span>
+                    <span></span>
+                </p>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">•</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">“深圳视界”</span>
+                    <span style="font-size:14px;color:#000000;">,</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">“八爪鱼”及相关图形等为深圳视界的注册商标。</span>
+                    <span></span>
+                </p>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">•</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        未经深圳视界许可，任何人不得擅自（包括但不限于：以非法的方式复制、传播、展示、镜像、上载、下载）使用。否则，深圳视界将依法追究法律责任。
+                    </span>
+                    <span></span>
+                </p>
+                <h1 style="margin-left:2.4pt;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">6</span>
+                    <span style="font-size:14px;color:#000000;">青少年用户特别提示</span>
+                    <span></span>
+                </h1>
+                <p class="Char" style="margin-left:0cm;">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">青少年用户必须遵守全国青少年网络文明公约：</span>
+                    <span></span>
+                </p>
+                <p class="Char" style="margin-left:0cm;">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        要善于网上学习，不浏览不良信息；要诚实友好交流，不侮辱欺诈他人；要增强自护意识，不随意约会网友；要维护网络安全，不破坏网络秩序；要有益身心健康，不沉溺虚拟时空。
+                    </span>
+                    <span></span>
+                </p>
+                <h1 style="margin-left:2.4pt;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">7</span>
+                    <span style="font-size:14px;color:#000000;">其他</span>
+                    <span></span>
+                </h1>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">7.1</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">本协议的订立、执行和解释及争议的解决均应适用中华人民共和国法律。</span>
+                    <span></span>
+                </h2>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">7.2</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        如双方就本协议内容或其执行发生任何争议，双方应尽量友好协商解决；协商不成时，任何一方均可向深圳视界所在地的人民法院提起诉讼。
+                    </span>
+                    <span></span>
+                </h2>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">7.3</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳视界未行使或执行本服务协议任何权利或规定，不构成对前述权利或权利之放弃。</span>
+                    <span></span>
+                </h2>
+                <h2 style="margin-left:0cm;text-indent:0cm;">
+                    <span style="font-size:14px;color:#000000;">7.4</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">如本协议中的任何条款无论因何种原因完全或部分无效或不具有执行力，本协议的其余条款仍应有效并且有约束力。</span>
+                    <span></span>
+                </h2>
+                <p class="Char" style="margin-left:0cm;">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">请在发现任何违反本服务协议以及其他任何单项服务的服务条款、深圳视界各类公告之情形时，可以通过以下联络方式同深圳视界联系∶</span>
+                    <span></span>
+                </p>
+                <p class="Char" style="margin-left:0cm;">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳市南山区科技园中区深南大道9966号</span>
+                    <span style="font-size:14px;color:#000000;">威盛科技大厦318</span>
+                </p>
+                <p class="Char" style="margin-left:0cm;">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳视界</span>
+                    <span></span>
+                </p>
+                <p class="Char" style="margin-left:0cm;">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">邮政编码：</span>
+                    <span style="font-size:14px;color:#000000;">518000</span>
+                </p>
+                <p class="Char" style="margin-left:0cm;">
+                    <br>
+                </p>
+                <hr>
+                <p>
+                    <br>
+                </p>
+                <p class="Char" style="margin-left:0cm;">
+                    <span></span>
+                </p>
+                <p align="center" style="text-align:left;">
+                    <span style="font-size:16.0pt;font-family:&quot;color:#333333;">
+                        <span style="font-size:14px;">
+                            <br>
+                        </span>
+                    </span>
+                </p>
+                <p align="center" style="text-align:left;">
+                    <span style="font-size:16.0pt;font-family:&quot;color:#333333;">
+                        <span style="font-size:18px;color:#000000;">
+                            <strong>《服务承诺》</strong>
+                        </span>
+                        <span></span>
+                    </span>
+                </p>
+                <p class="a" align="left">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">本文件更新日期于</span>
+                    <span style="font-size:14px;color:#000000;">2015</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">年</span>
+                    <span style="font-size:14px;color:#000000;">11</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">月</span>
+                    <span style="font-size:14px;color:#000000;">1</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">日并生效</span>
+                    <span></span>
+                </p>
+                <p class="a" align="left">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳视界下属网站：八爪鱼采集器官方网站（</span>
+                    <span style="font-size:14px;color:#000000;">www.bazhuayu.com）</span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">&nbsp;</span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">对于认证的机构或个用户，深圳视界承诺为数据使用者提供交易保障服务。</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">消费者保障服务承诺包含以下情况：</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">•</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">下载的数据与描述不符</span>
+                    <span style="font-size:14px;color:#000000;">&nbsp;&nbsp;&nbsp;</span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">&nbsp;</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">•</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">下载的数据不能使用</span>
+                    <span style="font-size:14px;color:#000000;">&nbsp;&nbsp;&nbsp;</span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">&nbsp;</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">•</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">下载的数据存在版权问题</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">以上问题均支持退款或退积分。</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        对于在深圳视界发布数据的一般用户（非认证用户），作为科研数据共享服务提供平台，深圳视界仅为此类用户提供上传空间及在线分享功能，深圳视界原则仅对该类用户上载数据的表现方式做保护处理，对上载数据本身不做任何修改或编辑，也不保证其数据的真实性、合法性、有效性、专业性。但涉嫌违法的内容（包括但不限于涉黄、涉毒、涉赌、损害国家或民族利益、诽谤他人等等）深圳视界将无需通知自行删除，并有权封闭或删除该用户。
+                    </span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        深圳视界遵守知识产权相关规定，如果深圳视界不经意侵犯了相关人员或组织机构的权益，一旦告知查实，深圳视界将真诚致歉，并承诺立即撤消相关数据。
+                    </span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">以上条款最终解释权归深圳视界所有。</span>
+                </p>
+                <p>
+                    <br>
+                </p>
+                <hr>
+                <p>
+                    <br>
+                </p>
+                <p class="a" align="center" style="text-align:center;">
+                    <span style="font-size:22.0pt;"></span>
+                </p>
+                <p class="a" align="center" style="text-align:left;">
+                    <span style="font-size:14px;font-family:宋体;">
+                        <br>
+                    </span>
+                </p>
+                <p class="a" align="center" style="text-align:left;">
+                    <span style="font-size:18px;font-family:宋体;color:#000000;">
+                        <strong>《深圳视界免责声明》</strong>
+                    </span>
+                    <span style="font-size:22.0pt;"></span>
+                </p>
+                <p class="a" align="left">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">本文件更新日期于</span>
+                    <span style="font-size:14px;color:#000000;">2015</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">年</span>
+                    <span style="font-size:14px;color:#000000;">11</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">月</span>
+                    <span style="font-size:14px;color:#000000;">1</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">日并生效</span>
+                    <span></span>
+                </p>
+                <p class="a" align="left">
+                    <span style="font-family:宋体;font-size:14px;">
+                        <br>
+                    </span>
+                </p>
+                <p class="a" align="left">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳视界下属网站：八爪鱼采集器官方网站（</span>
+                    <span style="font-size:14px;color:#000000;">www.bazhuayu.com</span>
+                </p>
+                <p class="a" align="center" style="text-align:center;">
+                    <span style="font-size:22.0pt;"></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        访问者在接受本网站服务之前，请务必仔细阅读本声明。访问者访问本网站的行为以及通过各类方式利用本网站的行为，都将被视作是对本声明全部内容的无异议的认可。
+                    </span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">第一条</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        访问者在从事与本网站相关的所有行为（包括但不限于访问浏览、利用、转载、宣传介绍）时，必须以善意且谨慎的态度行事；访问者不得故意或者过失的损害本网站的各类合法权益，不得利用本网站以任何方式直接或者间接的从事违反中华人民共和国法律、国际公约以及社会公德的行为。
+                    </span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">第二条</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        本网站充分尊重数据原创作者的著作权和知识产权。本网站合理信赖客户上传到深圳视界的数据、图文影像等资料是上传者原创或已经征得著作权人的同意。本网站对于有关原创数据、图文影像等资料的买卖以及使用属于合理行为，一旦发生与之有关的知识产权纠纷本网站不承担任何责任。本网站郑重提醒访问者：请在转载有关数据或者使用时一定要遵守相关的知识产权，否则与之有关的知识产权纠纷本网站免责。同时，对本网站原创数据以及本网站标识，本网站享有自主知识产权。侵犯本网站之知识产权的，本网站有权追究其法律责任。
+                    </span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">第三条</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        本网站发布的各类数据，访问者在本网站发表的观点以及以链接形式推荐的其他网站内容，仅为提供更多信息以参考使用或者学习交流，并不代表本网站观点，也不构成任何销售建议。
+                    </span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">第四条</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">以下情形导致的个人信息泄露，本网站免责：</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">1</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">）政府部门、司法机关等依照法定程序要求本网站披露个人资料时，本网站将根据执法单位之要求或为公共安全之目的提供个人资料；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">2</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">）由于用户将个人密码告知他人或与他人共享注册账户，由此导致的任何个人资料泄露；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">3</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        ）任何由于计算机问题、黑客攻击、计算机病毒侵入或发作、因政府管制而造成的暂时性关闭等影响网络正常经营的不可抗力而造成的个人资料泄露、丢失、被盗用或被窜改等；
+                    </span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">4</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">）由于与本网站链接的其他网站所造成之个人资料泄露；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">5</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">）因不可抗力导致的任何后果；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">第五条</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        本网站若因线路及本网站控制范围外的硬件故障或其它不可抗力而导致暂停服务，于暂停服务期间给用户造成的一切损失，本网站不承担任何法律责任。
+                    </span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">第六条</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        除本网站注明之服务条款外，其他一切因使用本网站而引致之任何意外、疏忽、诽谤、版权或知识产权侵犯及其所造成的损失（包括因下载而感染电脑病毒），本网站不承担任何法律责任。
+                    </span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">第七条</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">若因本网站产生任何诉诸于诉讼程序的法律争议，均交由以本网站所有者深圳视界网站所在地的法院判决。</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">第八条</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">本声明之订立、修改、更新及最终解释权均属深圳视界网站所有。</span>
+                </p>
+                <p class="Char" style="text-indent:0cm;">
+                    <span style="font-family:宋体;"></span>
+                </p>
+                <hr>
+                <p>
+                    <br>
+                </p>
+                <p class="a">
+                    <span style="font-size:18px;font-family:宋体;color:#000000;">
+                        <strong>《深圳视界侵权处理》</strong>
+                    </span>
+                    <span style="font-size:18.0pt;"></span>
+                </p>
+                <p class="a" align="left">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">本文件更新日期于</span>
+                    <span style="font-size:14px;color:#000000;">2015</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">年</span>
+                    <span style="font-size:14px;color:#000000;">11</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">月</span>
+                    <span style="font-size:14px;color:#000000;">1</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">日并生效</span>
+                    <span></span>
+                </p>
+                <p class="a" align="left">
+                    <span style="font-family:宋体;font-size:14px;">
+                        <br>
+                    </span>
+                </p>
+                <p class="a" align="left">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳视界下属网站：八爪鱼采集器官方网站（</span>
+                    <span style="font-size:14px;color:#000000;">www.bazhuayu.com</span>
+                </p>
+                <p class="a" style="text-indent:128.9pt;">
+                    <span style="font-size:18.0pt;"></span>
+                </p>
+                <p class="a" style="text-indent:128.9pt;">
+                    <span style="font-size:18.0pt;"></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        作为数据分享网络服务提供者，深圳视界仅为用户提供上传空间及在线分享手段，深圳视界原则对用户上载内容的表现方式做保护处理，对上载内容本身不做任何修改或编辑。但深圳视界坚决反对任何违反中华人民共和国版权法律法规及其他法律法规的行为。一经发现，深圳视界会立即移除并停止继续传播任何盗版和非法转载以及其他侵权数据及含义非法内容的数据、图片及影像、文字等，为此我们制定了旨在保护知识产权权利人合法权益的措施和步骤。具体如下：
+                    </span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">某一数据的著作权人和</span>
+                    <span style="font-size:14px;color:#000000;">/</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        或依法可以行使信息网络传播权的权利人，如果认为深圳视界网站上用户上传内容侵犯了其对该等数据的信息网络传播权，请务必以书面的方式通知或授权他人通知（下称权利通知）本公司，但应对书面通知陈述之真实性负责。如果权利通知的陈述失实，将承担对由此造成的全部法律责任（包括但不限于赔偿各种费用及律师费）。如果不确定网络上可获取的资料是否侵犯了其合法权益，深圳视界建议首先咨询专业人士。
+                    </span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">除明显或众所周知的数据，如已经广泛传播的数据资料以外，提出侵权指控者必须提供以下资料：</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">.</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">被控侵权信息的数据名称；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">.</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">被控侵权信息的数据在本网站的对应的网络地址（为了及时处理，请您提供数据的网络地址而不是文档名称的搜索地址）；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">.</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">本人的电话、传真和电子邮件地址；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">.</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">所在机构拥有版权的相关信息说明和资质证明。</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">（</span>
+                    <span style="font-size:14px;color:#000000;">1</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">）若涉及单位请提供单位营业执照复印件并加盖公章；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">（</span>
+                    <span style="font-size:14px;color:#000000;">2</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">）若涉及个人的请提供身份证复印件或护照复印件；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">（</span>
+                    <span style="font-size:14px;color:#000000;">3</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">）若由律师代理，请提供授权委托书。</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">.</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        请在权利通知书中写上以下陈述：“本公司（本人）保证，本通知中所述信息是充分、真实、准确的，本公司（本人）是该投诉内容的合法权利人（合法权利授权人），有权行使该权利。由此引起的一切法律纠纷，与深圳视界无关，由我本身承担。
+                    </span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">请将营业执照复印件、身份证复印件、授权书等材料投寄至：</span>
+                    <span></span>
+                </p>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳市南山区科技园中区深南大道9966号</span>
+                    <span style="font-size:14px;color:#000000;">威盛科技大厦318</span>
+                </p>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳视界　会员服务部</span>
+                    <span></span>
+                </p>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">邮政编码：</span>
+                    <span style="font-size:14px;color:#000000;">518000</span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">&nbsp;</span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">以上声明不包括深圳视界与其他签约合作伙伴的合作专区内容部分。</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        只要符合上述条件，深圳视界会在收到相关材料后依法采取包括移除在内的相应措施，并告知在本站发布数据的用户。如果不符合上述条件，则暂不采取包括移除等的相应的措施，和向深圳视界发布数据的用户同意接受《深圳视界服务协议》及就前款情况采取的相应措施。
+                    </span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        深圳视界对他人在网站上实施的此类侵权行为不承担侵权法律责任，侵权的法律责任概由上传或出售人承担。深圳视界已经在相应的页面中标注了上传或出售人的信息。深圳视界在满足前款条件下采取移除等相应措施后不为此向原发布人承担违约责任或其他法律责任，包括不承担因侵权指控不成立而给原发布人带来损害的赔偿责任。
+                    </span>
+                </p>
+                <hr>
+                <p>
+                    <br>
+                </p>
+                <p class="MsoNormal" align="center" style="text-align:left;">
+                    <span style="font-size:18px;font-family:宋体;color:#000000;">
+                        <strong>《深圳视界隐私原则》</strong>
+                    </span>
+                    <span style="font-size:22.0pt;"></span>
+                </p>
+                <p class="a" align="left">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">本文件更新日期于</span>
+                    <span style="font-size:14px;color:#000000;">2015</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">年</span>
+                    <span style="font-size:14px;color:#000000;">11</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">月</span>
+                    <span style="font-size:14px;color:#000000;">1</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">日并生效</span>
+                    <span></span>
+                </p>
+                <p class="a" align="left">
+                    <span style="font-family:宋体;font-size:14px;">
+                        <br>
+                    </span>
+                </p>
+                <p class="a" align="left">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳视界下属网站：八爪鱼采集器官方网站（</span>
+                    <span style="font-size:14px;color:#000000;">www.bazhuayu.com</span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        深圳视界重视对用户隐私的保护，保护隐私是深圳视界的一项基本政策。用户提供的登记资料及深圳视界保留的有关用户的若干其它个人资料将受到中国有关隐私的法律规范。请查看下方的深圳视界完整的《隐私权政策》。
+                    </span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">用户使用深圳视界服务时，深圳视界有权用数字代码、通用唯一标识符、</span>
+                    <span style="font-size:14px;color:#000000;">cookies</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        或其它技术确定进入服务的计算机。深圳视界有可能利用所得信息对服务的使用进行总体性及匿名的数据统计及分析，所得数据可供深圳视界或其合作人使用。计算机识别技术也会用于执行相关的服务条款。
+                    </span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        深圳视界可能会与第三方合作向用户提供相关的服务，如该第三方为合法经营的公司且提供同等的用户隐私保护（如电信运营商），深圳视界有权将用户的注册资料等提供给该第三方。
+                    </span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        深圳视界注重对保护用户的个人隐私的保护。有时候需要某些信息才能为用户提供用户请求的服务，本隐私权声明解释了这些情况下的数据收集和使用情况。本隐私权声明适用于深圳视界的所有相关服务。
+                    </span>
+                    <span></span>
+                </p>
+                <h2 style="margin-left:38.85pt;text-indent:-17.85pt;">
+                    <span style="font-family:黑体;font-size:14px;color:#000000;">1、</span>
+                    <span style="font-family:黑体;">
+                        <span style="font-size:14px;color:#000000;">用户个人信息的搜集</span>
+                        <span></span>
+                    </span>
+                </h2>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        当需要能识别用户身份的信息（个人信息）或者可以与用户联系的信息时，会征求用户的同意。通常，在用户注册深圳视界的在线服务时，会请求用户提供这些信息。深圳视界搜集的信息通常仅限于用户的姓名、性别、年龄、出生日期、身份证号、家庭住址、教育程度、公司情况、所属行业、兴趣爱好等。深圳视界会在法律要求或符合深圳视界的相关服务条款、软件许可使用协议约定的情况下透露用户的个人信息，或者有充分理由相信必须这样做才能：
+                    </span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">.</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">满足法律的明文规定，或者符合深圳视界或本站点适用的法律程序；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">.</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">符合深圳视界相关服务条款、软件许可使用协议的约定；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">.&nbsp;</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">保护深圳视界及其系列</span>
+                    <span style="font-size:14px;color:#000000;">Web</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">站点的权利或财产，以及在紧急情况下保护深圳视界员工、深圳视界服务的用户或大众的个人安全。</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳视界不会未经允许将这些信息与第三方共享，本声明已经列出的情况除外。</span>
+                    <span></span>
+                </p>
+                <h2 style="margin-left:38.85pt;text-indent:-17.85pt;">
+                    <span style="font-family:黑体;font-size:14px;color:#000000;">2、</span>
+                    <span style="font-family:黑体;">
+                        <span style="font-size:14px;color:#000000;">用户个人信息的安全</span>
+                        <span></span>
+                    </span>
+                </h2>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        严格保护用户的个人信息的安全。使用各种安全技术和程序来保护用户的个人信息不被未经授权的访问、使用或泄漏。如果用户对隐私保护有任何置疑，请
+                    </span>
+                    <span style="font-size:14px;color:#000000;">email</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">至</span>
+                    <span>
+                        <a href="mailto:support@skieer.com">
+                            <span class="Char2" style="font-size:14px;color:#000000;">
+                                <span style="color:#000000;text-decoration:none;font-size:14px;">support@dataduoduo.com</span>
+                            </span>
+                        </a>
+                    </span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">。</span>
+                    <span></span>
+                </p>
+                <h2 style="text-indent:24.0pt;">
+                    <span style="font-size:14px;color:#000000;">1</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">）</span>
+                    <span style="font-size:14px;color:#000000;">Cookie</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">的使用</span>
+                    <span></span>
+                </h2>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳视界使用</span>
+                    <span style="font-size:14px;color:#000000;">Cookie</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">来帮助用户实现用户的联机体验的个性化。</span>
+                    <span style="font-size:14px;color:#000000;">Cookie</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">是由网页服务器存放在用户的硬盘中的文本文件。</span>
+                    <span style="font-size:14px;color:#000000;">Cookie</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">不能用来运行程序或将病毒递送到用户的计算机中。指定给用户的</span>
+                    <span style="font-size:14px;color:#000000;">Cookie</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">是唯一的，它只能由将</span>
+                    <span style="font-size:14px;color:#000000;">Cookie</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">发布给用户的域中的</span>
+                    <span style="font-size:14px;color:#000000;">Web</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">服务器读取。</span>
+                    <span style="font-size:14px;color:#000000;">Cookie</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">的主要用途之一是提供一种节约时间的实用功能。例如，如果用户将深圳视界的网站上注册，</span>
+                    <span style="font-size:14px;color:#000000;">Cookie</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        会帮助深圳视界在用户后续访问时调用用户的特定信息。这样可以简化记录用户的个人信息的流程。当用户返回到深圳视界时，深圳视界可以调出用户以前所提供的信息，使用户能够容易地使用用户自定义的深圳视界功能。深圳视界允许那些在我们网页上发布广告的公司到用户电脑上设定或取用
+                    </span>
+                    <span style="font-size:14px;color:#000000;">Cookie</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">，其它公司将按其自订的隐私权政策而非本政策使用</span>
+                    <span style="font-size:14px;color:#000000;">Cookie</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">。深圳视界在进行与其产品及服务相关的工作时，会使用网络</span>
+                    <span style="font-size:14px;color:#000000;">beacons</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">进入网站提取</span>
+                    <span style="font-size:14px;color:#000000;">Cookie</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">。用户可以接受或拒绝</span>
+                    <span style="font-size:14px;color:#000000;">Cookie</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">。大多数</span>
+                    <span style="font-size:14px;color:#000000;">Web</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">浏览器会自动接受</span>
+                    <span style="font-size:14px;color:#000000;">Cookie</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">，但用户通常可根据自己的需要来修改浏览器的设置以拒绝</span>
+                    <span style="font-size:14px;color:#000000;">Cookie</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">。如果选择拒绝</span>
+                    <span style="font-size:14px;color:#000000;">Cookie</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">，那么用户可能无法完全体验所访问的深圳视界服务或网站的互动功能。</span>
+                    <span></span>
+                </p>
+                <h2 style="margin-left:39.0pt;text-indent:-18.0pt;">
+                    <span style="font-size:14px;color:#000000;">2）</span>
+                    <span style="font-size:14px;color:#000000;">Web Beacon</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">的使用</span>
+                    <span></span>
+                </h2>
+                <p class="Char">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳视界网页上常会包含一些电子图象（称为</span>
+                    <span style="font-size:14px;color:#000000;">"</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">单像素</span>
+                    <span style="font-size:14px;color:#000000;">" GIF</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">文件或</span>
+                    <span style="font-size:14px;color:#000000;">"</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">网络</span>
+                    <span style="font-size:14px;color:#000000;">beacon"</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">），它们可以帮助网站计算浏览网页的用户或访问某些</span>
+                    <span style="font-size:14px;color:#000000;">cookie</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">。</span>
+                    <span></span>
+                </p>
+                <h2 style="margin-left:39.0pt;text-indent:-18.0pt;">
+                    <span style="font-size:14px;color:#000000;">3）</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">访问用户的个人信息</span>
+                    <span></span>
+                </h2>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        为用户提供了多种途径以确保用户的个人信息是准确及时的。如果用户在深圳视界上注册，用户可以随时查阅或编辑用户提交给深圳视界的个人信息，用户也可以随时删除用户提交给深圳视界的个人信息。
+                    </span>
+                    <span></span>
+                </p>
+                <h2 style="margin-left:39.0pt;text-indent:-18.0pt;">
+                    <span style="font-size:14px;color:#000000;">4）</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">对青少年个人信息的搜集和使用</span>
+                    <span></span>
+                </h2>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳视界非常重视对青少年个人信息搜集和使用的安全性和保护。深圳视界建议，任何</span>
+                    <a>
+                        <span style="font-size:14px;color:#000000;">18</span>
+                    </a>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">岁以下的未成年人参加网上活动应事先取得家长或其法定监护人（以下简称</span>
+                    <span style="font-size:14px;color:#000000;">"</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">监护人</span>
+                    <span style="font-size:14px;color:#000000;">"</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">）的书面同意。</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳视界保证不会要求青少年提供额外的个人资料，以作为允许其参与网上活动的条件。</span>
+                    <span></span>
+                </p>
+                <h2 style="margin-left:38.85pt;text-indent:-17.85pt;">
+                    <span style="font-family:黑体;font-size:14px;color:#000000;">3、</span>
+                    <span style="font-family:黑体;">
+                        <span style="font-size:14px;color:#000000;">关于免责</span>
+                        <span></span>
+                    </span>
+                </h2>
+                <p class="a">
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">就下列相关事宜的发生，深圳视界不承担任何法律责任：</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">1</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">）</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">深圳视界根据法律规定或相关政府的要求提供用户的个人信息；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">2</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">）</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        由于用户将用户密码告知他人或与他人共享注册账户，由此导致的任何个人信息的泄漏，或其它非因深圳视界原因导致的个人信息的泄漏；
+                    </span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">3</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">）</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">任何第三方根据深圳视界各服务条款及声明中所列明的情况使用用户的个人信息，由此所产生的纠纷；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">4</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">）</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">任何由于黑客攻击、电脑病毒侵入或政府管制而造成的暂时性网站关闭；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">5.</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">）因不可抗力导致的任何后果；</span>
+                    <span></span>
+                </p>
+                <p class="a">
+                    <span style="font-size:14px;color:#000000;">6.</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">
+                        ）深圳视界在各服务条款及声明中列明的使用方式或免责情形。深圳视界会不定时更新本隐私权声明。更新时，我们还会修改隐私权声明顶部的
+                    </span>
+                    <span style="font-size:14px;color:#000000;">"</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">最近更新</span>
+                    <span style="font-size:14px;color:#000000;">"</span>
+                    <span style="font-family:宋体;font-size:14px;color:#000000;">的日期。</span>
+                    <span></span>
+                </p>
+                <p class="MsoNormal">
+                    <span style="font-size:14px;color:#000000;">&nbsp;</span>
+                </p>
+                <div>
+                    <div>
+                        <div id="_com_1" class="msocomtxt"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+		
+
+    </div>
+
+    <div class="modal fade" id="commonModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default cancel" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary ok">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<style>
+        .kefu-content{
+        width: 297px;
+        box-shadow: 1px 1px 1px black;
+        }
+        .kefu-dialog {
+            position: relative;
+            width: auto;
+            background-color: #fff;
+            -webkit-background-clip: padding-box;
+                    background-clip: padding-box;
+            border: 1px solid #999;
+            border: 1px solid rgba(0, 0, 0, .2);
+            border-radius: 6px;
+            outline: 0;
+            -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+                    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+        }
+        .kefu-body{
+            padding: 22px 15px;
+            /* height: 60px;
+            line-height: 60px; */
+        }
+        .kefu-headers {
+            height: 50px;
+            padding-top: 14px;
+            border-bottom: 0.5px solid #e2e0e0;
+        }
+        .kefu-headers span{
+            padding-right: 12px;
+        }
+        .modal-dialog{
+            margin-top: 364px !important;
+        }
+    </style>
+	
+    <div class="modal fade" id="serviceTip">
+        <div class="modal-dialog modal-sm">
+            <div class="kefu-content">
+                <div class="kefu-headers">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                    <h4 class="modal-title" style="margin-left:40%">服务提示</h4>
+                </div>
+                <div class="kefu-body">
+                    <div style="text-align:center;" id="detailTipContent">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:center;">
+                        <a class="btn btn-default" href="index2.html" target="_blank" id="consultNow">论坛求助</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a class="btn btn-primary" href="javascript:;" target="_blank" id="upgradeNow">立即升级套餐</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="consult-modal" style="display: none;">
+        <div class="consult-header">
+            <h3>咨询顾问</h3><span class="close-modal">×</span>
+        </div>
+        <div class="consult-body">
+            <form>
+                <input name="__RequestVerificationToken" type="hidden" value="teAJd-OIWbEuy0Kh-o0VuGQ75JDaeg-8KGGNCw67F06Lmchf91eNyFT-HkCVa5WVlogcDwkOIbOOFGj5ZumYXK-xrKK156wjgDd68NXT1Dg1">;
+                <p><input type="text" name="name" pattern="^\w{2,50}$" title="字符个数在2-50个之间" placeholder="姓名"></p>
+                <p><input type="text" name="mobile" pattern="^(?:\+?86)?1(?:3\d{3}|5[^4\D]\d{2}|8\d{3}|7(?:[235-8]\d{2}|4(?:0\d|1[0-2]|9\d))|9[0-35-9]\d{2}|66\d{2})\d{6}$" placeholder="手机"></p>
+                <p><input type="text" name="title" pattern="^\w{3,50}$" title="字符个数在3-50个之间" placeholder="职位"></p>
+                <p><input type="text" name="company" pattern="^\w{3,50}$" title="字符个数在3-50个之间" placeholder="公司"></p>
+                <p>咨询顾问联系方式 0755-86702246
+</p>
+                <button class="submit-btn" type="button">提交</button>
+            </form>
+        </div>
+    </div>
+<style>
+    #free-trial .modal-dialog {
+        width: 514px;
+    }
+
+    #free-trial .modal-content .modal-header {
+        border: none;
+        padding-top: 27px;
+        padding-bottom: 0;
+    }
+
+    #free-trial .modal-header .close {
+        margin-top: -11px;
+    }
+
+        #free-trial .modal-header .close .close-sig {
+            line-height: 24px;
+            display: inline-block;
+            height: 24px;
+            font-size: 36px;
+            width: 24px;
+            font-weight: 100;
+            color: #7E87A0;
+        }
+
+    #free-trial .modal-content h4.modal-title {
+        font-size: 20px;
+        margin-left: 202px;
+        line-height: 32px;
+    }
+
+    #free-trial .modal-content p.modal-subtitle {
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(126,135,160,1);
+        text-align: center;
+    }
+
+    #free-trial .modal-content .modal-body {
+        padding-top: 0;
+    }
+
+        #free-trial .modal-content .modal-body .modal-body-hint, #trial-form, #submitPlan {
+            display: none;
+        }
+
+    .modal-body .plan-form-title {
+        font-weight: bold;
+        color: rgba(28,29,30,1);
+        line-height: 24px;
+        margin: 28px 0 10px 21px;
+    }
+
+    .modal-body .plan-form-control {
+        margin-left: 21px;
+    }
+
+        .modal-body .plan-form-control .form-control-label {
+            display: inline-block;
+            width: 80px;
+            margin-right: 4px;
+        }
+
+        .modal-body .plan-form-control .form-required label::before {
+            content: '*';
+            color: #D0021B;
+            margin-right: 4px;
+        }
+
+        .modal-body .plan-form-control .form-control-item {
+            display: inline-block;
+            width: 358px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+            .modal-body .plan-form-control .form-control-item label.error ,
+            .modal-body .plan-form-control .form-control-item p.error{
+                position: absolute;
+                font-size: 12px;
+                font-weight: 500;
+                color: rgba(208,2,27,1);
+                line-height: 20px;
+                left: 0;
+                bottom: -20px;
+            }
+
+            .modal-body .plan-form-control .form-control-item input {
+                width: 100%;
+                border: 1px solid rgba(234,238,244,1);
+                border-radius: 4px;
+                height: 32px;
+                line-height: 32px;
+                color: #1C1D1E;
+                padding-left: 12px;
+            }
+
+            .modal-body .plan-form-control .form-control-item textarea {
+                width: 100%;
+                border: 1px solid rgba(234,238,244,1);
+                border-radius: 4px;
+                color: #1C1D1E;
+                padding-left: 12px;
+                min-height: 63px;
+                max-height: 63px;
+                padding: 5px 12px;
+            }
+
+            .modal-body .plan-form-control .form-control-item textarea::placeholder{
+                font-size: 12px;
+                color: #b2b8cc;
+            }
+
+            .modal-body .plan-form-control .form-control-item select {
+                width: 170px;
+                font-size: 14px;
+                font-weight: 500;
+                color: rgba(28,29,30,1);
+                line-height: 32px;
+                height: 32px;
+                border: 1px solid rgba(234,238,244,1);
+                border-radius: 4px;
+                padding-left: 12px;
+            }
+
+        .modal-body .plan-form-control #MobileCode {
+            padding-right: 108px;
+        }
+
+        .modal-body .plan-form-control .sendCode {
+            position: absolute;
+            right: 16px;
+            bottom: 4px;
+            padding-left: 15px;
+            border-left: 1px solid #EAEEF4;
+            color: #025CDF;
+            cursor: pointer;
+        }
+
+    .modal-body .form-useage {
+        display: flex;
+        justify-content: space-between;
+        margin: 32px 15px 10px 21px;
+        align-items: center;
+    }
+
+        .modal-body .form-useage .form-useage-checkbox label {
+            font-size: 16px;
+            font-weight: bold;
+            color: rgba(28,29,30,1);
+        }
+
+        .modal-body .form-useage .form-useage-checkbox input {
+            margin-right: 6px;
+        }
+
+        .modal-body .form-useage .form-useage-txt {
+            font-size: 12px;
+            color: #b2b8cc;
+            line-height: 20px;
+            height: 20px;
+        }
+
+    .modal-body .user-card-upload {
+        position: relative;
+        display: inline-block;
+    }
+
+    .modal-body .form-upload #userCardImg {
+        width: 80px;
+        height: 80px;
+        display: inline-block;
+        border-radius: 4px;
+        background-color: #EAEEF4;
+    }
+
+    .modal-body .form-upload .upload-btn {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+        .modal-body .form-upload .upload-btn input {
+            width: 80px;
+            height: 80px;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+    .modal-body .user-card-upload label.error {
+        position: absolute;
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(208,2,27,1);
+        line-height: 20px;
+        left: 0;
+        bottom: -20px;
+    }
+
+    #try-other-version {
+        display: none;
+    }
+
+    #free-trial .modal-content .modal-footer {
+        border: none;
+        padding-bottom: 36px;
+        padding-top: 64px;
+    }
+
+    #free-trial .modal-footer .btn-primary {
+        width: 200px;
+        border-radius: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    #free-trial .none .modal-body .modal-body-hint, #free-trial .invalid .modal-body .modal-body-hint {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        color: rgba(28,29,30,1);
+        line-height: 24px;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    #free-trial .invalid #try-other-version {
+        display: inline-block;
+        margin-bottom: 16px;
+    }
+
+    #free-trial .invalid .modal-footer {
+        padding-top: 25px;
+    }
+
+    #free-trial .trial-plan #trial-form {
+        display: block;
+    }
+
+    #free-trial .trial-plan #submitPlan {
+        display: block;
+        width: 200px;
+        border-radius: 20px;
+        margin: 32px auto 0;
+        height: 40px;
+    }
+
+        #free-trial .trial-plan #submitPlan:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+    #free-trial .trial-plan .modal-body {
+        padding-bottom: 0;
+    }
+
+    #free-trial .trial-plan .modal-footer {
+        padding-top: 15px;
+    }
+
+    #sendMobileCode[disabled] {
+        pointer-events: none;
+        color: #666;
+    }
+
+    #successMsg {
+        position: fixed;
+        top: 100px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        z-index: 9999999999999;
+    }
+
+        #successMsg div {
+            width: 330px;
+            padding: 10px 16px;
+            background: #fff;
+            margin: 0 auto;
+            border-radius: 2px;
+            -webkit-box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+            color: rgba(0, 0, 0, 0.85);
+            animation-name: slide;
+            animation-duration: 200ms;
+            animation-delay: 0ms;
+            animation-fill-mode: forwards;
+            position: relative;
+        }
+
+        #successMsg .text{
+            display: flex;
+            align-items: center;
+            height: 20px;
+            justify-content: center;
+        }
+
+    @keyframes slide {
+        0% {
+            top: 0;
+        }
+
+        100% {
+            top: 20px;
+        }
+    }
+
+    .margintop {
+        margin-top:58px !important;
+    }
+</style>
+<div class="modal fade" id="free-trial">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true" class="close-sig">×</span>
+                    <span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">申请试用</h4>
+                <p class="modal-subtitle">当前版本：<span id="currentAccountName"></span></p>
+            </div>
+            <div class="modal-body">
+                <p class="modal-body-hint">您当前不满足试用条件。
+                    <a href="tutorial8/sywt.html" target="_blank" style="color:#025CDF">（试用规则？）</a>
+                </p>
+                <form id="trial-form" autocomplete="off">
+                    <h3 class="plan-form-title">选择版本</h3>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>试用版本</label>
+                        </div>
+                        <div class="form-control-item" style="margin: 0;">
+                            <select name="AvailableTypes" id="AvailableTypes">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="plan-form-control" style='padding-top:12px;padding-bottom:8px;'>
+                        <div class="form-control-label">
+                            <label style='padding-left: 9px;'> 试用天数</label>
+                        </div>
+                        <div class="form-control-item" style="margin: 0;">
+                            <p class="form-useage-txt">
+                                3天
+                            </p>
+                        </div>
+                    </div>
+                    <h3 class="plan-form-title" style="margin-top: 12px;">填写信息</h3>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>联系人</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="Contact" name="Contact" type="text" required="">
+                        </div>
+                    </div>
+                    <div class="plan-form-control telphone">
+                        <div class="form-control-label form-required">
+                            <label>手机号</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="Telphone" name="Telphone" type="text">
+                            <p class="error"></p>
+                        </div>
+                    </div>
+                    <div class="plan-form-control mobile-code">
+                        <div class="form-control-label form-required">
+                            <label>验证码</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="MobileCode" name="MobileCode" type="text" required="">
+                            <div class="sendCode" id="sendMobileCode"><span>发送验证码</span></div>
+                        </div>
+                    </div>
+                    <div class="plan-form-control form-useage" style="display:none">
+                        <div class="form-useage-checkbox" id="radioSwitch">
+                            <label style="margin-right:16px;"><input type="radio" name="ApplicantType" id="entertainmentPlan" value="1" checked="">企业使用</label>
+                            <label><input type="radio" name="ApplicantType" id="personPlan" value="0">个人使用</label>
+                        </div>
+                    </div>
+                <div id="entertainmentPlanForm">
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>公司名称</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="CompanyName" name="CompanyName" type="text" required="">
+                        </div>
+                    </div>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>职位</label>
+                        </div>
+                        <div class="form-control-item">
+                            <input id="JobTitle" name="JobTitle" type="text" required="">
+                        </div>
+                    </div>
+                    <div class="plan-form-control">
+                        <div class="form-control-label form-required">
+                            <label>试用用途</label>
+                        </div>
+                        <div class="form-control-item">
+                            <textarea rows="3" placeholder="请备注您的行业，想要采集的网站，采集的用途等信息。" id="Reason" name="Reason" type="text" required=""></textarea>
+                        </div>
+                    </div>
+                    <div class="plan-form-control form-upload">
+                        <div class="form-control-label form-required">
+                            <label>上传名片</label>
+                        </div>
+                        <div class="user-card-upload">
+                            <div class="user-card-img">
+                                <img id="userCardImg" src="static/picture/add.png" class="">
+                            </div>
+                            <div class="upload-btn">
+                                <label>
+                                    <input type="file" id="filecard" name="filecard" onchange="fileChange(this)" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <input class="btn btn-primary" type="submit" id="submitPlan" value="提交申请">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div style="text-align:center;">
+                    <a class="btn btn-primary" href="javascript:;" id="try-other-version">试试其他版本</a>
+                    <p style="font-size: 12px;color:#7e87a0;">咨询顾问电话：0755-86702246&nbsp;&nbsp 010-87987723;&nbsp;&nbsp;企业合作邮箱：sales@skieer.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="successMsg" class="hidden">
+    <div>
+        <p class="text">
+            <img style="height: 20px;margin-right: 8px;" src="static/picture/zf_sucess.png" alt="">
+            <span></span>
+        </p>
+        <p class="sub-text hidden"></p>
+    </div>
+</div>
+<script src="static/js/jquery.validate.min.js"></script>
+<script src="static/js/jquery.validate.messages_zh.js"></script>
+<style>
+
+    .zhiCustomBtn {
+        visibility: hidden;
+        height: 50px;
+        width: 120px;
+        border-radius: 25px;
+        color: #fff;
+        background-color: #2282f2;
+        box-shadow: rgba(15, 66, 76, 0.45) 0px 0px 14px 0px;
+        border: 0px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+
+    .pZhichiCustomBtn {
+        float: right;
+        height: 50px;
+        width: 120px;
+        border-radius: 25px;
+        color: #fff;
+        background-color: #2282f2;
+        box-shadow: rgba(15, 66, 76, 0.45) 0px 0px 14px 0px;
+        border: 0px;
+        box-sizing: border-box;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .pZhichiCustomBtnClose {
+        float: right;
+        height: 70px;
+        width: 70px;
+        border-radius: 35px;
+        color: #fff;
+        background-color: #2282f2;
+        box-shadow: rgba(15, 66, 76, 0.45) 0px 0px 14px 0px;
+        border: 0px;
+        box-sizing: border-box;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+<style>
+
+    .floating_ck dl dd {
+        background-position: center;
+    }
+
+        .floating_ck dl dd.return {
+            background-size: 19px;
+            background-position: center;
+        }
+
+    .floating_ck .quote {
+        background-image: url(static/image/icon-qq.png);
+        background-size: 24px;
+    }
+
+    .floating_ck .kefu {
+        background-image: url(static/image/icon-kefu.png);
+        background-size: 38px;
+    }
+
+    .floating_ck .qiye {
+        background-image: url(static/image/icon-qiye.png);
+        position: relative;
+        background-size: 35px;
+    }
+
+        .floating_ck .qiye::after {
+            content: "";
+            background-image: url(static/image/free.png);
+            width: 30px;
+            height: 19px;
+            position: absolute;
+            right: -7px;
+            top: -4px;
+        }
+
+    .floating_ck .floating {
+        position: absolute;
+        left: -154px;
+        top: 10px;
+        padding: 15px;
+        line-height: 1.2;
+        color: #FFFFFF !important;
+        background: rgba(0,0,0,0.6);
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 4px;
+        z-index: 999999;
+        max-width: 315px;
+        font-size: 14px;
+        display: none;
+    }
+
+        .floating_ck .floating::after {
+            content: "";
+            width: 0;
+            height: 0;
+            display: block;
+            border-style: solid;
+            border-width: 8px;
+            border-color: transparent transparent transparent rgba(0,0,0,0.6);
+            position: absolute;
+            z-index: 999998;
+            right: -16px;
+            top: 13px;
+        }
+
+    .floating_ck .quote .flex {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .quote .floating {
+        left: -330px;
+        width: 315px;
+    }
+
+    .quote .floating li{
+        cursor: text;
+        line-height: 1.2;
+    }
+    .quote .floating .qq-title{
+        line-height: 22px;
+    }
+
+    #gotoTrial .floating {
+        left: -139px;
+    }
+
+    .floating_ck dl dd {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+    }
+
+    .floating_ck .pZhichiCustomBtn {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: none;
+    }
+
+    .floating_ck dl dd .txt {
+        color: #fff;
+        position: absolute;
+        bottom: 0px;
+        width: 70px;
+        text-align: center;
+    }
+
+    #zhichi-div:hover .floating-kefu, #gotoTrial:hover .floating-qiye, .quote:hover .floating {
+        display: block;
+    }
+</style>
+<div class="floating_ck">
+    <dl>
+        <dt></dt>
+        <a href="javascript:void(0);" id="onlineChatAnchor" target="_blank" style="">
+            <p>
+
+            </p>
+        </a>
+        <dd class="kefu" id="zhichi-div" title="点击联系客服">
+            <button id="btn" class="zhiCustomBtn"></button>
+            <p id="chatFlag" data-mtype="0"></p>
+            <button id="pbtn" class="pZhichiCustomBtn"></button>
+            <div class="floating floating-kefu">
+                <div>欢迎咨询在线客服</div>
+            </div>
+        </dd>
+        <dd class="quote">
+            <div class="floating">
+                <div class="flex">
+                    <ul>
+                        <li class="qq-title">免费版QQ群</li>
+                        <li>
+                            <span>159956780</span>
+                        </li>
+                        <li>
+                            <span>257583266</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="qq-title">专业版QQ群</li>
+                        <li>
+                            <span>1065566150</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="qq-title">月旗舰版QQ群</li>
+                        <li>
+                            <span>196097783</span>
+                        </li>
+                        <li>
+                            <span>157692830</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex">
+                    <ul>
+                        <li class="qq-title">月旗舰+QQ群</li>
+                        <li>
+                            <span>431013573</span>
+                        </li>
+                    </ul>
+                    <ul style="">
+                        <li class="qq-title">年旗舰版QQ群</li>
+                        <li>
+                            <span>415864512</span>
+                        </li>
+                    </ul>
+                    <ul style="">
+                        <li class="qq-title">年旗舰+QQ群</li>
+                        <li>
+                            <span>592777128</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </dd>
+        <dt></dt>
+        <dd class="qiye" id="gotoTrial" title="免费试用" onclick="javascript: window.location.href = '/trial/index';">
+            <div class="floating floating-qiye">
+                <div id="qiye">欢迎您申请试用</div>
+            </div>
+        </dd>
+        <dd class="return" onclick="gotoTop();return false;" title="回到顶部">
+        </dd>
+    </dl>
+
+</div>
+<!-- <div title="在线客服" id="zhichi-div" style="position: fixed;bottom: 120px;right: 20px;z-index: 999">
+    <button id="btn" class="zhiCustomBtn">欢迎咨询</button>
+    <p id="chatFlag" data-mType="0"></p>
+    <button id="pbtn" class="pZhichiCustomBtn">欢迎咨询</button>
+</div> -->
+<script src="static/js/entrance.js" id="zhichiScript" class="zhiCustomBtn"></script>
+
+<div class="modal fade" id="serviceTip" style="margin-top: 230px;font-size:14px;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                <h4 class="modal-title" style="margin-left:40%">服务提示</h4>
+            </div>
+            <div class="modal-body">
+                <div style="text-align:center;" id="detailTipContent">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="text-align:center;">
+                    <a class="btn btn-default" href="index2.html" target="_blank" id="consultNow">论坛求助</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-primary" href="javascript:;" target="_blank" id="upgradeNow">立即升级套餐</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="static/js/rightFixedBar.js"></script>
+<div class="site-footer">
+  <div class="bottom-banner" style="position:unset">
+    <div class="inner-main banner-content" style="position:relative;margin: 0;">
+      <p style="font-size:24px">开始简单高效的数据采集</p>
+      <div class="footer-download">
+        <span class="btn-download"><a href="download/windows.html">
+            免费下载
+          </a></span>
+        <span class="btn-signup"><a href="account/register.html">
+            免费注册
+          </a></span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-info">
+    <div class="inner-main">
+      <div class="part1">
+        <ul>
+          <li class="title"><a href="javascript:;">关于我们</a></li>
+          <li><a href="intro.html">公司介绍</a></li>
+          <li><a href="HonorWall.html">公司荣誉</a></li>
+          <li><a href="javascript:;" target="_blank">加入我们</a></li>
+          <li><a href="contactus.html">联系我们</a></li>
+        </ul>
+        <ul>
+          <li class="title"><a href="javascript:;">产品</a></li>
+          <li><a href="about.html">八爪鱼采集器</a></li>
+          <li><a href="enterprise/index.html" target="_blank">八爪鱼企业版</a></li>
+          <li><a href="qiyeban/index.html" target="_blank">八爪鱼私有化部署版</a></li>
+          <li><a href="javascript:;" target="_blank">客户体验管理</a></li>
+        </ul>
+        <ul>
+          <li class="title"><a href="javascript:;">服务</a></li>
+          
+          <li><a href="aboutus.html">商务合作</a></li>
+          
+          <li>
+            <a href="edu.html">教育公益计划</a>
+          </li>
+        </ul>
+        <ul>
+          <li class="title"><a href="javascript:;">资源中心</a></li>
+          <li><a href="tutorial8/hottutorial.html">图文教程</a></li>
+          <li><a href="tutorial8/videotutorial.html">视频教程</a></li>
+          <li>
+            <a href="tutorial8/faq.html">常见问题</a>
+          </li>
+          <li>
+            <a href="blog.html">博客文章</a>
+          </li>
+          <li>
+            <a href="tutorial8/81api.html">API文档</a>
+          </li>
+          <li>
+            <a href="tutorialindex.html">旧版教程</a>
+          </li>
+        </ul>
+        <div>
+          <dl>
+            <dt><img src="static/picture/qrcode1.jpg" alt="微信服务号"></dt>
+            <dd>微信服务号</dd>
+          </dl>
+          <dl>
+            <dt>
+              <img src="static/picture/qrcode2.jpg" alt="八爪鱼采集研究院微信订阅号">
+            </dt>
+            <dd>采集研究院</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="part2">
+        <ul class="tools">
+
+          
+			<li>
+            <a href="javascript:;" target="_blank">web scraping</a>
+          </li>	
+			<li>
+            <a href="javascript:;" target="_blank">webスクレイピング</a>
+          </li>
+			<li>
+            <a href="javascript:;" target="_blank">Herramienta de Web Scraping Gratis</a>
+          </li>
+			<li>
+            <a href="javascript:;" target="_blank">kostenloser Web Crawler</a>
+          </li>	
+			<li>
+            <a href="javascript:;" target="_blank">Outil de Web Scraping gratuits</a>
+          </li>	
+			<li>
+            <a href="javascript:;" target="_blank">data extraction</a>
+          </li>	
+						
+        </ul>
+      </div>
+
+      <div class="company-info">
+        <p>
+          深圳视界信息技术有限公司版权所有 © 2013-2021 . All rights reserved.
+          <a target="_blank" href="javascript:;" rel="nofollow">粤ICP备14092314号</a> <a href="ServiceTerms.html" rel="nofollow">服务协议</a>
+		  | <a href="octServicePrivacy.html" rel="nofollow">隐私协议</a> | <a href="octServiceCompetence.html" rel="nofollow">版本</a>
+		  | <a href="octServiceCompetence.html" rel="nofollow">开发者名称</a> | <a href="octServiceCompetence.html" rel="nofollow">权限</a>
+        </p>
+        <p>公司地址：深圳市南山区西丽街道禹洲广场A座5楼</p>
+        <p>粤公网安备 44030502000701号</p>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  var matchUrlLoaction = function() {
+    urlConfig = [
+      {
+        name: "about",
+        navIndex: 1
+      },
+      {
+        name: "plan",
+        navIndex: 2
+      },
+      {
+        name: "solution",
+        navIndex: 3
+      },
+      {
+        name: "download",
+        navIndex: 4
+      },
+      {
+        name: "app",
+        navIndex: 5
+      },
+      {
+        name: "tutorial",
+        navIndex: 6
+      },
+      {
+        name: "faqIndex",
+        navIndex: 7
+      },
+      {
+        name: "faq",
+        navIndex: 7
+      }
+    ];
+    var currentHref = window.location.href;
+    urlConfig.some(function(v) {
+      if (currentHref.lastIndexOf(v.name) > -1) {
+        $(".site-nav >li")
+          .eq(v.navIndex)
+          .addClass("active");
+      } else {
+        $(".site-nav >li")
+          .eq(v.navIndex)
+          .removeClass("active");
+      }
+    });
+  };
+  matchUrlLoaction();
+</script>
+
+
+    <script>
+        (function () {
+            var canonicalURL, curProtocol;
+            //Get the <link> tag
+            var x = document.getElementsByTagName("link");
+            //Find the last canonical URL
+            if (x.length > 0) {
+                for (i = 0; i < x.length; i++) {
+                    if (x[i].rel.toLowerCase() == 'canonical' && x[i].href) {
+                        canonicalURL = x[i].href;
+                    }
+                }
+            }
+            //Get protocol
+            if (!canonicalURL) {
+                curProtocol = window.location.protocol.split(':')[0];
+            }
+            else {
+                curProtocol = canonicalURL.split(':')[0];
+            }
+            //Get current URL if the canonical URL does not exist
+            if (!canonicalURL) canonicalURL = window.location.href;
+            //Assign script content. Replace current URL with the canonical URL
+            !function () { var e = /([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi, r = canonicalURL, t = document.referrer; if (!e.test(r)) { var n = (String(curProtocol).toLowerCase() === 'https') ? "https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif" : "//api.share.baidu.com/s.gif"; t ? (n += "?r=" + encodeURIComponent(document.referrer), r && (n += "&l=" + r)) : r && (n += "?l=" + r); var i = new Image; i.src = n } }(window);
+        })();
+    </script>
+    <script>
+        $(function () {
+            $("a[url]").click(function () {
+                var $th = $(this);
+                var url = $th.attr("url");
+                var title = $th.text();
+                layer.open({
+                    type: 2,
+                    title: title,
+                    shadeClose: false,
+                    shade: 0.8,
+                    area: ['350px', '460px'],
+                    anim: 2,
+                    content: [url, 'no'],
+                });
+            })
+
+            var appendUtmToLandPage = function () {
+                var utmList = ["utm_campaign", "utm_content", "utm_medium", "utm_source", "utm_term"];
+                var utmInfo = "";
+                var hasUtm = false;
+                utmList.forEach(utm => {
+                    var c = $.cookie(utm);
+                    if (c) {
+                        utmInfo += utm + "=" + c + "&";
+                        hasUtm = true;
+                    }
+                });
+                utmInfo = utmInfo.replace(/&$/, '');
+                if (hasUtm) {
+                    var utmLinks = document.querySelectorAll("a[data-utm]");
+                    if (utmLinks && utmLinks.length > 0) {
+                        utmLinks.forEach(a => {
+                            if (a.href.indexOf('?') != -1) {
+                                a.href = a.href + '&' + utmInfo;
+                            } else {
+                                a.href = a.href + '?' + utmInfo;
+                            }
+                        });
+                    }
+                }
+            };
+            appendUtmToLandPage();
+        })
+    </script>
+    
+
+
+    <script type="text/javascript" src="static/js/rightFixedBar.js"></script>
+    <script type="text/javascript" src="static/js/stat.js"></script>
+</body>
+</html>
